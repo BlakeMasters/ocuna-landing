@@ -88,8 +88,8 @@ function SiteFooter() {
   return (
     <footer className="site-footer">
       <div className="shell footer-layout">
-        <span>Ocuna AI Infrastructure</span>
-        <span>ocuna-ai.com</span>
+        <span>Contact</span>
+        <a href="mailto:business@ocuna-ai.com">business@ocuna-ai.com</a>
       </div>
     </footer>
   );
