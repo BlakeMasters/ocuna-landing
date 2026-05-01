@@ -30,17 +30,8 @@ the React app on GitHub Pages.
 
 The deployment workflow lives in `.github/workflows/pages.yml`.
 
-For the public repository project page, the workflow builds with:
-
-```text
-GITHUB_PAGES=true
-```
-
-That sets Vite's base path to:
-
-```text
-/ocuna-landing/
-```
+The site is configured for the custom domain root path. `site-public/CNAME`
+contains `ocuna-ai.com`, and Vite builds with `base: "/"`.
 
 Deployments run on pushes to `main` or `react`, and can also be started manually
 from the Actions tab.
@@ -57,7 +48,9 @@ src/
     CritterPage.jsx
   styles.css
 site-public/
+  CNAME
   ocuna_logo.png
+  OnVeil.png
   ocuna_background*.png
   sprites/
 ```

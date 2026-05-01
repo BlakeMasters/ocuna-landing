@@ -2,5 +2,10 @@ node_modules/
 dist/
 .tmp/
 public/
+ai-artifacts/
+artifacts/
+playwright-report/
+test-results/
+*.tsbuildinfo
 .DS_Store
 Thumbs.db

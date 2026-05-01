@@ -1,5 +1,5 @@
 import { asset, pagePath } from "../assets.js";
-import { heroNotes, releasePills, workCards } from "../content.js";
+import { heroNotes, onVeilCopy, releasePills, workCards } from "../content.js";
 
 export default function LandingPage() {
   return (
@@ -7,9 +7,9 @@ export default function LandingPage() {
       <Hero />
       <WorkSection />
       <MarketSection />
+      <OnVeilSection />
       <CritterCallout />
       <OcuraSection />
-      <LaunchSection />
     </main>
   );
 }
@@ -27,7 +27,7 @@ function Hero() {
           </p>
           <div className="hero-actions">
             <a className="button" href="#ocura">View Ocura</a>
-            <a className="ghost" href="#launch">Local launch</a>
+            <a className="ghost" href="#onveil">View OnVeil</a>
           </div>
           <div className="hero-notes" aria-label="Ocuna launch notes">
             {heroNotes.map((note) => (
@@ -90,6 +90,23 @@ function MarketSection() {
   );
 }
 
+function OnVeilSection() {
+  return (
+    <section className="onveil" id="onveil">
+      <div className="shell onveil-layout">
+        <div className="onveil-mark" aria-hidden="true">
+          <img src={asset("OnVeil.png")} alt="" />
+        </div>
+        <div className="onveil-copy">
+          <p className="eyebrow">OnVeil</p>
+          <h2>Machine-native trust for agentic systems.</h2>
+          <p>{onVeilCopy}</p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function CritterCallout() {
   return (
     <section className="critter-cta" id="critter">
@@ -132,32 +149,6 @@ function OcuraSection() {
           </div>
         </div>
       </div>
-    </section>
-  );
-}
-
-function LaunchSection() {
-  return (
-    <section className="shell launch" id="launch">
-      <div className="launch-copy">
-        <p className="eyebrow">Launch prep</p>
-        <h2>Static by default, Pages-ready when the domain is ready.</h2>
-        <p>
-          This React site builds to static files. GitHub Pages can serve the compiled
-          output from the Pages workflow, including direct links through the generated fallback.
-        </p>
-        <ul className="status-list">
-          <li><span>Main app entry is served from <strong>index.html</strong>.</span></li>
-          <li><span>Vite compiles the React app into <strong>dist</strong> for Pages.</span></li>
-          <li><span>GitHub Actions deploys the artifact after pushes to the configured branch.</span></li>
-        </ul>
-      </div>
-      <pre className="code-block"><code>{`npm install
-npm run dev
-
-# Build locally:
-npm run build
-npm run preview`}</code></pre>
     </section>
   );
 }
