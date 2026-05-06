@@ -23,8 +23,9 @@ npm run preview
 ```
 
 The build writes static files to `dist/`. The postbuild step copies `dist/index.html`
-to `dist/404.html` so direct links like `/critter-acknowledgement` can fall back to
-the React app on GitHub Pages.
+to `dist/404.html` for unknown direct links and also emits
+`dist/critter-acknowledgement/index.html` plus `dist/critter-acknowledgement.html`
+so the acknowledgement page has explicit static entry points on GitHub Pages.
 
 ## GitHub Pages
 
