@@ -40,7 +40,7 @@ function Hero() {
           </div>
         </div>
         <figure className="hero-art">
-          <img src={asset("ocuna_background1c.png")} alt="Ocuna illustrated background artwork" />
+          <img src={asset("images/ocuna_background1c.png")} alt="Ocuna illustrated background artwork" />
         </figure>
       </div>
     </section>
@@ -87,7 +87,7 @@ function MarketSection() {
           </p>
         </div>
         <figure className="market-art">
-          <img src={asset("ocuna_background3c.png")} alt="Ocuna abstract infrastructure artwork" />
+          <img src={asset("images/ocuna_background3c.png")} alt="Ocuna abstract infrastructure artwork" />
         </figure>
       </div>
     </section>
@@ -99,7 +99,7 @@ function OnVeilSection() {
     <section className="onveil" id="onveil">
       <div className="shell onveil-layout">
         <div className="onveil-mark" aria-hidden="true">
-          <img src={asset("OnVeil.png")} alt="" />
+          <img src={asset("images/OnVeil.png")} alt="" />
         </div>
         <div className="onveil-copy">
           <p className="eyebrow">OnVeil</p>
@@ -148,9 +148,9 @@ function OcuraSection() {
           </div>
         </div>
         <div className="product-mark">
-          <img src={asset("ocuna_background2c.png")} alt="Ocuna product illustration" />
+          <img src={asset("images/ocuna_background2c.png")} alt="Ocuna product illustration" />
           <div className="logo-badge" aria-hidden="true">
-            <img src={asset("ocuna_logo.png")} alt="" />
+            <img src={asset("images/ocuna_logo.png")} alt="" />
           </div>
         </div>
       </div>

@@ -50,8 +50,10 @@ src/
   styles.css
 site-public/
   CNAME
+  sprites/
+images/
   ocuna_logo.png
+  ocuna_title_logo.png
   OnVeil.png
   ocuna_background*.png
-  sprites/
 ```

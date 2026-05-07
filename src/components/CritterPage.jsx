@@ -4,10 +4,10 @@ import { acknowledgementCopy } from "../content.js";
 
 export default function CritterPage() {
   return (
-    <main>
+    <main id="top">
       <section
         className="acknowledgement"
-        style={{ "--ack-bg": `url(${asset("ocuna_background4c.png")})` }}
+        style={{ "--ack-bg": `url(${asset("images/ocuna_background4c.png")})` }}
       >
         <div className="shell acknowledgement-shell">
           <div className="acknowledgement-layout">

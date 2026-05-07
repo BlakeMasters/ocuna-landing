@@ -58,8 +58,7 @@ function SiteHeader({ isCritterPage, onNavigate }) {
   return (
     <header className="shell site-header">
       <a className="brand" href={pagePath("")} aria-label="Ocuna home">
-        <img src={asset("ocuna_logo.png")} alt="" />
-        <span>Ocuna</span>
+        <img src={asset("images/ocuna_title_logo_nobackground.png")} alt="Ocuna" />
       </a>
       <nav className="nav" aria-label="Primary navigation">
         {navItems.map((item) => {
@@ -88,8 +87,13 @@ function SiteFooter() {
   return (
     <footer className="site-footer">
       <div className="shell footer-layout">
-        <span>Contact</span>
-        <a href="mailto:business@ocuna-ai.com">business@ocuna-ai.com</a>
+        <a className="footer-logo-link" href="#top" aria-label="Back to top">
+          <img src={asset("images/ocuna_logo.png")} alt="" />
+        </a>
+        <div className="footer-contact">
+          <span>Contact</span>
+          <a href="mailto:business@ocuna-ai.com">business@ocuna-ai.com</a>
+        </div>
       </div>
     </footer>
   );
