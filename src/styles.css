@@ -456,6 +456,10 @@ section {
   grid-template-columns: minmax(0, 0.95fr) minmax(320px, 0.75fr);
 }
 
+.band-copy h2 + p {
+  margin-top: 30px;
+}
+
 .product-mark {
   position: relative;
   border: 1px solid var(--line);
