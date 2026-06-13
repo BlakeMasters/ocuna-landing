@@ -27,6 +27,15 @@ export default function App() {
       : "Ocuna | AI Infrastructure";
   }, [isCritterPage]);
 
+  useEffect(() => {
+    if (isCritterPage || !window.location.hash) {
+      return;
+    }
+
+    const target = document.getElementById(window.location.hash.slice(1));
+    target?.scrollIntoView({ block: "start" });
+  }, [isCritterPage]);
+
   function navigate(event, href) {
     if (href.startsWith("#")) {
       if (isCritterPage) {

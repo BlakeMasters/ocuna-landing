@@ -1,24 +1,9 @@
 export const navItems = [
+  { label: "Ocura", href: "#ocura" },
   { label: "Work", href: "#work" },
   { label: "Market", href: "#market" },
-  { label: "Ocura", href: "#ocura" },
   { label: "OnVeil", href: "#onveil" },
   { label: "Critter Acknowledgement", href: "#critter" },
-];
-
-export const heroNotes = [
-  {
-    title: "Deployment posture",
-    copy: "Ocura is centered on a resident authority for governed project deployments.",
-  },
-  {
-    title: "Project memory",
-    copy: "Deployments are organized around durable records, constraints, artifacts, and decision points.",
-  },
-  {
-    title: "Package path",
-    copy: "The first release path supports enterprise prototyping through package, CLI, and app surfaces.",
-  },
 ];
 
 export const workCards = [
@@ -37,13 +22,6 @@ export const workCards = [
     title: "Policy-bound control",
     copy: "Constrain commands, environment, artifacts, inference, and approvals at the project boundary.",
   },
-];
-
-export const releasePills = [
-  "Deployment control",
-  "Project control file",
-  "Den and pathway records",
-  "Enterprise prototyping path",
 ];
 
 export const acknowledgementCopy =
