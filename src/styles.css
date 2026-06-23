@@ -27,9 +27,9 @@ body {
   font-family: var(--sans);
   color: var(--ink);
   background:
-    linear-gradient(135deg, rgba(255, 198, 171, 0.68), transparent 34%),
+    linear-gradient(135deg, rgba(255, 215, 200, 0.38), transparent 34%),
     linear-gradient(35deg, rgba(8, 127, 131, 0.08), transparent 48%),
-    linear-gradient(180deg, #fff8f4 0%, #ffe1d2 42%, #fff4ee 76%, #f8f7f2 100%);
+    linear-gradient(180deg, #fff8f4 0%, #fff0e8 42%, #fff4ee 76%, #f8f7f2 100%);
   overflow-x: hidden;
 }
 
@@ -99,6 +99,185 @@ p {
 
 .nav a:hover {
   color: var(--ink);
+}
+
+.universe-section {
+  --space-ink: #e8eaf0;
+  --space-muted: rgba(232, 234, 240, 0.72);
+  --space-bg: #04060c;
+  --space-panel: rgba(8, 11, 20, 0.82);
+  --space-stroke: rgba(255, 255, 255, 0.10);
+  --space-signal: #e07a68;
+  --space-teal: #3cb8bc;
+  position: relative;
+  overflow: hidden;
+  color: var(--space-ink);
+  background: var(--space-bg);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.universe-section::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 120px;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    transparent,
+    rgba(8, 127, 131, 0.06) 55%,
+    rgba(216, 93, 70, 0.05)
+  );
+  z-index: 0;
+}
+
+.particle-section {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.particle-section canvas {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+}
+
+.universe-panel {
+  position: relative;
+  z-index: 1;
+  width: min(380px, 100%);
+  max-width: calc(100vw - 56px);
+  background: var(--space-panel);
+  border: 1px solid var(--space-stroke);
+  border-radius: 8px;
+  padding: clamp(20px, 3.5vw, 32px);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.hero.universe-section .universe-panel {
+  width: 100%;
+  max-width: min(580px, 58ch);
+}
+
+.universe-section .eyebrow {
+  color: var(--space-signal);
+}
+
+.universe-section .summary,
+.universe-section .market-copy p {
+  color: var(--space-muted);
+}
+
+.universe-section h1,
+.universe-section h2 {
+  color: var(--space-ink);
+}
+
+.noun-trigger {
+  cursor: default;
+  border-bottom: 1px dotted rgba(232, 234, 240, 0.28);
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.noun-trigger:hover,
+.noun-trigger:focus-visible {
+  color: var(--space-teal);
+  border-bottom-color: var(--space-teal);
+  outline: none;
+}
+
+.universe-button {
+  background: var(--space-ink);
+  color: var(--space-bg);
+  border-color: var(--space-ink);
+}
+
+.universe-ghost {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--space-ink);
+  border-color: rgba(255, 255, 255, 0.22);
+}
+
+.universe-ghost:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.hero.universe-section {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.hero.universe-section::before {
+  display: none;
+}
+
+.hero.universe-section .hero-layout {
+  grid-template-columns: minmax(0, max-content) 1fr;
+  gap: clamp(24px, 4vw, 48px);
+  align-items: center;
+  justify-items: start;
+  z-index: 1;
+  margin: 0;
+  margin-left: clamp(12px, 1.5vw, 20px);
+  margin-right: auto;
+  width: auto;
+  max-width: calc(100% - clamp(12px, 1.5vw, 20px) - 16px);
+}
+
+.market.universe-section .market-layout {
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: start;
+  margin-left: clamp(16px, 5vw, 56px);
+  margin-right: auto;
+  width: min(var(--shell-width), calc(100% - 32px));
+}
+
+.universe-section h1 {
+  max-width: 18ch;
+  font-size: clamp(2.2rem, 4.5vw, 3.2rem);
+}
+
+.universe-section h2 {
+  max-width: 16ch;
+  font-size: clamp(1.85rem, 4vw, 2.35rem);
+}
+
+.universe-section .summary,
+.universe-section .market-copy p {
+  font-size: clamp(0.98rem, 2vw, 1.05rem);
+  line-height: 1.62;
+  max-width: 58ch;
+}
+
+.brand-shape-trigger {
+  display: flex;
+  align-items: center;
+  transition: opacity 0.2s ease;
+}
+
+.brand-shape-trigger:hover,
+.brand-shape-trigger:focus-visible {
+  opacity: 0.86;
+  outline: none;
+}
+
+.brand-shape-trigger img {
+  display: block;
+}
+
+.market.universe-section {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--space-bg);
+}
+
+.hero.universe-section .hero-content {
+  width: auto;
+  max-width: min(580px, 58ch);
 }
 
 .hero {
@@ -1728,6 +1907,10 @@ section {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .particle-section canvas {
+    opacity: 0.85;
+  }
+
   .onveil-flow *,
   .onveil-flow *::before,
   .onveil-flow *::after {

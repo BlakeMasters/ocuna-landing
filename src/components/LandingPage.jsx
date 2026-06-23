@@ -1,6 +1,11 @@
+import { lazy, Suspense } from "react";
 import { asset, pagePath } from "../assets.js";
 import { onVeilCopy, workCards } from "../content.js";
+import { universeSections } from "../content/nounShapes.js";
+import NounTrigger from "./NounTrigger.jsx";
 import OcuraSimulator from "./OcuraSimulator.jsx";
+
+const ParticleSection = lazy(() => import("./particles/ParticleSection.jsx"));
 
 export default function LandingPage() {
   return (
@@ -18,24 +23,30 @@ export default function LandingPage() {
 
 function Hero() {
   return (
-    <section className="hero">
-      <div className="hero-layout">
-        <div className="hero-content">
+    <section className="hero universe-section" id="hero-universe">
+      <Suspense fallback={null}>
+        <ParticleSection sectionId={universeSections.hero} />
+      </Suspense>
+      <div className="shell hero-layout">
+        <div className="hero-content universe-panel">
           <p className="eyebrow">AI runtime infrastructure</p>
-          <h1>Ocuna builds control systems for stochastic execution.</h1>
+          <h1>
+            <NounTrigger shape="raccoon" sectionId={universeSections.hero}>Ocuna</NounTrigger>
+            {" "}builds <NounTrigger shape="puppet" sectionId={universeSections.hero}>control</NounTrigger> systems for stochastic execution.
+          </h1>
           <p className="summary">
             Ocuna is developing infrastructure for teams that need bounded, observable, and
-            branchable ways to run AI-adjacent workloads. Its first product, Ocura, is a
-            graph-based control surface for project deployments and prototyping.
+            branchable ways to run AI-adjacent workloads. Its first product, Ocura, is a{" "}
+            <NounTrigger shape="graph" sectionId={universeSections.hero}>graph</NounTrigger>
+            -based control surface for project{" "}
+            <NounTrigger shape="deployment" sectionId={universeSections.hero}>deployments</NounTrigger>{" "}
+            and prototyping.
           </p>
           <div className="hero-actions">
-            <a className="button" href="#ocura">View Ocura</a>
-            <a className="ghost" href="#onveil">View OnVeil</a>
+            <a className="button universe-button" href="#ocura">View Ocura</a>
+            <a className="ghost universe-ghost" href="#onveil">View OnVeil</a>
           </div>
         </div>
-        <figure className="hero-art">
-          <img src={asset("images/ocuna_background1c.png")} alt="Ocuna illustrated background artwork" />
-        </figure>
       </div>
     </section>
   );
@@ -68,21 +79,27 @@ function WorkSection() {
 
 function MarketSection() {
   return (
-    <section className="market" id="market">
+    <section className="market universe-section" id="market">
+      <Suspense fallback={null}>
+        <ParticleSection sectionId={universeSections.market} />
+      </Suspense>
       <div className="shell market-layout">
-        <div className="market-copy">
+        <div className="market-copy universe-panel">
           <p className="eyebrow">Broad-market infrastructure</p>
           <h2>Built for stochastic development cycles.</h2>
           <p>
             Many high-leverage compute domains now produce iterative, uncertain, evidence-heavy
-            development loops. Ocuna is designed for workflows where deployments and prototypes need
-            constraints, inspection, artifact trails, and branchable decision history across
-            foundational machine learning, finance, and speculative biotechnology.
+            development loops. Ocura is designed for workflows where deployments and prototypes need
+            constraints, inspection, artifact trails, and{" "}
+            <NounTrigger shape="branch" sectionId={universeSections.market}>branchable</NounTrigger>{" "}
+            decision history across foundational{" "}
+            <NounTrigger shape="network" sectionId={universeSections.market}>machine learning</NounTrigger>
+            ,{" "}
+            <NounTrigger shape="finance" sectionId={universeSections.market}>finance</NounTrigger>
+            , and speculative{" "}
+            <NounTrigger shape="helix" sectionId={universeSections.market}>biotechnology</NounTrigger>.
           </p>
         </div>
-        <figure className="market-art">
-          <img src={asset("images/ocuna_background3c.png")} alt="Ocuna abstract infrastructure artwork" />
-        </figure>
       </div>
     </section>
   );

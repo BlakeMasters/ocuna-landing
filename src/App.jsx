@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
 import { asset, pagePath, routeFromLocation } from "./assets.js";
 import { navItems } from "./content.js";
+import BrandShapeTrigger from "./components/BrandShapeTrigger.jsx";
 import LandingPage from "./components/LandingPage.jsx";
 import CritterPage from "./components/CritterPage.jsx";
+import { ParticleProvider } from "./components/particles/ParticleContext.jsx";
+import { universeSections } from "./content/nounShapes.js";
 
 function useRoute() {
   const [route, setRoute] = useState(() => routeFromLocation());
@@ -53,11 +56,17 @@ export default function App() {
 
   return (
     <>
-      <SiteHeader
-        isCritterPage={isCritterPage}
-        onNavigate={navigate}
-      />
-      {isCritterPage ? <CritterPage /> : <LandingPage />}
+      {isCritterPage ? (
+        <>
+          <SiteHeader isCritterPage onNavigate={navigate} />
+          <CritterPage />
+        </>
+      ) : (
+        <ParticleProvider>
+          <SiteHeader isCritterPage={false} onNavigate={navigate} />
+          <LandingPage />
+        </ParticleProvider>
+      )}
       <SiteFooter />
     </>
   );
@@ -66,9 +75,20 @@ export default function App() {
 function SiteHeader({ isCritterPage, onNavigate }) {
   return (
     <header className="shell site-header">
-      <a className="brand" href={pagePath("")} aria-label="Ocuna home">
-        <img src={asset("images/ocuna_title_logo_nobackground.png")} alt="Ocuna" />
-      </a>
+      {isCritterPage ? (
+        <a className="brand" href={pagePath("")} aria-label="Ocuna home">
+          <img src={asset("images/ocuna_title_logo_nobackground.png")} alt="Ocuna" />
+        </a>
+      ) : (
+        <BrandShapeTrigger
+          shape="raccoon"
+          sectionId={universeSections.hero}
+          href={pagePath("")}
+          aria-label="Ocuna home"
+        >
+          <img src={asset("images/ocuna_title_logo_nobackground.png")} alt="Ocuna" />
+        </BrandShapeTrigger>
+      )}
       <nav className="nav" aria-label="Primary navigation">
         {navItems.map((item) => {
           const href = item.href.startsWith("#") && isCritterPage

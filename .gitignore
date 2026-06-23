@@ -1,11 +1,40 @@
+# Dependencies & build output
 node_modules/
+node_modules/.vite/
 dist/
 .tmp/
-public/
-ai-artifacts/
-artifacts/
-playwright-report/
-test-results/
 *.tsbuildinfo
+
+# OS
 .DS_Store
 Thumbs.db
+
+# Extraction / model working directory (not served by Vite)
+public/
+
+# Model & alignment pipeline outputs
+ai-artifacts/
+artifacts/
+scripts/__pycache__/
+scripts/*.pyc
+scripts/.b64-*.txt
+scripts/.puppet-trace-source.sha256
+scripts/*.generated.json
+scripts/*-comparison.png
+scripts/puppet-trace-comparison.png
+
+# Extraction & lab tooling (not part of the deployed site)
+scripts/*
+!scripts/copy-404.mjs
+
+# Source sprite archives & duplicates (site uses site-public/sprites/)
+sprites/
+
+# Cursor alignment / particle lab canvases
+canvases/
+*.canvas.tsx
+*.canvas.data.json
+
+# Test runners
+playwright-report/
+test-results/
