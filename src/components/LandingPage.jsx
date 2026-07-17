@@ -1,130 +1,249 @@
-import { lazy, Suspense } from "react";
-import { asset, pagePath } from "../assets.js";
-import { onVeilCopy, workCards } from "../content.js";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { universeSections } from "../content/nounShapes.js";
+import CritterGlassCard from "./CritterGlassCard.jsx";
+import LogoRaccoonTrigger from "./LogoRaccoonTrigger.jsx";
 import NounTrigger from "./NounTrigger.jsx";
 import OcuraSimulator from "./OcuraSimulator.jsx";
+import "./HomePage.css";
 
 const ParticleSection = lazy(() => import("./particles/ParticleSection.jsx"));
+const LogisticsPrototype = lazy(() => import("./LogisticsPrototype.jsx"));
 
 export default function LandingPage() {
   return (
     <main id="top">
-      <Hero />
+      <ShipHero />
+      <RuntimeSection />
       <OcuraSimulator />
-      <WorkSection />
-      <MarketSection />
-      <OnVeilSection />
-      <OnVeilFlowSection />
-      <CritterCallout />
+      <CritterHomeSection />
     </main>
   );
 }
 
-function Hero() {
-  return (
-    <section className="hero universe-section" id="hero-universe">
-      <Suspense fallback={null}>
-        <ParticleSection sectionId={universeSections.hero} />
-      </Suspense>
-      <div className="shell hero-layout">
-        <div className="hero-content universe-panel">
-          <p className="eyebrow">AI runtime infrastructure</p>
-          <h1>
-            <NounTrigger shape="raccoon" sectionId={universeSections.hero}>Ocuna</NounTrigger>
-            {" "}builds <NounTrigger shape="puppet" sectionId={universeSections.hero}>control</NounTrigger> systems for stochastic execution.
-          </h1>
-          <p className="summary">
-            Ocuna is developing infrastructure for teams that need bounded, observable, and
-            branchable ways to run AI-adjacent workloads. Its first product, Ocura, is a{" "}
-            <NounTrigger shape="graph" sectionId={universeSections.hero}>graph</NounTrigger>
-            -based control surface for project{" "}
-            <NounTrigger shape="deployment" sectionId={universeSections.hero}>deployments</NounTrigger>{" "}
-            and prototyping.
-          </p>
-          <div className="hero-actions">
-            <a className="button universe-button" href="#ocura">View Ocura</a>
-            <a className="ghost universe-ghost" href="#onveil">View OnVeil</a>
-          </div>
-        </div>
-      </div>
-    </section>
+function ShipHero() {
+  const userMotionChoice = useRef(false);
+  const [motionEnabled, setMotionEnabled] = useState(
+    () =>
+      !window.matchMedia("(prefers-reduced-motion: reduce)").matches &&
+      !window.matchMedia("(max-width: 619px), (pointer: coarse)").matches
   );
-}
 
-function WorkSection() {
-  return (
-    <section className="shell" id="work">
-      <div className="section-head">
-        <h2>Quiet infrastructure for serious AI workflows.</h2>
-        <p>
-          The public story stays intentionally abstract: Ocuna builds operational software for
-          constrained model work, runtime supervision, durable execution records, and controlled
-          decision points. More implementation depth will be disclosed as Ocura approaches release
-          readiness.
-        </p>
-      </div>
-      <div className="grid">
-        {workCards.map((card) => (
-          <article className="card" key={card.tag}>
-            <span className="tag">{card.tag}</span>
-            <strong>{card.title}</strong>
-            <p>{card.copy}</p>
-          </article>
-        ))}
-      </div>
-    </section>
-  );
-}
+  useEffect(() => {
+    const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const mobileQuery = window.matchMedia("(max-width: 619px), (pointer: coarse)");
+    function updateMotionDefault() {
+      if (!userMotionChoice.current) {
+        setMotionEnabled(!motionQuery.matches && !mobileQuery.matches);
+      }
+    }
 
-function MarketSection() {
+    motionQuery.addEventListener("change", updateMotionDefault);
+    mobileQuery.addEventListener("change", updateMotionDefault);
+    return () => {
+      motionQuery.removeEventListener("change", updateMotionDefault);
+      mobileQuery.removeEventListener("change", updateMotionDefault);
+    };
+  }, []);
+
+  function toggleMotion() {
+    userMotionChoice.current = true;
+    setMotionEnabled((enabled) => !enabled);
+  }
+
   return (
-    <section className="market universe-section" id="market">
-      <Suspense fallback={null}>
-        <ParticleSection sectionId={universeSections.market} />
+    <section
+      className="ship-hero"
+      id="particle-logistics"
+      aria-labelledby="home-title"
+    >
+      <Suspense
+        fallback={<div className="ship-hero-stage ship-hero-stage--loading" aria-hidden="true" />}
+      >
+        <LogisticsPrototype motionEnabled={motionEnabled} />
       </Suspense>
-      <div className="shell market-layout">
-        <div className="market-copy universe-panel">
-          <p className="eyebrow">Broad-market infrastructure</p>
-          <h2>Built for stochastic development cycles.</h2>
+
+      <div className="shell ship-hero-overlay">
+        <article className="ship-hero-card">
+          <p className="ship-hero-eyebrow">Ocuna / systems company</p>
+          <h1 id="home-title">Infrastructure for uncertain computation.</h1>
           <p>
-            Many high-leverage compute domains now produce iterative, uncertain, evidence-heavy
-            development loops. Ocura is designed for workflows where deployments and prototypes need
-            constraints, inspection, artifact trails, and{" "}
-            <NounTrigger shape="branch" sectionId={universeSections.market}>branchable</NounTrigger>{" "}
-            decision history across foundational{" "}
-            <NounTrigger shape="network" sectionId={universeSections.market}>machine learning</NounTrigger>
-            ,{" "}
-            <NounTrigger shape="finance" sectionId={universeSections.market}>finance</NounTrigger>
-            , and speculative{" "}
-            <NounTrigger shape="helix" sectionId={universeSections.market}>biotechnology</NounTrigger>.
+            Ocuna builds systems for workloads that branch, adapt, and generate evidence as they
+            run. Our objective is a durable execution layer for training, inference, simulation,
+            and machine-operated services—policy-bounded from first action to final outcome.
           </p>
+        </article>
+
+        <div className="ship-hero-actions" aria-label="Particle logistics controls">
+          <a href="#work">Explore scheduler</a>
+          <button
+            type="button"
+            aria-label={motionEnabled ? "Pause particle scene" : "Play particle scene"}
+            onClick={toggleMotion}
+          >
+            <span>Particle motion</span>
+            <strong aria-live="polite">{motionEnabled ? "Pause" : "Play"}</strong>
+          </button>
         </div>
       </div>
     </section>
   );
 }
 
-function OnVeilSection() {
+function RuntimeSection() {
+  const sectionId = universeSections.scheduler;
+  const [motionPaused, setMotionPaused] = useState(false);
+
   return (
-    <section className="onveil" id="onveil">
-      <div className="shell onveil-layout">
-        <div className="onveil-mark" aria-hidden="true">
-          <img src={asset("images/OnVeil.png")} alt="" />
-        </div>
-        <div className="onveil-copy">
-          <p className="eyebrow">OnVeil</p>
-          <h2>Machine-native trust for agentic systems.</h2>
-          <p>{onVeilCopy}</p>
-        </div>
+    <section className="home-runtime-ink universe-section" id="work">
+      <Suspense fallback={null}>
+        <ParticleSection sectionId={sectionId} paused={motionPaused} />
+      </Suspense>
+      <div className="shell runtime-ink-composition">
+        <button
+          className="runtime-ink-pause"
+          type="button"
+          aria-label={motionPaused ? "Resume scheduler particle field" : "Pause scheduler particle field"}
+          aria-pressed={motionPaused}
+          onClick={() => setMotionPaused((paused) => !paused)}
+        >
+          <svg aria-hidden="true" viewBox="0 0 24 24">
+            {motionPaused ? (
+              <path d="M8 5.5v13l10-6.5z" />
+            ) : (
+              <>
+                <rect x="7" y="5.5" width="3.5" height="13" rx="1" />
+                <rect x="13.5" y="5.5" width="3.5" height="13" rx="1" />
+              </>
+            )}
+          </svg>
+        </button>
+
+        <article className="runtime-ink-region runtime-ink-region--scheduler">
+          <p className="runtime-ink-index">01 / Ocura smart scheduler</p>
+          <h2>
+            Direct every unit of compute across the{" "}
+            <NounTrigger shape="branch" sectionId={sectionId}>
+              execution frontier
+            </NounTrigger>
+            .
+          </h2>
+          <p className="runtime-ink-copy">
+            Ocura works at the model abstraction layer: core infrastructure for composing
+            execution, state, policy, and evidence. Teams can build custom systems and pipelines
+            at scale while the scheduler coordinates placement, budgets, reuse, preemption, and
+            continuation across training and inference branches.
+          </p>
+          <a className="runtime-ink-link" href="#ocura">
+            Explore Our V0
+          </a>
+        </article>
+
+        <section
+          className="runtime-ink-lifecycle"
+          id="market"
+          aria-labelledby="runtime-lifecycle-title"
+        >
+          <header className="runtime-ink-heading">
+            <div className="runtime-ink-heading-copy">
+              <p className="runtime-ink-index">02 / Training + inference</p>
+              <h2 id="runtime-lifecycle-title">
+                One runtime grammar across the model lifecycle.
+              </h2>
+            </div>
+            <LogoRaccoonTrigger sectionId={sectionId} />
+          </header>
+
+          <article className="runtime-ink-region runtime-ink-region--training">
+            <p className="runtime-ink-type">
+              <NounTrigger shape="network" sectionId={sectionId}>
+                Training
+              </NounTrigger>
+            </p>
+            <h3>Govern the search over viable paths.</h3>
+            <p>
+              Allocate workers and accelerator pools across checkpoint, data, and parameter
+              branches. Preserve lineage, concentrate compute on compatible paths with the
+              strongest evidence, and connect each run to its budget, artifacts, and continuation
+              decision.
+            </p>
+          </article>
+
+          <article className="runtime-ink-region runtime-ink-region--inference">
+            <p className="runtime-ink-type">
+              <NounTrigger shape="chip" sectionId={sectionId}>
+                Inference
+              </NounTrigger>
+            </p>
+            <h3>Coordinate a live execution frontier.</h3>
+            <p>
+              Coordinate model-serving pools, agent endpoints, tools, context, and latency budgets
+              through explicit policy. Escalation, preemption, and continuation remain traceable
+              across every transition.
+            </p>
+          </article>
+        </section>
       </div>
     </section>
   );
 }
 
-function OnVeilFlowSection() {
+function CritterHomeSection() {
   return (
-    <section className="onveil-flow" aria-label="OnVeil signal supervision concept">
+    <section className="home-critter" id="critter" aria-label="Critter acknowledgement">
+      <div className="shell">
+        <CritterGlassCard
+          title="A compact model for adaptation under uncertainty."
+          description="Ocuna recognizes the raccoon as a model for adaptive, probabilistic problem-solving across changing environments. The acknowledgement connects our systems work to learning, variation, and iterative strategy."
+        />
+      </div>
+    </section>
+  );
+}
+
+export function OnVeilFlowSection() {
+  const sectionRef = useRef(null);
+  const [isInView, setIsInView] = useState(false);
+  const [pageActive, setPageActive] = useState(
+    () => document.visibilityState === "visible" && document.hasFocus()
+  );
+
+  useEffect(() => {
+    const node = sectionRef.current;
+    if (!node) return undefined;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsInView(entry.isIntersecting),
+      { threshold: 0.12 }
+    );
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    function updatePageActivity() {
+      setPageActive(
+        document.visibilityState === "visible" && document.hasFocus()
+      );
+    }
+
+    document.addEventListener("visibilitychange", updatePageActivity);
+    window.addEventListener("focus", updatePageActivity);
+    window.addEventListener("blur", updatePageActivity);
+    return () => {
+      document.removeEventListener("visibilitychange", updatePageActivity);
+      window.removeEventListener("focus", updatePageActivity);
+      window.removeEventListener("blur", updatePageActivity);
+    };
+  }, []);
+
+  const animationActive = isInView && pageActive;
+
+  return (
+    <section
+      className={`onveil-flow${animationActive ? " is-animation-active" : ""}`}
+      aria-label="OnVeil eye supervision animation"
+      ref={sectionRef}
+    >
       <div className="shell">
         <div className="onveil-flow-frame">
           <svg
@@ -145,14 +264,21 @@ function OnVeilFlowSection() {
                 <stop offset="0" stopColor="#fff8f3" stopOpacity="0.96" />
                 <stop offset="1" stopColor="#ff2a3f" stopOpacity="0.28" />
               </linearGradient>
-              <clipPath id="ov-eye-clip" clipPathUnits="userSpaceOnUse">
+              <clipPath id="ov-stage-clip" clipPathUnits="userSpaceOnUse">
+                <rect x="0" y="0" width="1200" height="430" />
+              </clipPath>
+              <clipPath id="ov-eye-shape-clip" clipPathUnits="userSpaceOnUse">
+                <path d="M470 204 C532 106 700 106 784 204 C702 302 532 302 470 204 Z" />
+              </clipPath>
+              <clipPath id="ov-eye-aperture-clip" clipPathUnits="userSpaceOnUse">
                 <rect className="ov-eye-aperture" x="432" y="84" width="386" height="240" rx="34" />
               </clipPath>
             </defs>
 
-            <rect className="ov-field" x="0" y="0" width="1200" height="430" />
-            <path className="ov-background-line" d="M32 340 C160 320 260 346 374 318" />
-            <path className="ov-background-line ov-background-line-alt" d="M812 92 C928 52 1044 72 1164 40" />
+            <g className="ov-stage" clipPath="url(#ov-stage-clip)">
+              <rect className="ov-field" x="0" y="0" width="1200" height="430" />
+              <path className="ov-background-line" d="M32 340 C160 320 260 346 374 318" />
+              <path className="ov-background-line ov-background-line-alt" d="M812 92 C928 52 1044 72 1164 40" />
 
             <g className="ov-network">
               <path className="ov-network-line" d="M164 214 L110 106 L96 300" />
@@ -201,20 +327,22 @@ function OnVeilFlowSection() {
             <circle className="ov-packet ov-packet-browser-eye" cx="914" cy="322" r="7" />
             <circle className="ov-packet ov-packet-eye-chip" cx="516" cy="218" r="7" />
 
-            <g className="ov-eye">
-              <g className="ov-eye-interior" clipPath="url(#ov-eye-clip)">
-                <path className="ov-eye-fill" d="M470 204 C532 106 700 106 784 204 C702 302 532 302 470 204 Z" />
-                <g className="ov-eye-detail">
-                  <ellipse className="ov-iris" cx="625" cy="204" rx="34" ry="58" />
-                  <ellipse className="ov-pupil" cx="625" cy="204" rx="12" ry="43" />
-                  <path className="ov-eye-vein" d="M548 144 C596 178 594 232 548 266" />
-                  <path className="ov-eye-vein ov-eye-vein-alt" d="M704 138 C666 182 664 230 706 270" />
-                  <path className="ov-scan" d="M588 128 L664 278" />
+              <g className="ov-eye">
+                <g className="ov-eye-interior" clipPath="url(#ov-eye-shape-clip)">
+                  <g clipPath="url(#ov-eye-aperture-clip)">
+                    <path className="ov-eye-fill" d="M470 204 C532 106 700 106 784 204 C702 302 532 302 470 204 Z" />
+                    <g className="ov-eye-detail">
+                      <ellipse className="ov-iris" cx="625" cy="204" rx="34" ry="58" />
+                      <ellipse className="ov-pupil" cx="625" cy="204" rx="12" ry="43" />
+                      <path className="ov-eye-vein" d="M548 144 C596 178 594 232 548 266" />
+                      <path className="ov-eye-vein ov-eye-vein-alt" d="M704 138 C666 182 664 230 706 270" />
+                      <path className="ov-scan" d="M588 128 L664 278" />
+                    </g>
+                  </g>
                 </g>
+                <path className="ov-eye-top-lid" d="M470 204 C532 106 700 106 784 204" />
+                <path className="ov-eye-bottom-lid" d="M470 204 C532 302 702 302 784 204" />
               </g>
-              <path className="ov-eye-top-lid" d="M470 204 C532 106 700 106 784 204" />
-              <path className="ov-eye-bottom-lid" d="M470 204 C532 302 702 302 784 204" />
-            </g>
 
             <g className="ov-contract">
               <rect className="ov-contract-page" x="572" y="296" width="148" height="84" rx="8" />
@@ -224,36 +352,19 @@ function OnVeilFlowSection() {
               <circle className="ov-contract-seal" cx="694" cy="356" r="10" />
             </g>
 
-            <g className="ov-browser">
-              <rect className="ov-browser-shell" x="880" y="230" width="210" height="138" rx="12" />
-              <path className="ov-browser-bar" d="M880 266 H1090" />
-              <circle className="ov-browser-dot ov-browser-dot-red" cx="906" cy="248" r="6" />
-              <circle className="ov-browser-dot" cx="928" cy="248" r="6" />
-              <circle className="ov-browser-dot" cx="950" cy="248" r="6" />
-              <path className="ov-browser-glyph" d="M914 298 H1048 M914 324 H1008 M914 344 H1062" />
-              <path className="ov-browser-response" d="M1028 292 L1058 312 L1028 332" />
+              <g className="ov-browser">
+                <rect className="ov-browser-shell" x="880" y="230" width="210" height="138" rx="12" />
+                <path className="ov-browser-bar" d="M880 266 H1090" />
+                <circle className="ov-browser-dot ov-browser-dot-red" cx="906" cy="248" r="6" />
+                <circle className="ov-browser-dot" cx="928" cy="248" r="6" />
+                <circle className="ov-browser-dot" cx="950" cy="248" r="6" />
+                <path className="ov-browser-glyph" d="M914 298 H1048 M914 324 H1008 M914 344 H1062" />
+                <path className="ov-browser-response" d="M1028 292 L1058 312 L1028 332" />
+              </g>
             </g>
           </svg>
         </div>
       </div>
-    </section>
-  );
-}
-
-function CritterCallout() {
-  return (
-    <section className="critter-cta" id="critter">
-      <a className="shell critter-link" href={pagePath("critter-acknowledgement/")}>
-        <span>
-          <span className="eyebrow">Critter Acknowledgement</span>
-          <h2>A note on stochastic behavior, learning, and adaptation.</h2>
-          <p>
-            Ocuna recognizes the raccoon as a compact model for adaptive, probabilistic
-            problem-solving in changing environments.
-          </p>
-        </span>
-        <span className="critter-action">Read acknowledgement</span>
-      </a>
     </section>
   );
 }

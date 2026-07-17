@@ -2,7 +2,6 @@ import { useMemo, useState } from "react";
 import {
   branchNodes,
   chokepointNode,
-  graphNote,
   graphOutputs,
   graphScripts,
   normalNodes,
@@ -68,9 +67,18 @@ export default function OcuraSimulator() {
     <section className="ocura-sim" id="ocura">
       <div className="shell ocura-graph-layout">
         <header className="graph-intro">
-          <p className="eyebrow">Ocura graph concept</p>
-          <h2>Insert a chokepoint. Split the script path.</h2>
-          <p>{graphNote}</p>
+          <div>
+            <p className="eyebrow">Our V0</p>
+            <h2>A working runtime became Ocura's execution grammar.</h2>
+          </div>
+          <div className="graph-intro-copy">
+            <p>
+              Ocura began as a resident daemon and sandbox for model training and evaluation. One
+              explicit phase contract wrapped commands, environments, timeouts, checks,
+              telemetry, and artifacts. That working core grew into today's pathway, chokepoint,
+              and branch-aware runtime design.
+            </p>
+          </div>
         </header>
 
         <div className="graph-canvas" aria-label="Interactive Python script graph">
@@ -161,6 +169,22 @@ export default function OcuraSimulator() {
             </div>
           </article>
         </div>
+
+        <a
+          className="v0-proof"
+          href="https://blakemasters.github.io/aims-competition/"
+          target="_blank"
+          rel="noreferrer"
+        >
+          <span>
+            <small>Stanford competition winner</small>
+            <strong>
+              V0 proved the direction on a competition stage. Ocura is turning that foundation
+              into core infrastructure for training and inference.
+            </strong>
+          </span>
+          <span className="v0-proof-action">Explore the winning project ↗</span>
+        </a>
       </div>
     </section>
   );

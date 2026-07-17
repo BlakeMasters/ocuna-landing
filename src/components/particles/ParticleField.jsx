@@ -1,13 +1,10 @@
-import { useFrame } from "@react-three/fiber";
+import { useFrame, useThree } from "@react-three/fiber";
 import { useEffect, useMemo, useRef } from "react";
 import * as THREE from "three";
 import { sampleShapePoints } from "./shapes.js";
 
 const MORPH_IN_DURATION = 1.5;
 const MORPH_OUT_DURATION = 2.6;
-const SHAPE_OFFSET = [2.1, 0.02, 0];
-/** Match raccoon anchor; puppet is taller so it is scaled down in shapes.js. */
-const PUPPET_SHAPE_OFFSET = SHAPE_OFFSET;
 const ACCENT_RATIO = 0.08;
 
 function smoothstep(t) {
@@ -40,13 +37,12 @@ function createIdlePositions(count, spread = 4.5) {
   return { positions, velocities };
 }
 
-function offsetShapePoints(shapePoints, shapeKey) {
-  const offset = shapeKey === "puppet" ? PUPPET_SHAPE_OFFSET : SHAPE_OFFSET;
+function offsetShapePoints(shapePoints, shapeOffsetX) {
   const out = new Float32Array(shapePoints.length);
   for (let i = 0; i < shapePoints.length; i += 3) {
-    out[i] = shapePoints[i] + offset[0];
-    out[i + 1] = shapePoints[i + 1] + offset[1];
-    out[i + 2] = shapePoints[i + 2] + offset[2];
+    out[i] = shapePoints[i] + shapeOffsetX;
+    out[i + 1] = shapePoints[i + 1] + 0.02;
+    out[i + 2] = shapePoints[i + 2];
   }
   return out;
 }
@@ -72,12 +68,14 @@ export default function ParticleField({
   sectionId,
   reducedMotion,
   isVisible,
+  shapeOffsetX,
 }) {
   const fieldRef = useRef(null);
   const morphRef = useRef({ progress: 0, shapeKey: null, dissolving: false });
   const mouseRef = useRef({ x: 0, y: 0 });
   const shapeTargets = useRef(null);
   const pendingSnapshot = useRef(false);
+  const invalidate = useThree((state) => state.invalidate);
 
   const { positions: idlePositions, velocities } = useMemo(
     () => createIdlePositions(particleCount),
@@ -122,7 +120,13 @@ export default function ParticleField({
     activeShape && activeShape.sectionId === sectionId ? activeShape.shapeKey : null;
 
   useEffect(() => {
-    if (activeKey && activeKey !== morphRef.current.shapeKey) {
+    const targetSizeChanged =
+      shapeTargets.current?.length !== particleCount * 3;
+
+    if (
+      activeKey &&
+      (activeKey !== morphRef.current.shapeKey || targetSizeChanged)
+    ) {
       pendingSnapshot.current = true;
       morphRef.current.shapeKey = activeKey;
       morphRef.current.progress = 0;
@@ -130,7 +134,7 @@ export default function ParticleField({
 
       const rawPoints = offsetShapePoints(
         sampleShapePoints(activeKey, particleCount),
-        activeKey
+        shapeOffsetX
       );
       shapeTargets.current = mapShapeTargets(rawPoints, particleCount);
     } else if (!activeKey && morphRef.current.shapeKey) {
@@ -139,7 +143,24 @@ export default function ParticleField({
       morphRef.current.shapeKey = null;
       morphRef.current.progress = 1;
     }
-  }, [activeKey, particleCount]);
+  }, [activeKey, particleCount, shapeOffsetX]);
+
+  useEffect(() => {
+    if (!reducedMotion) {
+      return;
+    }
+
+    morphRef.current = { progress: 0, shapeKey: null, dissolving: false };
+    shapeTargets.current = null;
+    pendingSnapshot.current = false;
+    fieldPositions.set(idlePositions);
+
+    if (fieldRef.current) {
+      const positionAttribute = fieldRef.current.geometry.attributes.position;
+      positionAttribute.needsUpdate = true;
+    }
+    invalidate();
+  }, [fieldPositions, idlePositions, invalidate, reducedMotion]);
 
   useEffect(() => {
     function onPointerMove(event) {

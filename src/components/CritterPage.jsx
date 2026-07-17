@@ -1,25 +1,45 @@
 import { useEffect, useState } from "react";
 import { asset, pagePath } from "../assets.js";
 import { acknowledgementCopy } from "../content.js";
+import "./CritterPage.css";
 
 export default function CritterPage() {
   return (
-    <main id="top">
-      <section
-        className="acknowledgement"
-        style={{ "--ack-bg": `url(${asset("images/ocuna_background4c.png")})` }}
-      >
-        <div className="shell acknowledgement-shell">
-          <div className="acknowledgement-layout">
-            <div>
-              <p className="eyebrow">Critter Acknowledgement</p>
-              <h1>Structured stochasticity in motion.</h1>
-              <p className="acknowledgement-copy">
-                <AcknowledgementText />
-              </p>
-              <a className="back-link inline-back" href={pagePath("")}>Back to site</a>
-            </div>
+    <main className="critter-page" id="top">
+      <section className="critter-hero" aria-labelledby="critter-title">
+        <div className="critter-hero__blooms" aria-hidden="true">
+          <span />
+          <span />
+          <span />
+        </div>
 
+        <div className="shell critter-hero__layout">
+          <article className="critter-hero__glass">
+            <h1 id="critter-title">
+              <span>Critter</span>
+              <span>acknowledgement</span>
+            </h1>
+            <p className="critter-hero__copy">
+              <AcknowledgementText />
+            </p>
+            <a className="critter-hero__back" href={pagePath("")}>
+              Back to site
+            </a>
+          </article>
+
+          <div className="critter-hero__art">
+            <figure className="critter-cloud">
+              <div className="critter-cloud__mask">
+                <img
+                  alt="Watercolor raccoons exploring an old car beside a garden shed"
+                  decoding="async"
+                  fetchPriority="high"
+                  height="1300"
+                  src={asset("images/ocuna_background4c_cloud_masked.webp")}
+                  width="1600"
+                />
+              </div>
+            </figure>
             <WalkingSprite />
           </div>
         </div>
@@ -62,10 +82,10 @@ function WalkingSprite() {
   const y = (row / 2) * 100;
 
   return (
-    <div className="sprite-panel" aria-hidden="true">
-      <div className="sprite-viewport">
+    <div className="critter-sprite" aria-hidden="true">
+      <div className="critter-sprite__viewport">
         <div
-          className="sprite walking"
+          className="critter-sprite__sheet"
           style={{
             backgroundImage: `url(${asset("sprites/walking/raccoon_walking_spritesheet_clean_compact.png")})`,
             backgroundPosition: `${x}% ${y}%`,

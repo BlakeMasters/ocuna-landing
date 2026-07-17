@@ -41,28 +41,33 @@ function sampleEdges(geometry, targetCount, scale = 1) {
   geometry.dispose();
 
   const totalLen = segments.reduce((sum, s) => sum + s.len, 0);
-  const points = [];
-  let remaining = targetCount;
-
-  for (let i = 0; i < segments.length; i++) {
-    const seg = segments[i];
-    const count =
-      i === segments.length - 1
-        ? remaining
-        : Math.max(1, Math.round((seg.len / totalLen) * targetCount));
-    remaining -= count;
-
-    for (let j = 0; j < count; j++) {
-      const t = count === 1 ? 0.5 : j / (count - 1);
-      points.push(
-        seg.ax + (seg.bx - seg.ax) * t,
-        seg.ay + (seg.by - seg.ay) * t,
-        seg.az + (seg.bz - seg.az) * t
-      );
-    }
+  const count = Math.max(0, Math.floor(targetCount));
+  const points = new Float32Array(count * 3);
+  if (count === 0 || segments.length === 0 || totalLen <= 0) {
+    return points;
   }
 
-  return new Float32Array(points);
+  let segmentIndex = 0;
+  let segmentStart = 0;
+  for (let i = 0; i < count; i++) {
+    const distance = ((i + 0.5) / count) * totalLen;
+    while (
+      segmentIndex < segments.length - 1 &&
+      distance > segmentStart + segments[segmentIndex].len
+    ) {
+      segmentStart += segments[segmentIndex].len;
+      segmentIndex += 1;
+    }
+
+    const segment = segments[segmentIndex];
+    const t = Math.min(1, Math.max(0, (distance - segmentStart) / segment.len));
+    const i3 = i * 3;
+    points[i3] = segment.ax + (segment.bx - segment.ax) * t;
+    points[i3 + 1] = segment.ay + (segment.by - segment.ay) * t;
+    points[i3 + 2] = segment.az + (segment.bz - segment.az) * t;
+  }
+
+  return points;
 }
 
 function samplePolyline(points3d, targetCount, closed = false) {
@@ -1305,28 +1310,40 @@ function sampleMultiPolyline(paths, targetCount, closedFlags = []) {
   });
 
   const totalLen = segments.reduce((sum, s) => sum + s.len, 0);
-  const out = [];
-  let remaining = targetCount;
-
-  for (let i = 0; i < segments.length; i++) {
-    const seg = segments[i];
-    const count =
-      i === segments.length - 1
-        ? remaining
-        : Math.max(1, Math.round((seg.len / totalLen) * targetCount));
-    remaining -= count;
-
-    for (let j = 0; j < count; j++) {
-      const t = count === 1 ? 0.5 : j / (count - 1);
-      out.push(
-        seg.a[0] + (seg.b[0] - seg.a[0]) * t,
-        seg.a[1] + (seg.b[1] - seg.a[1]) * t,
-        seg.a[2] + (seg.b[2] - seg.a[2]) * t
-      );
-    }
+  const count = Math.max(0, Math.floor(targetCount));
+  const out = new Float32Array(count * 3);
+  if (count === 0 || segments.length === 0 || totalLen <= 0) {
+    return out;
   }
 
-  return new Float32Array(out);
+  // Sample the entire trace by global arc length. The former implementation
+  // guaranteed one point per segment, which overflowed every current raccoon
+  // particle budget and caused mapShapeTargets() to truncate the later paths.
+  // Global sampling keeps the output exact-N while still visiting the complete
+  // outline, including the face, legs, and striped tail at compact densities.
+  let segmentIndex = 0;
+  let segmentStart = 0;
+
+  for (let i = 0; i < count; i++) {
+    const distance = ((i + 0.5) / count) * totalLen;
+
+    while (
+      segmentIndex < segments.length - 1 &&
+      distance > segmentStart + segments[segmentIndex].len
+    ) {
+      segmentStart += segments[segmentIndex].len;
+      segmentIndex += 1;
+    }
+
+    const segment = segments[segmentIndex];
+    const t = Math.min(1, Math.max(0, (distance - segmentStart) / segment.len));
+    const i3 = i * 3;
+    out[i3] = segment.a[0] + (segment.b[0] - segment.a[0]) * t;
+    out[i3 + 1] = segment.a[1] + (segment.b[1] - segment.a[1]) * t;
+    out[i3 + 2] = segment.a[2] + (segment.b[2] - segment.a[2]) * t;
+  }
+
+  return out;
 }
 
 function buildHadamardBlochPoints(count) {

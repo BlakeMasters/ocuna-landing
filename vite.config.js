@@ -1,7 +1,15 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
-import { cp, readFile } from "node:fs/promises";
+import { copyFile, mkdir, readFile } from "node:fs/promises";
 import path from "node:path";
+
+const productionImages = [
+  "OnVeil.webp",
+  "ocuna_background4c_cloud_masked.webp",
+  "ocuna_logo.png",
+  "ocuna_logo.webp",
+  "ocuna_title_logo_nobackground.webp",
+];
 
 function imagesDirectory() {
   let imagesDir;
@@ -52,7 +60,12 @@ function imagesDirectory() {
       });
     },
     async closeBundle() {
-      await cp(imagesDir, distImagesDir, { recursive: true });
+      await mkdir(distImagesDir, { recursive: true });
+      await Promise.all(
+        productionImages.map((fileName) =>
+          copyFile(path.join(imagesDir, fileName), path.join(distImagesDir, fileName)),
+        ),
+      );
     },
   };
 }

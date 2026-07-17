@@ -1,3 +1,4 @@
+import { useCallback, useEffect } from "react";
 import { useParticleContext } from "./particles/ParticleContext.jsx";
 
 function isShapeTrigger(element) {
@@ -10,37 +11,64 @@ export default function NounTrigger({
   className = "",
   children,
 }) {
-  const { setActiveShape } = useParticleContext();
+  const { activeShape, setActiveShape } = useParticleContext();
+  const ownsActiveShape =
+    activeShape?.shapeKey === shape && activeShape?.sectionId === sectionId;
 
   function onEnter() {
     setActiveShape({ shapeKey: shape, sectionId });
   }
 
+  const clearIfOwned = useCallback(() => {
+    setActiveShape((current) =>
+      current?.shapeKey === shape && current?.sectionId === sectionId
+        ? null
+        : current
+    );
+  }, [sectionId, setActiveShape, shape]);
+
   function onLeave(event) {
     if (isShapeTrigger(event.relatedTarget)) {
       return;
     }
-    setActiveShape(null);
+    clearIfOwned();
   }
 
   function onBlur(event) {
     if (isShapeTrigger(event.relatedTarget)) {
       return;
     }
-    setActiveShape(null);
+    clearIfOwned();
   }
 
+  function onKeyDown(event) {
+    if (event.key === "Escape") {
+      clearIfOwned();
+      event.currentTarget.blur();
+    }
+  }
+
+  useEffect(
+    () => () => {
+      clearIfOwned();
+    },
+    [clearIfOwned]
+  );
+
   return (
-    <span
+    <button
+      type="button"
       className={`noun-trigger ${className}`.trim()}
       data-shape={shape}
-      onMouseEnter={onEnter}
-      onMouseLeave={onLeave}
+      aria-pressed={ownsActiveShape}
+      onPointerEnter={onEnter}
+      onPointerLeave={onLeave}
+      onPointerCancel={clearIfOwned}
       onFocus={onEnter}
       onBlur={onBlur}
-      tabIndex={0}
+      onKeyDown={onKeyDown}
     >
       {children}
-    </span>
+    </button>
   );
 }

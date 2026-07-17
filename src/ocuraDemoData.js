@@ -42,7 +42,7 @@ export const branchNodes = [
     kind: "branch",
     title: "Alternate function",
     detail:
-      "`review_path()` represents a separate path that can be explored from the chokepoint without hiding the original `hello_world()` call.",
+      "`review_path()` opens a separate exploratory path at the chokepoint while the original `hello_world()` call remains visible.",
     code: "def review_path():\n    print(\"review branch\")",
   },
   {
@@ -71,4 +71,4 @@ export const graphOutputs = {
 };
 
 export const graphNote =
-  "Interactive concept only: this page runs in the browser and does not execute Python.";
+  "The panel demonstrates the V0 package grammar through a compact Python workflow.";

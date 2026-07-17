@@ -53,7 +53,8 @@ site-public/
   sprites/
 images/
   ocuna_logo.png
-  ocuna_title_logo.png
-  OnVeil.png
-  ocuna_background*.png
+  ocuna_logo.webp
+  ocuna_title_logo_nobackground.webp
+  OnVeil.webp
+  ocuna_background4c_cloud_masked.webp
 ```

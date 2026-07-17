@@ -23,5 +23,9 @@ export function routeFromLocation(location = window.location) {
     return "/critter-acknowledgement";
   }
 
+  if (path === "/onveil.html") {
+    return "/onveil";
+  }
+
   return path;
 }

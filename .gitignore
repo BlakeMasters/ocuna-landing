@@ -38,3 +38,6 @@ canvases/
 # Test runners
 playwright-report/
 test-results/
+
+# Local visual research and iteration artifacts
+design/

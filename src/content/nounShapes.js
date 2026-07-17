@@ -1,9 +1,9 @@
 export const universeSections = {
-  hero: "hero",
-  market: "market",
+  scheduler: "scheduler",
+  lifecycle: "lifecycle",
 };
 
-/** Hero "control" uses puppet; market "finance" uses flat dollar bill. */
+/** Reusable particle-object aliases retained for product copy experiments. */
 export const nounShapeMap = {
   graph: "graph",
   deployments: "deployment",
