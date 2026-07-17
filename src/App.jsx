@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { asset, pagePath, routeFromLocation } from "./assets.js";
 import { navItems, productItems } from "./content.js";
 import LandingPage from "./components/LandingPage.jsx";
@@ -161,6 +161,20 @@ function SiteHeader({ route, onNavigate }) {
 
 function ProductMenu({ isLandingPage, onNavigate, route }) {
   const [isOpen, setIsOpen] = useState(false);
+  const menuRef = useRef(null);
+
+  useEffect(() => {
+    if (!isOpen) return undefined;
+
+    function closeFromOutsidePointer(event) {
+      if (!menuRef.current?.contains(event.target)) {
+        setIsOpen(false);
+      }
+    }
+
+    document.addEventListener("pointerdown", closeFromOutsidePointer);
+    return () => document.removeEventListener("pointerdown", closeFromOutsidePointer);
+  }, [isOpen]);
 
   function closeFromBlur(event) {
     if (!event.currentTarget.contains(event.relatedTarget)) {
@@ -175,15 +189,29 @@ function ProductMenu({ isLandingPage, onNavigate, route }) {
     }
   }
 
+  function openFromMouse(event) {
+    if (event.pointerType === "mouse") {
+      setIsOpen(true);
+    }
+  }
+
+  function closeFromMouse(event) {
+    if (event.pointerType === "mouse") {
+      setIsOpen(false);
+    }
+  }
+
   return (
     <div
       className={`nav-products${isOpen ? " is-open" : ""}`}
       onBlur={closeFromBlur}
       onKeyDown={handleKeyDown}
-      onPointerEnter={() => setIsOpen(true)}
-      onPointerLeave={() => setIsOpen(false)}
+      onPointerEnter={openFromMouse}
+      onPointerLeave={closeFromMouse}
+      ref={menuRef}
     >
       <button
+        aria-controls="products-menu"
         aria-expanded={isOpen}
         aria-haspopup="true"
         className="nav-products-trigger"
@@ -195,7 +223,7 @@ function ProductMenu({ isLandingPage, onNavigate, route }) {
           <path d="M1 1.5 6 6.5l5-5" />
         </svg>
       </button>
-      <div className="nav-products-menu">
+      <div className="nav-products-menu" id="products-menu">
         {productItems.map((item) => {
           const href = item.href.startsWith("#") && !isLandingPage
             ? `${pagePath("")}${item.href}`
