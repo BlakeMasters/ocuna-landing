@@ -64,12 +64,11 @@ function ShipHero() {
 
       <div className="shell ship-hero-overlay">
         <article className="ship-hero-card">
-          <p className="ship-hero-eyebrow">Ocuna / systems company</p>
           <h1 id="home-title">Infrastructure for uncertain computation.</h1>
           <p>
-            Ocuna builds systems for workloads that branch, adapt, and generate evidence as they
-            run. Our objective is a durable execution layer for training, inference, simulation,
-            and machine-operated services—policy-bounded from first action to final outcome.
+            Ocuna builds the execution layer for AI workloads that branch as they run. One runtime
+            governs training and inference from first action to final outcome, and keeps every
+            path it took on the record.
           </p>
         </article>
 
@@ -89,6 +88,85 @@ function ShipHero() {
   );
 }
 
+/**
+ * Decorative backing for the runtime cluster. Each lobe is laid out on the same
+ * subgrid cell as the panel it sits behind, then inflated past its edges; the
+ * goo filters blur the group and re-threshold its alpha, which fuses touching
+ * lobes into one organic mass. Nothing here contains text — the copy renders in
+ * unfiltered siblings above it so it stays crisp.
+ */
+function RuntimeMass() {
+  return (
+    <div className="runtime-ink-mass" aria-hidden="true">
+      <svg className="runtime-ink-goo-defs" width="0" height="0" focusable="false">
+        <defs>
+          <filter
+            id="runtime-ink-goo"
+            x="-20%"
+            y="-14%"
+            width="140%"
+            height="128%"
+            colorInterpolationFilters="sRGB"
+          >
+            <feGaussianBlur in="SourceGraphic" stdDeviation="20" result="soften" />
+            <feColorMatrix
+              in="soften"
+              type="matrix"
+              values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 26 -12"
+              result="mass"
+            />
+            <feMorphology in="mass" operator="erode" radius="2" result="inner" />
+            <feComposite in="mass" in2="inner" operator="out" result="edge" />
+            <feFlood floodColor="#a8e6ef" floodOpacity="0.5" result="edgeTint" />
+            <feComposite in="edgeTint" in2="edge" operator="in" result="rim" />
+            <feMerge>
+              <feMergeNode in="mass" />
+              <feMergeNode in="rim" />
+            </feMerge>
+          </filter>
+          <filter
+            id="runtime-ink-goo-halo"
+            x="-24%"
+            y="-18%"
+            width="148%"
+            height="136%"
+            colorInterpolationFilters="sRGB"
+          >
+            <feGaussianBlur in="SourceGraphic" stdDeviation="30" result="soften" />
+            <feColorMatrix
+              in="soften"
+              type="matrix"
+              values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -9"
+            />
+          </filter>
+        </defs>
+      </svg>
+
+      <div className="runtime-ink-mass-layer runtime-ink-mass-layer--halo">
+        <span className="runtime-ink-lobe runtime-ink-lobe--scheduler" />
+        <span className="runtime-ink-lobe runtime-ink-lobe--heading" />
+        <span className="runtime-ink-lobe runtime-ink-lobe--training" />
+        <span className="runtime-ink-lobe runtime-ink-lobe--inference" />
+        <span className="runtime-ink-lobe runtime-ink-lobe--tail" />
+        <span className="runtime-ink-bulge" />
+      </div>
+
+      <div className="runtime-ink-mass-layer runtime-ink-mass-layer--core">
+        <span className="runtime-ink-lobe runtime-ink-lobe--scheduler" />
+        <span className="runtime-ink-lobe runtime-ink-lobe--heading" />
+        <span className="runtime-ink-lobe runtime-ink-lobe--training" />
+        <span className="runtime-ink-lobe runtime-ink-lobe--inference" />
+        <span className="runtime-ink-lobe runtime-ink-lobe--tail" />
+        <span className="runtime-ink-bulge" />
+      </div>
+
+      <span className="runtime-ink-drop runtime-ink-drop--a" />
+      <span className="runtime-ink-drop runtime-ink-drop--b" />
+      <span className="runtime-ink-drop runtime-ink-drop--c" />
+    </div>
+  );
+}
+
 function RuntimeSection() {
   const sectionId = universeSections.scheduler;
   const [motionPaused, setMotionPaused] = useState(false);
@@ -99,6 +177,7 @@ function RuntimeSection() {
         <ParticleSection sectionId={sectionId} paused={motionPaused} />
       </Suspense>
       <div className="shell runtime-ink-composition">
+        <RuntimeMass />
         <button
           className="runtime-ink-pause"
           type="button"
@@ -119,22 +198,20 @@ function RuntimeSection() {
         </button>
 
         <article className="runtime-ink-region runtime-ink-region--scheduler">
-          <p className="runtime-ink-index">01 / Ocura smart scheduler</p>
           <h2>
-            Direct every unit of compute across the{" "}
+            Ocura directs every unit of compute across the{" "}
             <NounTrigger shape="branch" sectionId={sectionId}>
               execution frontier
             </NounTrigger>
             .
           </h2>
           <p className="runtime-ink-copy">
-            Ocura works at the model abstraction layer: core infrastructure for composing
-            execution, state, policy, and evidence. Teams can build custom systems and pipelines
-            at scale while the scheduler coordinates placement, budgets, reuse, preemption, and
-            continuation across training and inference branches.
+            The scheduler places work, holds budgets, and reuses results across training and
+            inference branches. Teams build their own pipelines on top; Ocura decides what runs,
+            what waits, and what continues.
           </p>
           <a className="runtime-ink-link" href="#ocura">
-            Explore Our V0
+            Run the V0 simulator
           </a>
         </article>
 
@@ -145,40 +222,38 @@ function RuntimeSection() {
         >
           <header className="runtime-ink-heading">
             <div className="runtime-ink-heading-copy">
-              <p className="runtime-ink-index">02 / Training + inference</p>
               <h2 id="runtime-lifecycle-title">
-                One runtime grammar across the model lifecycle.
+                One runtime across the whole model lifecycle.
               </h2>
             </div>
             <LogoRaccoonTrigger sectionId={sectionId} />
           </header>
 
           <article className="runtime-ink-region runtime-ink-region--training">
-            <p className="runtime-ink-type">
+            <h3>
               <NounTrigger shape="network" sectionId={sectionId}>
                 Training
-              </NounTrigger>
-            </p>
-            <h3>Govern the search over viable paths.</h3>
+              </NounTrigger>{" "}
+              — govern the search over viable paths.
+            </h3>
             <p>
-              Allocate workers and accelerator pools across checkpoint, data, and parameter
-              branches. Preserve lineage, concentrate compute on compatible paths with the
-              strongest evidence, and connect each run to its budget, artifacts, and continuation
-              decision.
+              Spread workers across checkpoint, data, and parameter branches, then concentrate
+              compute on the paths with the strongest evidence. Every run stays tied to its budget
+              and its continuation decision.
             </p>
           </article>
 
           <article className="runtime-ink-region runtime-ink-region--inference">
-            <p className="runtime-ink-type">
+            <h3>
               <NounTrigger shape="chip" sectionId={sectionId}>
                 Inference
-              </NounTrigger>
-            </p>
-            <h3>Coordinate a live execution frontier.</h3>
+              </NounTrigger>{" "}
+              — coordinate a live execution frontier.
+            </h3>
             <p>
-              Coordinate model-serving pools, agent endpoints, tools, context, and latency budgets
-              through explicit policy. Escalation, preemption, and continuation remain traceable
-              across every transition.
+              Route serving pools, agent endpoints, and tools under explicit policy and latency
+              budgets. Escalation, preemption, and continuation stay traceable across every
+              transition.
             </p>
           </article>
         </section>

@@ -6,6 +6,7 @@ import {
   graphScripts,
   normalNodes,
 } from "../ocuraDemoData.js";
+import ThinkingOrb from "./ThinkingOrb.jsx";
 
 export default function OcuraSimulator() {
   const [hasChokepoint, setHasChokepoint] = useState(false);
@@ -68,15 +69,13 @@ export default function OcuraSimulator() {
       <div className="shell ocura-graph-layout">
         <header className="graph-intro">
           <div>
-            <p className="eyebrow">Our V0</p>
-            <h2>A working runtime became Ocura's execution grammar.</h2>
+            <h2>V0 is a working runtime. Run it right here.</h2>
           </div>
           <div className="graph-intro-copy">
             <p>
-              Ocura began as a resident daemon and sandbox for model training and evaluation. One
-              explicit phase contract wrapped commands, environments, timeouts, checks,
-              telemetry, and artifacts. That working core grew into today's pathway, chokepoint,
-              and branch-aware runtime design.
+              Ocura started as a resident daemon that wrapped every run in one explicit phase
+              contract. That core grew into a pathway, chokepoint, and branch-aware runtime.
+              Insert a chokepoint, split the path, and watch each run resolve.
             </p>
           </div>
         </header>
@@ -162,10 +161,13 @@ export default function OcuraSimulator() {
             <h3>{hasSplit ? "Chokepoint split" : hasChokepoint ? "Chokepoint inserted" : "Normal path"}</h3>
             <pre><code>{script}</code></pre>
             <div className="terminal-output">
-              <span>$ run graph</span>
-              {graphOutputs[runMode].map((line) => (
-                <strong key={line}>{line}</strong>
-              ))}
+              <div className="terminal-output__stream">
+                <span>$ run graph</span>
+                {graphOutputs[runMode].map((line) => (
+                  <strong key={line}>{line}</strong>
+                ))}
+              </div>
+              <RunOrb runMode={runMode} />
             </div>
           </article>
         </div>
@@ -179,14 +181,32 @@ export default function OcuraSimulator() {
           <span>
             <small>Stanford competition winner</small>
             <strong>
-              V0 proved the direction on a competition stage. Ocura is turning that foundation
-              into core infrastructure for training and inference.
+              V0 won a Stanford competition. Ocura is turning it into runtime infrastructure for
+              training and inference.
             </strong>
           </span>
           <span className="v0-proof-action">Explore the winning project ↗</span>
         </a>
       </div>
     </section>
+  );
+}
+
+function RunOrb({ runMode }) {
+  if (runMode === "idle") return null;
+  const isSplit = runMode === "split";
+  return (
+    <div className={`run-orb ${isSplit ? "run-orb--split" : "run-orb--normal"}`}>
+      <ThinkingOrb
+        state={isSplit ? "connecting" : "breathing"}
+        size={104}
+        aria-label={
+          isSplit
+            ? "Connecting the branched path"
+            : "Thinking through one path"
+        }
+      />
+    </div>
   );
 }
 

@@ -46,11 +46,13 @@ export default function App() {
   useEffect(() => {
     document.body.classList.toggle("onveil-route", isOnVeilPage);
     document.body.classList.toggle("critter-route", isCritterPage);
+    document.body.classList.toggle("landing-route", isLandingPage);
     return () => {
       document.body.classList.remove("onveil-route");
       document.body.classList.remove("critter-route");
+      document.body.classList.remove("landing-route");
     };
-  }, [isCritterPage, isOnVeilPage]);
+  }, [isCritterPage, isOnVeilPage, isLandingPage]);
 
   useEffect(() => {
     if (!window.location.hash) return;

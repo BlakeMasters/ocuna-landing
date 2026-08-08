@@ -69,6 +69,53 @@ body.onveil-route::before {
   mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.92), transparent 58%);
 }
 
+body.landing-route {
+  color: #f3f1ef;
+  background: #04060c;
+}
+
+body.landing-route::before {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), transparent 60%);
+}
+
+body.landing-route .site-header {
+  color: rgba(248, 246, 243, 0.92);
+}
+
+body.landing-route .brand img {
+  filter: invert(1) grayscale(1) brightness(1.8);
+}
+
+body.landing-route .nav {
+  color: rgba(248, 246, 243, 0.64);
+}
+
+body.landing-route .nav a:hover,
+body.landing-route .nav button:hover {
+  color: #fff;
+}
+
+body.landing-route .site-footer {
+  color: rgba(244, 241, 238, 0.56);
+}
+
+body.landing-route .footer-logo-link {
+  border-color: rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+body.landing-route .footer-logo-link img {
+  filter: invert(1) grayscale(1);
+}
+
+body.landing-route .site-footer a:hover {
+  color: #fff;
+}
+
 a {
   color: inherit;
   text-decoration: none;
@@ -782,13 +829,21 @@ section {
 }
 
 .ocura-sim {
+  --sim-fill: linear-gradient(150deg, rgba(11, 12, 16, 0.82), rgba(3, 4, 7, 0.8));
+  --sim-border: rgba(255, 255, 255, 0.12);
+  --sim-ink: #eef0f4;
+  --sim-muted: rgba(232, 234, 240, 0.74);
+  --sim-teal: #3cb8bc;
+  --sim-signal: #e07a68;
   position: relative;
   overflow: hidden;
-  border-bottom: 1px solid var(--line);
+  color: var(--sim-ink);
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   background:
-    linear-gradient(145deg, rgba(8, 127, 131, 0.12), transparent 38%),
-    linear-gradient(35deg, rgba(216, 93, 70, 0.12), transparent 52%),
-    #f8f7f2;
+    radial-gradient(circle at 80% 18%, rgba(60, 184, 188, 0.07), transparent 26rem),
+    radial-gradient(circle at 18% 92%, rgba(224, 122, 104, 0.05), transparent 24rem),
+    #04060c;
 }
 
 .ocura-graph-layout {
@@ -804,7 +859,7 @@ section {
 }
 
 .graph-intro p:last-child {
-  color: var(--muted);
+  color: var(--sim-muted);
   font-size: 1.02rem;
   line-height: 1.6;
 }
@@ -813,10 +868,14 @@ section {
 .node-detail,
 .execution-panel {
   min-width: 0;
-  border: 1px solid rgba(21, 21, 21, 0.13);
-  border-radius: 8px;
-  background: rgba(255, 250, 246, 0.9);
-  box-shadow: var(--shadow);
+  border: 1px solid var(--sim-border);
+  border-radius: 6px;
+  background: var(--sim-fill);
+  box-shadow:
+    0 24px 60px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(14px) saturate(0.9);
+  -webkit-backdrop-filter: blur(14px) saturate(0.9);
 }
 
 .graph-canvas {
@@ -846,10 +905,10 @@ section {
   gap: 7px;
   min-width: 158px;
   min-height: 92px;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.72);
-  color: var(--ink);
+  border: 1px solid var(--sim-border);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--sim-ink);
   padding: 12px;
   text-align: left;
   font: inherit;
@@ -858,7 +917,7 @@ section {
 }
 
 .graph-node span {
-  color: var(--muted);
+  color: var(--sim-muted);
   font-family: var(--mono);
   font-size: 0.76rem;
 }
@@ -868,41 +927,41 @@ section {
 }
 
 .graph-node.active {
-  border-color: var(--ink);
-  background: var(--ink);
-  color: var(--surface);
+  border-color: rgba(255, 255, 255, 0.9);
+  background: #f1f2f4;
+  color: #08090c;
 }
 
 .graph-node.active span {
-  color: rgba(255, 244, 238, 0.72);
+  color: rgba(8, 9, 12, 0.66);
 }
 
 .graph-node.record {
-  border-color: rgba(8, 127, 131, 0.5);
-  background: rgba(8, 127, 131, 0.08);
+  border-color: rgba(60, 184, 188, 0.5);
+  background: rgba(60, 184, 188, 0.12);
 }
 
 .graph-node.record.active {
-  background: #087f83;
-  color: #fffaf6;
+  background: var(--sim-teal);
+  color: #04060c;
 }
 
 .graph-node.branch,
 .graph-node.branch-output {
-  border-color: rgba(216, 93, 70, 0.48);
-  background: rgba(216, 93, 70, 0.08);
+  border-color: rgba(224, 122, 104, 0.5);
+  background: rgba(224, 122, 104, 0.12);
 }
 
 .graph-node.branch.active,
 .graph-node.branch-output.active {
-  background: #d85d46;
-  color: #fffaf6;
+  background: var(--sim-signal);
+  color: #08090c;
 }
 
 .graph-edge {
   width: 42px;
   height: 2px;
-  background: var(--teal);
+  background: var(--sim-teal);
   flex: 0 0 42px;
   position: relative;
 }
@@ -912,17 +971,17 @@ section {
   position: absolute;
   right: -1px;
   top: -4px;
-  border-left: 8px solid var(--teal);
+  border-left: 8px solid var(--sim-teal);
   border-top: 5px solid transparent;
   border-bottom: 5px solid transparent;
 }
 
 .graph-edge.branch {
-  background: var(--signal);
+  background: var(--sim-signal);
 }
 
 .graph-edge.branch::after {
-  border-left-color: var(--signal);
+  border-left-color: var(--sim-signal);
 }
 
 .split-spacer {
@@ -934,8 +993,8 @@ section {
   width: 42px;
   height: 58px;
   flex: 0 0 42px;
-  border-left: 2px solid var(--signal);
-  border-bottom: 2px solid var(--signal);
+  border-left: 2px solid var(--sim-signal);
+  border-bottom: 2px solid var(--sim-signal);
   margin: -58px 0 0;
 }
 
@@ -944,6 +1003,26 @@ section {
   flex-wrap: wrap;
   gap: 10px;
   margin-top: 16px;
+}
+
+.ocura-sim .button {
+  border-color: #f1f2f4;
+  background: #f1f2f4;
+  color: #08090c;
+}
+
+.ocura-sim .ghost {
+  border-color: rgba(255, 255, 255, 0.22);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--sim-ink);
+}
+
+.ocura-sim .ghost:hover,
+.ocura-sim .ghost:focus-visible,
+.ocura-sim .button:hover,
+.ocura-sim .button:focus-visible {
+  outline: 2px solid rgba(60, 184, 188, 0.8);
+  outline-offset: 2px;
 }
 
 .graph-detail-grid {
@@ -959,7 +1038,7 @@ section {
 }
 
 .panel-kicker {
-  color: var(--teal);
+  color: var(--sim-teal);
   font-family: var(--mono);
   font-size: 0.78rem;
 }
@@ -971,7 +1050,7 @@ section {
 
 .node-detail p {
   margin-top: 9px;
-  color: var(--muted);
+  color: var(--sim-muted);
   line-height: 1.58;
 }
 
@@ -979,9 +1058,10 @@ section {
 .execution-panel pre {
   margin: 14px 0 0;
   overflow-x: auto;
-  border-radius: 8px;
-  background: #151515;
-  color: #fff4ee;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #05070d;
+  color: #eef0f4;
   padding: 14px;
   font-family: var(--mono);
   font-size: 0.82rem;
@@ -994,18 +1074,26 @@ section {
 }
 
 .terminal-output {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 12px;
+  border: 1px solid rgba(60, 184, 188, 0.28);
+  border-radius: 6px;
+  background: rgba(60, 184, 188, 0.08);
+  padding: 12px 14px;
+}
+
+.terminal-output__stream {
   display: grid;
   gap: 7px;
-  margin-top: 12px;
-  border: 1px solid rgba(8, 127, 131, 0.24);
-  border-radius: 8px;
-  background: rgba(8, 127, 131, 0.08);
-  padding: 12px;
+  min-width: 0;
 }
 
 .terminal-output span,
 .terminal-output small {
-  color: var(--muted);
+  color: var(--sim-muted);
   font-family: var(--mono);
   font-size: 0.78rem;
 }
@@ -1013,6 +1101,37 @@ section {
 .terminal-output strong {
   font-family: var(--mono);
   font-size: 1rem;
+  color: var(--sim-ink);
+}
+
+.run-orb {
+  display: grid;
+  gap: 6px;
+  justify-items: center;
+  margin: 0;
+  flex: 0 0 auto;
+  animation: run-orb-in 320ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.run-orb .thinking-orb {
+  display: block;
+}
+
+@keyframes run-orb-in {
+  from {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .run-orb {
+    animation: none;
+  }
 }
 
 .section-head {
