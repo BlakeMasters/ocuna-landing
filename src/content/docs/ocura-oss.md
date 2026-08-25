@@ -1,6 +1,6 @@
 # Ocura OSS
 
-Version 0.2.0.
+Version 0.2.2.
 
 Ocura OSS packages an adapted early Ocura research concept as a small local command-line tool. The package also provides a typed Python interface to the same workflow.
 
@@ -184,7 +184,7 @@ Use Ocura OSS only for trusted, same-owner local workloads.
 
 ## Version and support
 
-Version 0.2.0 is published on PyPI and supports CPython 3.11 through 3.14.
+Version 0.2.2 is published on PyPI and supports CPython 3.11 through 3.14.
 
 The API and record format remain provisional during the 0.x series. Ocura OSS does not include a production support commitment.
 

@@ -1,6 +1,6 @@
 # Command-line reference
 
-Version 0.2.0.
+Version 0.2.2.
 
 The `ocura-oss` command records trusted local command attempts, creates metadata branches, compares branch evidence, and verifies project-local state.
 
@@ -276,7 +276,7 @@ ocura-oss compare [--from CHOKEPOINT_ID] [--root PATH] [--json]
 
 | Option | Type | Default | Description |
 | --- | --- | --- | --- |
-| `--from CHOKEPOINT_ID` | chokepoint ID | newest branchable chokepoint | Explicit source for targeted verification |
+| `--from CHOKEPOINT_ID` | chokepoint ID | newest branched source, or newest terminal source when no branches exist | Explicit source for targeted verification |
 | `--root PATH` | path | current directory | Project root containing initialized state |
 | `--json` | flag | false | Emit a structured comparison document |
 
@@ -284,7 +284,7 @@ ocura-oss compare [--from CHOKEPOINT_ID] [--root PATH] [--json]
 
 With `--from`, comparison verifies the selected source and the child evidence used in the result.
 
-Without `--from`, the complete state must pass verification before Ocura OSS selects the newest branchable chokepoint. A malformed record, broken reference, unverified log, orphaned log file, or unexpected log directory anywhere in state blocks automatic selection.
+Without `--from`, the complete state must pass verification before Ocura OSS selects the newest chokepoint referenced by a child pathway. A state with no child pathways selects its newest terminal chokepoint and reports `no_branch`. A malformed record, broken reference, unverified log, orphaned log file, or unexpected log directory anywhere in state blocks automatic selection.
 
 #### Comparison state
 
@@ -296,7 +296,7 @@ Without `--from`, the complete state must pass verification before Ocura OSS sel
 
 For a child with multiple atoms, comparison uses the newest atom by start time and identifier. It reports pathway parameter differences and, when child evidence exists, run-level declared parameter differences.
 
-Parameter deltas contain inherited, added, and changed values. Version 0.2.0 does not report removed parameters.
+Version 0.2.2 parameter deltas contain inherited, added, and changed values. Removed parameters are outside the comparison schema.
 
 Comparison reads stored records and logs. It does not rerun commands.
 

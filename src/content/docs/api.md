@@ -1,6 +1,6 @@
 # Python API reference
 
-Version 0.2.0.
+Version 0.2.2.
 
 The `ocura_oss` package exposes typed workflow functions, read-oriented state access, frozen result and record types, enums, and public exceptions.
 
@@ -243,7 +243,7 @@ Compare a verified source run with the newest run on each child pathway created 
 
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
-| `source_chokepoint_id` | string or None | `None` | Explicit source chokepoint; `None` selects the newest branchable chokepoint after full-state verification |
+| `source_chokepoint_id` | string or None | `None` | Explicit source chokepoint; `None` selects the newest chokepoint referenced by a child pathway after full-state verification, or the newest terminal chokepoint when no branches exist |
 | `root` | path-like, string, or None | `None` | Project root containing initialized state |
 
 #### Returns
@@ -258,13 +258,13 @@ Compare a verified source run with the newest run on each child pathway created 
 
 #### Notes
 
-Explicit selection verifies the pinned source and relevant child evidence. Automatic selection requires complete state verification, and any verification problem causes selection to fail.
+Explicit selection verifies the pinned source and relevant child evidence. Automatic selection requires complete state verification and selects the newest chokepoint referenced by a child pathway. A state with no child pathways selects its newest terminal chokepoint and reports `NO_BRANCH`. Any verification problem causes automatic selection to fail.
 
 Comparison is a read-only operation over recorded state. For a child with more than one atom, it selects the newest atom by start time and identifier.
 
 `ComparisonState.READY` means every child has evidence. `PARTIAL` means at least one child lacks evidence. `NO_BRANCH` means the source has no child pathways.
 
-Version 0.2.0 parameter deltas contain inherited, added, and changed values.
+Version 0.2.2 parameter deltas contain inherited, added, and changed values.
 
 #### Example
 
@@ -959,7 +959,7 @@ Declared parameter relationship between source and child values.
 | `added` | mapping of string to string | Keys present only in the child |
 | `changed` | nested string mapping | Changed keys, each with `source` and `child` values |
 
-Removed source keys are not represented in version 0.2.0.
+Removed source keys are outside the version 0.2.2 representation.
 
 #### Methods
 
@@ -1174,7 +1174,7 @@ The destination is retained when it was created before the failure.
 ocura_oss.__version__: str
 ```
 
-Installed package version. Version 0.2.0 reports `"0.2.0"`.
+Installed package version. Version 0.2.2 reports `"0.2.2"`.
 
 ## Typing
 

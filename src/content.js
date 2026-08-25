@@ -2,7 +2,7 @@ export const SITE_ORIGIN = "https://ocuna-ai.com";
 export const CONTACT_EMAIL = "business@ocuna-ai.com";
 export const OCURA_OSS_REPO = "https://github.com/BlakeMasters/ocura-oss";
 export const OCURA_OSS_PYPI = "https://pypi.org/project/ocura-oss/";
-export const OCURA_OSS_VERSION = "0.2.0";
+export const OCURA_OSS_VERSION = "0.2.2";
 
 export const companyNavItems = [
   { label: "Docs", href: "/docs" },
