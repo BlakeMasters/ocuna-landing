@@ -1,4 +1,10 @@
 import { lazy, Suspense, useEffect, useRef, useState } from "react";
+import { pagePath } from "../assets.js";
+import {
+  OCURA_OSS_PYPI,
+  OCURA_OSS_REPO,
+  OCURA_OSS_VERSION,
+} from "../content.js";
 import { universeSections } from "../content/nounShapes.js";
 import CritterGlassCard from "./CritterGlassCard.jsx";
 import LogoRaccoonTrigger from "./LogoRaccoonTrigger.jsx";
@@ -11,9 +17,10 @@ const LogisticsPrototype = lazy(() => import("./LogisticsPrototype.jsx"));
 
 export default function LandingPage() {
   return (
-    <main id="top">
+    <main id="top" tabIndex={-1}>
       <ShipHero />
       <RuntimeSection />
+      <OssCard />
       <OcuraSimulator />
       <CritterHomeSection />
     </main>
@@ -63,7 +70,7 @@ function ShipHero() {
       </Suspense>
 
       <div className="shell ship-hero-overlay">
-        <article className="ship-hero-card">
+        <article className="ship-hero-copy">
           <h1 id="home-title">Infrastructure for uncertain computation.</h1>
           <p>
             Ocuna builds the execution layer for AI workloads that branch as they run. One runtime
@@ -257,6 +264,32 @@ function RuntimeSection() {
             </p>
           </article>
         </section>
+      </div>
+    </section>
+  );
+}
+
+function OssCard() {
+  return (
+    <section className="home-oss" id="ocura-oss" aria-labelledby="ocura-oss-title">
+      <div className="shell">
+        <article className="home-oss-card">
+          <p className="home-oss-kicker">Ocura OSS / v{OCURA_OSS_VERSION}</p>
+          <h2 id="ocura-oss-title">Project-local records of trusted command execution.</h2>
+          <p>
+            Ocura OSS records local command executions as project-local records. It provides a
+            command-line interface and a typed Python API. Current Ocura engine development is
+            separate from this package.
+          </p>
+          <pre>
+            <code>python -m pip install ocura-oss</code>
+          </pre>
+          <div className="home-oss-actions">
+            <a href={pagePath("docs")}>Docs</a>
+            <a href={OCURA_OSS_PYPI}>PyPI</a>
+            <a href={OCURA_OSS_REPO}>GitHub</a>
+          </div>
+        </article>
       </div>
     </section>
   );

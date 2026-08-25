@@ -1,4 +1,5 @@
-body.critter-route {
+body.critter-route,
+body.paper-route {
   --critter-sky: #f7f9ff;
   --critter-sky-deep: #e8f1ff;
   --critter-ink: #242642;
@@ -17,7 +18,8 @@ body.critter-route {
     linear-gradient(145deg, #fbfcff 0%, var(--critter-sky-deep) 48%, #fff8f3 100%);
 }
 
-body.critter-route::before {
+body.critter-route::before,
+body.paper-route::before {
   background-image:
     linear-gradient(rgba(63, 75, 146, 0.035) 1px, transparent 1px),
     linear-gradient(90deg, rgba(63, 75, 146, 0.035) 1px, transparent 1px);
@@ -25,18 +27,22 @@ body.critter-route::before {
   mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.68), transparent 62%);
 }
 
-body.critter-route .site-header {
+body.critter-route .site-header,
+body.paper-route .site-header {
   position: relative;
   z-index: 5;
   border-bottom-color: rgba(63, 75, 146, 0.1);
 }
 
 body.critter-route .nav,
-body.critter-route .nav-products-trigger {
+body.critter-route .nav-products-trigger,
+body.paper-route .nav,
+body.paper-route .nav-products-trigger {
   color: rgba(36, 38, 66, 0.72);
 }
 
-body.critter-route .nav-products-menu {
+body.critter-route .nav-products-menu,
+body.paper-route .nav-products-menu {
   border-color: rgba(63, 75, 146, 0.14);
   background: rgba(249, 251, 255, 0.88);
   box-shadow: 0 24px 60px rgba(63, 75, 146, 0.14);
@@ -44,10 +50,27 @@ body.critter-route .nav-products-menu {
   -webkit-backdrop-filter: blur(24px) saturate(130%);
 }
 
-body.critter-route .site-footer {
-  color: rgba(36, 38, 66, 0.58);
+body.critter-route .site-footer,
+body.paper-route .site-footer {
+  color: #535978;
   border-top-color: rgba(63, 75, 146, 0.12);
   background: rgba(248, 250, 255, 0.56);
+}
+
+body.paper-route .nav a:focus-visible,
+body.paper-route .nav-products-trigger:focus-visible,
+body.paper-route .site-footer a:focus-visible,
+body.critter-route .nav a:focus-visible,
+body.critter-route .nav-products-trigger:focus-visible,
+body.critter-route .site-footer a:focus-visible {
+  outline: 3px solid var(--critter-indigo);
+  outline-offset: 4px;
+}
+
+body.paper-route .nav-products-menu a:focus-visible,
+body.critter-route .nav-products-menu a:focus-visible {
+  outline: 3px solid var(--critter-indigo);
+  outline-offset: 2px;
 }
 
 .critter-page {

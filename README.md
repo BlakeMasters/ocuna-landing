@@ -22,10 +22,14 @@ npm run build
 npm run preview
 ```
 
-The build writes static files to `dist/`. The postbuild step copies `dist/index.html`
-to `dist/404.html` for unknown direct links and also emits
-`dist/critter-acknowledgement/index.html` plus `dist/critter-acknowledgement.html`
-so the acknowledgement page has explicit static entry points on GitHub Pages.
+The build writes static files to `dist/`. `postbuild` runs `scripts/prerender.mjs`,
+which prerenders the main routes (home, Ocura, docs, contact, and others),
+writes `dist/404.html`, and copies OSS markdown into `dist/docs/`.
+
+Published routes include `/`, `/ocura`, `/docs`, `/contact`, `/onveil`, and
+`/critter-acknowledgement`. `/ocuna` aliases the home page; canonical URLs use `/`.
+
+`site-public/` also ships `robots.txt` and `sitemap.xml` for GitHub Pages.
 
 ## GitHub Pages
 
@@ -42,19 +46,17 @@ from the Actions tab.
 ```text
 src/
   App.jsx
-  assets.js
   content.js
+  content/docs/          # Ocura OSS markdown (source for /docs)
   components/
     LandingPage.jsx
+    DocsPage.jsx
+    ContactPage.jsx
     CritterPage.jsx
-  styles.css
 site-public/
   CNAME
+  robots.txt
+  sitemap.xml
   sprites/
-images/
-  ocuna_logo.png
-  ocuna_logo.webp
-  ocuna_title_logo_nobackground.webp
-  OnVeil.webp
-  ocuna_background4c_cloud_masked.webp
+images/                  # production images copied into dist/images/
 ```

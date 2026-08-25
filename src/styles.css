@@ -23,6 +23,26 @@ html {
   scroll-behavior: smooth;
 }
 
+.skip-link {
+  position: absolute;
+  z-index: 200;
+  top: 12px;
+  left: 12px;
+  padding: 0.65rem 1rem;
+  border-radius: 999px;
+  color: #fff;
+  background: #3f4b92;
+  font-size: 0.82rem;
+  font-weight: 730;
+  transform: translateY(-160%);
+}
+
+.skip-link:focus {
+  transform: none;
+  outline: 3px solid #3f4b92;
+  outline-offset: 4px;
+}
+
 body {
   margin: 0;
   min-width: 320px;
@@ -113,6 +133,51 @@ body.landing-route .footer-logo-link img {
 }
 
 body.landing-route .site-footer a:hover {
+  color: #fff;
+}
+
+body.docs-route {
+  color: #d6d9e0;
+  background: #1c1e21;
+}
+
+body.docs-route::before {
+  display: none;
+}
+
+body.docs-route .site-header {
+  color: rgba(248, 246, 243, 0.92);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+body.docs-route .brand img {
+  filter: invert(1) grayscale(1) brightness(1.8);
+}
+
+body.docs-route .nav {
+  color: rgba(248, 246, 243, 0.64);
+}
+
+body.docs-route .nav a:hover,
+body.docs-route .nav button:hover {
+  color: #fff;
+}
+
+body.docs-route .site-footer {
+  color: rgba(244, 241, 238, 0.56);
+  background: #15171a;
+}
+
+body.docs-route .footer-logo-link {
+  border-color: rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+body.docs-route .footer-logo-link img {
+  filter: invert(1) grayscale(1);
+}
+
+body.docs-route .site-footer a:hover {
   color: #fff;
 }
 

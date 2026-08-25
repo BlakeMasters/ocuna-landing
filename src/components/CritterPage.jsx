@@ -5,7 +5,7 @@ import "./CritterPage.css";
 
 export default function CritterPage() {
   return (
-    <main className="critter-page" id="top">
+    <main className="critter-page" id="top" tabIndex={-1}>
       <section className="critter-hero" aria-labelledby="critter-title">
         <div className="critter-hero__blooms" aria-hidden="true">
           <span />

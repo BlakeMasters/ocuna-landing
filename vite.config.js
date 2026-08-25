@@ -5,6 +5,7 @@ import path from "node:path";
 
 const productionImages = [
   "OnVeil.webp",
+  "ocuna_background1c.webp",
   "ocuna_background4c_cloud_masked.webp",
   "ocuna_logo.png",
   "ocuna_logo.webp",
@@ -14,15 +15,35 @@ const productionImages = [
 function imagesDirectory() {
   let imagesDir;
   let distImagesDir;
+  let rootDir;
 
   return {
     name: "ocuna-images-directory",
     configResolved(config) {
+      rootDir = config.root;
       imagesDir = path.resolve(config.root, "images");
       distImagesDir = path.resolve(config.root, config.build.outDir, "images");
     },
     configureServer(server) {
       server.middlewares.use(async (req, res, next) => {
+        const pathname = req.url ? new URL(req.url, "http://localhost").pathname : "";
+        const documentationSources = new Map([
+          ["/docs/ocura-oss.md", "src/content/docs/ocura-oss.md"],
+          ["/docs/cli.md", "src/content/docs/cli.md"],
+          ["/docs/api.md", "src/content/docs/api.md"],
+        ]);
+        const documentationSource = documentationSources.get(pathname);
+        if (documentationSource) {
+          try {
+            res.setHeader("Content-Type", "text/markdown; charset=utf-8");
+            res.end(await readFile(path.resolve(rootDir, documentationSource)));
+            return;
+          } catch {
+            next();
+            return;
+          }
+        }
+
         if (!req.url?.startsWith("/images/")) {
           next();
           return;

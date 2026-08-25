@@ -27,5 +27,29 @@ export function routeFromLocation(location = window.location) {
     return "/onveil";
   }
 
+  if (path === "/ocuna.html") {
+    return "/ocuna";
+  }
+
+  if (path === "/ocura.html") {
+    return "/ocura";
+  }
+
+  if (path === "/docs.html") {
+    return "/docs";
+  }
+
+  if (path === "/docs/cli.html") {
+    return "/docs/cli";
+  }
+
+  if (path === "/docs/api.html") {
+    return "/docs/api";
+  }
+
+  if (path === "/contact.html") {
+    return "/contact";
+  }
+
   return path;
 }

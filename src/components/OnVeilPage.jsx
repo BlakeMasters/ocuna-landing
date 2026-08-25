@@ -5,7 +5,7 @@ import "./OnVeilPage.css";
 
 export default function OnVeilPage() {
   return (
-    <main className="ov-page" id="top">
+    <main className="ov-page" id="top" tabIndex={-1}>
       <div className="ov-page__grid" aria-hidden="true" />
       <div className="ov-page__system-line" aria-hidden="true" />
 
@@ -24,8 +24,8 @@ export default function OnVeilPage() {
               <a className="ov-page__action ov-page__action--primary" href="#eye">
                 See the eye
               </a>
-              <a className="ov-page__action" href={`${pagePath("")}#work`}>
-                View Ocura
+              <a className="ov-page__action" href={pagePath("")}>
+                View Ocuna
               </a>
             </div>
           </div>
