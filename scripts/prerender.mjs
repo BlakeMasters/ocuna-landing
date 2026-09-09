@@ -2,7 +2,8 @@ import { copyFile, mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { jsonLdGraph } from "../src/content/jsonld.js";
 import { crawlableHtml } from "../src/content/crawlable.js";
-import { SITE_ORIGIN, pageMeta } from "../src/content.js";
+import { SITE_ORIGIN, OCURA_OSS_REPO, OCURA_OSS_VERSION, pageMeta } from "../src/content.js";
+import { DOC_PAGES } from "../src/content/docPages.js";
 
 const origin = SITE_ORIGIN;
 const routes = [
@@ -11,17 +12,13 @@ const routes = [
   "/ocura",
   "/onveil",
   "/critter-acknowledgement",
-  "/docs",
-  "/docs/cli",
-  "/docs/api",
+  ...DOC_PAGES.map((page) => page.route),
   "/contact",
 ];
 
-const documentationSources = new Map([
-  ["/docs", "src/content/docs/ocura-oss.md"],
-  ["/docs/cli", "src/content/docs/cli.md"],
-  ["/docs/api", "src/content/docs/api.md"],
-]);
+const documentationSources = new Map(
+  DOC_PAGES.map((page) => [page.route, `src/content/docs/${page.file}`]),
+);
 const documentation = new Map(
   await Promise.all(
     [...documentationSources].map(async ([route, source]) => [route, await readFile(source, "utf8")]),
@@ -78,6 +75,10 @@ function applyDocument(html, route, isNotFound = false) {
     `<script id="ocuna-jsonld" type="application/ld+json">${jsonLd}</script>`,
   );
   next = replaceFirst(next, /<div id="root"><\/div>/, `<div id="root">${rootHtml}</div>`);
+  const docPage = DOC_PAGES.find((page) => page.route === route);
+  if (docPage && !isNotFound) {
+    next = next.replace("</head>", `<link rel="alternate" type="text/markdown" href="${origin}/docs/${docPage.file}" title="Markdown" />\n</head>`);
+  }
 
   if (isNotFound) {
     next = replaceFirst(next, /<meta property="og:url" content="[^"]*" \/>/, "");
@@ -126,3 +127,5 @@ await Promise.all(
     copyFile(source, path.join("dist/docs", path.basename(source))),
   ),
 );
+
+await writeFile("dist/llms.txt", `# Ocura OSS ${OCURA_OSS_VERSION}\n\nA local execution ledger for recording, branching, and comparing command runs. Use the JSON CLI or typed Python API from a terminal, script, or AI agent.\n\n## Documentation\n\n${DOC_PAGES.map((page) => `- [${page.label}](${origin}/docs/${page.file})`).join("\n")}\n\n## Source\n\n- [Version ${OCURA_OSS_VERSION}](${OCURA_OSS_REPO}/tree/v${OCURA_OSS_VERSION})\n- [Repository training example](${OCURA_OSS_REPO}/tree/v${OCURA_OSS_VERSION}/examples/autoregressive)\n\nExamples are repository-only. The core package has no runtime dependencies. Commands inherit their execution environment's permissions; checksums verify local consistency.\n`);

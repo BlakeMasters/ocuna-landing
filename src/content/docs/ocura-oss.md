@@ -1,195 +1,131 @@
 # Ocura OSS
 
-Version 0.2.2.
+Version 0.3.0.
 
-Ocura OSS packages an adapted early Ocura research concept as a small local command-line tool. The package also provides a typed Python interface to the same workflow.
+A local execution ledger for recording, branching, and comparing command runs.
 
-Ocura OSS records trusted local command executions as project-local state. It can create metadata branches, attach later runs to those branches, compare recorded evidence, and verify the consistency of its records and logs.
+Record a baseline, explain the next variation, and keep its result connected to the
+original run. Ocura OSS stores command arguments, outcomes, timing, output logs,
+declared parameters, and branch lineage in your project. It verifies the relevant
+records and logs before branching or comparing them.
 
-Current [Ocura](/ocura) engine development is separate from this package. Ocura OSS is research software, not the current engine or a production release.
+Use it from your terminal, Python scripts, or an AI agent with a shell. The CLI
+provides JSON output throughout the workflow; the Python API returns typed results.
 
-## Installation
+## Install and try
 
-Ocura OSS requires Python 3.11 or later. Its runtime uses only the Python standard library.
+Python 3.11 or later is required. Ocura OSS uses only the standard library at runtime.
+
+Install from [PyPI](https://pypi.org/project/ocura-oss/) in a virtual environment:
 
 ```console
 python -m pip install ocura-oss
-```
-
-The package installs the `ocura-oss` command and the `ocura_oss` import package.
-
-```console
-ocura-oss --help
-```
-
-```python
-import ocura_oss
-
-print(ocura_oss.__version__)
-```
-
-## Documentation
-
-| Reference | Contents |
-| --- | --- |
-| [CLI reference](/docs/cli) | Commands, options, output formats, state effects, and exit status |
-| [Python API reference](/docs/api) | Workflow functions, `Store`, data models, enums, exceptions, and typing |
-
-The [source repository](https://github.com/BlakeMasters/ocura-oss) contains the tests, changelog, security policy, and contributor guide. Release files are available from [PyPI](https://pypi.org/project/ocura-oss/).
-
-## Recorded workflow
-
-The package records this sequence:
-
-`run -> evidence -> chokepoint -> branch -> rerun -> compare`
-
-A command attempt produces one atom, two referenced output logs, and one terminal chokepoint. The atom belongs to a pathway.
-
-A branch creates a child pathway with a source chokepoint, a reason, and declared parameter overrides. It records lineage metadata only. A later run must name the child pathway to attach new evidence to it.
-
-## Quick start
-
-Run the complete retained demonstration:
-
-```console
 ocura-oss demo --root ./ocura-oss-demo
 ```
 
-The destination must not exist. The demonstration initializes state, records a baseline command, creates a branch, records a child run, verifies the state, and reports a comparison.
+The demo runs the complete workflow and retains a new directory for inspection.
+Its destination must not already exist. To install a repository checkout instead,
+run `python -m pip install .` from its root.
 
-For direct use:
+## Compare two runs
 
 ```console
-ocura-oss init --name example
-ocura-oss run --param batch=1 -- python script.py
-ocura-oss chokepoints
-ocura-oss branch --from <chokepoint-id> --reason "increase batch" --param batch=4
-ocura-oss run --pathway <child-pathway-id> --param batch=4 -- python script.py
-ocura-oss verify
-ocura-oss compare --from <chokepoint-id>
+ocura-oss init --name example --json
+ocura-oss run --json --param count=1 -- python -c "print(1)"
+ocura-oss branch --json --from <chokepoint-id> --reason "try count 2" --param count=2
+ocura-oss run --json --pathway <child-pathway-id> --param count=2 -- python -c "print(2)"
+ocura-oss verify --json
+ocura-oss compare --json --from <chokepoint-id>
 ```
 
-The same workflow is available from Python:
+Use the baseline's `chokepoint_id` to branch and the branch result's `id` for the
+child run. `compare` reports each variant's relationship to its source, parameter
+changes, outcomes, and timing. Read the recorded output logs for workload-specific
+metrics, such as validation loss or accuracy.
+
+**Parameters are recorded labels.** Set actual inputs in your command as well:
+`--param batch=4 -- python train.py --batch 4`. Each run records its own labels.
+
+Omit `--json` for terminal output. By default, `run` streams the command's output
+while retaining stdout and stderr logs; `--json` or `--quiet` keeps that output in
+the logs without streaming. A first Ctrl+C records an interrupted attempt; a
+second exits immediately and may leave that attempt unrecorded.
+
+## Autoregressive example: PyTorch, JAX, and Ray
+
+The [autoregressive example](/docs/examples) trains a small
+character-level next-token model on an included text corpus. Choose PyTorch or
+JAX, run a baseline and a longer-training variant, then reconstruct the comparison
+from saved evidence. An optional Ray Core executor runs either backend as a local
+task. The example stays in the source repository; neither the wheel nor the source
+distribution includes its scripts or framework dependencies. Install only what you use.
+
+From a repository checkout, after installing Ocura:
+
+```console
+python -m pip install -r examples/autoregressive/requirements-pytorch.txt
+python examples/autoregressive/experiment.py run --backend pytorch --root ./ar-pytorch
+python examples/autoregressive/experiment.py report --root ./ar-pytorch
+```
+
+The guide includes JAX and Ray commands. The script supplies metric reading and
+interpretation; the package supplies recording, lineage, and verification.
+
+## Python and automation
 
 ```python
 import sys
-from pathlib import Path
+from ocura_oss import branch, compare, initialize, run, verify
 
-from ocura_oss import ComparisonState, branch, compare, initialize, run, verify
-
-root = Path("experiment")
-initialize(root, name="batch study")
-
-baseline = run(
-    [sys.executable, "-c", "print('baseline')"],
-    root=root,
-    parameters={"batch": "1"},
-)
-
-child = branch(
-    baseline.chokepoint.id,
-    root=root,
-    reason="increase batch",
-    parameters={"batch": "4"},
-)
-
-run(
-    [sys.executable, "-c", "print('child')"],
-    root=root,
-    pathway_id=child.id,
-    parameters={"batch": "4"},
-)
-
-result = compare(baseline.chokepoint.id, root=root)
-assert result.state is ComparisonState.READY
+root = initialize("experiment", name="example").root
+baseline = run([sys.executable, "-c", "print(1)"], root=root, parameters={"count": "1"})
+child = branch(baseline.chokepoint.id, root=root, reason="try count 2", parameters={"count": "2"})
+run([sys.executable, "-c", "print(2)"], root=root, pathway_id=child.id, parameters={"count": "2"})
 assert verify(root).ok
+comparison = compare(baseline.chokepoint.id, root=root)
 ```
 
-## Concepts
+An agent can use the same CLI or Python workflow inside its existing execution
+environment. The [automation guide](/docs/automation) explains JSON results,
+exit codes, parameter labels, and how to inspect earlier attempts.
 
-| Term | Definition |
-| --- | --- |
-| Den | The identity for one project-local state directory and its default pathway |
-| Pathway | One lineage of declared parameters and recorded evidence |
-| Atom | One recorded command attempt and its referenced stdout and stderr logs |
-| Chokepoint | A terminal evidence boundary that can serve as a metadata branch source |
+## Documentation
 
-Declared parameters are labels stored with pathways and atoms. Ocura OSS does not interpret them or pass them to the command automatically.
+- [CLI reference](/docs/cli): every command, JSON fields, and exit codes
+- [Python API](/docs/api): functions, typed results, and `Store`
+- [State and verification](/docs/state): records and checks
+- [Autoregressive example](/docs/examples): PyTorch, JAX, and Ray
+- [Hosted documentation](https://ocuna-ai.com/docs): the currently published release
 
-## Local state
+Repository references describe this checkout and remain readable directly on GitHub.
 
-State is stored under `.ocura-oss/` in the selected project root:
+## Local state and operating model
 
-```text
-.ocura-oss/
-  den.json
-  pathways/
-    <pathway-id>.json
-  atoms/
-    <atom-id>.json
-  chokepoints/
-    <chokepoint-id>.json
-  logs/
-    <atom-id>.stdout.log
-    <atom-id>.stderr.log
-```
+State lives under `.ocura-oss/` in the project root. A **den** identifies that state;
+a **pathway** groups runs in a lineage; an **atom** records one command attempt;
+a **chokepoint** identifies terminal evidence from which a branch can be created.
 
-Each JSON record contains a schema version, a record kind, a payload, and a SHA-256 checksum over the canonical record content. The checksums provide local change detection. They are not authenticated signatures and do not establish authorship.
+Each branch records its source and reason. It represents a new line of work;
+workspace files, process state, and model weights are managed by the workload.
+One mutating process per state root is supported at a time. Delete `.ocura-oss/`
+to discard that project's records. Legacy `.ocura/` records are unsupported.
 
-One mutating process per state root is supported at a time. Legacy `.ocura/` state is not compatible with `.ocura-oss/` records.
+Commands run with `shell=False` in the project root and inherit the invoking
+environment's permissions. Use trusted, owner-authorized workloads. For generated
+or otherwise untrusted commands, provide isolation and permissions through your
+execution environment; Ocura OSS itself does not sandbox or restrict them.
 
-Removing `.ocura-oss/` removes all Ocura OSS state for that project.
+Records retain command arguments, parameter labels, reasons, and output. Keep secrets
+out of these fields. SHA-256 checksums detect local inconsistencies; they do not
+authenticate authorship or prevent a writer from replacing records and checksums.
 
-## Verification
+## Project status
 
-`ocura-oss verify` and `ocura_oss.verify()` recheck state records and every log referenced by a recorded run.
+Ocura OSS is research software under [MPL-2.0](https://github.com/BlakeMasters/ocura-oss/blob/main/LICENSE). The 0.x interface and record
+format may change before 1.0, and there is no production support commitment.
 
-Verification covers:
+The package adapts an early Ocura research concept. Current Ocura engine development
+is a separate project.
 
-- envelope shape, record kind, and schema version
-- record checksums, identifiers, filenames, and required fields
-- den, pathway, atom, and chokepoint relationships
-- pathway lineage and source-parent agreement
-- referenced log containment, existence, byte count, and SHA-256 digest
-- unreferenced files and unexpected directories under `.ocura-oss/logs/`
-
-Verification establishes consistency among local records and logs. It does not establish authorship, capture the execution environment, or reproduce external conditions.
-
-A source-evidence verification failure prevents branching and comparison.
-
-## Recorded information
-
-Atoms retain command arguments, declared parameters, outcome, return code, timing, log paths, byte counts, and log digests. Logs retain command output. Pathways retain lineage, branch reasons, source chokepoints, and effective parameters.
-
-The child command inherits the invoking process environment, but Ocura OSS does not serialize environment keys or values.
-
-Ocura OSS does not record dependency versions, source revisions, workspace contents, process memory, network activity, or external-system state.
-
-Keep secrets out of command arguments, declared parameters, branch reasons, and command output.
-
-## Execution boundary
-
-Commands run directly on the local machine with `shell=False` and the selected project root as their working directory.
-
-Ocura OSS does not provide:
-
-- command sandboxing
-- network restriction
-- hostile-code containment
-- process-tree isolation
-- workspace, process, checkpoint, or artifact snapshots
-- replay or restoration of external state
-
-Use Ocura OSS only for trusted, same-owner local workloads.
-
-## Version and support
-
-Version 0.2.2 is published on PyPI and supports CPython 3.11 through 3.14.
-
-The API and record format remain provisional during the 0.x series. Ocura OSS does not include a production support commitment.
-
-The source code and tests are licensed under the [Mozilla Public License 2.0](https://github.com/BlakeMasters/ocura-oss/blob/main/LICENSE).
-
-Bug reports and focused pull requests are welcome. Read the [contributor guide](https://github.com/BlakeMasters/ocura-oss/blob/main/CONTRIBUTING.md) before submitting changes.
-
-Report security issues through the [security policy](https://github.com/BlakeMasters/ocura-oss/blob/main/SECURITY.md). Documentation and research questions can go to [business@ocuna-ai.com](mailto:business@ocuna-ai.com) or the [contact page](/contact).
+Bug reports and focused pull requests are welcome. See [Contributing](https://github.com/BlakeMasters/ocura-oss/blob/main/CONTRIBUTING.md)
+and the [security policy](https://github.com/BlakeMasters/ocura-oss/blob/main/SECURITY.md).

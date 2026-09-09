@@ -47,7 +47,7 @@ export function jsonLdGraph() {
         installUrl: OCURA_OSS_PYPI,
         softwareVersion: OCURA_OSS_VERSION,
         description:
-          "Ocura OSS records local commands as integrity-checked, branchable execution records. It provides a command-line interface and a typed Python API. It is a research package, not the Ocura engine.",
+          "A local execution ledger for recording, branching, and comparing command runs. Use the JSON CLI or typed Python API from terminals, scripts, and AI agents. Repository examples support PyTorch, JAX, and a local Ray task.",
         publisher: { "@id": `${SITE_ORIGIN}/#organization` },
       },
     ],

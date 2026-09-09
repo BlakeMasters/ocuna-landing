@@ -1,3 +1,5 @@
+import { isDocRoute } from "./content/docPages.js";
+
 const base = import.meta.env.BASE_URL || "/";
 
 export function asset(path) {
@@ -35,16 +37,8 @@ export function routeFromLocation(location = window.location) {
     return "/ocura";
   }
 
-  if (path === "/docs.html") {
-    return "/docs";
-  }
-
-  if (path === "/docs/cli.html") {
-    return "/docs/cli";
-  }
-
-  if (path === "/docs/api.html") {
-    return "/docs/api";
+  if (path.endsWith(".html") && isDocRoute(path.slice(0, -5))) {
+    return path.slice(0, -5);
   }
 
   if (path === "/contact.html") {

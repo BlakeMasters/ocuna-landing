@@ -1,8 +1,10 @@
+import { DOC_PAGES } from "./content/docPages.js";
+
 export const SITE_ORIGIN = "https://ocuna-ai.com";
 export const CONTACT_EMAIL = "business@ocuna-ai.com";
 export const OCURA_OSS_REPO = "https://github.com/BlakeMasters/ocura-oss";
 export const OCURA_OSS_PYPI = "https://pypi.org/project/ocura-oss/";
-export const OCURA_OSS_VERSION = "0.2.2";
+export const OCURA_OSS_VERSION = "0.3.0";
 
 export const companyNavItems = [
   { label: "Docs", href: "/docs" },
@@ -40,7 +42,7 @@ export const acknowledgementCopy =
 const homeMeta = {
   title: "Ocuna | Infrastructure for uncertain computation",
   description:
-    "Ocuna builds the execution layer for AI workloads that branch as they run. Ocura is its runtime. Ocura OSS is a public research package for recording local command runs.",
+    "Ocuna builds the execution layer for AI workloads that branch as they run. Ocura is its runtime. Ocura OSS is a local execution ledger for recording, branching, and comparing command runs.",
 };
 
 export const pageMeta = {
@@ -62,7 +64,7 @@ export const pageMeta = {
   "/docs": {
     title: "Ocura OSS | Documentation",
     description:
-      `Ocura OSS records trusted local command executions as project-local records. Version ${OCURA_OSS_VERSION} is published on PyPI. It provides a CLI and a typed Python API, and is not the Ocura engine.`,
+      `Ocura OSS ${OCURA_OSS_VERSION}: a local execution ledger for recording, branching, and comparing command runs. Use the JSON CLI or typed Python API from terminals, scripts, and AI agents.`,
   },
   "/docs/cli": {
     title: "CLI reference | Ocura OSS",
@@ -73,6 +75,18 @@ export const pageMeta = {
     title: "Python API reference | Ocura OSS",
     description:
       "Complete Python API reference for Ocura OSS workflows, Store access, data models, enums, exceptions, and typing.",
+  },
+  "/docs/automation": {
+    title: "Scripts and AI agents | Ocura OSS",
+    description: "Drive the Ocura OSS record, branch, rerun, and compare workflow with JSON commands or the Python API inside your existing execution environment.",
+  },
+  "/docs/examples": {
+    title: "PyTorch, JAX, and Ray example | Ocura OSS",
+    description: "Run a small autoregressive training experiment with PyTorch or JAX, optionally using a local Ray task, and reconstruct its comparison from saved evidence.",
+  },
+  "/docs/state": {
+    title: "State and verification | Ocura OSS",
+    description: "Understand Ocura OSS records, lineage, logs, checksums, and the local execution model.",
   },
   "/contact": {
     title: "Contact Ocuna",
@@ -90,8 +104,6 @@ export const knownRoutes = new Set([
   "/ocura",
   "/onveil",
   "/critter-acknowledgement",
-  "/docs",
-  "/docs/cli",
-  "/docs/api",
+  ...DOC_PAGES.map((page) => page.route),
   "/contact",
 ]);

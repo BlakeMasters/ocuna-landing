@@ -7,6 +7,7 @@
     "dev": "node node_modules/vite/bin/vite.js --host 127.0.0.1",
     "build": "vite build",
     "postbuild": "node scripts/prerender.mjs",
+    "verify:docs": "node scripts/verify-docs.mjs",
     "preview": "node node_modules/vite/bin/vite.js preview --host 127.0.0.1"
   },
   "dependencies": {

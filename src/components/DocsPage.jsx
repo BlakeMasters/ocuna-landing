@@ -8,6 +8,10 @@ import {
 import apiMarkdown from "../content/docs/api.md?raw";
 import cliMarkdown from "../content/docs/cli.md?raw";
 import ocuraOssMarkdown from "../content/docs/ocura-oss.md?raw";
+import automationMarkdown from "../content/docs/automation.md?raw";
+import examplesMarkdown from "../content/docs/examples.md?raw";
+import stateMarkdown from "../content/docs/state.md?raw";
+import { DOC_PAGES } from "../content/docPages.js";
 import { extractHeadings, renderMarkdown } from "../lib/markdown.js";
 import "./DocsPage.css";
 
@@ -27,34 +31,20 @@ function readStoredFontSize() {
   return 16;
 }
 
-const DOC_PAGES = [
-  {
-    route: "/docs",
-    label: "Overview",
-    crumb: "Overview",
-    markdown: ocuraOssMarkdown,
-    source: "docs/ocura-oss.md",
-  },
-  {
-    route: "/docs/cli",
-    label: "CLI reference",
-    crumb: "CLI reference",
-    markdown: cliMarkdown,
-    source: "docs/cli.md",
-  },
-  {
-    route: "/docs/api",
-    label: "Python API",
-    crumb: "Python API reference",
-    markdown: apiMarkdown,
-    source: "docs/api.md",
-  },
-];
+const markdownByFile = {
+  "ocura-oss.md": ocuraOssMarkdown,
+  "cli.md": cliMarkdown,
+  "api.md": apiMarkdown,
+  "automation.md": automationMarkdown,
+  "examples.md": examplesMarkdown,
+  "state.md": stateMarkdown,
+};
 
 export default function DocsPage({ route }) {
   const page = DOC_PAGES.find((item) => item.route === route) ?? DOC_PAGES[0];
-  const headings = useMemo(() => extractHeadings(page.markdown), [page.markdown]);
-  const html = useMemo(() => renderMarkdown(page.markdown), [page.markdown]);
+  const markdown = markdownByFile[page.file];
+  const headings = useMemo(() => extractHeadings(markdown), [markdown]);
+  const html = useMemo(() => renderMarkdown(markdown), [markdown]);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [fontSizePx, setFontSizePx] = useState(readStoredFontSize);
   const fontSizeIndex = FONT_SIZE_STEPS.indexOf(fontSizePx);
@@ -107,6 +97,7 @@ export default function DocsPage({ route }) {
     const target = document.getElementById(headingId);
     if (!target) return;
     event.preventDefault();
+    closeSidebar();
     target.tabIndex = -1;
     target.scrollIntoView({ block: "start" });
     target.focus({ preventScroll: true });
@@ -131,6 +122,7 @@ export default function DocsPage({ route }) {
   function handlePageClick(event, href) {
     if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey) return;
     event.preventDefault();
+    closeSidebar();
     window.history.pushState({}, "", pagePath(href));
     window.dispatchEvent(new PopStateEvent("popstate"));
     window.scrollTo({ top: 0 });
@@ -278,6 +270,10 @@ export default function DocsPage({ route }) {
             <span>/</span>
             {page.crumb}
           </p>
+          <nav className="docs-source-links" aria-label="Alternative documentation formats">
+            <a href={pagePath(`docs/${page.file}`)}>Read Markdown</a>
+            <a href={`${OCURA_OSS_REPO}/blob/v${OCURA_OSS_VERSION}/${page.repositoryPath}`}>Read on GitHub</a>
+          </nav>
           <div
             className="docs-prose"
             dangerouslySetInnerHTML={{ __html: html }}

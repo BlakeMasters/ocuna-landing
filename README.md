@@ -25,6 +25,12 @@ npm run preview
 The build writes static files to `dist/`. `postbuild` runs `scripts/prerender.mjs`,
 which prerenders the main routes (home, Ocura, docs, contact, and others),
 writes `dist/404.html`, and copies OSS markdown into `dist/docs/`.
+The documentation route list lives in `src/content/docPages.js`; it drives the React
+navigation, prerendered navigation, raw Markdown exports, and `llms.txt` index.
+Each documentation page links to its Markdown file and versioned GitHub reference.
+Run `npm run verify:docs` after building to check route coverage, static content,
+Markdown parity, metadata, navigation, source links, and discovery files. The Pages
+workflow runs this check before deployment.
 
 Published routes include `/`, `/ocura`, `/docs`, `/contact`, `/onveil`, and
 `/critter-acknowledgement`. `/ocuna` aliases the home page; canonical URLs use `/`.

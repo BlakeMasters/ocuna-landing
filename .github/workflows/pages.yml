@@ -35,6 +35,9 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Verify documentation routes and exports
+        run: npm run verify:docs
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:

@@ -275,17 +275,18 @@ function OssCard() {
       <div className="shell">
         <article className="home-oss-card">
           <p className="home-oss-kicker">Ocura OSS / v{OCURA_OSS_VERSION}</p>
-          <h2 id="ocura-oss-title">Project-local records of trusted command execution.</h2>
+          <h2 id="ocura-oss-title">Record, branch, and compare your command runs.</h2>
           <p>
-            Ocura OSS records local command executions as project-local records. It provides a
-            command-line interface and a typed Python API. Current Ocura engine development is
-            separate from this package.
+            Keep a baseline, explain the next variation, and connect its result to the original
+            run. Use the JSON CLI or Python API from your terminal, scripts, or an AI agent.
+            Try the repository example with PyTorch, JAX, or a local Ray task.
           </p>
           <pre>
             <code>python -m pip install ocura-oss</code>
           </pre>
           <div className="home-oss-actions">
             <a href={pagePath("docs")}>Docs</a>
+            <a href={pagePath("docs/examples")}>Training example</a>
             <a href={OCURA_OSS_PYPI}>PyPI</a>
             <a href={OCURA_OSS_REPO}>GitHub</a>
           </div>

@@ -122,6 +122,27 @@ export function renderMarkdown(markdown) {
       continue;
     }
 
+    if (/^\d+\. /.test(line)) {
+      const items = [];
+      const start = Number(line.match(/^\d+/)[0]);
+      while (index < lines.length && /^\d+\. /.test(lines[index])) {
+        items.push(`<li>${renderInline(lines[index].replace(/^\d+\. /, ""))}</li>`);
+        index += 1;
+      }
+      html.push(`<ol${start === 1 ? "" : ` start="${start}"`}>${items.join("")}</ol>`);
+      continue;
+    }
+
+    if (line.startsWith("> ")) {
+      const quote = [];
+      while (index < lines.length && lines[index].startsWith("> ")) {
+        quote.push(lines[index].slice(2));
+        index += 1;
+      }
+      html.push(`<blockquote><p>${renderInline(quote.join(" "))}</p></blockquote>`);
+      continue;
+    }
+
     if (line.startsWith("- ")) {
       const items = [];
       while (index < lines.length && lines[index].startsWith("- ")) {
@@ -166,6 +187,8 @@ export function renderMarkdown(markdown) {
       lines[index].trim() &&
       !lines[index].startsWith("#") &&
       !lines[index].startsWith("- ") &&
+      !/^\d+\. /.test(lines[index]) &&
+      !lines[index].startsWith("> ") &&
       !lines[index].startsWith("|") &&
       !lines[index].startsWith("```")
     ) {

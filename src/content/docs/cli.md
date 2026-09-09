@@ -1,6 +1,6 @@
 # Command-line reference
 
-Version 0.2.2.
+Version 0.3.0.
 
 The `ocura-oss` command records trusted local command attempts, creates metadata branches, compares branch evidence, and verifies project-local state.
 
@@ -41,13 +41,13 @@ Declared parameters do not configure the child process. Pass process arguments a
 
 ### JSON output
 
-`pathways`, `chokepoints`, `branch`, `compare`, `verify`, and `demo` accept `--json`. Successful JSON mode writes one JSON document to standard output. Diagnostic messages go to standard error.
+Every command accepts `--json`. JSON mode writes one result document to standard output, with Unicode escaped so it also works on legacy Windows encodings. Diagnostic messages go to standard error.
 
-`init` and `run` do not provide JSON mode.
+`run --json` retains child stdout and stderr in their logs without streaming them. A recorded command failure, interruption, or launch failure still returns a JSON result with its existing nonzero exit status. Invalid input or a state error returns no result document.
 
 ### Summary data
 
-Default summaries and listing output omit command arguments, environment values, and log contents. `run` streams child output unless `--quiet` is present, so streamed output is separate from the final summary.
+Default summaries and listing output omit command arguments, environment values, and log contents. `run` streams child output unless `--quiet` or `--json` is present, so streamed output is separate from the final summary.
 
 Raw atom records retain command arguments, and log files retain command output. Keep secrets out of command arguments, declared parameters, branch reasons, and output.
 
@@ -56,7 +56,7 @@ Raw atom records retain command arguments, and log files retain command output. 
 Create one den and one default pathway.
 
 ```text
-ocura-oss init [--root PATH] [--name NAME]
+ocura-oss init [--root PATH] [--name NAME] [--json]
 ```
 
 #### Options
@@ -65,12 +65,22 @@ ocura-oss init [--root PATH] [--name NAME]
 | --- | --- | --- | --- |
 | `--root PATH` | path | current directory | Project root in which `.ocura-oss/` is created |
 | `--name NAME` | string | `ocura-oss` | Nonblank name stored in the den record |
+| `--json` | flag | false | Emit project paths and identifiers as JSON |
 
 #### Behavior
 
 `init` creates `.ocura-oss/`, one den record, and one unbranched default pathway. Initialization fails if `.ocura-oss/` already exists, including when the directory contains incomplete state.
 
 The text response identifies the den, default pathway, and state directory.
+
+#### JSON output
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `root` | string | Resolved project root |
+| `state_dir` | string | Resolved `.ocura-oss` directory |
+| `den_id` | string | Persisted den identifier |
+| `default_pathway_id` | string | Persisted default pathway identifier |
 
 #### Exit status
 
@@ -90,7 +100,7 @@ ocura-oss init --root ./experiment --name "batch study"
 Run one trusted local command and record terminal evidence.
 
 ```text
-ocura-oss run [--root PATH] [--pathway ID] [--param KEY=VALUE] [--quiet] -- COMMAND...
+ocura-oss run [--root PATH] [--pathway ID] [--param KEY=VALUE] [--quiet] [--json] -- COMMAND...
 ```
 
 The `--` separator is required. Ocura OSS options belong before it. Every token after it is passed to the child command as one argument token.
@@ -103,13 +113,14 @@ The `--` separator is required. Ocura OSS options belong before it. Every token 
 | `--pathway ID` | pathway ID | den default | Pathway that receives the recorded atom |
 | `--param KEY=VALUE` | string pair | none | Declared run parameter; repeatable |
 | `--quiet` | flag | false | Retain output without mirroring it to the terminal |
+| `--json` | flag | false | Emit one result as JSON; retain child output in logs without streaming |
 | `COMMAND...` | argument tokens | required | Executable and arguments placed after `--` |
 
 #### Execution
 
 The command runs with `shell=False` and the project root as its working directory. It inherits the invoking process environment. Environment keys and values are not serialized.
 
-Stdout and stderr are captured as separate files under `.ocura-oss/logs/`. Unless `--quiet` is present, the same bytes are also streamed to the terminal.
+Stdout and stderr are captured as separate files under `.ocura-oss/logs/`. Unless `--quiet` or `--json` is present, the same bytes are also streamed to the terminal.
 
 One run produces:
 
@@ -122,6 +133,22 @@ A passing command records `passed`. A nonzero return code records `failed`. A la
 #### Text output
 
 The final text summary includes the atom, chokepoint, pathway, outcome, duration, log paths, and the return code or launch category when available. It does not repeat command arguments.
+
+#### JSON output
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `atom_id` | string | Recorded command attempt |
+| `chokepoint_id` | string | Terminal evidence for branching |
+| `pathway_id` | string | Pathway containing the run |
+| `outcome` | string | `passed`, `failed`, `interrupted`, or `launch_failed` |
+| `duration_seconds` | number | Recorded elapsed command time |
+| `return_code` | integer or null | Child exit status when available |
+| `launch_error_category` | string or null | Error category or `interrupted` |
+| `stdout_log` | string | Project-relative stdout log path |
+| `stderr_log` | string | Project-relative stderr log path |
+
+Use returned IDs to continue the [automated workflow](/docs/automation). The [training example](/docs/examples) provides an executable client.
 
 #### Exit status
 
@@ -139,7 +166,7 @@ ocura-oss run -- python script.py --epochs 4
 ```
 
 ```console
-ocura-oss run --pathway pathway-<id> --param batch=4 --quiet -- python script.py
+ocura-oss run --pathway pathway-<id> --param batch=4 --quiet -- python script.py --batch 4
 ```
 
 ## `pathways`
@@ -296,7 +323,7 @@ Without `--from`, the complete state must pass verification before Ocura OSS sel
 
 For a child with multiple atoms, comparison uses the newest atom by start time and identifier. It reports pathway parameter differences and, when child evidence exists, run-level declared parameter differences.
 
-Version 0.2.2 parameter deltas contain inherited, added, and changed values. Removed parameters are outside the comparison schema.
+Version 0.3.0 parameter deltas contain inherited, added, and changed values. Removed parameters are outside the comparison schema.
 
 Comparison reads stored records and logs. It does not rerun commands.
 
@@ -430,4 +457,4 @@ Argument parsing errors also use status 2.
 
 `run` executes command tokens directly with `shell=False`. Ocura OSS does not sandbox commands, restrict network access, contain hostile code, or guarantee process-tree isolation.
 
-Use the CLI only for trusted, same-owner local workloads. See the [overview boundaries](/docs#execution-boundary) and [Python API reference](/docs/api) for the corresponding programmatic contract.
+Use owner-authorized workloads inside an execution environment with suitable permissions and isolation. See [state and verification](/docs/state) and [Python API reference](/docs/api) for the corresponding programmatic contract.

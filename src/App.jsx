@@ -18,6 +18,7 @@ import NotFoundPage from "./components/NotFoundPage.jsx";
 import OnVeilPage from "./components/OnVeilPage.jsx";
 import { ParticleProvider } from "./components/particles/ParticleContext.jsx";
 import { jsonLdGraph } from "./content/jsonld.js";
+import { isDocRoute } from "./content/docPages.js";
 
 const LANDING_KINDS = new Set(["home", "ocuna", "ocura"]);
 const PAPER_KINDS = new Set(["contact", "notfound"]);
@@ -40,7 +41,7 @@ function pageKind(route) {
   if (route === "/ocura") return "ocura";
   if (route === "/onveil") return "onveil";
   if (route === "/critter-acknowledgement") return "critter";
-  if (route === "/docs" || route === "/docs/cli" || route === "/docs/api") return "docs";
+  if (isDocRoute(route)) return "docs";
   if (route === "/contact") return "contact";
   return "notfound";
 }

@@ -1,8 +1,10 @@
 import {
   CONTACT_EMAIL,
   OCURA_OSS_REPO,
+  OCURA_OSS_VERSION,
   pageMeta,
 } from "../content.js";
+import { DOC_PAGES, isDocRoute } from "./docPages.js";
 import { extractHeadings, escapeHtml, renderMarkdown } from "../lib/markdown.js";
 
 function navHtml() {
@@ -40,12 +42,13 @@ ${footerHtml()}`;
 function landingBody(extra = "") {
   return `
       <p>${pageMeta["/"].description}</p>
-      <p>Ocuna builds the execution layer for AI workloads that branch as they run. Ocura is the runtime. Ocura OSS is the public research package.</p>
+      <p>Ocuna builds the execution layer for AI workloads that branch as they run. Ocura is the runtime. Ocura OSS is a local execution ledger for recording, branching, and comparing command runs.</p>
       <nav>
         <a href="/#work">Scheduler</a>
         <a href="/#market">Training and inference</a>
         <a href="/ocura">Ocura</a>
         <a href="/docs">Ocura OSS docs</a>
+        <a href="/docs/examples">PyTorch, JAX, and Ray example</a>
       </nav>
       ${extra}`;
 }
@@ -70,7 +73,8 @@ export function crawlableHtml(route, markdown = "") {
     );
   }
 
-  if (route === "/docs" || route === "/docs/cli" || route === "/docs/api") {
+  if (isDocRoute(route)) {
+    const page = DOC_PAGES.find((item) => item.route === route);
     const toc = extractHeadings(markdown)
       .map((heading) => `<a href="#${escapeHtml(heading.id)}">${escapeHtml(heading.text)}</a>`)
       .join(" ");
@@ -79,12 +83,15 @@ export function crawlableHtml(route, markdown = "") {
 <main>
   <aside>
     <nav aria-label="Documentation sections">
-      <a href="/docs">Overview</a>
-      <a href="/docs/cli">CLI reference</a>
-      <a href="/docs/api">Python API</a>
+      ${DOC_PAGES.map((item) => `<a href="${item.route}">${item.label}</a>`).join("\n      ")}
     </nav>
   </aside>
   <article>
+    <p>Ocura OSS ${OCURA_OSS_VERSION}</p>
+    <nav aria-label="Alternative documentation formats">
+      <a href="/docs/${page.file}">Read Markdown</a>
+      <a href="${OCURA_OSS_REPO}/blob/v${OCURA_OSS_VERSION}/${page.repositoryPath}">Read on GitHub</a>
+    </nav>
     <nav aria-label="On this page">${toc}</nav>
     ${body}
   </article>

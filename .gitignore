@@ -26,6 +26,7 @@ scripts/puppet-trace-comparison.png
 # Extraction & lab tooling (not part of the deployed site)
 scripts/*
 !scripts/prerender.mjs
+!scripts/verify-docs.mjs
 
 # Source sprite archives & duplicates (site uses site-public/sprites/)
 sprites/

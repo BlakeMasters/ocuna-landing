@@ -2,6 +2,7 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import { copyFile, mkdir, readFile } from "node:fs/promises";
 import path from "node:path";
+import { DOC_PAGES } from "./src/content/docPages.js";
 
 const productionImages = [
   "OnVeil.webp",
@@ -27,11 +28,9 @@ function imagesDirectory() {
     configureServer(server) {
       server.middlewares.use(async (req, res, next) => {
         const pathname = req.url ? new URL(req.url, "http://localhost").pathname : "";
-        const documentationSources = new Map([
-          ["/docs/ocura-oss.md", "src/content/docs/ocura-oss.md"],
-          ["/docs/cli.md", "src/content/docs/cli.md"],
-          ["/docs/api.md", "src/content/docs/api.md"],
-        ]);
+        const documentationSources = new Map(
+          DOC_PAGES.map((page) => [`/docs/${page.file}`, `src/content/docs/${page.file}`]),
+        );
         const documentationSource = documentationSources.get(pathname);
         if (documentationSource) {
           try {

@@ -1,6 +1,6 @@
 # Python API reference
 
-Version 0.2.2.
+Version 0.3.0.
 
 The `ocura_oss` package exposes typed workflow functions, read-oriented state access, frozen result and record types, enums, and public exceptions.
 
@@ -19,6 +19,8 @@ File operations can propagate `OSError` when a rejected read, write, replacement
 A crafted pathway lineage that exceeds Python's recursion limit can propagate `RecursionError` from programmatic loading, verification, branching, or comparison. The CLI converts that condition to exit status 2.
 
 Declared parameter mappings require nonempty string values. Keys must begin with a letter or underscore and may then contain letters, digits, underscores, periods, or hyphens. Values are stored without type conversion.
+
+Use these operations from a script or an AI agent inside its existing execution environment. The [automation guide](/docs/automation) describes caller responsibilities; the [training example](/docs/examples) supplies PyTorch/JAX workloads with an optional local Ray executor.
 
 ## Workflow example
 
@@ -264,7 +266,7 @@ Comparison is a read-only operation over recorded state. For a child with more t
 
 `ComparisonState.READY` means every child has evidence. `PARTIAL` means at least one child lacks evidence. `NO_BRANCH` means the source has no child pathways.
 
-Version 0.2.2 parameter deltas contain inherited, added, and changed values.
+Version 0.3.0 parameter deltas contain inherited, added, and changed values.
 
 #### Example
 
@@ -959,7 +961,7 @@ Declared parameter relationship between source and child values.
 | `added` | mapping of string to string | Keys present only in the child |
 | `changed` | nested string mapping | Changed keys, each with `source` and `child` values |
 
-Removed source keys are outside the version 0.2.2 representation.
+Removed source keys are outside the version 0.3.0 representation.
 
 #### Methods
 
@@ -1174,7 +1176,7 @@ The destination is retained when it was created before the failure.
 ocura_oss.__version__: str
 ```
 
-Installed package version. Version 0.2.2 reports `"0.2.2"`.
+Installed package version. Version 0.3.0 reports `"0.3.0"`.
 
 ## Typing
 

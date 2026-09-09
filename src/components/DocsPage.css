@@ -1,3 +1,17 @@
+.docs-source-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  margin-bottom: 1.2rem;
+  font-size: 0.85rem;
+}
+
+.docs-source-links a {
+  color: #ee4c2c;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 .docs-page {
   display: flex;
   flex-direction: column;
@@ -472,7 +486,14 @@ body.docs-sidebar-open {
   text-decoration: underline;
 }
 
-.docs-prose ul {
+.docs-prose blockquote {
+  margin: 0;
+  padding: 0.5em 1em;
+  border-left: 3px solid #ee4c2c;
+}
+
+.docs-prose ul,
+.docs-prose ol {
   margin: 0;
   padding-left: 1.2em;
 }
