@@ -153,10 +153,15 @@ ${footerHtml()}`;
 
   if (route === "/onveil") {
     return wrap(
-      "OnVeil, authority research",
+      "Checking what agents are allowed to run",
       `
-      <p>${pageMeta["/onveil"].description}</p>
-      <p><a href="/">View Ocuna</a> · <a href="/ocura">Ocura</a></p>`,
+      <p>More AI agents are online every month. They crawl pages, call APIs, open pull requests, and run commands, usually with someone’s credentials attached. Most services can’t tell a well-behaved agent from a hijacked one until something breaks.</p>
+      <p>OnVeil is Ocuna’s research into checking an agent’s authority before it executes anything.</p>
+      <h2>Why we’re working on it</h2>
+      <p><strong>Agents have real access.</strong> A crawler used to read pages and leave. Agents now log in, fill out forms, merge code, and spend money, often with a long-lived token nobody is watching.</p>
+      <p><strong>One bad instruction is enough.</strong> A leaked token, or a prompt hidden in a web page, can turn a helpful agent into a flood of requests. For a small service, that is an outage.</p>
+      <p><strong>A check before every action.</strong> OnVeil puts a check between an agent and the thing it wants to do. The agent presents a grant, the check reads it, and only then does the action run. We are also working on how operators review the grants that were used.</p>
+      <p><a href="/">More from Ocuna</a> · <a href="/ocura">Ocura</a></p>`,
     );
   }
 

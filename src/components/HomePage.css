@@ -715,63 +715,6 @@
   outline: none;
 }
 
-.v0-proof {
-  display: flex;
-  gap: 28px;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 18px;
-  padding: clamp(20px, 3vw, 30px);
-  border: 1px solid var(--sim-border);
-  border-radius: 6px;
-  color: var(--sim-ink);
-  background: var(--sim-fill);
-  box-shadow:
-    0 24px 60px rgba(0, 0, 0, 0.4),
-    inset 0 1px 0 rgba(255, 255, 255, 0.05);
-}
-
-.v0-proof > span:first-child {
-  display: grid;
-  gap: 8px;
-}
-
-.v0-proof small {
-  color: var(--sim-signal);
-  font-family: var(--mono);
-  font-size: 0.68rem;
-  font-weight: 760;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
-
-.v0-proof strong {
-  max-width: 40ch;
-  font-size: clamp(1.2rem, 2vw, 1.65rem);
-  line-height: 1.15;
-}
-
-.v0-proof-action {
-  flex: 0 0 auto;
-  padding: 10px 13px;
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  border-radius: 4px;
-  font-size: 0.78rem;
-  font-weight: 760;
-  background: rgba(255, 255, 255, 0.05);
-}
-
-.v0-proof:hover .v0-proof-action,
-.v0-proof:focus-visible .v0-proof-action {
-  color: #08090c;
-  background: #f1f2f4;
-}
-
-.v0-proof:focus-visible {
-  outline: 2px solid var(--sim-teal);
-  outline-offset: 3px;
-}
-
 @media (max-width: 900px) {
   .ship-hero {
     display: flex;
@@ -880,11 +823,6 @@
     margin-top: 20px;
     font-size: 0.9rem;
     line-height: 1.64;
-  }
-
-  .v0-proof {
-    align-items: flex-start;
-    flex-direction: column;
   }
 }
 
