@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { DOC_PAGES } from "../src/content/docPages.js";
-import { OCURA_OSS_REPO, OCURA_OSS_VERSION, SITE_ORIGIN, knownRoutes, pageMeta } from "../src/content.js";
+import { OCURA_OSS_REPO, OCURA_OSS_SOURCE_REF, OCURA_OSS_VERSION, SITE_ORIGIN, knownRoutes, pageMeta } from "../src/content.js";
 import { extractHeadings, renderMarkdown } from "../src/lib/markdown.js";
 
 const sitemap = await readFile("dist/sitemap.xml", "utf8");
@@ -28,7 +28,7 @@ for (const page of DOC_PAGES) {
   assert.ok(html.includes(`href="${SITE_ORIGIN}${page.route}"`), `${page.route}: canonical URL`);
   assert.ok(html.includes(`type="text/markdown" href="${SITE_ORIGIN}/docs/${page.file}"`));
   assert.ok(html.includes(`href="/docs/${page.file}">Read Markdown</a>`));
-  assert.ok(html.includes(`${OCURA_OSS_REPO}/blob/v${OCURA_OSS_VERSION}/${page.repositoryPath}`));
+  assert.ok(html.includes(`${OCURA_OSS_REPO}/blob/${OCURA_OSS_SOURCE_REF}/${page.repositoryPath}`));
   assert.ok(sitemap.includes(`<loc>${SITE_ORIGIN}${page.route}</loc>`));
   assert.ok(index.includes(`${SITE_ORIGIN}/docs/${page.file}`));
   for (const other of DOC_PAGES) assert.ok(html.includes(`href="${other.route}"`));

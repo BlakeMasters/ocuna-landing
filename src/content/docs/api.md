@@ -1,6 +1,6 @@
 # Python API reference
 
-Version 0.3.0.
+Version 0.4.0.
 
 The `ocura_oss` package exposes typed workflow functions, read-oriented state access, frozen result and record types, enums, and public exceptions.
 
@@ -266,7 +266,7 @@ Comparison is a read-only operation over recorded state. For a child with more t
 
 `ComparisonState.READY` means every child has evidence. `PARTIAL` means at least one child lacks evidence. `NO_BRANCH` means the source has no child pathways.
 
-Version 0.3.0 parameter deltas contain inherited, added, and changed values.
+Parameter deltas contain inherited, added, and changed values.
 
 #### Example
 
@@ -656,7 +656,57 @@ The resolved `pathlib.Path` directly inside this store's `.ocura-oss/logs/` dire
 | --- | --- |
 | `StoreError` | `stream` is invalid or the recorded path is empty, absolute, escaping, or outside the direct logs directory |
 
-The returned path has passed containment checks only. `verify_atom_evidence()` adds existence, byte-count, and digest verification before evidence is read.
+The returned path has passed containment checks only. Use `read_verified_log()` to consume bytes that have been checked against the stored atom; `verify_atom_evidence()` checks both logs without returning their contents.
+
+### `Store.read_verified_log`
+
+```python
+store.read_verified_log(
+    atom_id: str,
+    *,
+    stream: Literal["stdout", "stderr"] = "stdout",
+) -> bytes
+```
+
+Read one complete recorded log and verify the exact bytes returned. Added in 0.4.0.
+
+#### Parameters
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| `atom_id` | string | required | Identifier of the stored atom whose output is read |
+| `stream` | `stdout` or `stderr` | `stdout` | Selects the recorded output stream; keyword-only |
+
+#### Returns
+
+The selected log as `bytes`, unchanged, after loading and validating the stored atom and its lineage, checking path containment, and verifying the returned bytes' count and SHA-256 digest against the atom.
+
+#### Raises
+
+| Exception | Condition |
+| --- | --- |
+| `StoreError` | The atom or lineage is invalid; the stream is invalid; or the selected log is missing, unreadable, outside containment, or inconsistent with its recorded byte count or digest |
+| `RecursionError` | A crafted lineage exceeds the Python recursion limit |
+
+#### Notes
+
+The complete log is read into memory. Binary output is preserved, and output from failed commands can be read. Decoding and metric interpretation belong to the caller.
+
+This is a targeted check of one stream. It does not verify the other stream or the whole ledger; use `verify_state()` for the complete state check. Reading does not lock the ledger or create an atomic snapshot of records and logs. The returned bytes remain the verified contents even if the log file later changes.
+
+#### Example
+
+```python
+import json
+
+from ocura_oss import Store
+
+store = Store("experiment")
+raw = store.read_verified_log("atom-<id>", stream="stdout")
+metrics = json.loads(raw.decode("utf-8"))  # For a workload that emits UTF-8 JSON.
+
+diagnostics = store.read_verified_log("atom-<id>", stream="stderr")
+```
 
 ### `Store.verify_atom_evidence`
 
@@ -961,7 +1011,7 @@ Declared parameter relationship between source and child values.
 | `added` | mapping of string to string | Keys present only in the child |
 | `changed` | nested string mapping | Changed keys, each with `source` and `child` values |
 
-Removed source keys are outside the version 0.3.0 representation.
+Removed source keys are outside the parameter-delta representation.
 
 #### Methods
 
@@ -1176,7 +1226,7 @@ The destination is retained when it was created before the failure.
 ocura_oss.__version__: str
 ```
 
-Installed package version. Version 0.3.0 reports `"0.3.0"`.
+Installed package version. Version 0.4.0 reports `"0.4.0"`.
 
 ## Typing
 

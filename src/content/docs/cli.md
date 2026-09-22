@@ -1,6 +1,6 @@
 # Command-line reference
 
-Version 0.3.0.
+Version 0.4.0.
 
 The `ocura-oss` command records trusted local command attempts, creates metadata branches, compares branch evidence, and verifies project-local state.
 
@@ -323,7 +323,7 @@ Without `--from`, the complete state must pass verification before Ocura OSS sel
 
 For a child with multiple atoms, comparison uses the newest atom by start time and identifier. It reports pathway parameter differences and, when child evidence exists, run-level declared parameter differences.
 
-Version 0.3.0 parameter deltas contain inherited, added, and changed values. Removed parameters are outside the comparison schema.
+Parameter deltas contain inherited, added, and changed values. Removed parameters are outside the comparison schema.
 
 Comparison reads stored records and logs. It does not rerun commands.
 

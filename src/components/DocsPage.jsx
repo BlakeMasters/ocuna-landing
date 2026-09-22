@@ -3,6 +3,7 @@ import { pagePath } from "../assets.js";
 import {
   OCURA_OSS_PYPI,
   OCURA_OSS_REPO,
+  OCURA_OSS_SOURCE_REF,
   OCURA_OSS_VERSION,
 } from "../content.js";
 import apiMarkdown from "../content/docs/api.md?raw";
@@ -272,7 +273,7 @@ export default function DocsPage({ route }) {
           </p>
           <nav className="docs-source-links" aria-label="Alternative documentation formats">
             <a href={pagePath(`docs/${page.file}`)}>Read Markdown</a>
-            <a href={`${OCURA_OSS_REPO}/blob/v${OCURA_OSS_VERSION}/${page.repositoryPath}`}>Read on GitHub</a>
+            <a href={`${OCURA_OSS_REPO}/blob/${OCURA_OSS_SOURCE_REF}/${page.repositoryPath}`}>Read on GitHub</a>
           </nav>
           <div
             className="docs-prose"

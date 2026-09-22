@@ -2,7 +2,7 @@ import { copyFile, mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { jsonLdGraph } from "../src/content/jsonld.js";
 import { crawlableHtml } from "../src/content/crawlable.js";
-import { SITE_ORIGIN, OCURA_OSS_REPO, OCURA_OSS_VERSION, pageMeta } from "../src/content.js";
+import { SITE_ORIGIN, OCURA_OSS_REPO, OCURA_OSS_SOURCE_REF, OCURA_OSS_VERSION, pageMeta } from "../src/content.js";
 import { DOC_PAGES } from "../src/content/docPages.js";
 
 const origin = SITE_ORIGIN;
@@ -128,4 +128,4 @@ await Promise.all(
   ),
 );
 
-await writeFile("dist/llms.txt", `# Ocura OSS ${OCURA_OSS_VERSION}\n\nA local execution ledger for recording, branching, and comparing command runs. Use the JSON CLI or typed Python API from a terminal, script, or AI agent.\n\n## Documentation\n\n${DOC_PAGES.map((page) => `- [${page.label}](${origin}/docs/${page.file})`).join("\n")}\n\n## Source\n\n- [Version ${OCURA_OSS_VERSION}](${OCURA_OSS_REPO}/tree/v${OCURA_OSS_VERSION})\n- [Repository training example](${OCURA_OSS_REPO}/tree/v${OCURA_OSS_VERSION}/examples/autoregressive)\n\nExamples are repository-only. The core package has no runtime dependencies. Commands inherit their execution environment's permissions; checksums verify local consistency.\n`);
+await writeFile("dist/llms.txt", `# Ocura OSS ${OCURA_OSS_VERSION}\n\nA local execution ledger for recording, branching, and comparing command runs. Use the JSON CLI or typed Python API from a terminal, script, or AI agent.\n\n## Documentation\n\n${DOC_PAGES.map((page) => `- [${page.label}](${origin}/docs/${page.file})`).join("\n")}\n\n## Source\n\n- [Version ${OCURA_OSS_VERSION}](${OCURA_OSS_REPO}/tree/${OCURA_OSS_SOURCE_REF})\n- [Repository training example](${OCURA_OSS_REPO}/tree/${OCURA_OSS_SOURCE_REF}/examples/autoregressive)\n\nExamples are repository-only. The core package has no runtime dependencies. Commands inherit their execution environment's permissions; checksums verify local consistency.\n`);

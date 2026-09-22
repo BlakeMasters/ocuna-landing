@@ -1,6 +1,7 @@
 import {
   CONTACT_EMAIL,
   OCURA_OSS_REPO,
+  OCURA_OSS_SOURCE_REF,
   OCURA_OSS_VERSION,
   pageMeta,
 } from "../content.js";
@@ -90,7 +91,7 @@ export function crawlableHtml(route, markdown = "") {
     <p>Ocura OSS ${OCURA_OSS_VERSION}</p>
     <nav aria-label="Alternative documentation formats">
       <a href="/docs/${page.file}">Read Markdown</a>
-      <a href="${OCURA_OSS_REPO}/blob/v${OCURA_OSS_VERSION}/${page.repositoryPath}">Read on GitHub</a>
+      <a href="${OCURA_OSS_REPO}/blob/${OCURA_OSS_SOURCE_REF}/${page.repositoryPath}">Read on GitHub</a>
     </nav>
     <nav aria-label="On this page">${toc}</nav>
     ${body}

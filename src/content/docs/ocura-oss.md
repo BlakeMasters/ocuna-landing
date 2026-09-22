@@ -1,6 +1,6 @@
 # Ocura OSS
 
-Version 0.3.0.
+Version 0.4.0.
 
 A local execution ledger for recording, branching, and comparing command runs.
 
@@ -11,6 +11,18 @@ records and logs before branching or comparing them.
 
 Use it from your terminal, Python scripts, or an AI agent with a shell. The CLI
 provides JSON output throughout the workflow; the Python API returns typed results.
+
+## New in 0.4.0
+
+`Store.read_verified_log()` returns recorded stdout or stderr as bytes after checking
+their exact byte count and SHA-256 digest against the stored atom. Use it when a
+script needs to consume saved output, including metrics or failure diagnostics.
+Decoding and interpretation remain with your script.
+
+The autoregressive example now uses this reader to reconstruct its report. The
+core runtime still uses only the standard library, and the state format is unchanged.
+See the [Python API](/docs/api#store-store-read-verified-log) for the method and its
+verification scope.
 
 ## Install and try
 
@@ -84,6 +96,10 @@ run([sys.executable, "-c", "print(2)"], root=root, pathway_id=child.id, paramete
 assert verify(root).ok
 comparison = compare(baseline.chokepoint.id, root=root)
 ```
+
+Use `Store(root).read_verified_log(atom_id, stream="stdout")` to consume verified
+output bytes. The method also accepts `stream="stderr"`; use `verify(root)` for a
+complete state check. See the [Python API](/docs/api#store-store-read-verified-log).
 
 An agent can use the same CLI or Python workflow inside its existing execution
 environment. The [automation guide](/docs/automation) explains JSON results,
