@@ -1,4 +1,5 @@
 import { DOC_PAGES } from "./content/docPages.js";
+import { RESEARCH_META, RESEARCH_ROUTES } from "./content/research.js";
 
 export const SITE_ORIGIN = "https://ocuna-ai.com";
 export const CONTACT_EMAIL = "business@ocuna-ai.com";
@@ -9,6 +10,7 @@ export const OCURA_OSS_SOURCE_REF = "240843038a744b906ed6dffa8836dd827ea50691";
 
 export const companyNavItems = [
   { label: "Docs", href: "/docs" },
+  { label: "Research", href: "/research" },
   { label: "Contact", href: "/contact" },
 ];
 
@@ -17,6 +19,7 @@ export const ocuraNavItems = [
   { label: "Training + Inference", href: "#market" },
   { label: "Critter Acknowledgement", href: "#critter" },
   { label: "Docs", href: "/docs" },
+  { label: "Research", href: "/research" },
 ];
 
 export const productItems = [
@@ -34,6 +37,7 @@ export const productItems = [
 
 export const footerNavItems = [
   { label: "Docs", href: "/docs" },
+  { label: "Research", href: "/research" },
   { label: "Contact", href: "/contact" },
 ];
 
@@ -47,6 +51,7 @@ const homeMeta = {
 };
 
 export const pageMeta = {
+  ...RESEARCH_META,
   "/": homeMeta,
   "/ocuna": homeMeta,
   "/ocura": {
@@ -106,5 +111,6 @@ export const knownRoutes = new Set([
   "/onveil",
   "/critter-acknowledgement",
   ...DOC_PAGES.map((page) => page.route),
+  ...RESEARCH_ROUTES,
   "/contact",
 ]);

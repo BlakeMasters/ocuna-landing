@@ -37,6 +37,26 @@ Published routes include `/`, `/ocura`, `/docs`, `/contact`, `/onveil`, and
 
 `site-public/` also ships `robots.txt` and `sitemap.xml` for GitHub Pages.
 
+## Research
+
+The research section at `/research` contains two articles: "A Dream-RSI workflow
+with Ocura OSS" and "Good experiments leave a trail". Each article has its own
+route, illustration, section navigation, and link to the companion article.
+
+The Dream-RSI study describes a bounded CPU training workflow built around Ocura
+OSS execution records, lineage, and verified logs. It evaluates implementation
+support; the experiment did not establish a useful policy advantage.
+
+Article metadata and routes live in `src/content/research.js`; the Dream-RSI
+article is defined in `src/content/dreamRsiPost.js`. The UI loads as a separate
+chunk. The build emits readable HTML for the index and articles, including
+`.html` aliases, canonical URLs, and article artwork for social previews.
+Research routes are included in the sitemap. Unknown routes remain `noindex`.
+
+The illustrations in `site-public/research/` were generated for Ocuna. The
+Dream-RSI image depicts a raccoon inspecting drawings of a branching search tree;
+the companion article uses `raccoon-field-note.png`.
+
 ## GitHub Pages
 
 The deployment workflow lives in `.github/workflows/pages.yml`.
@@ -54,11 +74,13 @@ src/
   App.jsx
   content.js
   content/docs/          # Ocura OSS markdown (source for /docs)
+  content/research.js    # Articles and research route metadata
   components/
     LandingPage.jsx
     DocsPage.jsx
     ContactPage.jsx
     CritterPage.jsx
+    ResearchPage.jsx
 site-public/
   CNAME
   robots.txt
