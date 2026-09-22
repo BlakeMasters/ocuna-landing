@@ -1,6 +1,8 @@
 import { isDocRoute } from "./content/docPages.js";
+import { RESEARCH_ROUTES } from "./content/research.js";
 
 const base = import.meta.env.BASE_URL || "/";
+const researchRoutes = new Set(RESEARCH_ROUTES);
 
 export function asset(path) {
   return `${base}${path.replace(/^\/+/, "")}`;
@@ -37,7 +39,7 @@ export function routeFromLocation(location = window.location) {
     return "/ocura";
   }
 
-  if (path.endsWith(".html") && isDocRoute(path.slice(0, -5))) {
+  if (path.endsWith(".html") && (isDocRoute(path.slice(0, -5)) || researchRoutes.has(path.slice(0, -5)))) {
     return path.slice(0, -5);
   }
 

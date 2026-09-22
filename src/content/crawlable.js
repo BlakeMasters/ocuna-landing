@@ -6,6 +6,7 @@ import {
   pageMeta,
 } from "../content.js";
 import { DOC_PAGES, isDocRoute } from "./docPages.js";
+import { getResearchPost, RESEARCH_ART, RESEARCH_POSTS } from "./research.js";
 import { extractHeadings, escapeHtml, renderMarkdown } from "../lib/markdown.js";
 
 function navHtml() {
@@ -17,6 +18,7 @@ function navHtml() {
     <a href="/ocura">Ocura</a>
     <a href="/onveil">OnVeil</a>
     <a href="/docs">Docs</a>
+    <a href="/research">Research</a>
     <a href="/contact">Contact</a>
   </nav>
 </header>`;
@@ -26,6 +28,7 @@ function footerHtml() {
   return `
 <footer>
   <a href="/docs">Docs</a>
+  <a href="/research">Research</a>
   <a href="/contact">Contact</a>
   <a href="mailto:${CONTACT_EMAIL}">${CONTACT_EMAIL}</a>
 </footer>`;
@@ -55,6 +58,44 @@ function landingBody(extra = "") {
 }
 
 export function crawlableHtml(route, markdown = "") {
+  if (route === "/research") {
+    return wrap(
+      "Field Notes",
+      `<section aria-label="Research notes">
+        ${RESEARCH_POSTS.map((post) => `<article>
+          <figure><img src="/research/${escapeHtml(RESEARCH_ART[post.art].file)}" width="1536" height="1024" style="max-width:100%;height:auto" alt="${escapeHtml(RESEARCH_ART[post.art].alt)}" /></figure>
+          <p>${escapeHtml(post.category)} · <time datetime="${escapeHtml(post.date)}">${escapeHtml(post.dateLabel)}</time> · ${escapeHtml(post.readTime)}</p>
+          <h2><a href="/research/${escapeHtml(post.slug)}">${escapeHtml(post.title)}</a></h2>
+        </article>`).join("\n")}
+      </section>`,
+    );
+  }
+
+  const researchPost = getResearchPost(route);
+  if (researchPost) {
+    const illustration = RESEARCH_ART[researchPost.art] ?? RESEARCH_ART.trail;
+    return `${navHtml()}
+<main id="top" tabindex="-1">
+  <article>
+    <p><a href="/research">All field notes</a></p>
+    <p>${escapeHtml(researchPost.category)}</p>
+    <h1>${escapeHtml(researchPost.title)}</h1>
+    <p><time datetime="${escapeHtml(researchPost.date)}">${escapeHtml(researchPost.dateLabel)}</time> · ${escapeHtml(researchPost.readTime)}</p>
+    <figure><img src="/research/${escapeHtml(illustration.file)}" width="1536" height="1024" style="max-width:100%;height:auto" alt="${escapeHtml(illustration.alt)}" /></figure>
+    <nav aria-label="On this page">${researchPost.sections.map((section) => `<a href="#${escapeHtml(section.id)}">${escapeHtml(section.title)}</a>`).join(" ")}</nav>
+    ${researchPost.sections.map((section) => `<section aria-labelledby="${escapeHtml(section.id)}">
+      <h2 id="${escapeHtml(section.id)}" tabindex="-1">${escapeHtml(section.title)}</h2>
+      ${section.paragraphs.map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join("\n      ")}
+      ${section.code ? `<pre><code>${escapeHtml(section.code)}</code></pre>` : ""}
+      ${section.links?.length ? `<ul>${section.links.map((link) => `<li><a href="${escapeHtml(link.href)}">${escapeHtml(link.label)}</a></li>`).join("")}</ul>` : ""}
+    </section>`).join("\n    ")}
+    <section aria-label="Read next"><h2>Read next</h2>${RESEARCH_POSTS.filter((post) => post.slug !== researchPost.slug).map((post) => `<p><a href="/research/${escapeHtml(post.slug)}">${escapeHtml(post.title)}</a></p>`).join("")}</section>
+    <p><a href="/research">All field notes</a></p>
+  </article>
+</main>
+${footerHtml()}`;
+  }
+
   if (route === "/" || route === "/ocuna") {
     return wrap("Ocuna, infrastructure for uncertain computation", landingBody());
   }

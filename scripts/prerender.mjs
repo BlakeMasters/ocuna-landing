@@ -4,6 +4,7 @@ import { jsonLdGraph } from "../src/content/jsonld.js";
 import { crawlableHtml } from "../src/content/crawlable.js";
 import { SITE_ORIGIN, OCURA_OSS_REPO, OCURA_OSS_SOURCE_REF, OCURA_OSS_VERSION, pageMeta } from "../src/content.js";
 import { DOC_PAGES } from "../src/content/docPages.js";
+import { RESEARCH_ROUTES } from "../src/content/research.js";
 
 const origin = SITE_ORIGIN;
 const routes = [
@@ -13,6 +14,7 @@ const routes = [
   "/onveil",
   "/critter-acknowledgement",
   ...DOC_PAGES.map((page) => page.route),
+  ...RESEARCH_ROUTES,
   "/contact",
 ];
 
@@ -75,6 +77,8 @@ function applyDocument(html, route, isNotFound = false) {
     `<script id="ocuna-jsonld" type="application/ld+json">${jsonLd}</script>`,
   );
   next = replaceFirst(next, /<div id="root"><\/div>/, `<div id="root">${rootHtml}</div>`);
+  next = replaceFirst(next, /<meta property="og:type" content="[^"]*" \/>/, `<meta property="og:type" content="${meta.type ?? "website"}" />`);
+  next = replaceFirst(next, /<meta property="og:image" content="[^"]*" \/>/, `<meta property="og:image" content="${origin}${meta.image ?? "/images/ocuna_logo.png"}" />`);
   const docPage = DOC_PAGES.find((page) => page.route === route);
   if (docPage && !isNotFound) {
     next = next.replace("</head>", `<link rel="alternate" type="text/markdown" href="${origin}/docs/${docPage.file}" title="Markdown" />\n</head>`);

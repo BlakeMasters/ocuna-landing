@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { asset, pagePath, routeFromLocation } from "./assets.js";
 import "./components/CritterPage.css";
 import "./components/PaperPage.css";
@@ -9,6 +9,7 @@ import {
   ocuraNavItems,
   pageMeta,
   productItems,
+  SITE_ORIGIN,
 } from "./content.js";
 import ContactPage from "./components/ContactPage.jsx";
 import CritterPage from "./components/CritterPage.jsx";
@@ -19,9 +20,12 @@ import OnVeilPage from "./components/OnVeilPage.jsx";
 import { ParticleProvider } from "./components/particles/ParticleContext.jsx";
 import { jsonLdGraph } from "./content/jsonld.js";
 import { isDocRoute } from "./content/docPages.js";
+import { RESEARCH_ROUTES } from "./content/research.js";
 
 const LANDING_KINDS = new Set(["home", "ocuna", "ocura"]);
 const PAPER_KINDS = new Set(["contact", "notfound"]);
+const RESEARCH_ROUTE_SET = new Set(RESEARCH_ROUTES);
+const ResearchPage = lazy(() => import("./components/ResearchPage.jsx"));
 
 function useRoute() {
   const [route, setRoute] = useState(() => routeFromLocation());
@@ -42,6 +46,7 @@ function pageKind(route) {
   if (route === "/onveil") return "onveil";
   if (route === "/critter-acknowledgement") return "critter";
   if (isDocRoute(route)) return "docs";
+  if (RESEARCH_ROUTE_SET.has(route)) return "research";
   if (route === "/contact") return "contact";
   return "notfound";
 }
@@ -66,6 +71,7 @@ export default function App() {
   const isOnVeilPage = kind === "onveil";
   const isCritterPage = kind === "critter";
   const isDocsPage = kind === "docs";
+  const isResearchPage = kind === "research";
   const isPaperPage = PAPER_KINDS.has(kind);
   const meta = pageMeta[kind === "notfound" ? "/404" : route] ?? pageMeta["/404"];
   const moveFocusToMain = useRef(false);
@@ -75,6 +81,8 @@ export default function App() {
     document.querySelector('meta[name="description"]')?.setAttribute("content", meta.description);
     document.querySelector('meta[property="og:title"]')?.setAttribute("content", meta.title);
     document.querySelector('meta[property="og:description"]')?.setAttribute("content", meta.description);
+    document.querySelector('meta[property="og:type"]')?.setAttribute("content", meta.type ?? "website");
+    document.querySelector('meta[property="og:image"]')?.setAttribute("content", `${SITE_ORIGIN}${meta.image ?? "/images/ocuna_logo.png"}`);
 
     let robots = document.querySelector('meta[name="robots"]');
     if (kind === "notfound") {
@@ -84,12 +92,15 @@ export default function App() {
         document.head.append(robots);
       }
       robots.setAttribute("content", "noindex");
+    } else {
+      robots?.remove();
+    }
+
+    if (kind === "notfound") {
       document.querySelector('meta[property="og:url"]')?.remove();
       document.querySelector('link[rel="canonical"]')?.remove();
       return;
     }
-
-    robots?.remove();
 
     const canonical = `https://ocuna-ai.com${canonicalPath(route) === "/" ? "/" : canonicalPath(route)}`;
 
@@ -126,20 +137,36 @@ export default function App() {
     document.body.classList.toggle("critter-route", isCritterPage);
     document.body.classList.toggle("landing-route", isLandingPage);
     document.body.classList.toggle("docs-route", isDocsPage);
+    document.body.classList.toggle("research-route", isResearchPage);
     document.body.classList.toggle("paper-route", isPaperPage);
     return () => {
       document.body.classList.remove("onveil-route");
       document.body.classList.remove("critter-route");
       document.body.classList.remove("landing-route");
       document.body.classList.remove("docs-route");
+      document.body.classList.remove("research-route");
       document.body.classList.remove("paper-route");
     };
-  }, [isCritterPage, isDocsPage, isLandingPage, isOnVeilPage, isPaperPage]);
+  }, [isCritterPage, isDocsPage, isLandingPage, isOnVeilPage, isPaperPage, isResearchPage]);
 
   useEffect(() => {
     if (!moveFocusToMain.current) return;
-    moveFocusToMain.current = false;
-    document.getElementById("top")?.focus({ preventScroll: true });
+    let observer;
+    function focusWhenReady() {
+      const target = document.getElementById("top");
+      if (target) {
+        target.focus({ preventScroll: true });
+        moveFocusToMain.current = false;
+        observer?.disconnect();
+        return true;
+      }
+      return false;
+    }
+    if (!focusWhenReady()) {
+      observer = new MutationObserver(focusWhenReady);
+      observer.observe(document.getElementById("root"), { childList: true, subtree: true });
+    }
+    return () => observer?.disconnect();
   }, [route]);
 
   useEffect(() => {
@@ -171,6 +198,12 @@ export default function App() {
   }, [kind, route]);
 
   function navigate(event, href) {
+    if (
+      event.defaultPrevented || event.button !== 0 || event.metaKey ||
+      event.ctrlKey || event.shiftKey || event.altKey ||
+      event.currentTarget.target === "_blank"
+    ) return;
+
     if (href.startsWith("#")) {
       if (isLandingPage) {
         return;
@@ -201,6 +234,13 @@ export default function App() {
   if (kind === "contact") page = <ContactPage />;
   if (kind === "critter") page = <CritterPage />;
   if (kind === "onveil") page = <OnVeilPage />;
+  if (kind === "research") {
+    page = (
+      <Suspense fallback={<div className="shell" role="status">Loading field notes…</div>}>
+        <ResearchPage route={route} onNavigate={navigate} />
+      </Suspense>
+    );
+  }
 
   const shell = (
     <>
@@ -244,7 +284,7 @@ function SiteHeader({ route, kind, onNavigate }) {
             : pagePath(item.href);
           const isCurrent =
             item.href.startsWith("/") &&
-            (route === item.href || (item.href === "/docs" && route.startsWith("/docs/")));
+            (route === item.href || route.startsWith(`${item.href}/`));
 
           return (
             <a
