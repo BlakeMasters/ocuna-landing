@@ -22,7 +22,6 @@ export default function ContactPage() {
   return (
     <PaperShell
       className="paper-page--contact"
-      kicker="Ocuna / contact"
       titleLines={["Write", "to Ocuna"]}
       lede="There is no signup form on this site. Use email for product, research, partnership, or documentation questions."
       extra={<ContactArt />}

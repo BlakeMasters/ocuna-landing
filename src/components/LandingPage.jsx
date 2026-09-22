@@ -441,11 +441,11 @@ export function OnVeilFlowSection() {
                   <g clipPath="url(#ov-eye-aperture-clip)">
                     <path className="ov-eye-fill" d="M470 204 C532 106 700 106 784 204 C702 302 532 302 470 204 Z" />
                     <g className="ov-eye-detail">
-                      <ellipse className="ov-iris" cx="625" cy="204" rx="34" ry="58" />
-                      <ellipse className="ov-pupil" cx="625" cy="204" rx="12" ry="43" />
-                      <path className="ov-eye-vein" d="M548 144 C596 178 594 232 548 266" />
-                      <path className="ov-eye-vein ov-eye-vein-alt" d="M704 138 C666 182 664 230 706 270" />
-                      <path className="ov-scan" d="M588 128 L664 278" />
+                      <g className="ov-gaze">
+                        <circle className="ov-gaze-iris" cx="627" cy="204" r="60" />
+                        <circle className="ov-gaze-ring" cx="627" cy="204" r="39" />
+                        <circle className="ov-gaze-pupil" cx="627" cy="204" r="12" />
+                      </g>
                     </g>
                   </g>
                 </g>

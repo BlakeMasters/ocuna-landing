@@ -61,7 +61,8 @@ export const pageMeta = {
   },
   "/onveil": {
     title: "OnVeil | Authority Research",
-    description: "OnVeil explores authority checks and operator controls for software execution.",
+    description:
+      "OnVeil is Ocuna’s research into checking what AI agents are allowed to run before they run it.",
   },
   "/critter-acknowledgement": {
     title: "Ocuna | Critter Acknowledgement",
