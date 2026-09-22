@@ -171,22 +171,6 @@ export default function OcuraSimulator() {
             </div>
           </article>
         </div>
-
-        <a
-          className="v0-proof"
-          href="https://blakemasters.github.io/aims-competition/"
-          target="_blank"
-          rel="noreferrer"
-        >
-          <span>
-            <small>Stanford competition winner</small>
-            <strong>
-              V0 won a Stanford competition. Ocura is turning it into runtime infrastructure for
-              training and inference.
-            </strong>
-          </span>
-          <span className="v0-proof-action">Explore the winning project ↗</span>
-        </a>
       </div>
     </section>
   );
