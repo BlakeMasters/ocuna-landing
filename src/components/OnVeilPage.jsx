@@ -111,14 +111,27 @@ function Skyline() {
   );
 }
 
+const EYE_SHAPE = "M40 110 C110 22 310 22 380 110 C310 198 110 198 40 110 Z";
+
 function Eye() {
   return (
     <svg className="ov-scene__eye" viewBox="30 30 360 160" aria-hidden="true" focusable="false">
-      <g filter="url(#ovp-grit)">
-        <path className="ov-eye__white" d="M40 110 C110 22 310 22 380 110 C310 198 110 198 40 110 Z" />
-        <circle className="ov-eye__iris" cx="210" cy="110" r="58" />
-        <circle className="ov-eye__ring" cx="210" cy="110" r="38" />
-        <circle className="ov-eye__pupil" cx="210" cy="110" r="12" />
+      <defs>
+        <clipPath id="ovp-eye-clip">
+          <path d={EYE_SHAPE} />
+        </clipPath>
+      </defs>
+      <g className="ov-eye__lid">
+        <g filter="url(#ovp-grit)">
+          <path className="ov-eye__white" d={EYE_SHAPE} />
+          <g clipPath="url(#ovp-eye-clip)">
+            <g className="ov-eye__gaze">
+              <circle className="ov-eye__iris" cx="210" cy="110" r="58" />
+              <circle className="ov-eye__ring" cx="210" cy="110" r="38" />
+              <circle className="ov-eye__pupil" cx="210" cy="110" r="12" />
+            </g>
+          </g>
+        </g>
       </g>
     </svg>
   );

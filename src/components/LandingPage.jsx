@@ -1,11 +1,12 @@
 import { lazy, Suspense, useEffect, useRef, useState } from "react";
-import { pagePath } from "../assets.js";
+import { asset, pagePath } from "../assets.js";
 import {
   OCURA_OSS_PYPI,
   OCURA_OSS_REPO,
   OCURA_OSS_VERSION,
 } from "../content.js";
 import { universeSections } from "../content/nounShapes.js";
+import { RESEARCH_ART, RESEARCH_POSTS } from "../content/research.js";
 import CritterGlassCard from "./CritterGlassCard.jsx";
 import LogoRaccoonTrigger from "./LogoRaccoonTrigger.jsx";
 import NounTrigger from "./NounTrigger.jsx";
@@ -20,8 +21,9 @@ export default function LandingPage() {
     <main id="top" tabIndex={-1}>
       <ShipHero />
       <RuntimeSection />
-      <OssCard />
       <OcuraSimulator />
+      <OssBand />
+      <MoreFromOcuna />
       <CritterHomeSection />
     </main>
   );
@@ -77,19 +79,29 @@ function ShipHero() {
             governs training and inference from first action to final outcome, and keeps every
             path it took on the record.
           </p>
+          <a className="ship-hero-link" href="#work">
+            Explore the scheduler
+          </a>
         </article>
 
-        <div className="ship-hero-actions" aria-label="Particle logistics controls">
-          <a href="#work">Explore scheduler</a>
-          <button
-            type="button"
-            aria-label={motionEnabled ? "Pause particle scene" : "Play particle scene"}
-            onClick={toggleMotion}
-          >
-            <span>Particle motion</span>
-            <strong aria-live="polite">{motionEnabled ? "Pause" : "Play"}</strong>
-          </button>
-        </div>
+        <button
+          className="ship-hero-motion"
+          type="button"
+          aria-label={motionEnabled ? "Pause particle scene" : "Play particle scene"}
+          aria-pressed={!motionEnabled}
+          onClick={toggleMotion}
+        >
+          <svg aria-hidden="true" viewBox="0 0 24 24">
+            {motionEnabled ? (
+              <>
+                <rect x="7" y="5.5" width="3.5" height="13" rx="1" />
+                <rect x="13.5" y="5.5" width="3.5" height="13" rx="1" />
+              </>
+            ) : (
+              <path d="M8 5.5v13l10-6.5z" />
+            )}
+          </svg>
+        </button>
       </div>
     </section>
   );
@@ -269,18 +281,20 @@ function RuntimeSection() {
   );
 }
 
-function OssCard() {
+function OssBand() {
   return (
     <section className="home-oss" id="ocura-oss" aria-labelledby="ocura-oss-title">
-      <div className="shell">
-        <article className="home-oss-card">
-          <p className="home-oss-kicker">Ocura OSS / v{OCURA_OSS_VERSION}</p>
+      <div className="shell home-oss-band">
+        <div className="home-oss-copy">
           <h2 id="ocura-oss-title">Record, branch, and compare your command runs.</h2>
           <p>
-            Keep a baseline, explain the next variation, and connect its result to the original
-            run. Use the JSON CLI or Python API from your terminal, scripts, or an AI agent.
-            Try the repository example with PyTorch, JAX, or a local Ray task.
+            Ocura OSS {OCURA_OSS_VERSION} is the part you can run on your own machine today. Keep
+            a baseline, branch from it with a reason, and connect each result to the original run
+            from the JSON CLI, the Python API, or an AI agent. The repository example covers
+            PyTorch, JAX, and a local Ray task.
           </p>
+        </div>
+        <div className="home-oss-try">
           <pre>
             <code>python -m pip install ocura-oss</code>
           </pre>
@@ -290,7 +304,60 @@ function OssCard() {
             <a href={OCURA_OSS_PYPI}>PyPI</a>
             <a href={OCURA_OSS_REPO}>GitHub</a>
           </div>
-        </article>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+const TILE_RAYS = Array.from({ length: 18 }, (_, index) => {
+  const angle = (index * 360) / 18 + ((index * 5) % 3);
+  return `rgba(179, 52, 43, 0.3) ${angle}deg ${angle + 5 + ((index * 7) % 4)}deg, transparent ${angle + 5 + ((index * 7) % 4)}deg ${((index + 1) * 360) / 18}deg`;
+}).join(", ");
+
+function OnVeilTileArt() {
+  return (
+    <div
+      className="home-more-art home-more-art--onveil"
+      style={{ backgroundImage: `conic-gradient(from 0deg at 50% 46%, ${TILE_RAYS})` }}
+      aria-hidden="true"
+    >
+      <svg viewBox="30 30 360 160" focusable="false">
+        <path fill="#ebe3d3" d="M40 110 C110 22 310 22 380 110 C310 198 110 198 40 110 Z" />
+        <circle fill="#121010" cx="210" cy="118" r="58" />
+        <circle fill="none" stroke="#ebe3d3" strokeWidth="9" cx="210" cy="118" r="38" />
+        <circle fill="#b3342b" cx="210" cy="118" r="12" />
+      </svg>
+    </div>
+  );
+}
+
+function MoreFromOcuna() {
+  const latest = RESEARCH_POSTS[0];
+  const latestArt = RESEARCH_ART[latest.art];
+
+  return (
+    <section className="home-more" aria-labelledby="home-more-title">
+      <div className="shell">
+        <h2 id="home-more-title">More from Ocuna</h2>
+        <div className="home-more-grid">
+          <a className="home-more-tile home-more-tile--onveil" href={pagePath("onveil")}>
+            <OnVeilTileArt />
+            <div className="home-more-copy">
+              <h3>OnVeil</h3>
+              <p>Research into checking what AI agents are allowed to run before they run it.</p>
+            </div>
+          </a>
+          <a className="home-more-tile home-more-tile--research" href={pagePath("research")}>
+            <div className="home-more-art home-more-art--research">
+              <img src={asset(`research/${latestArt.file}`)} alt="" loading="lazy" width="1536" height="1024" />
+            </div>
+            <div className="home-more-copy">
+              <h3>Field Notes</h3>
+              <p>Research notes from Ocuna. The latest is &ldquo;{latest.title}.&rdquo;</p>
+            </div>
+          </a>
+        </div>
       </div>
     </section>
   );

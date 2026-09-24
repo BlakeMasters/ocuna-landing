@@ -180,6 +180,73 @@
   fill: var(--ovp-red);
 }
 
+.ov-eye__gaze {
+  animation: ovp-eye-look 16s ease-in-out infinite;
+}
+
+.ov-eye__lid {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: ovp-eye-blink 16s ease-in-out infinite;
+}
+
+@keyframes ovp-eye-look {
+  0%,
+  4% {
+    transform: translate(0, 0);
+  }
+  10%,
+  16% {
+    transform: translate(0, 20px);
+  }
+  22%,
+  30% {
+    transform: translate(-46px, 17px);
+  }
+  38%,
+  46% {
+    transform: translate(48px, 19px);
+  }
+  52%,
+  56% {
+    transform: translate(4px, 24px);
+  }
+  62%,
+  68% {
+    transform: translate(-32px, -6px);
+  }
+  74%,
+  80% {
+    transform: translate(40px, 4px);
+  }
+  88%,
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+@keyframes ovp-eye-blink {
+  0%,
+  33%,
+  35.5%,
+  84%,
+  86.5%,
+  100% {
+    transform: scaleY(1);
+  }
+  34.2%,
+  85.2% {
+    transform: scaleY(0.08);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ov-eye__gaze,
+  .ov-eye__lid {
+    animation: none;
+  }
+}
+
 .ov-scene__content {
   position: relative;
   z-index: 1;

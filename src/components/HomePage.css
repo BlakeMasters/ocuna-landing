@@ -16,8 +16,6 @@
   isolation: isolate;
   color: #f2f3f5;
   background: #000;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .ship-hero::after {
@@ -25,8 +23,8 @@
   z-index: 2;
   inset: 0;
   background:
-    linear-gradient(90deg, rgba(0, 0, 0, 0.3), transparent 42%),
-    linear-gradient(180deg, rgba(0, 0, 0, 0.18), transparent 24%, rgba(0, 0, 0, 0.12));
+    linear-gradient(90deg, rgba(0, 0, 0, 0.42), transparent 44%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.18), transparent 24%, transparent 82%, #000);
   content: "";
   pointer-events: none;
 }
@@ -73,105 +71,110 @@
 
 .ship-hero-copy {
   position: absolute;
-  top: clamp(24px, 3.8vw, 48px);
+  top: clamp(36px, 5.5vw, 80px);
   left: 0;
-  display: grid;
-  width: min(760px, 60vw);
-  grid-template-columns: minmax(220px, 0.88fr) minmax(280px, 1.12fr);
-  gap: 8px clamp(24px, 3vw, 40px);
-  align-items: start;
+  width: min(540px, 42vw);
   padding: 0;
   pointer-events: auto;
 }
 
 .ship-hero-copy h1 {
-  grid-column: 1;
-  grid-row: 1;
-  max-width: 22ch;
+  max-width: 14ch;
   margin-top: 0;
   color: #f2f3f5;
-  font-size: clamp(2rem, 3vw, 2.9rem);
-  line-height: 1.04;
-  letter-spacing: -0.025em;
+  font-size: clamp(2.3rem, 3.9vw, 3.6rem);
+  line-height: 1.02;
+  letter-spacing: -0.03em;
   text-wrap: balance;
   text-shadow: 0 2px 24px rgba(0, 0, 0, 0.55);
 }
 
 .ship-hero-copy > p {
-  grid-column: 2;
-  grid-row: 1;
-  max-width: 56ch;
-  margin-top: 0;
-  color: rgba(232, 234, 240, 0.88);
-  font-size: clamp(0.86rem, 1.15vw, 0.98rem);
-  line-height: 1.58;
+  max-width: 46ch;
+  margin-top: 18px;
+  color: rgba(232, 234, 240, 0.86);
+  font-size: clamp(0.92rem, 1.15vw, 1.02rem);
+  line-height: 1.62;
   text-shadow: 0 1px 18px rgba(0, 0, 0, 0.5);
 }
 
-.ship-hero-actions {
-  position: absolute;
-  top: clamp(28px, 4vw, 52px);
-  right: 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 9px;
-  align-items: center;
-  pointer-events: auto;
-}
-
-.ship-hero-actions a,
-.ship-hero-actions button {
+.ship-hero-link {
   display: inline-flex;
-  min-height: 38px;
+  min-height: 40px;
   align-items: center;
-  justify-content: center;
-  padding: 8px 12px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 4px;
-  color: rgba(242, 243, 245, 0.82);
-  background: rgba(255, 255, 255, 0.05);
-  font: inherit;
-  font-size: 0.76rem;
-  font-weight: 700;
-  cursor: pointer;
+  padding: 8px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 999px;
+  color: rgba(244, 244, 245, 0.88);
+  background: rgba(255, 255, 255, 0.045);
+  font-size: 0.8rem;
+  font-weight: 720;
+  transition: color 160ms ease, background-color 160ms ease, border-color 160ms ease;
 }
 
-.ship-hero-actions button {
-  gap: 10px;
-}
-
-.ship-hero-actions button span {
-  color: rgba(242, 243, 245, 0.58);
-  font-weight: 600;
-}
-
-.ship-hero-actions button strong {
-  color: #f2f3f5;
-  font-size: 0.66rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.ship-hero-actions a {
+.ship-hero-link {
+  margin-top: 26px;
   border-color: #f1f2f4;
-  color: #08090c;
+  color: #07080a;
   background: #f1f2f4;
 }
 
-.ship-hero-actions a:hover,
-.ship-hero-actions a:focus-visible,
-.ship-hero-actions button:hover,
-.ship-hero-actions button:focus-visible {
-  outline: 2px solid rgba(224, 122, 104, 0.9);
-  outline-offset: 2px;
+.ship-hero-link:hover,
+.ship-hero-link:focus-visible {
+  border-color: #fff;
+  color: #07080a;
+  background: #fff;
+  outline: none;
 }
 
-.ship-hero .logistics-stage-key {
-  z-index: 3;
+.ship-hero-link:focus-visible {
+  box-shadow: 0 0 0 3px rgba(96, 190, 208, 0.55);
 }
 
-.home-runtime-ink {
-  --runtime-ink-bg: #000002;
+.ship-hero-motion {
+  position: absolute;
+  right: 0;
+  bottom: clamp(20px, 3vw, 36px);
+  display: inline-flex;
+  width: 40px;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 1px solid var(--card-border);
+  border-radius: 999px;
+  color: rgba(244, 244, 245, 0.78);
+  background: rgba(6, 8, 12, 0.72);
+  cursor: pointer;
+  pointer-events: auto;
+  backdrop-filter: var(--card-blur);
+  -webkit-backdrop-filter: var(--card-blur);
+  transition: color 180ms ease, border-color 180ms ease;
+}
+
+.ship-hero-motion svg {
+  width: 18px;
+  fill: currentColor;
+}
+
+.ship-hero-motion:hover,
+.ship-hero-motion:focus-visible {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.32);
+  outline: none;
+}
+
+.ship-hero-motion:focus-visible {
+  box-shadow: 0 0 0 3px rgba(96, 190, 208, 0.55);
+}
+
+.ship-hero-motion[aria-pressed="true"] {
+  color: rgba(224, 122, 104, 0.96);
+  border-color: rgba(224, 122, 104, 0.32);
+}
+
+.home-runtime-ink.universe-section {
+  --runtime-ink-bg: #000;
   min-height: clamp(720px, 88svh, 1000px);
   padding: clamp(84px, 9vw, 124px) 0;
   isolation: isolate;
@@ -186,15 +189,15 @@
   background:
     radial-gradient(circle at 82% 22%, rgba(255, 255, 255, 0.025), transparent 28rem),
     radial-gradient(circle at 66% 74%, rgba(60, 184, 188, 0.025), transparent 24rem),
-    linear-gradient(180deg, #000002 0%, rgba(0, 0, 4, 0.36) 46%, #000002 100%);
+    linear-gradient(180deg, #000 0%, rgba(0, 0, 4, 0.36) 46%, #000 100%);
   content: "";
   pointer-events: none;
 }
 
-.home-runtime-ink::after {
+.home-runtime-ink.universe-section::after {
   z-index: 0;
   height: 180px;
-  background: linear-gradient(180deg, transparent, #000002);
+  background: linear-gradient(180deg, transparent, #000);
 }
 
 .home-runtime-ink .particle-section {
@@ -664,28 +667,54 @@
 .home-critter {
   position: relative;
   overflow: hidden;
-  padding: clamp(64px, 8vw, 104px) 0;
-  background:
-    radial-gradient(circle at 82% 112%, rgba(143, 21, 27, 0.18), transparent 34rem),
-    linear-gradient(180deg, #05070d, #09090c);
-  border-top: 1px solid rgba(255, 255, 255, 0.055);
+  padding: clamp(24px, 4vw, 48px) 0 clamp(72px, 9vw, 112px);
+  background: radial-gradient(circle at 84% 120%, rgba(143, 21, 27, 0.16), transparent 32rem);
 }
 
-.home-critter::before {
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.014) 1px, transparent 1px);
-  background-size: 54px 54px;
-  content: "";
-  mask-image: linear-gradient(180deg, transparent, #000 34%, #000 76%, transparent);
-  pointer-events: none;
+.home-critter .critter-glass-card {
+  align-items: center;
+  padding: clamp(28px, 3.5vw, 40px) 0 0;
+  border: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0;
+  color: #f0f1f3;
+  background: transparent;
+  box-shadow: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
 }
 
-.home-critter .shell {
-  position: relative;
-  z-index: 1;
+.home-critter .critter-glass-card::before {
+  display: none;
+}
+
+.home-critter .critter-glass-card .critter-glass-card__title {
+  max-width: 20ch;
+  color: #f0f1f3;
+  font-size: clamp(1.6rem, 2.6vw, 2.3rem);
+}
+
+.home-critter .critter-glass-card__description {
+  color: rgba(235, 236, 239, 0.72);
+}
+
+.home-critter .critter-glass-card__action {
+  border-color: rgba(255, 255, 255, 0.22);
+  color: rgba(244, 244, 245, 0.88);
+  background: rgba(255, 255, 255, 0.045);
+  box-shadow: none;
+}
+
+.home-critter .critter-glass-card__action:hover,
+.home-critter .critter-glass-card__action:focus-visible {
+  border-color: #fff;
+  color: #07080a;
+  background: #fff;
+  transform: none;
+}
+
+.home-critter .critter-glass-card__action:focus-visible {
+  outline: 3px solid rgba(96, 190, 208, 0.55);
 }
 
 .ocura-sim .graph-intro h2 {
@@ -729,31 +758,31 @@
     min-height: 560px;
   }
 
-  .ship-hero-overlay {
-    position: relative;
+  .shell.ship-hero-overlay {
+    position: static;
     inset: auto;
     order: 1;
     display: grid;
     gap: 12px;
     height: auto;
-    padding: 16px 0;
+    padding: 24px 0 8px;
   }
 
   .ship-hero-copy {
     position: relative;
+    z-index: 4;
     top: auto;
     left: auto;
     width: 100%;
   }
 
-  .ship-hero-actions {
-    position: relative;
-    top: auto;
-    right: auto;
-    justify-self: end;
+  .ship-hero-motion {
+    z-index: 4;
+    right: 16px;
+    bottom: 16px;
   }
 
-  .home-runtime-ink {
+  .home-runtime-ink.universe-section {
     min-height: auto;
   }
 
@@ -872,7 +901,7 @@
 
   .ship-hero-copy h1 {
     margin-top: 8px;
-    font-size: clamp(1.55rem, 8.5vw, 2.05rem);
+    font-size: clamp(2rem, 10vw, 2.6rem);
   }
 
   .ship-hero-copy > p {
@@ -883,24 +912,17 @@
     overflow-wrap: anywhere;
   }
 
-  .ship-hero-actions {
-    width: 100%;
-    flex-direction: column;
-    justify-self: stretch;
-  }
-
-  .ship-hero-actions a,
-  .ship-hero-actions button {
-    width: 100%;
+  .ship-hero-link {
     min-height: 44px;
-    flex: none;
+    margin-top: 20px;
   }
 
-  .ship-hero .logistics-stage-key {
-    bottom: 12px;
+  .ship-hero-motion {
+    width: 44px;
+    height: 44px;
   }
 
-  .home-runtime-ink {
+  .home-runtime-ink.universe-section {
     padding: 66px 0 76px;
   }
 
@@ -991,11 +1013,22 @@
   }
 }
 
+/* Shared surface for everything after the scheduler: the goo core's near-black
+   fill and teal rim, so the simulator, the OSS band, and the tiles read as
+   pieces of the same mass rather than unrelated cards. */
+.home-oss-band,
+.home-more-tile {
+  border: 1px solid rgba(126, 210, 222, 0.2);
+  border-radius: 28px;
+  background: rgba(4, 6, 11, 0.9);
+  box-shadow:
+    0 0 42px rgba(96, 190, 208, 0.07),
+    0 24px 60px rgba(0, 0, 0, 0.42);
+}
+
 .home-oss {
-  padding: clamp(48px, 8vw, 96px) 0;
+  padding: clamp(28px, 4vw, 44px) 0 clamp(56px, 7vw, 88px);
   color: #eef0f4;
-  background: #04060c;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 #ocura-oss,
@@ -1003,93 +1036,182 @@
   scroll-margin-top: 7.5rem;
 }
 
-.home-oss-card {
+.home-oss-band {
   display: grid;
-  gap: 16px;
-  width: min(920px, 100%);
-  padding: clamp(24px, 4vw, 40px);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 6px;
-  background:
-    linear-gradient(150deg, rgba(11, 12, 16, 0.92), rgba(3, 4, 7, 0.88));
-  box-shadow:
-    0 26px 74px rgba(0, 0, 0, 0.45),
-    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: clamp(24px, 4vw, 56px);
+  align-items: center;
+  padding: clamp(28px, 4vw, 48px);
 }
 
-.home-oss-kicker {
-  margin: 0;
-  color: #7fd4d8;
-  font-family: var(--mono);
-  font-size: 0.72rem;
-  font-weight: 760;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
-.home-oss-card h2 {
+.home-oss-copy h2 {
   max-width: 18ch;
   margin: 0;
-  font-size: clamp(1.6rem, 4vw, 2.4rem);
-  line-height: 1.1;
+  font-size: clamp(1.6rem, 3vw, 2.3rem);
+  line-height: 1.08;
+  letter-spacing: -0.028em;
 }
 
-.home-oss-card p {
-  max-width: 62ch;
+.home-oss-copy p {
+  max-width: 58ch;
+  margin: 14px 0 0;
+  color: rgba(238, 240, 244, 0.76);
+  font-size: 0.96rem;
+  line-height: 1.62;
+}
+
+.home-oss-try {
+  display: grid;
+  gap: 18px;
+  min-width: 0;
+}
+
+.home-oss-try pre {
   margin: 0;
-  color: rgba(238, 240, 244, 0.78);
-  line-height: 1.55;
+  overflow-x: auto;
+  padding: 16px 18px;
+  border: 1px solid rgba(60, 184, 188, 0.28);
+  border-radius: 16px;
+  background: rgba(60, 184, 188, 0.08);
 }
 
-.home-oss-card pre {
-  width: fit-content;
-  margin: 0;
-  padding: 12px 16px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 4px;
-  background: #0b0d12;
-}
-
-.home-oss-card code {
-  font-family: var(--mono);
-  font-size: 0.92rem;
+.home-oss-try code {
   color: #f4f6fa;
+  font-family: var(--mono);
+  font-size: 0.95rem;
 }
 
 .home-oss-actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 10px;
 }
 
 .home-oss-actions a {
-  padding: 10px 14px;
+  padding: 9px 15px;
   border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 4px;
-  font-size: 0.82rem;
-  font-weight: 760;
+  border-radius: 999px;
+  color: rgba(244, 244, 245, 0.88);
+  background: rgba(255, 255, 255, 0.045);
+  font-size: 0.8rem;
+  font-weight: 720;
 }
 
 .home-oss-actions a:first-child {
-  color: #08090c;
-  background: #f1f2f4;
   border-color: #f1f2f4;
+  color: #07080a;
+  background: #f1f2f4;
 }
 
 .home-oss-actions a:hover,
 .home-oss-actions a:focus-visible {
-  color: #08090c;
+  border-color: #fff;
+  color: #07080a;
   background: #fff;
   outline: none;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .ship-hero-actions a,
-  .ship-hero-actions button {
-    transition: none;
-  }
+.home-oss-actions a:focus-visible {
+  box-shadow: 0 0 0 3px rgba(96, 190, 208, 0.55);
+}
 
-  .runtime-ink-pause {
+.home-more {
+  padding: 0 0 clamp(56px, 7vw, 88px);
+  color: #eef0f4;
+}
+
+.home-more h2 {
+  margin: 0;
+  font-size: clamp(1.6rem, 3vw, 2.3rem);
+  line-height: 1.08;
+  letter-spacing: -0.028em;
+}
+
+.home-more-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(16px, 2vw, 24px);
+  margin-top: clamp(20px, 3vw, 32px);
+}
+
+.home-more-tile {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  overflow: hidden;
+  color: inherit;
+  transition: border-color 180ms ease;
+}
+
+.home-more-tile:hover,
+.home-more-tile:focus-visible {
+  border-color: rgba(126, 210, 222, 0.5);
+  outline: none;
+}
+
+.home-more-tile--onveil:hover,
+.home-more-tile--onveil:focus-visible {
+  border-color: rgba(179, 52, 43, 0.7);
+}
+
+.home-more-tile:focus-visible {
+  box-shadow: 0 0 0 3px rgba(96, 190, 208, 0.55);
+}
+
+.home-more-art {
+  position: relative;
+  display: grid;
+  aspect-ratio: 16 / 8;
+  overflow: hidden;
+  place-items: center;
+}
+
+.home-more-art--onveil {
+  background-color: #121010;
+}
+
+.home-more-art--onveil svg {
+  width: 52%;
+}
+
+.home-more-art--research {
+  background: #f1ede1;
+}
+
+.home-more-art--research img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.home-more-copy {
+  padding: clamp(20px, 2.4vw, 28px);
+}
+
+.home-more-copy h3 {
+  margin: 0;
+  font-size: clamp(1.2rem, 1.7vw, 1.45rem);
+  letter-spacing: -0.02em;
+}
+
+.home-more-copy p {
+  margin: 8px 0 0;
+  color: rgba(238, 240, 244, 0.74);
+  font-size: 0.94rem;
+  line-height: 1.58;
+}
+
+@media (max-width: 760px) {
+  .home-oss-band,
+  .home-more-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ship-hero-link,
+  .ship-hero-motion,
+  .runtime-ink-pause,
+  .home-more-tile {
     transition: none;
   }
 }

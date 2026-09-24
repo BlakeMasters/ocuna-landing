@@ -14,14 +14,6 @@ export const companyNavItems = [
   { label: "Contact", href: "/contact" },
 ];
 
-export const ocuraNavItems = [
-  { label: "Scheduler", href: "#work" },
-  { label: "Training + Inference", href: "#market" },
-  { label: "Critter Acknowledgement", href: "#critter" },
-  { label: "Docs", href: "/docs" },
-  { label: "Research", href: "/research" },
-];
-
 export const productItems = [
   {
     label: "Ocura",

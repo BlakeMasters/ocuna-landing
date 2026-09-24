@@ -206,7 +206,9 @@ export default function ParticleField({
     const forming = Boolean(activeKey && targets);
     const morphT = forming ? smoothstep(rawProgress) : 0;
     const releaseT = dissolving ? 1 - easeOutCubic(rawProgress) : 0;
-    const driftScale = forming ? 1 - morphT * 0.85 : dissolving ? 1 - releaseT * 0.5 : 1;
+    // Dissolving blends toward the idle position by releaseT, so the idle target
+    // must already carry full parallax; anything less snaps when the blend ends.
+    const driftScale = forming ? 1 - morphT * 0.85 : 1;
     const parallaxX = mouseRef.current.x * 0.12 * driftScale;
     const parallaxY = mouseRef.current.y * 0.08 * driftScale;
 

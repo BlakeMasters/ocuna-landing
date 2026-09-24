@@ -50,9 +50,11 @@ function landingBody(extra = "") {
       <nav>
         <a href="/#work">Scheduler</a>
         <a href="/#market">Training and inference</a>
-        <a href="/ocura">Ocura</a>
+        <a href="/#ocura">V0 simulator</a>
         <a href="/docs">Ocura OSS docs</a>
         <a href="/docs/examples">PyTorch, JAX, and Ray example</a>
+        <a href="/onveil">OnVeil</a>
+        <a href="/research">Field Notes</a>
       </nav>
       ${extra}`;
 }
