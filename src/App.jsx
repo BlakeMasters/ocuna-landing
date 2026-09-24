@@ -6,7 +6,6 @@ import {
   CONTACT_EMAIL,
   companyNavItems,
   footerNavItems,
-  ocuraNavItems,
   pageMeta,
   productItems,
   SITE_ORIGIN,
@@ -259,9 +258,7 @@ export default function App() {
 }
 
 function SiteHeader({ route, kind, onNavigate }) {
-  const isLandingPage = LANDING_KINDS.has(kind);
   const isOnVeilPage = kind === "onveil";
-  const navItems = isLandingPage ? ocuraNavItems : companyNavItems;
 
   return (
     <header className={`shell site-header${isOnVeilPage ? " site-header--onveil" : ""}`}>
@@ -276,20 +273,13 @@ function SiteHeader({ route, kind, onNavigate }) {
       </a>
       <nav className="nav" aria-label="Primary navigation">
         <ProductMenu onNavigate={onNavigate} route={route} />
-        {navItems.map((item) => {
-          const href = item.href.startsWith("#")
-            ? isLandingPage
-              ? item.href
-              : `${pagePath("")}${item.href}`
-            : pagePath(item.href);
-          const isCurrent =
-            item.href.startsWith("/") &&
-            (route === item.href || route.startsWith(`${item.href}/`));
+        {companyNavItems.map((item) => {
+          const isCurrent = route === item.href || route.startsWith(`${item.href}/`);
 
           return (
             <a
               aria-current={isCurrent ? "page" : undefined}
-              href={href}
+              href={pagePath(item.href)}
               key={item.label}
               onClick={(event) => onNavigate(event, item.href)}
             >

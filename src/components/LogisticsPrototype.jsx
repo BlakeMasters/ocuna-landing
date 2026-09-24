@@ -159,12 +159,6 @@ export default function LogisticsPrototype({ motionEnabled = true }) {
           />
         </Canvas>
       </div>
-      <div className="shell logistics-stage-key" aria-hidden="true">
-        <span>01 · emerge</span>
-        <span>02 · berth</span>
-        <span>03 · transfer</span>
-        <span>04 · disperse</span>
-      </div>
     </div>
   );
 }
