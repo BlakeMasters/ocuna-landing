@@ -1,3 +1,4 @@
+import { CSIM_POST } from "./csimPost.js";
 import { DREAM_RSI_POST } from "./dreamRsiPost.js";
 
 export const RESEARCH_ART = {
@@ -5,9 +6,11 @@ export const RESEARCH_ART = {
   logs: { file: "raccoon-inspection.png", alt: "A seated raccoon examining an ochre stone between its front paws." },
   replay: { file: "raccoon-looking-back.png", alt: "A raccoon pausing to look back over its shoulder, its ringed tail curving behind it." },
   dream: { file: "dream-rsi-replay.png", alt: "A raccoon examines overlapping drawings of a branching search tree, with one recorded route traced in ochre." },
+  cells: { file: "virtual-cell-evidence.png", alt: "An ink-drawn raccoon studies three abstract virtual cells, each connected to a small recorded trace." },
 };
 
 export const RESEARCH_POSTS = [
+  CSIM_POST,
   DREAM_RSI_POST,
   {
     slug: "experiments-need-a-memory",
@@ -71,7 +74,7 @@ export const getResearchPost = (route) =>
 export const RESEARCH_META = {
   "/research": {
     title: "Field Notes — Ocuna Research",
-    image: "/research/dream-rsi-replay.png",
+    image: "/research/virtual-cell-evidence.png",
     description:
       "Notes from Ocuna on experimental infrastructure, verified evidence, and the decisions between training runs.",
   },
