@@ -6,7 +6,7 @@ export const RESEARCH_ART = {
   logs: { file: "raccoon-inspection.png", alt: "A seated raccoon examining an ochre stone between its front paws." },
   replay: { file: "raccoon-looking-back.png", alt: "A raccoon pausing to look back over its shoulder, its ringed tail curving behind it." },
   dream: { file: "dream-rsi-replay.png", alt: "A raccoon examines overlapping drawings of a branching search tree, with one recorded route traced in ochre." },
-  cells: { file: "virtual-cell-evidence.png", alt: "An ink-drawn raccoon studies three abstract virtual cells, each connected to a small recorded trace." },
+  cells: { file: "virtual-cell-evidence.png", alt: "An ink-drawn raccoon studies three schematic cells with visible nuclei, each connected to a recorded trace." },
 };
 
 export const RESEARCH_POSTS = [
