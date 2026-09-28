@@ -55,6 +55,28 @@ body.research-route .footer-contact { font-size: 13px; }
 .field-article-date { display: block; margin-top: 6px; font-size: 12px; color: var(--field-muted); }
 .field-article-cover { width: min(100%, 970px); margin: 0 auto 56px; background: #eeeadf; }
 .field-article-cover > img { display: block; width: 100%; height: auto; max-height: 500px; object-fit: contain; mix-blend-mode: multiply; }
+.field-feature-image img.field-art-original, .field-thumbnail.field-art-original { object-fit: contain; mix-blend-mode: normal; background: #000; }
+.field-feature-image:has(.field-art-original) { background: #000; aspect-ratio: 1.5; }
+.field-feature-image img.field-art-original { position: absolute; inset: 0; width: 100%; height: 100%; }
+.field-article-cover-media { background: transparent; }
+.field-media { min-width: 0; }
+.field-prose .field-media { margin: 0 0 26px; }
+.field-media img { display: block; max-width: 100%; height: auto; }
+.field-media > a { display: block; }
+.field-media-screenshot > a > img { width: 100%; }
+.field-media figcaption { margin-top: 12px; color: var(--field-muted, #687069); font-size: 12px; line-height: 1.7; }
+.field-media figcaption a { text-decoration: underline; text-underline-offset: 3px; }
+.field-event-panel { display: grid; grid-template-columns: 1.1fr 1fr; align-items: center; gap: 28px; padding: 30px; }
+.field-media-dark .field-event-panel { background: #000; }
+.field-event-marks { display: flex; align-items: center; justify-content: center; gap: 28px; min-width: 0; }
+.field-event-mark-project { width: min(70%, 260px); }
+.field-media-dark .field-event-mark-host { width: 56px; flex-shrink: 0; }
+.field-event-mark a, .field-event-art a { display: block; }
+.field-event-mark img { width: 100%; object-fit: contain; }
+.field-event-art img { width: 100%; max-height: 440px; object-fit: contain; }
+.field-media-light .field-event-panel { padding: 0; gap: 20px; grid-template-columns: 1fr 1fr; align-items: start; }
+.field-media-light .field-event-mark-host { width: 100%; }
+.field-media-light .field-event-art img { max-height: none; }
 .field-reading-layout { display: grid; grid-template-columns: 210px minmax(0, 650px); gap: 65px; justify-content: center; }
 .field-contents-title { font-size: 13px; font-weight: 500; }
 .field-article-contents { align-self: start; position: sticky; top: 30px; }
@@ -93,6 +115,7 @@ body.research-route .footer-contact { font-size: 13px; }
   .field-masthead h1 { font-size: clamp(64px, 14vw, 90px); }
   .field-feature { display: flex; flex-direction: column-reverse; }
   .field-feature-image img { height: auto; aspect-ratio: 1.65; object-fit: cover; }
+  .field-feature-image:has(.field-art-original) { aspect-ratio: 1.65; }
   .field-feature-copy { padding: 27px; }
   .field-feature h2 { font-size: 40px; max-width: 330px; margin-top: 0; }
   .field-feature-meta { padding-top: 20px; }
@@ -105,6 +128,12 @@ body.research-route .footer-contact { font-size: 13px; }
   .field-article-heading { margin-top: 34px; }
   .field-article-heading h1 { font-size: 46px; }
   .field-article-cover { margin-bottom: 35px; }
+  .field-media-dark .field-event-panel { grid-template-columns: 1fr; padding: 22px; gap: 24px; }
+  .field-media-dark .field-event-marks { gap: 28px; }
+  .field-media-dark .field-event-mark-project { width: 150px; }
+  .field-media-dark .field-event-mark-host { width: 42px; }
+  .field-event-art img { max-height: none; }
+  .field-media-light .field-event-panel { gap: 12px; }
   .field-reading-layout { display: block; }
   .field-article-contents { position: static; border-bottom: 1px solid var(--field-line); padding-bottom: 24px; margin-bottom: 30px; }
   .field-article-contents nav { gap: 10px; }

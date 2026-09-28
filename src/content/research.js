@@ -2,6 +2,7 @@ import { CSIM_POST } from "./csimPost.js";
 import { DREAM_RSI_POST } from "./dreamRsiPost.js";
 
 export const RESEARCH_ART = {
+  weekend: { file: "weekend/raccoon-hackathon-park-relaxed-gaze.png", alt: "An ink-drawn raccoon glances toward YC, four1 and Pear logo cards resting on a lightly sketched park bench." },
   trail: { file: "raccoon-field-note.png", alt: "An ink-drawn raccoon reaching toward a small amber circle." },
   logs: { file: "raccoon-inspection.png", alt: "A seated raccoon examining an ochre stone between its front paws." },
   replay: { file: "raccoon-looking-back.png", alt: "A raccoon pausing to look back over its shoulder, its ringed tail curving behind it." },
@@ -74,7 +75,7 @@ export const getResearchPost = (route) =>
 export const RESEARCH_META = {
   "/research": {
     title: "Field Notes — Ocuna Research",
-    image: "/research/virtual-cell-evidence.png",
+    image: `/research/${RESEARCH_ART.weekend.file}`,
     description:
       "Notes from Ocuna on experimental infrastructure, verified evidence, and the decisions between training runs.",
   },

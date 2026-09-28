@@ -59,13 +59,25 @@ function landingBody(extra = "") {
       ${extra}`;
 }
 
+function researchImageHtml(image, priority = false) {
+  const img = `<img src="/research/${escapeHtml(image.file)}" alt="${escapeHtml(image.alt)}" width="${image.width}" height="${image.height}" loading="${priority ? "eager" : "lazy"}" style="max-width:100%;height:auto" />`;
+  return image.href ? `<a href="${escapeHtml(image.href)}">${img}</a>` : img;
+}
+
+function researchMediaHtml(media, priority = false) {
+  const visual = media.layout === "event"
+    ? `<div class="field-event-panel"><div class="field-event-marks">${media.marks.map((mark) => `<div class="field-event-mark field-event-mark-${escapeHtml(mark.kind)}">${researchImageHtml(mark, priority)}</div>`).join("")}</div><div class="field-event-art">${researchImageHtml(media.image, priority)}</div></div>`
+    : researchImageHtml(media.image);
+  return `<figure class="field-media field-media-${escapeHtml(media.layout)}${media.theme ? ` field-media-${escapeHtml(media.theme)}` : ""}">${visual}<figcaption>${escapeHtml(media.caption)}${media.credit ? ` <a href="${escapeHtml(media.credit.href)}">${escapeHtml(media.credit.label)}</a>.` : ""}</figcaption></figure>`;
+}
+
 export function crawlableHtml(route, markdown = "") {
   if (route === "/research") {
     return wrap(
       "Field Notes",
       `<section aria-label="Research notes">
         ${RESEARCH_POSTS.map((post) => `<article>
-          <figure><img src="/research/${escapeHtml(RESEARCH_ART[post.art].file)}" width="1536" height="1024" style="max-width:100%;height:auto" alt="${escapeHtml(RESEARCH_ART[post.art].alt)}" /></figure>
+          <figure><img src="/research/${escapeHtml(RESEARCH_ART[post.art].file)}" width="${RESEARCH_ART[post.art].width ?? 1536}" height="${RESEARCH_ART[post.art].height ?? 1024}" style="max-width:100%;height:auto" alt="${escapeHtml(RESEARCH_ART[post.art].alt)}" /></figure>
           <p>${escapeHtml(post.category)} · <time datetime="${escapeHtml(post.date)}">${escapeHtml(post.dateLabel)}</time> · ${escapeHtml(post.readTime)}</p>
           <h2><a href="/research/${escapeHtml(post.slug)}">${escapeHtml(post.title)}</a></h2>
         </article>`).join("\n")}
@@ -83,10 +95,11 @@ export function crawlableHtml(route, markdown = "") {
     <p>${escapeHtml(researchPost.category)}</p>
     <h1>${escapeHtml(researchPost.title)}</h1>
     <p><time datetime="${escapeHtml(researchPost.date)}">${escapeHtml(researchPost.dateLabel)}</time> · ${escapeHtml(researchPost.readTime)}</p>
-    <figure><img src="/research/${escapeHtml(illustration.file)}" width="1536" height="1024" style="max-width:100%;height:auto" alt="${escapeHtml(illustration.alt)}" /></figure>
+    ${researchPost.cover ? researchMediaHtml(researchPost.cover, true) : `<figure><img src="/research/${escapeHtml(illustration.file)}" width="${illustration.width ?? 1536}" height="${illustration.height ?? 1024}" style="max-width:100%;height:auto" alt="${escapeHtml(illustration.alt)}" /></figure>`}
     <nav aria-label="On this page">${researchPost.sections.map((section) => `<a href="#${escapeHtml(section.id)}">${escapeHtml(section.title)}</a>`).join(" ")}</nav>
     ${researchPost.sections.map((section) => `<section aria-labelledby="${escapeHtml(section.id)}">
       <h2 id="${escapeHtml(section.id)}" tabindex="-1">${escapeHtml(section.title)}</h2>
+      ${section.figures?.map((media) => researchMediaHtml(media)).join("\n      ") ?? ""}
       ${section.paragraphs.map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join("\n      ")}
       ${section.code ? `<pre><code>${escapeHtml(section.code)}</code></pre>` : ""}
       ${section.links?.length ? `<ul>${section.links.map((link) => `<li><a href="${escapeHtml(link.href)}">${escapeHtml(link.label)}</a></li>`).join("")}</ul>` : ""}

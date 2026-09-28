@@ -39,23 +39,28 @@ Published routes include `/`, `/ocura`, `/docs`, `/contact`, `/onveil`, and
 
 ## Research
 
-The research section at `/research` contains two articles: "A Dream-RSI workflow
-with Ocura OSS" and "Good experiments leave a trail". Each article has its own
-route, illustration, section navigation, and link to the companion article.
+The research section at `/research` contains "Double Hackathon Weekend",
+"A Dream-RSI workflow with Ocura OSS", and "Good experiments leave a trail".
+Each article has its own route, illustration, section navigation, and links
+to related articles.
 
 The Dream-RSI study describes a bounded CPU training workflow built around Ocura
 OSS execution records, lineage, and verified logs. It evaluates implementation
 support; the experiment did not establish a useful policy advantage.
 
 Article metadata and routes live in `src/content/research.js`; the Dream-RSI
-article is defined in `src/content/dreamRsiPost.js`. The UI loads as a separate
+article is defined in `src/content/dreamRsiPost.js`, and the hackathon article
+in `src/content/csimPost.js`. The UI loads as a separate
 chunk. The build emits readable HTML for the index and articles, including
 `.html` aliases, canonical URLs, and article artwork for social previews.
 Research routes are included in the sitemap. Unknown routes remain `noindex`.
 
 The illustrations in `site-public/research/` were generated for Ocuna. The
 Dream-RSI image depicts a raccoon inspecting drawings of a branching search tree;
-the companion article uses `raccoon-field-note.png`.
+the companion article uses `raccoon-field-note.png`. The hackathon article uses
+the park-bench raccoon illustration in `site-public/research/weekend/`, alongside
+project marks, event artwork, and a Csim screenshot. Image provenance is recorded
+in `docs/research-image-sources.md`.
 
 ## GitHub Pages
 
