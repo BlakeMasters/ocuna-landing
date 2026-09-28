@@ -1,5 +1,4 @@
 const CSIM_SOURCE = "https://github.com/BlakeMasters/csim/blob/a8a1b124540129440dada5835b973166b2d2627f";
-const FOUR_ONE_SOURCE = "https://github.com/BlakeMasters/four-one";
 const YC_EVENT = "https://events.ycombinator.com/gbrain-qm-river-memorable-hackathon";
 const HEALTHCARE_EVENT = "https://luma.com/e9z9vuxz";
 
@@ -22,7 +21,7 @@ export const CSIM_POST = {
           layout: "event",
           theme: "dark",
           marks: [
-            { file: "weekend/four-one.png", alt: "four1", width: 1254, height: 1254, kind: "project", href: FOUR_ONE_SOURCE },
+            { file: "weekend/four-one.png", alt: "four1", width: 1254, height: 1254, kind: "project" },
             { file: "weekend/yc.svg", alt: "Y Combinator", width: 48, height: 48, kind: "host", href: "https://www.ycombinator.com/" },
           ],
           image: {
@@ -45,10 +44,7 @@ export const CSIM_POST = {
         "The broader aim is a research network that grows with each registered session. New investigations can discover prior work, reuse its shared context and request further contributions across harnesses. Today, discovery and approved context retrieval work between explicitly paired, reachable nodes; coordinating new agent work automatically is a further step.",
         "The local demonstration exercised the research exchange across two separate harnesses. An agent on Node A proposed a pulse-and-recovery experiment. A synthetic fixture ran through Ocura OSS, and its verified output went to an agent on Node B for review. The agent on Node A then used the returned critique to revise the proposed experiment with additional controls and calibration checks. Both nodes ran on one computer; testing on separate computers is next.",
         "Ocura OSS supplies the execution evidence within this network. four1’s worker records an experiment, reads verified output and attaches a receipt to the task; the server checks the ledger before marking the experiment complete. four1 connects the selected context, contribution and resulting artifact, while Ocura OSS retains the record of what ran. Together, those records let a reviewer inspect both an experiment’s output and the context used to decide the next step.",
-      ],
-      links: [
-        { label: "Explore four1", href: FOUR_ONE_SOURCE },
-        { label: "Session discovery and automatic context replies", href: FOUR_ONE_SOURCE + "/blob/d16b2b9f0568a75e7a964969e664ffa9efe0df4a/docs/networking.md" },
+        "Update: the four1 repository has been taken private due to its potential value.",
       ],
     },
     {

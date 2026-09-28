@@ -9,7 +9,7 @@ The source images are retained without raster edits.
 
 | File | Source and attribution |
 | --- | --- |
-| `four-one.png` | Project mark from [four1](https://github.com/BlakeMasters/four-one/blob/d16b2b9f0568a75e7a964969e664ffa9efe0df4a/four_one_logo.png), supplied by the project owner. |
+| `four-one.png` | four1 project mark supplied by the project owner. Original file: `four_one_logo.png` at commit `d16b2b9f0568a75e7a964969e664ffa9efe0df4a`; the source repository is now private. |
 | `yc.svg` | Official orange YC mark from the header of [YC’s press page](https://www.ycombinator.com/press), retrieved September 27, 2026. Original paths and colors preserved. |
 | `own-your-intelligence.png` | Screenshot supplied by the author from Garry Tan’s Twitter post about the [Own Your Intelligence Hackathon](https://events.ycombinator.com/gbrain-qm-river-memorable-hackathon). The exact Twitter post URL was not supplied. |
 | `csim-playground.jpg` | [Csim virtual-cell interaction screenshot](https://github.com/BlakeMasters/csim/blob/a8a1b124540129440dada5835b973166b2d2627f/docs/images/virtual-cell-interaction.jpg), from the project’s published demo gallery. Synthetic local demonstration. |
