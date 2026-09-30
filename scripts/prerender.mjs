@@ -11,7 +11,7 @@ const routes = [
   "/",
   "/ocuna",
   "/ocura",
-  "/onveil",
+  "/four1",
   "/critter-acknowledgement",
   ...DOC_PAGES.map((page) => page.route),
   ...RESEARCH_ROUTES,

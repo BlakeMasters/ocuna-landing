@@ -15,7 +15,6 @@ import CritterPage from "./components/CritterPage.jsx";
 import DocsPage from "./components/DocsPage.jsx";
 import LandingPage from "./components/LandingPage.jsx";
 import NotFoundPage from "./components/NotFoundPage.jsx";
-import OnVeilPage from "./components/OnVeilPage.jsx";
 import { ParticleProvider } from "./components/particles/ParticleContext.jsx";
 import { jsonLdGraph } from "./content/jsonld.js";
 import { isDocRoute } from "./content/docPages.js";
@@ -25,6 +24,13 @@ const LANDING_KINDS = new Set(["home", "ocuna", "ocura"]);
 const PAPER_KINDS = new Set(["contact", "notfound"]);
 const RESEARCH_ROUTE_SET = new Set(RESEARCH_ROUTES);
 const ResearchPage = lazy(() => import("./components/ResearchPage.jsx"));
+const Four1Page = lazy(() => import("./components/Four1Page.jsx"));
+// Retain the OnVeil page for local work without including it in a release.
+const OnVeilPage = import.meta.env.DEV ? lazy(() => import("./components/OnVeilPage.jsx")) : null;
+const localOnVeilMeta = import.meta.env.DEV ? {
+  title: "OnVeil | Authority Research",
+  description: "OnVeil is Ocuna’s research into checking what AI agents are allowed to run before they run it.",
+} : null;
 
 function useRoute() {
   const [route, setRoute] = useState(() => routeFromLocation());
@@ -42,7 +48,8 @@ function pageKind(route) {
   if (route === "/") return "home";
   if (route === "/ocuna") return "ocuna";
   if (route === "/ocura") return "ocura";
-  if (route === "/onveil") return "onveil";
+  if (import.meta.env.DEV && route === "/onveil") return "onveil";
+  if (route === "/four1") return "four1";
   if (route === "/critter-acknowledgement") return "critter";
   if (isDocRoute(route)) return "docs";
   if (RESEARCH_ROUTE_SET.has(route)) return "research";
@@ -68,11 +75,12 @@ export default function App() {
   const kind = pageKind(route);
   const isLandingPage = LANDING_KINDS.has(kind);
   const isOnVeilPage = kind === "onveil";
+  const isFour1Page = kind === "four1";
   const isCritterPage = kind === "critter";
   const isDocsPage = kind === "docs";
   const isResearchPage = kind === "research";
   const isPaperPage = PAPER_KINDS.has(kind);
-  const meta = pageMeta[kind === "notfound" ? "/404" : route] ?? pageMeta["/404"];
+  const meta = isOnVeilPage ? localOnVeilMeta : pageMeta[kind === "notfound" ? "/404" : route] ?? pageMeta["/404"];
   const moveFocusToMain = useRef(false);
 
   useEffect(() => {
@@ -133,6 +141,7 @@ export default function App() {
 
   useEffect(() => {
     document.body.classList.toggle("onveil-route", isOnVeilPage);
+    document.body.classList.toggle("four1-route", isFour1Page);
     document.body.classList.toggle("critter-route", isCritterPage);
     document.body.classList.toggle("landing-route", isLandingPage);
     document.body.classList.toggle("docs-route", isDocsPage);
@@ -140,13 +149,14 @@ export default function App() {
     document.body.classList.toggle("paper-route", isPaperPage);
     return () => {
       document.body.classList.remove("onveil-route");
+      document.body.classList.remove("four1-route");
       document.body.classList.remove("critter-route");
       document.body.classList.remove("landing-route");
       document.body.classList.remove("docs-route");
       document.body.classList.remove("research-route");
       document.body.classList.remove("paper-route");
     };
-  }, [isCritterPage, isDocsPage, isLandingPage, isOnVeilPage, isPaperPage, isResearchPage]);
+  }, [isCritterPage, isDocsPage, isFour1Page, isLandingPage, isOnVeilPage, isPaperPage, isResearchPage]);
 
   useEffect(() => {
     if (!moveFocusToMain.current) return;
@@ -232,7 +242,12 @@ export default function App() {
   if (kind === "docs") page = <DocsPage route={route} />;
   if (kind === "contact") page = <ContactPage />;
   if (kind === "critter") page = <CritterPage />;
-  if (kind === "onveil") page = <OnVeilPage />;
+  if (import.meta.env.DEV && isOnVeilPage) {
+    page = <Suspense fallback={<div className="shell" role="status">Loading OnVeil…</div>}><OnVeilPage /></Suspense>;
+  }
+  if (isFour1Page) {
+    page = <Suspense fallback={<div className="shell" role="status">Loading Four1…</div>}><Four1Page onNavigate={navigate} /></Suspense>;
+  }
   if (kind === "research") {
     page = (
       <Suspense fallback={<div className="shell" role="status">Loading field notes…</div>}>
@@ -358,9 +373,7 @@ function ProductMenu({ onNavigate, route }) {
       </button>
       <div className="nav-products-menu" id="products-menu">
         {productItems.map((item) => {
-          const isCurrent =
-            (item.label === "Ocura" && item.href === "/ocura" && route === "/ocura") ||
-            (item.label === "OnVeil" && route === "/onveil");
+          const isCurrent = route === item.href;
 
           return (
             <a

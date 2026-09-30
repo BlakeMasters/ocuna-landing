@@ -7,7 +7,8 @@ import {
 } from "../content.js";
 import { DOC_PAGES, isDocRoute } from "./docPages.js";
 import { getResearchPost, RESEARCH_ART, RESEARCH_POSTS } from "./research.js";
-import { extractHeadings, escapeHtml, renderMarkdown } from "../lib/markdown.js";
+import { extractHeadings, escapeHtml, renderInline, renderMarkdown } from "../lib/markdown.js";
+import { FOUR1 } from "./four1.js";
 
 function navHtml() {
   return `
@@ -16,7 +17,7 @@ function navHtml() {
   <nav>
     <a href="/ocuna">Ocuna</a>
     <a href="/ocura">Ocura</a>
-    <a href="/onveil">OnVeil</a>
+    <a href="/four1">Four1</a>
     <a href="/docs">Docs</a>
     <a href="/research">Research</a>
     <a href="/contact">Contact</a>
@@ -53,7 +54,7 @@ function landingBody(extra = "") {
         <a href="/#ocura">V0 simulator</a>
         <a href="/docs">Ocura OSS docs</a>
         <a href="/docs/examples">PyTorch, JAX, and Ray example</a>
-        <a href="/onveil">OnVeil</a>
+        <a href="/four1">Four1</a>
         <a href="/research">Field Notes</a>
       </nav>
       ${extra}`;
@@ -100,7 +101,7 @@ export function crawlableHtml(route, markdown = "") {
     ${researchPost.sections.map((section) => `<section aria-labelledby="${escapeHtml(section.id)}">
       <h2 id="${escapeHtml(section.id)}" tabindex="-1">${escapeHtml(section.title)}</h2>
       ${section.figures?.map((media) => researchMediaHtml(media)).join("\n      ") ?? ""}
-      ${section.paragraphs.map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join("\n      ")}
+      ${section.paragraphs.map((paragraph) => `<p>${renderInline(paragraph)}</p>`).join("\n      ")}
       ${section.code ? `<pre><code>${escapeHtml(section.code)}</code></pre>` : ""}
       ${section.links?.length ? `<ul>${section.links.map((link) => `<li><a href="${escapeHtml(link.href)}">${escapeHtml(link.label)}</a></li>`).join("")}</ul>` : ""}
     </section>`).join("\n    ")}
@@ -166,18 +167,24 @@ ${footerHtml()}`;
     );
   }
 
-  if (route === "/onveil") {
-    return wrap(
-      "Checking what agents are allowed to run",
-      `
-      <p>More AI agents are online every month. They crawl pages, call APIs, open pull requests, and run commands, usually with someone’s credentials attached. Most services can’t tell a well-behaved agent from a hijacked one until something breaks.</p>
-      <p>OnVeil is Ocuna’s research into checking an agent’s authority before it executes anything.</p>
-      <h2>Why we’re working on it</h2>
-      <p><strong>Agents have real access.</strong> A crawler used to read pages and leave. Agents now log in, fill out forms, merge code, and spend money, often with a long-lived token nobody is watching.</p>
-      <p><strong>One bad instruction is enough.</strong> A leaked token, or a prompt hidden in a web page, can turn a helpful agent into a flood of requests. For a small service, that is an outage.</p>
-      <p><strong>A check before every action.</strong> OnVeil puts a check between an agent and the thing it wants to do. The agent presents a grant, the check reads it, and only then does the action run. We are also working on how operators review the grants that were used.</p>
-      <p><a href="/">More from Ocuna</a> · <a href="/ocura">Ocura</a></p>`,
-    );
+  if (route === "/four1") {
+    return `${navHtml()}
+<main id="top" tabindex="-1">
+  <section>
+    <p>Four1</p>
+    <img src="/four1/logo.png" alt="Four1 factory mark" width="100" height="100" style="background:#111312" />
+    <h1>${escapeHtml(FOUR1.headline)}</h1>
+    <p>${escapeHtml(FOUR1.definition)}</p>
+    <p><a href="/contact">Discuss Four1</a> · <a href="${FOUR1.researchRoute}">Read the field note</a></p>
+    <img src="/four1/city.png" alt="" width="1672" height="941" style="max-width:100%;height:auto" />
+  </section>
+  <section aria-labelledby="four1-native-title">
+    <h2 id="four1-native-title">${escapeHtml(FOUR1.nativeAgents.title)}</h2>
+    <p>${escapeHtml(FOUR1.nativeAgents.introduction)}</p>
+    <p><a href="/contact">Discuss a research workflow</a></p>
+  </section>
+</main>
+${footerHtml()}`;
   }
 
   if (route === "/critter-acknowledgement") {

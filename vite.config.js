@@ -5,7 +5,6 @@ import path from "node:path";
 import { DOC_PAGES } from "./src/content/docPages.js";
 
 const productionImages = [
-  "OnVeil.webp",
   "ocuna_background1c.webp",
   "ocuna_background4c_cloud_masked.webp",
   "ocuna_logo.png",

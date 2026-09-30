@@ -1,0 +1,131 @@
+body.four1-route {
+  color: #f2f1ed;
+  background: #111312;
+}
+
+body.four1-route::before { display: none; }
+body.four1-route .brand img { filter: invert(1) grayscale(1) brightness(1.8); }
+body.four1-route .site-header { border-bottom: 1px solid #ffffff0d; }
+body.four1-route .nav { color: #b5b8b5; }
+body.four1-route .nav a:hover,
+body.four1-route .nav button:hover { color: #fff; }
+body.four1-route .nav-products-menu {
+  border-color: #ffffff24;
+  border-radius: 3px;
+  background: #191c1a;
+  box-shadow: 0 20px 48px #0006;
+}
+body.four1-route .nav-products-menu a { border-radius: 1px; }
+body.four1-route .nav-products-menu strong { color: #f2f1ed; }
+body.four1-route .nav-products-menu span { color: #b5b8b5; }
+body.four1-route .nav-products-menu a:hover,
+body.four1-route .nav-products-menu a:focus-visible,
+body.four1-route .nav-products-menu a[aria-current="page"] { background: #bd947820; }
+body.four1-route .site-footer { color: #acb0ac; border-top-color: #ffffff1a; }
+body.four1-route .footer-logo-link { background: #ffffff06; border-color: #ffffff24; }
+body.four1-route .footer-logo-link img { filter: invert(1) grayscale(1); }
+body.four1-route .site-footer a:hover { color: #fff; }
+
+.four1-page {
+  --four1-ink: #f2f1ed;
+  --four1-muted: #b5b8b5;
+  --four1-copper: #c39b7e;
+  isolation: isolate;
+  overflow: clip;
+  outline-offset: -3px;
+}
+
+.four1-page :where(h1, h2, h3) { font-weight: 500; text-wrap: balance; }
+.four1-page :where(a, button):focus-visible {
+  outline: 2px solid var(--four1-copper);
+  outline-offset: 5px;
+}
+
+.four1-hero {
+  position: relative;
+  display: grid;
+  align-items: start;
+  min-height: min(870px, calc(100svh - 114px));
+  padding: clamp(54px, 6vw, 88px) 0 200px;
+  background: #111312;
+}
+
+.four1-city {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background: #111312;
+}
+
+.four1-city__image,
+.four1-city__atmosphere { position: absolute; inset: 0; width: 100%; height: 100%; }
+.four1-city__image { object-fit: cover; object-position: center bottom; }
+.four1-city[data-art-ready="true"] .four1-city__image { visibility: hidden; }
+.four1-city::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  background:
+    radial-gradient(ellipse 42% 54% at 50% 40%, #111312b8, #11131250 67%, transparent),
+    linear-gradient(#11131230, transparent 15%, transparent 76%, #111312);
+}
+
+.four1-hero__content { display: grid; justify-items: center; text-align: center; }
+.four1-identity { display: flex; align-items: center; gap: 8px; margin-bottom: 25px; }
+.four1-identity img { display: block; width: 72px; height: 72px; object-fit: contain; }
+.four1-identity span { font-size: 1.8rem; letter-spacing: -0.035em; font-weight: 500; }
+.four1-hero h1 { font-size: clamp(3.25rem, 5.8vw, 5.7rem); letter-spacing: -0.055em; line-height: 1.04; }
+.four1-hero__definition { max-width: 36rem; margin-top: 30px; font-size: 1.15rem; line-height: 1.65; color: #d2d5d1; text-wrap: pretty; }
+.four1-actions { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 20px 30px; margin-top: 32px; }
+.four1-button { display: inline-flex; align-items: center; gap: 20px; padding: 14px 19px; background: var(--four1-ink); color: #151715; border: 1px solid var(--four1-ink); border-radius: 2px; font-size: 0.94rem; font-weight: 600; }
+.four1-button:hover { background: #fff; border-color: #fff; }
+.four1-link { display: inline-flex; align-items: center; gap: 12px; color: var(--four1-ink); font-size: 0.95rem; line-height: 1.5; }
+.four1-link:hover { color: var(--four1-copper); }
+.four1-link svg,
+.four1-button svg { width: 25px; height: 14px; fill: none; stroke: currentColor; stroke-width: 1.25; }
+.four1-motion { position: absolute; z-index: 2; right: max(24px, calc((100% - 1280px) / 2)); bottom: 25px; display: flex; align-items: center; gap: 9px; min-height: 44px; padding: 9px 12px; border: 1px solid #ffffff25; border-radius: 2px; background: #111312a6; color: #b5b8b5; font-size: 0.8rem; cursor: pointer; }
+.four1-motion svg { width: 12px; height: 12px; fill: currentColor; }
+.four1-motion:hover { border-color: #ffffff66; color: #f2f1ed; }
+
+.four1-body { max-width: 1136px; padding: 55px 0 100px; }
+.four1-section-intro { display: grid; grid-template-columns: 1fr 1.13fr; gap: 70px; }
+.four1-section-intro h2 { max-width: 15ch; font-size: clamp(1.9rem, 2.8vw, 2.8rem); letter-spacing: -0.035em; line-height: 1.16; }
+.four1-section-intro p { color: var(--four1-muted); font-size: 1.06rem; line-height: 1.75; text-wrap: pretty; }
+.four1-native .four1-link { margin-top: 27px; }
+
+@media (max-width: 900px) {
+  .four1-city__image { object-fit: contain; }
+  .four1-body { width: calc(100% - 48px); }
+  .four1-section-intro { gap: 38px; }
+}
+
+@media (max-width: 620px) {
+  .four1-hero { min-height: 720px; padding: 35px 0 205px; }
+  .four1-hero__content { width: calc(100% - 40px); }
+  .four1-identity { margin-bottom: 22px; }
+  .four1-identity img { width: 62px; height: 62px; }
+  .four1-identity span { font-size: 1.55rem; }
+  .four1-hero h1 { font-size: clamp(2.5rem, 10.5vw, 3.8rem); }
+  .four1-hero__definition { margin-top: 24px; font-size: 1.03rem; }
+  .four1-actions { gap: 22px; margin-top: 27px; flex-direction: column; }
+  .four1-city__image { object-fit: contain; }
+  .four1-city::after { background: linear-gradient(#111312 0%, #11131200 22%, transparent 80%, #111312); }
+  .four1-motion { right: 20px; bottom: 15px; font-size: 0.75rem; }
+  .four1-body { width: calc(100% - 40px); padding: 44px 0 70px; }
+  .four1-section-intro { grid-template-columns: 1fr; gap: 24px; }
+  .four1-section-intro h2 { max-width: 19ch; font-size: 2rem; }
+  .four1-section-intro p { font-size: 1rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .four1-motion { display: none; }
+}
+
+@media (forced-colors: active) {
+  body.four1-route, .four1-hero, .four1-city { color: CanvasText; background: Canvas; }
+  .four1-city, .four1-motion { display: none; }
+  .four1-button { color: ButtonText; background: ButtonFace; border-color: ButtonText; }
+  .four1-page :where(p, h1, h2, h3, span) { color: CanvasText; }
+  .four1-page a { color: LinkText; }
+}

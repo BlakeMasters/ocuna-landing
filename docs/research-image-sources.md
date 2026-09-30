@@ -19,3 +19,21 @@ The source images are retained without raster edits.
 
 The cover illustration contains generated depictions of the marks. Original
 brand assets are retained separately for the event figures within the article.
+
+## Four1 product page
+
+The `/four1` page reuses the approved Four1 artwork supplied by the project
+owner on September 30, 2026. The source repository is private. Source pixels
+are preserved; the moving roofline bands, steam and haze are composed at runtime.
+
+| File | Source and attribution |
+| --- | --- |
+| `site-public/four1/city.png` | Unmodified `city_backdrop.png`, generated for Four1 with the built-in imagegen tool. The source's `logo_loader_targets.md` records the prompt: a wide, low-contrast grey-black industrial city, layered rectangular silhouettes along the bottom and far edges, and open dark space for the logo; no text, people, bright windows, neon or glow. SHA-256: `f8ae6f270e84c3725481f65da736c8b28c0668b53f12ffeb57694c6cbde0f974`. |
+| `site-public/four1/logo.png` | Unmodified owner-supplied transparent Four1 factory mark, from `four_one_logo_alpha.png`. SHA-256: `4d75f64232042f1bd705b36c8ff52eab3137f95e754be8671e905403e228c5c4`. |
+
+The city animation traces three depth bands in the original 1672 × 941 artwork.
+Source pixels travel left at different speeds; mirrored neighbours join at
+identical image edges for a continuous panorama. Steam stays with its roofline.
+Reduced motion uses the original complete city at rest.
+The complete logo appears immediately. Neither image represents a running
+research system or a measured product result.

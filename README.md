@@ -15,6 +15,10 @@ Vite will print the local URL, usually:
 http://127.0.0.1:5173/
 ```
 
+The retained OnVeil page is available at `/onveil` (or `/onveil.html`) only in
+local development. Its component, stylesheet and source artwork remain in the
+checkout; the production build excludes the page and its navigation links.
+
 ## Production Build
 
 ```powershell
@@ -32,7 +36,7 @@ Run `npm run verify:docs` after building to check route coverage, static content
 Markdown parity, metadata, navigation, source links, and discovery files. The Pages
 workflow runs this check before deployment.
 
-Published routes include `/`, `/ocura`, `/docs`, `/contact`, `/onveil`, and
+Published routes include `/`, `/ocura`, `/docs`, `/contact`, `/four1`, and
 `/critter-acknowledgement`. `/ocuna` aliases the home page; canonical URLs use `/`.
 
 `site-public/` also ships `robots.txt` and `sitemap.xml` for GitHub Pages.

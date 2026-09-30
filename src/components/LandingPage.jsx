@@ -7,6 +7,7 @@ import {
 } from "../content.js";
 import { universeSections } from "../content/nounShapes.js";
 import { RESEARCH_ART, RESEARCH_POSTS } from "../content/research.js";
+import { FOUR1 } from "../content/four1.js";
 import CritterGlassCard from "./CritterGlassCard.jsx";
 import LogoRaccoonTrigger from "./LogoRaccoonTrigger.jsx";
 import NounTrigger from "./NounTrigger.jsx";
@@ -310,24 +311,11 @@ function OssBand() {
   );
 }
 
-const TILE_RAYS = Array.from({ length: 18 }, (_, index) => {
-  const angle = (index * 360) / 18 + ((index * 5) % 3);
-  return `rgba(179, 52, 43, 0.3) ${angle}deg ${angle + 5 + ((index * 7) % 4)}deg, transparent ${angle + 5 + ((index * 7) % 4)}deg ${((index + 1) * 360) / 18}deg`;
-}).join(", ");
-
-function OnVeilTileArt() {
+function Four1TileArt() {
   return (
-    <div
-      className="home-more-art home-more-art--onveil"
-      style={{ backgroundImage: `conic-gradient(from 0deg at 50% 46%, ${TILE_RAYS})` }}
-      aria-hidden="true"
-    >
-      <svg viewBox="30 30 360 160" focusable="false">
-        <path fill="#ebe3d3" d="M40 110 C110 22 310 22 380 110 C310 198 110 198 40 110 Z" />
-        <circle fill="#121010" cx="210" cy="118" r="58" />
-        <circle fill="none" stroke="#ebe3d3" strokeWidth="9" cx="210" cy="118" r="38" />
-        <circle fill="#b3342b" cx="210" cy="118" r="12" />
-      </svg>
+    <div className="home-more-art home-more-art--four1" aria-hidden="true">
+      <img className="home-more-city" src={asset("four1/city.png")} alt="" loading="lazy" width="1672" height="941" />
+      <img className="home-more-mark" src={asset("four1/logo.png")} alt="" loading="lazy" width="1254" height="1254" />
     </div>
   );
 }
@@ -341,11 +329,11 @@ function MoreFromOcuna() {
       <div className="shell">
         <h2 id="home-more-title">More from Ocuna</h2>
         <div className="home-more-grid">
-          <a className="home-more-tile home-more-tile--onveil" href={pagePath("onveil")}>
-            <OnVeilTileArt />
+          <a className="home-more-tile home-more-tile--four1" href={pagePath("four1")}>
+            <Four1TileArt />
             <div className="home-more-copy">
-              <h3>OnVeil</h3>
-              <p>Research into checking what AI agents are allowed to run before they run it.</p>
+              <h3>Four1</h3>
+              <p>{FOUR1.definition}</p>
             </div>
           </a>
           <a className="home-more-tile home-more-tile--research" href={pagePath("research")}>

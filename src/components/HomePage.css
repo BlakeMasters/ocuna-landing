@@ -1148,9 +1148,9 @@
   outline: none;
 }
 
-.home-more-tile--onveil:hover,
-.home-more-tile--onveil:focus-visible {
-  border-color: rgba(179, 52, 43, 0.7);
+.home-more-tile--four1:hover,
+.home-more-tile--four1:focus-visible {
+  border-color: rgba(195, 155, 126, 0.7);
 }
 
 .home-more-tile:focus-visible {
@@ -1165,12 +1165,22 @@
   place-items: center;
 }
 
-.home-more-art--onveil {
-  background-color: #121010;
+.home-more-art--four1 {
+  background: #111312;
 }
 
-.home-more-art--onveil svg {
-  width: 52%;
+.home-more-city {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.home-more-mark {
+  position: relative;
+  width: clamp(72px, 24%, 132px);
+  height: auto;
 }
 
 .home-more-art--research {

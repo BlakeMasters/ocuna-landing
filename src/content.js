@@ -1,5 +1,6 @@
 import { DOC_PAGES } from "./content/docPages.js";
 import { RESEARCH_META, RESEARCH_ROUTES } from "./content/research.js";
+import { FOUR1 } from "./content/four1.js";
 
 export const SITE_ORIGIN = "https://ocuna-ai.com";
 export const CONTACT_EMAIL = "business@ocuna-ai.com";
@@ -21,9 +22,9 @@ export const productItems = [
     description: "Branch-aware AI runtime",
   },
   {
-    label: "OnVeil",
-    href: "/onveil",
-    description: "Execution authority research",
+    label: "Four1",
+    href: "/four1",
+    description: "Research across machines and providers",
   },
 ];
 
@@ -51,10 +52,10 @@ export const pageMeta = {
     description:
       "Ocura is Ocuna’s branch-aware scheduler and evidence engine for AI training and inference workloads.",
   },
-  "/onveil": {
-    title: "OnVeil | Authority Research",
-    description:
-      "OnVeil is Ocuna’s research into checking what AI agents are allowed to run before they run it.",
+  "/four1": {
+    title: "Four1 | Research across your machines",
+    description: FOUR1.definition,
+    image: "/four1/city.png",
   },
   "/critter-acknowledgement": {
     title: "Ocuna | Critter Acknowledgement",
@@ -101,7 +102,7 @@ export const knownRoutes = new Set([
   "/",
   "/ocuna",
   "/ocura",
-  "/onveil",
+  "/four1",
   "/critter-acknowledgement",
   ...DOC_PAGES.map((page) => page.route),
   ...RESEARCH_ROUTES,

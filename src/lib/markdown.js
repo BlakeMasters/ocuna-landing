@@ -32,7 +32,7 @@ function safeHref(href) {
   return "#";
 }
 
-function renderInline(value) {
+export function renderInline(value) {
   const escaped = escapeHtml(value);
   return escaped
     .replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_, label, href) => {

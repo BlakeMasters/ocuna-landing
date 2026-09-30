@@ -5,6 +5,7 @@ import {
   OCURA_OSS_VERSION,
   SITE_ORIGIN,
 } from "../content.js";
+import { FOUR1 } from "./four1.js";
 
 export function jsonLdGraph() {
   return {
@@ -32,6 +33,17 @@ export function jsonLdGraph() {
         url: `${SITE_ORIGIN}/ocura`,
         description:
           "Ocura is Ocuna’s branch-aware scheduler and evidence engine. Ocura OSS is the public research package for recorded local command runs.",
+        applicationCategory: "DeveloperApplication",
+        publisher: { "@id": `${SITE_ORIGIN}/#organization` },
+        brand: { "@id": `${SITE_ORIGIN}/#organization` },
+      },
+      {
+        "@type": "SoftwareApplication",
+        "@id": `${SITE_ORIGIN}/four1#product`,
+        name: "Four1",
+        url: `${SITE_ORIGIN}/four1`,
+        image: `${SITE_ORIGIN}/four1/city.png`,
+        description: `${FOUR1.definition} Being built toward a downloadable desktop app; a public download is not yet available.`,
         applicationCategory: "DeveloperApplication",
         publisher: { "@id": `${SITE_ORIGIN}/#organization` },
         brand: { "@id": `${SITE_ORIGIN}/#organization` },

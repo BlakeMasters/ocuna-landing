@@ -85,6 +85,7 @@ body.research-route .footer-contact { font-size: 13px; }
 .field-prose section { scroll-margin-top: 30px; margin-bottom: 38px; }
 .field-prose h2 { font-family: var(--critter-display); font-weight: 450; font-size: 31px; letter-spacing: -.025em; margin-bottom: 20px; }
 .field-prose p { font-family: Georgia, serif; font-size: 18px; line-height: 1.85; color: #3c4942; margin-bottom: 20px; }
+.field-prose p a { text-decoration: underline; text-underline-offset: 3px; }
 .field-prose pre { max-width: 100%; overflow-x: auto; padding: 24px; background: #e6e8df; border-left: 2px solid var(--field-accent); font-family: var(--mono); font-size: 12px; line-height: 1.8; }
 .field-source-links { padding-left: 18px; font-size: 13px; line-height: 1.8; }
 .field-source-links a { text-decoration: underline; text-underline-offset: 4px; }

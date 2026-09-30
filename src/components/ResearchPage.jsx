@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { asset, pagePath } from "../assets.js";
 import { getResearchPost, RESEARCH_ART, RESEARCH_POSTS } from "../content/research.js";
+import { renderInline } from "../lib/markdown.js";
 import ResearchMedia from "./ResearchMedia.jsx";
 import "./ResearchPage.css";
 
@@ -61,7 +62,7 @@ function ResearchArticle({ post, onNavigate }) {
         {post.cover ? <ResearchMedia media={post.cover} priority /> : <NoteArt kind={post.art} />}
       </div>
       <div className="field-reading-layout"><aside className="field-article-contents"><p className="field-contents-title">Contents</p><nav aria-label="Article sections">{post.sections.map((section) => <a key={section.id} href={`#${section.id}`}>{section.title}</a>)}</nav></aside>
-        <article className="field-prose">{post.sections.map((section) => <section key={section.id} id={section.id}><h2>{section.title}</h2>{section.figures?.map((media) => <ResearchMedia key={media.image.file} media={media} />)}{section.paragraphs.map((paragraph, index) => <p key={index}>{paragraph}</p>)}{section.code && <pre><code>{section.code}</code></pre>}{section.links && <ul className="field-source-links">{section.links.map((link) => <li key={link.href}><a href={link.href}>{link.label} <Arrow diagonal /></a></li>)}</ul>}</section>)}</article>
+        <article className="field-prose">{post.sections.map((section) => <section key={section.id} id={section.id}><h2>{section.title}</h2>{section.figures?.map((media) => <ResearchMedia key={media.image.file} media={media} />)}{section.paragraphs.map((paragraph, index) => <p key={index} dangerouslySetInnerHTML={{ __html: renderInline(paragraph) }} />)}{section.code && <pre><code>{section.code}</code></pre>}{section.links && <ul className="field-source-links">{section.links.map((link) => <li key={link.href}><a href={link.href}>{link.label} <Arrow diagonal /></a></li>)}</ul>}</section>)}</article>
       </div>
       <section className="field-related" aria-labelledby="field-related-title"><div className="field-notebook-heading"><h2 id="field-related-title">Read next</h2></div>{RESEARCH_POSTS.filter((item) => item.slug !== post.slug).map((item) => <ArticleLink post={item} onNavigate={onNavigate} className="field-related-link" key={item.slug}><span>{item.category}</span><h3>{item.title}</h3><Arrow diagonal /></ArticleLink>)}</section>
     </div>

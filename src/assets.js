@@ -27,8 +27,12 @@ export function routeFromLocation(location = window.location) {
     return "/critter-acknowledgement";
   }
 
-  if (path === "/onveil.html") {
+  if (import.meta.env.DEV && path === "/onveil.html") {
     return "/onveil";
+  }
+
+  if (path === "/four1.html") {
+    return "/four1";
   }
 
   if (path === "/ocuna.html") {
