@@ -18,7 +18,7 @@ function navHtml() {
 <header>
   <a href="/">Ocuna</a>
   <nav>
-    <a href="/ocuna">Ocuna</a>
+    <a href="/">Home</a>
     <a href="/ocura">Ocura</a>
     <a href="/four1">Four1</a>
     <a href="/docs">Docs</a>

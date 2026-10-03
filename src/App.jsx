@@ -291,6 +291,13 @@ function SiteHeader({ route, kind, onNavigate }) {
         <img src={asset("images/ocuna_title_logo_nobackground.webp")} alt="Ocuna" />
       </a>
       <nav className="nav" aria-label="Primary navigation">
+        <a
+          aria-current={route === "/" || route === "/ocuna" ? "page" : undefined}
+          href={pagePath("")}
+          onClick={(event) => onNavigate(event, "/")}
+        >
+          Home
+        </a>
         <ProductMenu onNavigate={onNavigate} route={route} />
         {companyNavItems.map((item) => {
           const isCurrent = route === item.href || route.startsWith(`${item.href}/`);

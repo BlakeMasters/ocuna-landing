@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { createThinkingOrbRenderer } from "../lib/thinkingOrb.js";
 
 /*
  * Dotted thought-orb, adapted for Ocura from thinking-orbs by Jakub Antalik
@@ -347,73 +348,19 @@ export default function ThinkingOrb({
   "aria-label": ariaLabel,
 }) {
   const canvasRef = useRef(null);
+  const renderer = useRef(null);
   const mode = MODES[state] ?? MODES.globe;
 
   useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return undefined;
-    const dpr = Math.min(2, (typeof devicePixelRatio !== "undefined" && devicePixelRatio) || 1);
-    canvas.width = Math.round(size * dpr);
-    canvas.height = Math.round(size * dpr);
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return undefined;
-
-    const reduced =
-      typeof matchMedia !== "undefined" &&
-      matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-    const frame = (tSec) => {
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      ctx.clearRect(0, 0, size, size);
-      mode.draw(ctx, size, tSec, dark);
-    };
-
-    if (reduced) {
-      frame(0.6);
-      return undefined;
-    }
-
-    let raf = 0;
-    let running = false;
-    const loop = () => {
-      frame((performance.now() / 1000) * mode.speed);
-      if (running) raf = requestAnimationFrame(loop);
-    };
-    const start = () => {
-      if (running || paused) return;
-      running = true;
-      raf = requestAnimationFrame(loop);
-    };
-    const stop = () => {
-      running = false;
-      cancelAnimationFrame(raf);
-    };
-
-    frame((performance.now() / 1000) * mode.speed);
-
-    let visible = true;
-    const io =
-      typeof IntersectionObserver !== "undefined"
-        ? new IntersectionObserver(([entry]) => {
-            visible = entry.isIntersecting;
-            if (visible && document.visibilityState !== "hidden") start();
-            else stop();
-          })
-        : null;
-    io?.observe(canvas);
-    const onVis = () => {
-      if (document.visibilityState === "hidden") stop();
-      else if (visible) start();
-    };
-    document.addEventListener("visibilitychange", onVis);
-    if (!io) start();
-
+    const controller = createThinkingOrbRenderer(canvasRef.current, window, MODES, { state, size, dark, paused });
+    renderer.current = controller;
     return () => {
-      stop();
-      io?.disconnect();
-      document.removeEventListener("visibilitychange", onVis);
+      controller.dispose();
+      renderer.current = null;
     };
-  }, [state, size, dark, paused, mode]);
+  }, []);
+
+  useEffect(() => { renderer.current?.update({ state, size, dark, paused }); }, [state, size, dark, paused]);
 
   return (
     <canvas

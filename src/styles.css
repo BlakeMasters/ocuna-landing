@@ -46,7 +46,7 @@ html {
 
 body {
   margin: 0;
-  min-width: 320px;
+  min-width: 0;
   font-family: var(--sans);
   color: var(--ink);
   background:
@@ -2994,21 +2994,49 @@ section {
 }
 
 /* Shared header geometry; route styles supply their own colors and borders. */
-html body .site-header.shell {
+html body #root > .site-header.shell {
   width: min(var(--shell-width), calc(100% - 80px));
-  min-height: 88px;
-  padding: 20px 0;
+  min-height: 104px;
+  padding: 16px 0;
   flex-direction: row;
   flex-wrap: wrap;
   align-items: center;
   gap: 24px;
 }
-html body .site-header.shell .brand { align-self: flex-start; flex-shrink: 0; }
-html body .site-header.shell .brand img { width: auto; height: 48px; max-width: none; }
+html body #root > .site-header.shell .brand { flex-shrink: 0; }
+html body #root > .site-header.shell .brand img { width: auto; height: 72px; max-width: none; }
+html body #root > .site-header.shell .nav > a {
+  position: relative;
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+}
+html body #root > .site-header.shell .nav > a::after {
+  position: absolute;
+  right: 0;
+  bottom: 6px;
+  left: 0;
+  height: 2px;
+  background: var(--products-accent);
+  content: "";
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 200ms ease;
+}
+html body #root > .site-header.shell .nav > a:is(:hover, :focus-visible)::after {
+  transform: scaleX(1);
+}
 @media (max-width: 1050px) {
-  html body .site-header.shell { width: calc(100% - 48px); }
+  html body #root > .site-header.shell { width: calc(100% - 48px); }
 }
 @media (max-width: 620px) {
-  html body .site-header.shell { width: calc(100% - 32px); gap: 18px; }
-  html body .site-header.shell .nav { display: flex; width: auto; flex-wrap: wrap; gap: 17px; font-size: .84rem; }
+  html body #root > .site-header.shell { width: calc(100% - 32px); gap: 8px; }
+  html body #root > .site-header.shell .brand img { height: 56px; }
+  html body #root > .site-header.shell .nav { display: flex; width: 100%; flex-wrap: wrap; justify-content: space-between; gap: 8px 12px; font-size: .84rem; }
+}
+@media (max-width: 360px) {
+  html body #root > .site-header.shell .nav { gap: 8px; font-size: .78rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html body #root > .site-header.shell .nav > a::after { transition: none; }
 }

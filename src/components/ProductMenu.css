@@ -193,6 +193,8 @@ body.onveil-route {
 }
 
 @media (max-width: 760px) {
+  .site-header .nav { position: relative; }
+  .site-header .nav-products { position: static; }
   .site-header .nav-products-menu {
     right: auto;
     left: 0;

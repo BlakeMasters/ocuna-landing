@@ -466,15 +466,28 @@ body.critter-route .site-footer a:focus-visible,
 }
 
 @media (max-width: 800px) {
+  body.critter-route,
+  body.critter-route #root {
+    height: auto;
+    min-height: 100svh;
+    overflow: visible;
+  }
+
+  .critter-page {
+    flex: 1 0 auto;
+    grid-template-rows: auto auto;
+    overflow: visible;
+  }
+
   .critter-hero,
   .critter-source {
     grid-template-columns: minmax(0, 1fr);
   }
 
   .critter-hero {
-    align-content: center;
-    padding-block: 0.5rem;
-    gap: clamp(0.4rem, 1.6svh, 1rem);
+    align-content: start;
+    padding-block: 1.5rem 2rem;
+    gap: 1.25rem;
   }
 
   .critter-hero__copy {
@@ -533,10 +546,9 @@ body.critter-route .site-footer a:focus-visible,
   }
 
   .critter-page-links {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0;
-    padding-block: 0.2rem 0.5rem;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.25rem;
+    padding-block: 1rem max(1rem, env(safe-area-inset-bottom));
   }
 
   .critter-page-links > .critter-text-link {
@@ -626,7 +638,7 @@ body.critter-route .site-footer a:focus-visible,
   }
 
   .critter-hero {
-    padding-top: 0.5rem;
+    padding-top: 1.5rem;
   }
 
   .critter-hero h1 span:first-child {
