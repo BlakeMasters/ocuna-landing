@@ -1,0 +1,194 @@
+body.paper-route.contact-route {
+  --critter-sky: #f5f0df;
+  --critter-sky-deep: #e6e8d2;
+  --critter-ink: #2d3428;
+  --critter-muted: #59614e;
+  --critter-indigo: #855132;
+  color: var(--critter-ink);
+  background:
+    radial-gradient(circle at 85% 12%, rgba(148, 170, 111, 0.4), transparent 31rem),
+    radial-gradient(circle at 8% 88%, rgba(229, 164, 103, 0.45), transparent 34rem),
+    linear-gradient(145deg, #f9f4e7, #e9ecd9 52%, #f4e3ce);
+}
+
+body.contact-route #root {
+  display: flex;
+  min-height: 100svh;
+  flex-direction: column;
+}
+
+body.contact-route .site-header,
+body.contact-route .site-footer {
+  flex-shrink: 0;
+}
+
+body.paper-route.contact-route::before {
+  background-image:
+    linear-gradient(rgba(77, 89, 56, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(77, 89, 56, 0.035) 1px, transparent 1px);
+}
+
+body.paper-route.contact-route .site-header {
+  border-bottom-color: rgba(78, 90, 54, 0.16);
+}
+
+body.paper-route.contact-route .nav,
+body.paper-route.contact-route .nav-products-trigger {
+  color: var(--critter-muted);
+}
+
+body.paper-route.contact-route .nav-products-menu {
+  border-color: rgba(78, 90, 54, 0.18);
+  background: rgba(248, 244, 228, 0.96);
+  box-shadow: 0 24px 60px rgba(63, 74, 42, 0.14);
+}
+
+body.paper-route.contact-route .site-footer {
+  color: var(--critter-muted);
+  border-top-color: rgba(78, 90, 54, 0.16);
+  background: rgba(246, 239, 219, 0.56);
+}
+
+.paper-page.paper-page--contact {
+  flex: 1;
+  background:
+    radial-gradient(circle at 79% 15%, rgba(130, 158, 93, 0.18), transparent 25rem),
+    radial-gradient(circle at 16% 82%, rgba(224, 150, 81, 0.22), transparent 28rem),
+    linear-gradient(145deg, rgba(250, 246, 233, 0.7), rgba(237, 240, 219, 0.6) 52%, rgba(248, 228, 204, 0.7));
+}
+
+.paper-page--contact .paper-page__blooms {
+  /* Keep the offset washes from extending the document below its footer. */
+  overflow: clip;
+  animation: contact-wash-arrive 3200ms ease-out both;
+}
+
+.paper-page--contact .paper-page__blooms span:nth-child(1) {
+  background: linear-gradient(145deg, rgba(128, 157, 85, 0.5), rgba(184, 191, 115, 0.2));
+}
+
+.paper-page--contact .paper-page__blooms span:nth-child(2) {
+  background: linear-gradient(140deg, rgba(217, 134, 68, 0.44), rgba(238, 186, 116, 0.45));
+}
+
+.paper-page--contact .paper-page__blooms span:nth-child(3) {
+  background: linear-gradient(135deg, rgba(158, 182, 111, 0.42), rgba(227, 182, 112, 0.28));
+}
+
+.paper-page--contact .paper-page__glass {
+  margin-inline-end: 0;
+  border-color: rgba(255, 252, 240, 0.86);
+  background: linear-gradient(145deg, rgba(255, 252, 240, 0.84), rgba(243, 241, 219, 0.68));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 254, 247, 0.96),
+    0 30px 80px rgba(82, 88, 49, 0.14);
+}
+
+.paper-page--contact .paper-page__button {
+  border-color: rgba(133, 81, 50, 0.24);
+  box-shadow: 0 12px 28px rgba(133, 81, 50, 0.18);
+}
+
+.paper-page--contact .paper-page__button:hover {
+  background: #6b412a;
+  box-shadow: 0 16px 32px rgba(133, 81, 50, 0.24);
+}
+
+.contact-plate {
+  width: min(100%, 25rem);
+  margin: 0;
+  justify-self: center;
+  animation: contact-plate-arrive 1800ms cubic-bezier(0.2, 0.7, 0.2, 1) 150ms both;
+}
+
+.contact-plate__paper {
+  padding: clamp(0.9rem, 1.5vw, 1.3rem);
+  border: 1px solid rgba(81, 75, 40, 0.18);
+  background: #e9dfbc;
+  box-shadow: 0 18px 46px rgba(66, 71, 39, 0.15);
+}
+
+.contact-plate__window {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: var(--plate-aspect);
+  background: #626448;
+  animation: contact-print-reveal 1600ms cubic-bezier(0.2, 0.65, 0.25, 1) 180ms both;
+}
+
+.contact-plate__window img {
+  position: absolute;
+  top: var(--plate-top);
+  left: var(--plate-left);
+  width: var(--plate-width);
+  height: var(--plate-height);
+  max-width: none;
+  animation: contact-print-settle 3800ms cubic-bezier(0.2, 0.65, 0.25, 1) both;
+}
+
+.contact-plate figcaption {
+  margin-top: 0.9rem;
+  color: var(--critter-muted);
+  font-size: 0.78rem;
+  line-height: 1.6;
+  text-align: center;
+}
+
+.contact-plate figcaption a {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.contact-plate figcaption a:focus-visible {
+  outline: 2px solid var(--critter-indigo);
+  outline-offset: 4px;
+}
+
+@keyframes contact-wash-arrive {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes contact-plate-arrive {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes contact-print-reveal {
+  from { clip-path: inset(0 0 100% 0); }
+  to { clip-path: inset(0); }
+}
+
+@keyframes contact-print-settle {
+  from { transform: scale(1.055) translateY(-0.5%); }
+  to { transform: scale(1) translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .paper-page--contact .paper-page__blooms,
+  .contact-plate,
+  .contact-plate__window,
+  .contact-plate__window img {
+    animation: none;
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .paper-page--contact .paper-page__glass { background: #f8f4e6; }
+}
+
+@media (forced-colors: active) {
+  body.paper-route.contact-route {
+    --critter-ink: CanvasText;
+    --critter-muted: CanvasText;
+    --critter-indigo: LinkText;
+    color: CanvasText;
+    background: Canvas;
+  }
+
+  .paper-page.paper-page--contact,
+  .paper-page--contact .paper-page__glass {
+    color: CanvasText;
+    background: Canvas;
+  }
+}

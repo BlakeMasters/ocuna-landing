@@ -77,6 +77,7 @@ export default function App() {
   const isOnVeilPage = kind === "onveil";
   const isFour1Page = kind === "four1";
   const isCritterPage = kind === "critter";
+  const isContactPage = kind === "contact";
   const isDocsPage = kind === "docs";
   const isResearchPage = kind === "research";
   const isPaperPage = PAPER_KINDS.has(kind);
@@ -143,6 +144,7 @@ export default function App() {
     document.body.classList.toggle("onveil-route", isOnVeilPage);
     document.body.classList.toggle("four1-route", isFour1Page);
     document.body.classList.toggle("critter-route", isCritterPage);
+    document.body.classList.toggle("contact-route", isContactPage);
     document.body.classList.toggle("landing-route", isLandingPage);
     document.body.classList.toggle("docs-route", isDocsPage);
     document.body.classList.toggle("research-route", isResearchPage);
@@ -151,12 +153,13 @@ export default function App() {
       document.body.classList.remove("onveil-route");
       document.body.classList.remove("four1-route");
       document.body.classList.remove("critter-route");
+      document.body.classList.remove("contact-route");
       document.body.classList.remove("landing-route");
       document.body.classList.remove("docs-route");
       document.body.classList.remove("research-route");
       document.body.classList.remove("paper-route");
     };
-  }, [isCritterPage, isDocsPage, isFour1Page, isLandingPage, isOnVeilPage, isPaperPage, isResearchPage]);
+  }, [isContactPage, isCritterPage, isDocsPage, isFour1Page, isLandingPage, isOnVeilPage, isPaperPage, isResearchPage]);
 
   useEffect(() => {
     if (!moveFocusToMain.current) return;

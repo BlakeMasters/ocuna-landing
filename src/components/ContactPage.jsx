@@ -1,18 +1,28 @@
 import { asset } from "../assets.js";
+import { TENANTS_PLATE, TENANTS_PLATE_STYLE } from "../content/illustrations.js";
 import PaperShell from "./PaperShell.jsx";
+import "./ContactPage.css";
 
 function ContactArt() {
   return (
     <div className="paper-page__art">
-      <figure className="critter-cloud paper-page__scene">
-        <div className="critter-cloud__mask">
-          <img
-            alt=""
-            decoding="async"
-            fetchPriority="high"
-            src={asset("images/ocuna_background1c.webp")}
-          />
+      <figure className="contact-plate" style={TENANTS_PLATE_STYLE}>
+        <div className="contact-plate__paper">
+          <div className="contact-plate__window">
+            <img
+              alt={TENANTS_PLATE.alt}
+              decoding="async"
+              fetchPriority="high"
+              src={asset(TENANTS_PLATE.file)}
+              width={TENANTS_PLATE.width}
+              height={TENANTS_PLATE.height}
+            />
+          </div>
         </div>
+        <figcaption>
+          <a href={TENANTS_PLATE.sourceHref}><cite>{TENANTS_PLATE.title}</cite></a>
+          {" · "}{TENANTS_PLATE.illustrator}, {TENANTS_PLATE.year}
+        </figcaption>
       </figure>
     </div>
   );

@@ -1,0 +1,10 @@
+{
+  "file": "watercolor-woodland.png",
+  "title": "Watercolor woodland for the critter acknowledgement",
+  "createdFor": "Ocuna",
+  "generator": "Built-in image_gen tool",
+  "generatedOn": "2026-10-02",
+  "transparentBackground": true,
+  "prompt": "Use case: illustration-story. Asset type: an original transparent-background watercolor woodland border for a literary website, wide landscape composition. Primary request: a quiet cluster of tall deciduous woodland trees and a few slender young trees, hand-painted with translucent watercolor washes, ragged pigment edges, visible watery blooms and granulation. Composition: the tallest loose canopies are at the left and right edges, with a low, sparse understory and much lighter, open space through the central third; the entire cluster is freestanding with softened roots and ground wash fading into full transparency. No rectangular sky, no paper-colored background. Trees fill a wide, approximately 2:1 landscape image. Palette: muted moss, sage, olive, gray green, warm umber trunks, a little pale ochre. Mood: gentle and thoughtful, an early twentieth-century naturalist's watercolor sketch, delicate botanical shapes rather than cartoon trees. This accompanies a separate 1907 book plate and must be a supporting background that leaves text readable. No raccoons, no animals, no people, no text, no lettering, no logos, no frames, no watermarks. Actual transparent alpha background.",
+  "display": "Original generated pixels, subdued with CSS opacity and a slow fade and rise on page load. This is new artwork, separate from Louis Rhead's historical plate."
+}

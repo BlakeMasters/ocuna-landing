@@ -1,0 +1,15 @@
+{
+  "file": "cambridge-raccoon.jpg",
+  "title": "Cambridge Natural History Mammalia Fig 213",
+  "bookTitle": "The Cambridge Natural History",
+  "volume": "X, Mammalia",
+  "bookAuthor": "Frank E. Beddard",
+  "publicationYear": 1902,
+  "caption": "Fig. 213.—Raccoon. Procyon lotor. × 1/5.",
+  "source": "https://commons.wikimedia.org/wiki/File:Cambridge_Natural_History_Mammalia_Fig_213.jpg",
+  "metadataVerified": "2026-10-02 via Wikimedia Commons imageinfo and source wikitext",
+  "suppliedFile": "Cambridge_Natural_History_Mammalia_Fig_213.jpg",
+  "rights": "Public domain; Wikimedia Commons marks this scan PD-Gutenberg.",
+  "treatment": "User-supplied JPEG retained byte for byte. An 8.2-second JavaScript brushstroke diffusion builds three overlapping pigment passes: broad olive-charcoal washes, broken bristle strokes, then fine engraving detail. Tapered curved strokes follow the back, face, paws, tail and branch; slight pigment bleed and paper grain soften their edges. This is a source-guided canvas effect, not model inference. White paper becomes transparent only when rendering. Reduced motion and failed animation loads show the original drawing immediately.",
+  "generator": "src/lib/critterDiffusion.js"
+}

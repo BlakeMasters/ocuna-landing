@@ -1,97 +1,102 @@
-import { useEffect, useState } from "react";
+import { useRef } from "react";
 import { asset, pagePath } from "../assets.js";
-import { acknowledgementCopy } from "../content.js";
+import { CRITTER } from "../content/critter.js";
+import RaccoonDiffusion from "./RaccoonDiffusion.jsx";
+import CritterTypewriter, { quoteTypingDuration } from "./CritterTypewriter.jsx";
 import "./CritterPage.css";
 
 export default function CritterPage() {
+  const sourceRef = useRef(null);
+  const { illustration, book } = CRITTER;
+
   return (
     <main className="critter-page" id="top" tabIndex={-1}>
-      <section className="critter-hero" aria-labelledby="critter-title">
-        <div className="critter-hero__blooms" aria-hidden="true">
-          <span />
-          <span />
-          <span />
-        </div>
-
-        <div className="shell critter-hero__layout">
-          <article className="critter-hero__glass">
-            <h1 id="critter-title">
-              <span>Critter</span>
-              <span>acknowledgement</span>
-            </h1>
-            <p className="critter-hero__copy">
-              <AcknowledgementText />
-            </p>
-            <a className="critter-hero__back" href={pagePath("")}>
-              Back to site
-            </a>
-          </article>
-
-          <div className="critter-hero__art">
-            <figure className="critter-cloud">
-              <div className="critter-cloud__mask">
-                <img
-                  alt="Watercolor raccoons exploring an old car beside a garden shed"
-                  decoding="async"
-                  fetchPriority="high"
-                  height="1300"
-                  src={asset("images/ocuna_background4c_cloud_masked.webp")}
-                  width="1600"
-                />
-              </div>
-            </figure>
-            <WalkingSprite />
+      <div className="critter-woodland" aria-hidden="true">
+        <img src={asset(CRITTER.woodland)} alt="" decoding="async" />
+      </div>
+      <section className="critter-hero critter-shell" aria-labelledby="critter-title">
+        <div className="critter-hero__copy">
+          <h1 id="critter-title">
+            <span>Critter</span>{" "}
+            <span>acknowledgement</span>
+          </h1>
+          <p className="critter-hero__recognition">
+            {CRITTER.recognition}<br />
+            (<em>{CRITTER.species}</em>).
+          </p>
+          <div className="critter-quotes">
+            {CRITTER.quotes.map((quote, index) => (
+              <BookQuote key={quote.id} quote={quote} book={book} delay={700 + CRITTER.quotes.slice(0, index).reduce((time, previous) => time + quoteTypingDuration(`“${previous.text}”`) + 420, 0)} />
+            ))}
           </div>
         </div>
+
+        <figure className="critter-drawing">
+          <RaccoonDiffusion illustration={illustration} />
+          <figcaption className="critter-drawing__caption">
+            <cite>{illustration.title}</cite>, {illustration.year}
+          </figcaption>
+        </figure>
       </section>
+
+      <div className="critter-page-links critter-shell">
+        <a className="critter-text-link" href={pagePath("")}>
+          <span aria-hidden="true">←</span> Back to site
+        </a>
+        <button
+          className="critter-text-link critter-source-trigger"
+          type="button"
+          aria-haspopup="dialog"
+          aria-controls="critter-sources"
+          onClick={() => sourceRef.current?.showModal()}
+        >
+          About the illustration
+        </button>
+      </div>
+
+      <dialog className="critter-source-dialog" id="critter-sources" aria-labelledby="critter-illustration-title" ref={sourceRef}>
+        <button className="critter-text-link critter-source-dialog__close" type="button" onClick={() => sourceRef.current?.close()}>
+          Close
+        </button>
+        <section className="critter-source" aria-labelledby="critter-illustration-title">
+          <div className="critter-source__book">
+            <h2 id="critter-illustration-title"><cite>{illustration.title}</cite></h2>
+            <p>{illustration.volume}<br />{illustration.author}, {illustration.year}</p>
+          </div>
+          <div className="critter-source__detail">
+            <p>{illustration.context}</p>
+            <p className="critter-source__credit">
+              Original illustration in the <a href={illustration.licenseHref}>public domain</a>.{" "}
+              Image from <a href={illustration.sourceHref}>{illustration.source}</a>.
+            </p>
+            <p className="critter-source__credit">
+              Quotations from <cite>{book.title}</cite> by {book.author} ({book.year}), pages 62 and 40.
+            </p>
+            <nav className="critter-source__links" aria-label="Illustration sources">
+              <a className="critter-text-link" href={book.href}>
+                Read {book.title} <span aria-hidden="true">↗</span>
+              </a>
+              <a className="critter-text-link" href={illustration.originalHref}>
+                View the original drawing <span aria-hidden="true">↗</span>
+              </a>
+            </nav>
+          </div>
+        </section>
+      </dialog>
     </main>
   );
 }
 
-function AcknowledgementText() {
-  const prefix = "Ocuna recognizes the raccoon (Procyon lotor)";
-  const rest = acknowledgementCopy.slice(prefix.length);
-
+function BookQuote({ quote, book, delay }) {
   return (
-    <>
-      Ocuna recognizes the raccoon (<em>Procyon lotor</em>){rest}
-    </>
-  );
-}
-
-function WalkingSprite() {
-  const [frame, setFrame] = useState(0);
-
-  useEffect(() => {
-    const media = window.matchMedia("(prefers-reduced-motion: reduce)");
-
-    if (media.matches) {
-      return undefined;
-    }
-
-    const timer = window.setInterval(() => {
-      setFrame((current) => (current + 1) % 8);
-    }, 135);
-
-    return () => window.clearInterval(timer);
-  }, []);
-
-  const column = frame % 4;
-  const row = Math.floor(frame / 4);
-  const x = (column / 3) * 100;
-  const y = (row / 2) * 100;
-
-  return (
-    <div className="critter-sprite" aria-hidden="true">
-      <div className="critter-sprite__viewport">
-        <div
-          className="critter-sprite__sheet"
-          style={{
-            backgroundImage: `url(${asset("sprites/walking/raccoon_walking_spritesheet_clean_compact.png")})`,
-            backgroundPosition: `${x}% ${y}%`,
-          }}
-        />
-      </div>
-    </div>
+    <figure className="critter-quote">
+      <blockquote>
+        <p className="critter-quote__words"><CritterTypewriter text={`“${quote.text}”`} delay={delay} /></p>
+      </blockquote>
+      <figcaption className="critter-quote__source">
+        {book.author}, <cite>{book.title}</cite>,{" "}
+        <a href={quote.href}>p. {quote.page}</a>
+      </figcaption>
+    </figure>
   );
 }

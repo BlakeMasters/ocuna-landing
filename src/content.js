@@ -1,6 +1,7 @@
 import { DOC_PAGES } from "./content/docPages.js";
 import { RESEARCH_META, RESEARCH_ROUTES } from "./content/research.js";
 import { FOUR1 } from "./content/four1.js";
+import { CRITTER } from "./content/critter.js";
 
 export const SITE_ORIGIN = "https://ocuna-ai.com";
 export const CONTACT_EMAIL = "business@ocuna-ai.com";
@@ -35,7 +36,7 @@ export const footerNavItems = [
 ];
 
 export const acknowledgementCopy =
-  "Ocuna recognizes the raccoon (Procyon lotor) as a model of stochastic behavioral expression shaped by high variability, adaptive learning, and individual divergence across natural and urban environments. Empirical studies describe flexible, probabilistic problem-solving strategies, with solution pathways varying across individuals and trials. Rapid associative learning produces structured stochasticity: a dynamic repertoire shaped by cognition, ecology, chance, novel stimuli, and competition. This acknowledgement celebrates an adaptive behavioral system that continuously samples, tests, and revises its strategies across changing surroundings.";
+  `${CRITTER.recognition} (${CRITTER.species}). ${CRITTER.acknowledgement}`;
 
 const homeMeta = {
   title: "Ocuna | Accelerating Uncertain computation",
@@ -59,7 +60,8 @@ export const pageMeta = {
   },
   "/critter-acknowledgement": {
     title: "Ocuna | Critter Acknowledgement",
-    description: "Ocuna's acknowledgement of structured stochasticity, adaptation, and the raccoon.",
+    description: "Ocuna’s acknowledgement of the raccoon, with a drawing from The Cambridge Natural History (1902) and quotations from Tenants of the Trees (1907).",
+    image: `/${CRITTER.illustration.file}`,
   },
   "/docs": {
     title: "Ocura OSS | Documentation",

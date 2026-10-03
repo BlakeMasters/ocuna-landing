@@ -9,6 +9,8 @@ import { DOC_PAGES, isDocRoute } from "./docPages.js";
 import { getResearchPost, RESEARCH_ART, RESEARCH_POSTS } from "./research.js";
 import { extractHeadings, escapeHtml, renderInline, renderMarkdown } from "../lib/markdown.js";
 import { FOUR1 } from "./four1.js";
+import { CRITTER } from "./critter.js";
+import { TENANTS_PLATE, TENANTS_PLATE_STYLE } from "./illustrations.js";
 import { HOME } from "./home.js";
 
 function navHtml() {
@@ -166,7 +168,15 @@ ${footerHtml()}`;
       `
       <p>${pageMeta["/contact"].description}</p>
       <p>Email <a href="mailto:${CONTACT_EMAIL}">${CONTACT_EMAIL}</a>. There is no signup form on this site.</p>
-      <p>Security reports for Ocura OSS should use <a href="${OCURA_OSS_REPO}/security/advisories/new">GitHub private vulnerability reporting</a>.</p>`,
+      <p>Security reports for Ocura OSS should use <a href="${OCURA_OSS_REPO}/security/advisories/new">GitHub private vulnerability reporting</a>.</p>
+      <figure style="max-width:25rem;margin:2rem auto;${Object.entries(TENANTS_PLATE_STYLE).map(([key, value]) => `${key}:${value}`).join(";")}">
+        <div style="padding:1.1rem;background:#e9dfbc">
+          <div style="position:relative;overflow:hidden;aspect-ratio:var(--plate-aspect)">
+            <img src="/${TENANTS_PLATE.file}" alt="${escapeHtml(TENANTS_PLATE.alt)}" width="${TENANTS_PLATE.width}" height="${TENANTS_PLATE.height}" style="position:absolute;top:var(--plate-top);left:var(--plate-left);width:var(--plate-width);height:var(--plate-height);max-width:none" />
+          </div>
+        </div>
+        <figcaption><a href="${TENANTS_PLATE.sourceHref}"><cite>${TENANTS_PLATE.title}</cite></a> · ${TENANTS_PLATE.illustrator}, ${TENANTS_PLATE.year}</figcaption>
+      </figure>`,
     );
   }
 
@@ -191,9 +201,24 @@ ${footerHtml()}`;
   }
 
   if (route === "/critter-acknowledgement") {
+    const { illustration, book } = CRITTER;
     return wrap(
       "Critter acknowledgement",
-      `<p>${pageMeta["/critter-acknowledgement"].description}</p>`,
+      `<p>${escapeHtml(CRITTER.recognition)} (<em>${escapeHtml(CRITTER.species)}</em>).</p>
+      ${CRITTER.quotes.map((quote) => `<figure><blockquote><p>${escapeHtml(quote.text)}</p></blockquote><figcaption>${escapeHtml(book.author)}, <cite>${escapeHtml(book.title)}</cite>, <a href="${quote.href}">p. ${quote.page}</a>.</figcaption></figure>`).join("\n")}
+      <figure>
+        <img src="/${escapeHtml(illustration.file)}" alt="${escapeHtml(illustration.alt)}" width="${illustration.width}" height="${illustration.height}" style="display:block;max-width:100%;height:auto" />
+        <figcaption><cite>${escapeHtml(illustration.title)}</cite>, ${illustration.year}</figcaption>
+      </figure>
+      <section>
+        <h2><cite>${escapeHtml(illustration.title)}</cite></h2>
+        <p>${escapeHtml(illustration.volume)}. ${escapeHtml(illustration.author)}, ${illustration.year}.</p>
+        <p>${escapeHtml(illustration.context)}</p>
+        <p>Original illustration in the <a href="${illustration.licenseHref}">public domain</a>. Image from <a href="${illustration.sourceHref}">${escapeHtml(illustration.source)}</a>.</p>
+        <p>Quotations from <cite>${escapeHtml(book.title)}</cite> by ${escapeHtml(book.author)} (${book.year}), pages 62 and 40.</p>
+        <nav aria-label="Illustration sources"><a href="${book.href}">Read ${escapeHtml(book.title)}</a> <a href="${illustration.originalHref}">View the original drawing</a></nav>
+      </section>
+      <p><a href="/">Back to site</a></p>`,
     );
   }
 
