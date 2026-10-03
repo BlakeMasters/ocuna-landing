@@ -19,7 +19,7 @@ export const companyNavItems = [
 export const productItems = [
   {
     label: "Ocura",
-    href: "/ocura",
+    href: "#work",
     description: "Branch-aware AI runtime",
   },
   {

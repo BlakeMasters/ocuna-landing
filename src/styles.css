@@ -3011,7 +3011,17 @@ html body #root > .site-header.shell .nav > a {
   min-height: 44px;
   align-items: center;
 }
-html body #root > .site-header.shell .nav > a::after {
+.footer-contact > a,
+.critter-page-links > .critter-text-link {
+  position: relative;
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  text-decoration: none;
+}
+html body #root > .site-header.shell .nav > a::after,
+.footer-contact > a::after,
+.critter-page-links > .critter-text-link::after {
   position: absolute;
   right: 0;
   bottom: 6px;
@@ -3023,7 +3033,9 @@ html body #root > .site-header.shell .nav > a::after {
   transform-origin: left;
   transition: transform 200ms ease;
 }
-html body #root > .site-header.shell .nav > a:is(:hover, :focus-visible)::after {
+html body #root > .site-header.shell .nav > a:is(:hover, :focus-visible)::after,
+.footer-contact > a:is(:hover, :focus-visible)::after,
+.critter-page-links > .critter-text-link:is(:hover, :focus-visible)::after {
   transform: scaleX(1);
 }
 @media (max-width: 1050px) {
@@ -3038,5 +3050,7 @@ html body #root > .site-header.shell .nav > a:is(:hover, :focus-visible)::after 
   html body #root > .site-header.shell .nav { gap: 8px; font-size: .78rem; }
 }
 @media (prefers-reduced-motion: reduce) {
-  html body #root > .site-header.shell .nav > a::after { transition: none; }
+  html body #root > .site-header.shell .nav > a::after,
+  .footer-contact > a::after,
+  .critter-page-links > .critter-text-link::after { transition: none; }
 }

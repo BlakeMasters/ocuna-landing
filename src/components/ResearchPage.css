@@ -11,7 +11,6 @@ body.research-route {
 body.research-route::before { display: none; }
 body.research-route .site-header { max-width: 1280px; padding-top: 16px; padding-bottom: 16px; border-bottom: 1px solid var(--field-line); min-height: 88px; }
 body.research-route .nav { display: flex; font-size: 14px; gap: 28px; color: var(--field-ink); }
-body.research-route .nav a[aria-current="page"] { text-decoration: underline; text-underline-offset: 7px; text-decoration-color: var(--field-accent); }
 body.research-route .site-footer { background: transparent; border-top: 1px solid var(--field-line); color: var(--field-muted); padding-block: 28px; }
 body.research-route .footer-logo-link { background: transparent; border: 0; box-shadow: none; width: 50px; height: 50px; }
 body.research-route .footer-contact { font-size: 13px; }

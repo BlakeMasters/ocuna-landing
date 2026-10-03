@@ -319,9 +319,8 @@ body.critter-route .site-footer a:focus-visible,
   left: -8%;
   display: block;
   width: 116%;
-  height: 95%;
-  object-fit: contain;
-  object-position: center bottom;
+  max-width: none;
+  height: auto;
 }
 
 .critter-quotes {

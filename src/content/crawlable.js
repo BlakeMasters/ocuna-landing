@@ -19,7 +19,7 @@ function navHtml() {
   <a href="/">Ocuna</a>
   <nav>
     <a href="/">Home</a>
-    <a href="/ocura">Ocura</a>
+    <a href="/#work">Ocura</a>
     <a href="/four1">Four1</a>
     <a href="/docs">Docs</a>
     <a href="/research">Research</a>
