@@ -38,7 +38,7 @@ export const acknowledgementCopy =
   "Ocuna recognizes the raccoon (Procyon lotor) as a model of stochastic behavioral expression shaped by high variability, adaptive learning, and individual divergence across natural and urban environments. Empirical studies describe flexible, probabilistic problem-solving strategies, with solution pathways varying across individuals and trials. Rapid associative learning produces structured stochasticity: a dynamic repertoire shaped by cognition, ecology, chance, novel stimuli, and competition. This acknowledgement celebrates an adaptive behavioral system that continuously samples, tests, and revises its strategies across changing surroundings.";
 
 const homeMeta = {
-  title: "Ocuna | Infrastructure for uncertain computation",
+  title: "Ocuna | Accelerating Uncertain computation",
   description:
     "Ocuna builds the execution layer for AI workloads that branch as they run. Ocura is its runtime. Ocura OSS is a local execution ledger for recording, branching, and comparing command runs.",
 };

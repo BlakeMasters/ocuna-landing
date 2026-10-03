@@ -8,7 +8,10 @@ import {
 } from "../ocuraDemoData.js";
 import ThinkingOrb from "./ThinkingOrb.jsx";
 
-export default function OcuraSimulator() {
+export default function OcuraSimulator({
+  title = "V0 is a working runtime. Run it right here.",
+  description = "Ocura started as a resident daemon that wrapped every run in one explicit phase contract. That core grew into a pathway, chokepoint, and branch-aware runtime. Insert a chokepoint, split the path, and watch each run resolve.",
+}) {
   const [hasChokepoint, setHasChokepoint] = useState(false);
   const [hasSplit, setHasSplit] = useState(false);
   const [activeNodeId, setActiveNodeId] = useState("main");
@@ -69,14 +72,10 @@ export default function OcuraSimulator() {
       <div className="shell ocura-graph-layout">
         <header className="graph-intro">
           <div>
-            <h2>V0 is a working runtime. Run it right here.</h2>
+            <h2>{title}</h2>
           </div>
           <div className="graph-intro-copy">
-            <p>
-              Ocura started as a resident daemon that wrapped every run in one explicit phase
-              contract. That core grew into a pathway, chokepoint, and branch-aware runtime.
-              Insert a chokepoint, split the path, and watch each run resolve.
-            </p>
+            <p>{description}</p>
           </div>
         </header>
 

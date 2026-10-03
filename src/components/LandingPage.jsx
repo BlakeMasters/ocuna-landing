@@ -12,12 +12,18 @@ import CritterGlassCard from "./CritterGlassCard.jsx";
 import LogoRaccoonTrigger from "./LogoRaccoonTrigger.jsx";
 import NounTrigger from "./NounTrigger.jsx";
 import OcuraSimulator from "./OcuraSimulator.jsx";
+import SystemHomePage from "./SystemHomePage.jsx";
 import "./HomePage.css";
 
 const ParticleSection = lazy(() => import("./particles/ParticleSection.jsx"));
 const LogisticsPrototype = lazy(() => import("./LogisticsPrototype.jsx"));
 
 export default function LandingPage() {
+  return <SystemHomePage />;
+}
+
+// Retain the ship composition for future experiments alongside its scene assets.
+export function ShipLandingPage() {
   return (
     <main id="top" tabIndex={-1}>
       <ShipHero />

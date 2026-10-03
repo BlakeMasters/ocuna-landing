@@ -21,6 +21,7 @@
 
 html {
   scroll-behavior: smooth;
+  scrollbar-gutter: stable;
 }
 
 .skip-link {
@@ -3127,4 +3128,24 @@ section {
 
 .logistics-deferred.is-mounted {
   min-height: 0;
+}
+
+/* Shared header geometry; route styles supply their own colors and borders. */
+html body .site-header.shell {
+  width: min(var(--shell-width), calc(100% - 80px));
+  min-height: 88px;
+  padding: 20px 0;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 24px;
+}
+html body .site-header.shell .brand { align-self: flex-start; flex-shrink: 0; }
+html body .site-header.shell .brand img { width: auto; height: 48px; max-width: none; }
+@media (max-width: 1050px) {
+  html body .site-header.shell { width: calc(100% - 48px); }
+}
+@media (max-width: 620px) {
+  html body .site-header.shell { width: calc(100% - 32px); gap: 18px; }
+  html body .site-header.shell .nav { display: flex; width: auto; flex-wrap: wrap; gap: 17px; font-size: .84rem; }
 }

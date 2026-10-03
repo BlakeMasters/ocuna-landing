@@ -9,6 +9,7 @@ import { DOC_PAGES, isDocRoute } from "./docPages.js";
 import { getResearchPost, RESEARCH_ART, RESEARCH_POSTS } from "./research.js";
 import { extractHeadings, escapeHtml, renderInline, renderMarkdown } from "../lib/markdown.js";
 import { FOUR1 } from "./four1.js";
+import { HOME } from "./home.js";
 
 function navHtml() {
   return `
@@ -46,17 +47,27 @@ ${footerHtml()}`;
 
 function landingBody(extra = "") {
   return `
-      <p>${pageMeta["/"].description}</p>
-      <p>Ocuna builds the execution layer for AI workloads that branch as they run. Ocura is the runtime. Ocura OSS is a local execution ledger for recording, branching, and comparing command runs.</p>
-      <nav>
+      <p>${escapeHtml(HOME.introduction)}</p>
+      <nav aria-label="Ocuna systems">
         <a href="/#work">Scheduler</a>
         <a href="/#market">Training and inference</a>
-        <a href="/#ocura">V0 simulator</a>
+        <a href="/#ocura">Execution graph</a>
         <a href="/docs">Ocura OSS docs</a>
         <a href="/docs/examples">PyTorch, JAX, and Ray example</a>
         <a href="/four1">Four1</a>
         <a href="/research">Field Notes</a>
       </nav>
+      <section id="work">
+        <h2>${escapeHtml(HOME.runtimeTitle)}</h2>
+        <p>${escapeHtml(HOME.runtimeIntroduction)}</p>
+        <div id="market">
+          ${HOME.capabilities.map((capability) => `<article><h3>${escapeHtml(capability.title)}</h3><h4>${escapeHtml(capability.heading)}</h4><p>${escapeHtml(capability.description)}</p><a href="${capability.href}">${escapeHtml(capability.action)}</a></article>`).join("\n")}
+        </div>
+      </section>
+      <section id="ocura"><h2>${escapeHtml(HOME.executionTitle)}</h2><p>${escapeHtml(HOME.executionIntroduction)}</p><p>The normal path writes <code>hello_world</code>. The review branch writes <code>review branch</code>, with both paths connected to the same chokepoint.</p></section>
+      <section id="ocura-oss"><h2>Record, branch, and compare.</h2><p>Ocura OSS ${OCURA_OSS_VERSION} is the part you can run on your own machine today. Keep a baseline, branch from it with a reason, and connect each result to the original run through the JSON CLI, the Python API, or an AI agent.</p><pre><code>python -m pip install ocura-oss</code></pre><a href="/docs">Documentation</a><a href="/docs/examples">Try the training example</a></section>
+      <section><h2>More from Ocuna.</h2><h3><a href="/four1">Four1</a></h3><p>${escapeHtml(FOUR1.definition)}</p><h3><a href="/research/${escapeHtml(RESEARCH_POSTS[0].slug)}">${escapeHtml(RESEARCH_POSTS[0].title)}</a></h3><p>${escapeHtml(RESEARCH_POSTS[0].category)} · ${escapeHtml(RESEARCH_POSTS[0].dateLabel)}</p></section>
+      <p id="critter"><a href="/critter-acknowledgement">Critter acknowledgement</a></p>
       ${extra}`;
 }
 
@@ -113,21 +124,13 @@ ${footerHtml()}`;
   }
 
   if (route === "/" || route === "/ocuna") {
-    return wrap("Ocuna, infrastructure for uncertain computation", landingBody());
+    return wrap(HOME.headline, landingBody());
   }
 
   if (route === "/ocura") {
     return wrap(
-      "Ocura, Ocuna’s branch-aware AI runtime",
-      `
-      <p>${pageMeta["/ocura"].description}</p>
-      <p>Ocura directs compute across training and inference branches, holds budgets, and keeps every path it took on the record.</p>
-      <nav>
-        <a href="/ocura#work">Scheduler</a>
-        <a href="/ocura#market">Training and inference</a>
-        <a href="/ocura#ocura">V0 simulator</a>
-        <a href="/docs">Ocura OSS documentation</a>
-      </nav>`,
+      HOME.headline,
+      landingBody(),
     );
   }
 
