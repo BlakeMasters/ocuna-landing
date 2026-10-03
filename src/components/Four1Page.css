@@ -9,18 +9,6 @@ body.four1-route .site-header { border-bottom: 1px solid #ffffff0d; }
 body.four1-route .nav { color: #b5b8b5; }
 body.four1-route .nav a:hover,
 body.four1-route .nav button:hover { color: #fff; }
-body.four1-route .nav-products-menu {
-  border-color: #ffffff24;
-  border-radius: 3px;
-  background: #191c1a;
-  box-shadow: 0 20px 48px #0006;
-}
-body.four1-route .nav-products-menu a { border-radius: 1px; }
-body.four1-route .nav-products-menu strong { color: #f2f1ed; }
-body.four1-route .nav-products-menu span { color: #b5b8b5; }
-body.four1-route .nav-products-menu a:hover,
-body.four1-route .nav-products-menu a:focus-visible,
-body.four1-route .nav-products-menu a[aria-current="page"] { background: #bd947820; }
 body.four1-route .site-footer { color: #acb0ac; border-top-color: #ffffff1a; }
 body.four1-route .footer-logo-link { background: #ffffff06; border-color: #ffffff24; }
 body.four1-route .footer-logo-link img { filter: invert(1) grayscale(1); }

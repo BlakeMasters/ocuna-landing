@@ -109,7 +109,6 @@ body.research-route .footer-contact { font-size: 13px; }
 @media (max-width: 700px) {
   body.research-route .site-header { flex-wrap: wrap; justify-content: space-between; padding-block: 14px; gap: 14px; width: calc(100% - 40px); }
   body.research-route .nav { gap: 14px; font-size: 12px; flex-wrap: nowrap; }
-  body.research-route .nav-products-menu { max-width: calc(100vw - 56px); }
   .field-shell { width: calc(100% - 40px); }
   .field-page { padding-top: 22px; }
   .field-masthead { flex-direction: column; align-items: flex-start; gap: 20px; padding: 12px 0 30px; }

@@ -19,6 +19,7 @@ import { ParticleProvider } from "./components/particles/ParticleContext.jsx";
 import { jsonLdGraph } from "./content/jsonld.js";
 import { isDocRoute } from "./content/docPages.js";
 import { RESEARCH_ROUTES } from "./content/research.js";
+import "./components/ProductMenu.css";
 
 const LANDING_KINDS = new Set(["home", "ocuna", "ocura"]);
 const PAPER_KINDS = new Set(["contact", "notfound"]);
@@ -313,12 +314,20 @@ function SiteHeader({ route, kind, onNavigate }) {
 function ProductMenu({ onNavigate, route }) {
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef(null);
+  const closeTimer = useRef(null);
+
+  function cancelClose() {
+    clearTimeout(closeTimer.current);
+  }
+
+  useEffect(() => () => clearTimeout(closeTimer.current), []);
 
   useEffect(() => {
     if (!isOpen) return undefined;
 
     function closeFromOutsidePointer(event) {
       if (!menuRef.current?.contains(event.target)) {
+        cancelClose();
         setIsOpen(false);
       }
     }
@@ -329,12 +338,14 @@ function ProductMenu({ onNavigate, route }) {
 
   function closeFromBlur(event) {
     if (!event.currentTarget.contains(event.relatedTarget)) {
+      cancelClose();
       setIsOpen(false);
     }
   }
 
   function handleKeyDown(event) {
     if (event.key === "Escape") {
+      cancelClose();
       setIsOpen(false);
       event.currentTarget.querySelector(".nav-products-trigger")?.focus();
     }
@@ -342,14 +353,25 @@ function ProductMenu({ onNavigate, route }) {
 
   function openFromMouse(event) {
     if (event.pointerType === "mouse") {
+      cancelClose();
       setIsOpen(true);
     }
   }
 
   function closeFromMouse(event) {
     if (event.pointerType === "mouse") {
-      setIsOpen(false);
+      cancelClose();
+      // Allow the pointer to cross from the trigger into the wide dropdown.
+      closeTimer.current = setTimeout(() => setIsOpen(false), 200);
     }
+  }
+
+  function toggleFromClick(event) {
+    cancelClose();
+    // A mouse click keeps the hover-open menu available; taps and keyboard
+    // activation retain their toggle behavior.
+    if (event.nativeEvent.pointerType === "mouse") setIsOpen(true);
+    else setIsOpen((current) => !current);
   }
 
   return (
@@ -366,7 +388,7 @@ function ProductMenu({ onNavigate, route }) {
         aria-expanded={isOpen}
         aria-haspopup="true"
         className="nav-products-trigger"
-        onClick={() => setIsOpen((current) => !current)}
+        onClick={toggleFromClick}
         type="button"
       >
         Products
@@ -384,6 +406,7 @@ function ProductMenu({ onNavigate, route }) {
               href={pagePath(item.href)}
               key={item.label}
               onClick={(event) => {
+                cancelClose();
                 setIsOpen(false);
                 onNavigate(event, item.href);
               }}

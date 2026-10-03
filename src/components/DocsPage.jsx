@@ -266,11 +266,6 @@ export default function DocsPage({ route }) {
           className="docs-main"
           style={{ "--docs-font-size": `${fontSizePx}px` }}
         >
-          <p className="docs-crumbs">
-            <a href={pagePath("docs")}>Docs</a>
-            <span>/</span>
-            {page.crumb}
-          </p>
           <nav className="docs-source-links" aria-label="Alternative documentation formats">
             <a href={pagePath(`docs/${page.file}`)}>Read Markdown</a>
             <a href={`${OCURA_OSS_REPO}/blob/${OCURA_OSS_SOURCE_REF}/${page.repositoryPath}`}>Read on GitHub</a>

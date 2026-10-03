@@ -44,14 +44,6 @@ body.paper-route .nav-products-trigger {
   color: rgba(36, 38, 66, 0.72);
 }
 
-body.paper-route .nav-products-menu {
-  border-color: rgba(63, 75, 146, 0.14);
-  background: rgba(249, 251, 255, 0.88);
-  box-shadow: 0 24px 60px rgba(63, 75, 146, 0.14);
-  backdrop-filter: blur(24px) saturate(130%);
-  -webkit-backdrop-filter: blur(24px) saturate(130%);
-}
-
 body.paper-route .site-footer {
   color: #535978;
   border-top-color: rgba(63, 75, 146, 0.12);
@@ -63,11 +55,6 @@ body.paper-route .nav-products-trigger:focus-visible,
 body.paper-route .site-footer a:focus-visible {
   outline: 3px solid var(--critter-indigo);
   outline-offset: 4px;
-}
-
-body.paper-route .nav-products-menu a:focus-visible {
-  outline: 3px solid var(--critter-indigo);
-  outline-offset: 2px;
 }
 
 body.critter-route {
@@ -111,19 +98,6 @@ body.critter-route .site-header {
 body.critter-route .nav,
 body.critter-route .nav-products-trigger {
   color: var(--critter-secondary);
-}
-
-/* Join the compact trigger's hover area to the dropdown's existing bridge. */
-body.critter-route .nav-products-trigger {
-  min-height: 44px;
-}
-
-body.critter-route .nav-products-menu {
-  right: 0;
-  left: auto;
-  border-color: var(--critter-rule);
-  background: #f6f1e5;
-  box-shadow: 0 18px 45px rgba(48, 53, 36, 0.1);
 }
 
 body.critter-route .site-footer {
@@ -592,14 +566,6 @@ body.critter-route .site-footer a:focus-visible,
     flex-wrap: wrap;
     gap: 0.6rem;
     font-size: 0.76rem;
-  }
-
-  body.critter-route .nav-products-menu {
-    position: fixed;
-    top: 4rem;
-    right: 20px;
-    left: 20px;
-    width: auto;
   }
 
   .critter-source {
