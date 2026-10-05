@@ -50,6 +50,10 @@ ${footerHtml()}`;
 function landingBody(extra = "") {
   return `
       <p>${escapeHtml(HOME.introduction)}</p>
+      <section aria-labelledby="system-partners-title">
+        <h2 id="system-partners-title">${escapeHtml(HOME.partnersTitle)}</h2>
+        <ul>${HOME.partners.map((partner) => `<li><a href="${escapeHtml(partner.href)}"><img src="/${escapeHtml(partner.logo)}" alt="${escapeHtml(partner.name)}" width="${partner.width}" height="${partner.height}" style="width:auto;height:40px;max-width:100%;filter:grayscale(1)" /></a></li>`).join("\n")}</ul>
+      </section>
       <nav aria-label="Ocuna systems">
         <a href="/#work">Scheduler</a>
         <a href="/#market">Training and inference</a>

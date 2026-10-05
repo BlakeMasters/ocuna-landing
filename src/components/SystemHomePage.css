@@ -269,6 +269,51 @@ body.landing-route:has(.system-home) .footer-logo-link img { filter: none; }
 .system-motion:hover { color: var(--system-teal); border-color: var(--system-teal); }
 .system-motion svg { width: 17px; height: 17px; fill: currentColor; }
 
+.system-home .system-partners {
+  padding: 12px 0 44px;
+  text-align: center;
+}
+
+.system-home .system-partners h2 {
+  max-width: none;
+  color: var(--system-muted);
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1.5;
+}
+
+.system-partner-list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 12px clamp(32px, 6vw, 88px);
+  margin: 16px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.system-partner-list a {
+  display: grid;
+  min-height: 64px;
+  place-items: center;
+}
+
+.system-partner-logo {
+  display: block;
+  height: auto;
+  filter: grayscale(1);
+  opacity: 0.72;
+  transition: opacity 160ms ease;
+}
+
+.system-partner-logo--antler { width: 150px; }
+.system-partner-logo--ucsf { width: 90px; }
+.system-partner-logo--stanford { width: 174px; }
+.system-partner-list a:is(:hover, :focus-visible) img { opacity: 1; }
+
 .system-product-strip {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -483,5 +528,6 @@ body.landing-route:has(.system-home) .footer-logo-link img { filter: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .system-partner-logo { transition: none; }
   .system-home *, .system-home *::before, .system-home *::after { scroll-behavior: auto; transition: none; }
 }

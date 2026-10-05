@@ -1,0 +1,19 @@
+{
+  "antler": {
+    "source": "https://www.antler.co/",
+    "asset": "antler.svg",
+    "description": "Original inline Antler wordmark from the official site header."
+  },
+  "ucsf": {
+    "source": "https://www.ucsf.edu/themes/custom/ucsf/logo.svg",
+    "guide": "https://identity.ucsf.edu/brand-guide/logos",
+    "asset": "ucsf.svg",
+    "description": "Original UCSF wordmark from the official site header."
+  },
+  "stanford": {
+    "source": "https://identity.stanford.edu/wp-content/uploads/sites/3/2020/06/wordmark-nospace-black.png",
+    "guide": "https://identity.stanford.edu/visual-identity/stanford-logos/wordmarks/",
+    "asset": "stanford.png",
+    "description": "Original black Stanford wordmark from the official identity guide."
+  }
+}

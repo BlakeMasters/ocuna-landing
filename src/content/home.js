@@ -3,6 +3,12 @@ export const HOME = {
   headlineLead: "Accelerating",
   introduction:
     "Ocuna builds the execution layer for AI workloads that branch as they run. From model training to agent research, we’re building systems that coordinate work and keep their decisions on the record.",
+  partnersTitle: "Thank you to our partners",
+  partners: [
+    { name: "Antler", id: "antler", href: "https://www.antler.co/", logo: "partners/antler.svg", width: 117, height: 28 },
+    { name: "UCSF", id: "ucsf", href: "https://www.ucsf.edu/", logo: "partners/ucsf.svg", width: 802, height: 393 },
+    { name: "Stanford", id: "stanford", href: "https://www.stanford.edu/", logo: "partners/stanford.png", width: 426, height: 91 },
+  ],
   runtimeTitle: "Compute follows the work.",
   runtimeIntroduction:
     "Ocura directs compute across an execution frontier. The scheduler places work, holds budgets, and reuses results across training and inference branches. You build the pipeline; the runtime governs what runs, what waits, and what continues.",

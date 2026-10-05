@@ -66,6 +66,30 @@ function RuntimePanels() {
   );
 }
 
+function PartnerAcknowledgement() {
+  return (
+    <section className="shell system-partners" aria-labelledby="system-partners-title">
+      <h2 id="system-partners-title">{HOME.partnersTitle}</h2>
+      <ul className="system-partner-list">
+        {HOME.partners.map((partner) => (
+          <li key={partner.id}>
+            <a href={partner.href}>
+              <img
+                className={`system-partner-logo system-partner-logo--${partner.id}`}
+                src={asset(partner.logo)}
+                alt={partner.name}
+                width={partner.width}
+                height={partner.height}
+                decoding="async"
+              />
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
+
 function OssPanel() {
   return (
     <section className="system-oss-section" id="ocura-oss" aria-labelledby="system-oss-title">
@@ -127,6 +151,7 @@ export default function SystemHomePage() {
   return (
     <main className="system-home" id="top" tabIndex={-1}>
       <SystemHero motionEnabled={motionEnabled} onToggleMotion={toggleMotion} />
+      <PartnerAcknowledgement />
       <nav className="shell system-product-strip" aria-label="Ocuna systems">
         {products.map((product) => <a href={product.href.startsWith("#") ? product.href : pagePath(product.href)} key={product.name}><div><strong>{product.name}</strong><span>{product.description}</span></div><ArrowIcon /></a>)}
       </nav>
