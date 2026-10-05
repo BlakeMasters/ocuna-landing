@@ -311,7 +311,7 @@ body.landing-route:has(.system-home) .footer-logo-link img { filter: none; }
 
 .system-partner-logo--antler { width: 150px; }
 .system-partner-logo--ucsf { width: 90px; }
-.system-partner-logo--stanford { width: 174px; }
+.system-partner-logo--stanford { width: auto; height: 56px; }
 .system-partner-list a:is(:hover, :focus-visible) img { opacity: 1; }
 
 .system-product-strip {

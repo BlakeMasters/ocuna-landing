@@ -7,7 +7,7 @@ export const HOME = {
   partners: [
     { name: "Antler", id: "antler", href: "https://www.antler.co/", logo: "partners/antler.svg", width: 117, height: 28 },
     { name: "UCSF", id: "ucsf", href: "https://www.ucsf.edu/", logo: "partners/ucsf.svg", width: 802, height: 393 },
-    { name: "Stanford", id: "stanford", href: "https://www.stanford.edu/", logo: "partners/stanford.png", width: 426, height: 91 },
+    { name: "Stanford", id: "stanford", href: "https://www.stanford.edu/", logo: "partners/stanford-s.svg", width: 92, height: 139 },
   ],
   runtimeTitle: "Compute follows the work.",
   runtimeIntroduction:
