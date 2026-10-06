@@ -3,17 +3,5 @@
     "source": "https://www.antler.co/",
     "asset": "antler.svg",
     "description": "Original inline Antler wordmark from the official site header."
-  },
-  "ucsf": {
-    "source": "https://www.ucsf.edu/themes/custom/ucsf/logo.svg",
-    "guide": "https://identity.ucsf.edu/brand-guide/logos",
-    "asset": "ucsf.svg",
-    "description": "Original UCSF wordmark from the official site header."
-  },
-  "stanford": {
-    "source": "https://www-media.stanford.edu/assets/favicon/safari-pinned-tab.svg",
-    "guide": "https://identity.stanford.edu/visual-identity/stanford-logos/block-s/",
-    "asset": "stanford-s.svg",
-    "description": "Original Stanford block S with tree artwork, displayed in grayscale."
   }
 }
