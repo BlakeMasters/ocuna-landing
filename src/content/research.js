@@ -2,7 +2,7 @@ import { CSIM_POST } from "./csimPost.js";
 import { DREAM_RSI_POST } from "./dreamRsiPost.js";
 
 export const RESEARCH_ART = {
-  weekend: { file: "weekend/raccoon-hackathon-park-relaxed-gaze.png", alt: "An ink-drawn raccoon glances toward YC, four1 and Pear logo cards resting on a lightly sketched park bench." },
+  weekend: { file: "weekend/bench-logos.png", alt: "An ink-drawn raccoon peeks out from a tree beside a park bench displaying YC, four1 and Pear logo cards.", width: 1536, height: 1024, fit: "contain" },
   trail: { file: "raccoon-field-note.png", alt: "An ink-drawn raccoon reaching toward a small amber circle." },
   logs: { file: "raccoon-inspection.png", alt: "A seated raccoon examining an ochre stone between its front paws." },
   replay: { file: "raccoon-looking-back.png", alt: "A raccoon pausing to look back over its shoulder, its ringed tail curving behind it." },

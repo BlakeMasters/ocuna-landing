@@ -11,7 +11,7 @@ function Arrow({ diagonal = false }) {
 
 function NoteArt({ kind, thumbnail = false, priority = false }) {
   const illustration = RESEARCH_ART[kind] ?? RESEARCH_ART.trail;
-  return <img className={[thumbnail && "field-thumbnail", illustration.original && "field-art-original"].filter(Boolean).join(" ") || undefined} src={asset(`research/${illustration.file}`)} alt={thumbnail ? "" : illustration.alt} loading={thumbnail ? "lazy" : "eager"} fetchPriority={priority ? "high" : undefined} width={illustration.width ?? 1536} height={illustration.height ?? 1024} />;
+  return <img className={[thumbnail && "field-thumbnail", illustration.original && "field-art-original"].filter(Boolean).join(" ") || undefined} src={asset(`research/${illustration.file}`)} alt={thumbnail ? "" : illustration.alt} style={illustration.fit ? { objectFit: illustration.fit } : undefined} loading={thumbnail ? "lazy" : "eager"} fetchPriority={priority ? "high" : undefined} width={illustration.width ?? 1536} height={illustration.height ?? 1024} />;
 }
 
 function ArticleLink({ post, onNavigate, children, ...props }) {
