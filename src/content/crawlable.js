@@ -9,6 +9,7 @@ import { DOC_PAGES, isDocRoute } from "./docPages.js";
 import { getResearchPost, RESEARCH_ART, RESEARCH_POSTS } from "./research.js";
 import { extractHeadings, escapeHtml, renderInline, renderMarkdown } from "../lib/markdown.js";
 import { FOUR1 } from "./four1.js";
+import { researchStageSvg } from "../components/four1/researchStageArt.js";
 import { CRITTER } from "./critter.js";
 import { TENANTS_PLATE, TENANTS_PLATE_STYLE } from "./illustrations.js";
 import { HOME } from "./home.js";
@@ -192,13 +193,15 @@ ${footerHtml()}`;
     <img src="/four1/logo.png" alt="Four1 factory mark" width="100" height="100" style="background:#111312" />
     <h1>${escapeHtml(FOUR1.headline)}</h1>
     <p>${escapeHtml(FOUR1.definition)}</p>
-    <p><a href="/contact">Discuss Four1</a> · <a href="${FOUR1.researchRoute}">Read the field note</a></p>
+    <p>${escapeHtml(FOUR1.heroBenefit)}</p>
+    <p><a href="/contact">Discuss Four1</a></p>
     <img src="/four1/city.png" alt="" width="1672" height="941" style="max-width:100%;height:auto" />
   </section>
   <section aria-labelledby="four1-native-title">
-    <h2 id="four1-native-title">${escapeHtml(FOUR1.nativeAgents.title)}</h2>
-    <p>${escapeHtml(FOUR1.nativeAgents.introduction)}</p>
+    <h2 id="four1-native-title">${escapeHtml(FOUR1.nativeEnvironments.title)}</h2>
+    <p>${escapeHtml(FOUR1.nativeEnvironments.introduction)}</p>
     <p><a href="/contact">Discuss a research workflow</a></p>
+    <figure class="research-stage" id="four1-research-animation" data-running="false">${researchStageSvg("four1-static-stage")}</figure>
   </section>
 </main>
 ${footerHtml()}`;

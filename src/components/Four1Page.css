@@ -65,6 +65,7 @@ body.four1-route .site-footer a:hover { color: #fff; }
 .four1-identity span { font-size: 1.8rem; letter-spacing: -0.035em; font-weight: 500; }
 .four1-hero h1 { font-size: clamp(3.25rem, 5.8vw, 5.7rem); letter-spacing: -0.055em; line-height: 1.04; }
 .four1-hero__definition { max-width: 36rem; margin-top: 30px; font-size: 1.15rem; line-height: 1.65; color: #d2d5d1; text-wrap: pretty; }
+.four1-hero__benefit { max-width: 40rem; margin-top: 16px; font-size: 1.06rem; line-height: 1.65; color: #d2d5d1; text-wrap: pretty; }
 .four1-actions { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 20px 30px; margin-top: 32px; }
 .four1-button { display: inline-flex; align-items: center; gap: 20px; padding: 14px 19px; background: var(--four1-ink); color: #151715; border: 1px solid var(--four1-ink); border-radius: 2px; font-size: 0.94rem; font-weight: 600; }
 .four1-button:hover { background: #fff; border-color: #fff; }
@@ -96,6 +97,7 @@ body.four1-route .site-footer a:hover { color: #fff; }
   .four1-identity span { font-size: 1.55rem; }
   .four1-hero h1 { font-size: clamp(2.5rem, 10.5vw, 3.8rem); }
   .four1-hero__definition { margin-top: 24px; font-size: 1.03rem; }
+  .four1-hero__benefit { margin-top: 14px; font-size: 1rem; }
   .four1-actions { gap: 22px; margin-top: 27px; flex-direction: column; }
   .four1-city__image { object-fit: contain; }
   .four1-city::after { background: linear-gradient(#111312 0%, #11131200 22%, transparent 80%, #111312); }
