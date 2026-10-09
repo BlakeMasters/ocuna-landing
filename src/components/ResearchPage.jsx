@@ -1,8 +1,10 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { asset, pagePath } from "../assets.js";
 import { getResearchPost, RESEARCH_ART, RESEARCH_POSTS } from "../content/research.js";
 import { renderInline } from "../lib/markdown.js";
 import ResearchMedia from "./ResearchMedia.jsx";
+import FieldNotesJungle from "./FieldNotesJungle.jsx";
+import NappingRaccoon from "./NappingRaccoon.jsx";
 import "./ResearchPage.css";
 
 function Arrow({ diagonal = false }) {
@@ -21,11 +23,23 @@ function ArticleLink({ post, onNavigate, children, ...props }) {
 
 function ResearchIndex({ onNavigate }) {
   const [featured, ...posts] = RESEARCH_POSTS;
+  const [paused, setPaused] = useState(false);
 
-  return <main className="field-page" id="top" tabIndex={-1}>
+  return <main className="field-page field-index-page" id="top" tabIndex={-1}>
+    <FieldNotesJungle paused={paused} />
     <div className="field-shell">
       <section className="field-masthead" aria-labelledby="field-title">
-        <h1 id="field-title">Field Notes</h1>
+        <div className="field-masthead-title">
+          <h1 id="field-title">Field Notes</h1>
+          <NappingRaccoon paused={paused} />
+        </div>
+        <button className="field-motion" type="button" aria-pressed={paused}
+          aria-label={paused ? "Resume Field Notes animations" : "Pause Field Notes animations"}
+          aria-controls="field-jungle field-napping-raccoon" onClick={() => setPaused((value) => !value)}>
+          <svg viewBox="0 0 16 16" aria-hidden="true">
+            {paused ? <path d="m5 3 8 5-8 5Z" /> : <path d="M4 3h3v10H4zm5 0h3v10H9z" />}
+          </svg>
+        </button>
       </section>
       <section aria-label="Featured field note">
         <ArticleLink post={featured} onNavigate={onNavigate} className="field-feature">

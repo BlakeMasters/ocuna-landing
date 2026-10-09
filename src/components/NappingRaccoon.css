@@ -1,0 +1,35 @@
+.field-masthead-title { display: flex; align-items: flex-end; gap: 28px; min-width: 0; }
+.field-masthead-title h1 { white-space: nowrap; }
+.field-napping-raccoon {
+  display: block;
+  flex: 0 0 auto;
+  width: clamp(135px, 16vw, 195px);
+  height: auto;
+  margin-bottom: 4px;
+  pointer-events: none;
+}
+.field-napping-raccoon__art {
+  display: block;
+  width: 100%;
+  height: auto;
+  transform-origin: 76% 94%;
+  animation: field-nap-breath 6.2s ease-in-out infinite;
+  animation-play-state: paused;
+}
+.field-napping-raccoon[data-running="true"] .field-napping-raccoon__art {
+  animation-play-state: running;
+}
+@keyframes field-nap-breath {
+  0%, 100% { transform: scale(1); }
+  48% { transform: scale(1.002, 1.014); }
+}
+@media (max-width: 700px) {
+  .field-index-page .field-masthead { align-items: flex-start; }
+  .field-masthead-title { flex-wrap: wrap; gap: 8px; flex: 1; }
+  .field-masthead-title h1 { flex-basis: 100%; }
+  .field-napping-raccoon { width: 148px; margin: 0 0 0 auto; }
+  .field-index-page .field-motion { margin-top: 12px; }
+}
+@media (prefers-reduced-motion: reduce), print {
+  .field-napping-raccoon__art { animation: none; }
+}
