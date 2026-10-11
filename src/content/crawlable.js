@@ -13,12 +13,14 @@ import { researchStageSvg } from "../components/four1/researchStageArt.js";
 import { CRITTER } from "./critter.js";
 import { TENANTS_PLATE, TENANTS_PLATE_STYLE } from "./illustrations.js";
 import { HOME } from "./home.js";
+import { galleryImagePath, NOT_FOUND, RACCOON_GALLERY } from "./raccoonGallery.js";
 
-function navHtml() {
+function navHtml(styled = false) {
   return `
-<header>
-  <a href="/">Ocuna</a>
-  <nav>
+${styled ? '<a class="skip-link" href="#top">Skip to content</a>' : ""}
+<header${styled ? ' class="shell site-header not-found-static-header"' : ""}>
+  <a${styled ? ' class="brand" aria-label="Ocuna home"' : ""} href="/">${styled ? '<img src="/images/ocuna_title_logo_nobackground.webp" alt="Ocuna" />' : "Ocuna"}</a>
+  <nav${styled ? ' class="nav" aria-label="Primary navigation"' : ""}>
     <a href="/">Home</a>
     <a href="/#work">Ocura</a>
     <a href="/four1">Four1</a>
@@ -29,14 +31,32 @@ function navHtml() {
 </header>`;
 }
 
-function footerHtml() {
+function footerHtml(styled = false) {
   return `
-<footer>
+<footer${styled ? ' class="site-footer"' : ""}>
+  ${styled ? '<div class="shell footer-layout"><a class="footer-logo-link" href="#top" aria-label="Back to top"><img src="/images/ocuna_logo.webp" alt="" /></a><nav class="footer-contact" aria-label="Footer">' : ""}
   <a href="/docs">Docs</a>
   <a href="/research">Research</a>
   <a href="/contact">Contact</a>
   <a href="mailto:${CONTACT_EMAIL}">${CONTACT_EMAIL}</a>
+  ${styled ? "</nav></div>" : ""}
 </footer>`;
+}
+
+function raccoonArtworkHtml(art, featured = false) {
+  return `<figure class="not-found-art${featured ? " not-found-art--featured" : ""}">
+    <time class="not-found-art__year" datetime="${art.year}">${art.year}</time>
+    <a class="not-found-art__image" href="/${galleryImagePath(art)}" aria-label="Enlarge ${escapeHtml(art.title)}, ${art.year}">
+      <img src="/${galleryImagePath(art, !featured)}" alt="${escapeHtml(art.alt)}" width="${art.width}" height="${art.height}" loading="${featured ? "eager" : "lazy"}" fetchpriority="${featured ? "high" : "auto"}" decoding="async" />
+      <span class="not-found-art__enlarge" aria-hidden="true">View artwork <span>↗</span></span>
+    </a>
+    <figcaption>
+      <${featured ? "h2" : "h3"}>${escapeHtml(art.title)}</${featured ? "h2" : "h3"}>
+      <p class="not-found-art__credit">${escapeHtml(art.credit)}</p>
+      <p class="not-found-art__description">${escapeHtml(art.description)}</p>
+      <a class="not-found-art__source" href="${escapeHtml(art.sourceHref)}">View source <span aria-hidden="true">↗</span><span class="not-found-sr-only"> for ${escapeHtml(art.title)}, ${art.year}</span></a>
+    </figcaption>
+  </figure>`;
 }
 
 function wrap(title, body) {
@@ -229,15 +249,30 @@ ${footerHtml()}`;
     );
   }
 
-  return wrap(
-    "This path is not a page",
-    `
-    <p>${pageMeta["/404"].description}</p>
-    <nav>
-      <a href="/">Ocuna home</a>
-      <a href="/ocura">Ocura</a>
-      <a href="/docs">Docs</a>
-      <a href="/contact">Contact</a>
-    </nav>`,
-  );
+  return `${navHtml(true)}
+<main class="not-found-page" id="top" tabindex="-1">
+  <div class="not-found-shell">
+    <section class="not-found-hero" aria-labelledby="not-found-title">
+      <div class="not-found-hero__copy">
+        <p class="not-found-code" aria-label="Error 404">404</p>
+        <h1 id="not-found-title">${escapeHtml(NOT_FOUND.title)}</h1>
+        <p class="not-found-message">${escapeHtml(NOT_FOUND.message)}</p>
+        <nav class="not-found-actions" aria-label="Find your way back">
+          ${NOT_FOUND.actions.map((action, index) => `<a class="${index === 0 ? "not-found-home" : "not-found-text-link"}" href="/${action.href}">${index === 0 ? '<span aria-hidden="true">←</span>' : ""}${escapeHtml(action.label)}${index !== 0 ? '<span aria-hidden="true">↗</span>' : ""}</a>`).join("\n")}
+        </nav>
+      </div>
+      ${raccoonArtworkHtml(RACCOON_GALLERY[0], true)}
+    </section>
+    <section class="not-found-gallery" aria-labelledby="raccoon-gallery-title">
+      <div class="not-found-gallery__heading">
+        <h2 id="raccoon-gallery-title">${escapeHtml(NOT_FOUND.galleryTitle)}</h2>
+        <p>${RACCOON_GALLERY[0].year}–${RACCOON_GALLERY.at(-1).year}</p>
+      </div>
+      <ol class="not-found-gallery__list" start="2" aria-label="Later raccoon artwork in chronological order">
+        ${RACCOON_GALLERY.slice(1).map((art) => `<li>${raccoonArtworkHtml(art)}</li>`).join("\n")}
+      </ol>
+    </section>
+  </div>
+</main>
+${footerHtml(true)}`;
 }

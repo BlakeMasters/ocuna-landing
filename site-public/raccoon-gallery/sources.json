@@ -1,0 +1,190 @@
+[
+  {
+    "id": "le-raton-1756",
+    "originalDimensions": [
+      2562,
+      3564
+    ],
+    "originalSha256": "19d993d781f0c681430cb507346f30c8e82284892f8d11256ce35d7e193cb562",
+    "download": "https://upload.wikimedia.org/wikipedia/commons/5/53/Le_Raton._-_dessin_-_De_Seve_1756._-_btv1b10528231v.jpg",
+    "retrieved": "2026-10-10",
+    "treatment": "Resized and encoded as WebP. Entire source image retained without cropping, retouching, or recoloring.",
+    "image": {
+      "file": "le-raton-1756.webp",
+      "width": 1600,
+      "height": 2226,
+      "bytes": 408408
+    },
+    "thumbnail": {
+      "file": "le-raton-1756-small.webp",
+      "width": 800,
+      "height": 1113,
+      "bytes": 128878
+    },
+    "year": 1756,
+    "title": "Le Raton",
+    "credit": "Jacques de Sève",
+    "source": "https://commons.wikimedia.org/wiki/File:Le_Raton._-_dessin_-_De_Seve_1756._-_btv1b10528231v.jpg",
+    "sourceName": "Bibliothèque nationale de France via Wikimedia Commons",
+    "rights": "Public domain",
+    "rightsHref": "https://creativecommons.org/publicdomain/mark/1.0/",
+    "dateNote": "The drawing is dated 1756; it was prepared for Buffon’s 1760 volume.",
+    "primarySource": "https://gallica.bnf.fr/ark:/12148/btv1b10528231v"
+  },
+  {
+    "id": "audubon-raccoon-1845",
+    "originalDimensions": [
+      2000,
+      1512
+    ],
+    "originalSha256": "353e74854339091f6c171e13d4cf5fb8d12f5b8c4f2c0572977cf1d900c704ee",
+    "download": "https://d2ujpqfu85jxzw.cloudfront.net/website/panth-live/artwork/1965-147/carter_1965-147_o2_14.jpg",
+    "retrieved": "2026-10-10",
+    "treatment": "Resized and encoded as WebP. Entire source image retained without cropping, retouching, or recoloring.",
+    "image": {
+      "file": "audubon-raccoon-1845.webp",
+      "width": 1600,
+      "height": 1210,
+      "bytes": 341494
+    },
+    "thumbnail": {
+      "file": "audubon-raccoon-1845-small.webp",
+      "width": 800,
+      "height": 605,
+      "bytes": 76998
+    },
+    "year": 1845,
+    "title": "Raccoon, male",
+    "credit": "John James Audubon · John T. Bowen",
+    "source": "https://www.cartermuseum.org/collection/procyon-lotor-cuvier-raccoon-male-natural-size-1965147",
+    "sourceName": "Amon Carter Museum of American Art",
+    "rights": "Public domain",
+    "rightsHref": "https://creativecommons.org/publicdomain/mark/1.0/",
+    "dateNote": "Drawn by Audubon; lithographed, printed, and colored by Bowen. The print is dated 1845."
+  },
+  {
+    "id": "the-racoon-1869",
+    "originalDimensions": [
+      883,
+      566
+    ],
+    "originalSha256": "1c879f8ddbd8214c0272afbc8e8ab32b8158045e65ac7335d3ec74816ad0a1b7",
+    "download": "https://upload.wikimedia.org/wikipedia/commons/1/16/Picture_Natural_History_-_No_17_-_The_Racoon.png",
+    "retrieved": "2026-10-10",
+    "treatment": "Resized and encoded as WebP. Entire source image retained without cropping, retouching, or recoloring.",
+    "image": {
+      "file": "the-racoon-1869.webp",
+      "width": 883,
+      "height": 566,
+      "bytes": 100678
+    },
+    "thumbnail": {
+      "file": "the-racoon-1869-small.webp",
+      "width": 800,
+      "height": 513,
+      "bytes": 89830
+    },
+    "year": 1869,
+    "title": "Picture Natural History",
+    "credit": "Book by Mary E. C. Boutell",
+    "source": "https://commons.wikimedia.org/wiki/File:Picture_Natural_History_-_No_17_-_The_Racoon.png",
+    "sourceName": "Wikimedia Commons",
+    "rights": "Public domain",
+    "rightsHref": "https://creativecommons.org/publicdomain/mark/1.0/",
+    "dateNote": "The source dates the book illustration to 1869. The illustrator is not identified in the record."
+  },
+  {
+    "id": "cambridge-raccoon-1902",
+    "originalDimensions": [
+      837,
+      443
+    ],
+    "originalSha256": "191466f8b2c197f49bc14597a21eab21fc934a6403a0ed5f9d4e3056907fa2d1",
+    "download": "https://upload.wikimedia.org/wikipedia/commons/f/fb/Cambridge_Natural_History_Mammalia_Fig_213.jpg",
+    "retrieved": "2026-10-10",
+    "treatment": "Resized and encoded as WebP. Entire source image retained without cropping, retouching, or recoloring.",
+    "image": {
+      "file": "cambridge-raccoon-1902.webp",
+      "width": 837,
+      "height": 443,
+      "bytes": 87830
+    },
+    "thumbnail": {
+      "file": "cambridge-raccoon-1902-small.webp",
+      "width": 800,
+      "height": 423,
+      "bytes": 81308
+    },
+    "year": 1902,
+    "title": "The Cambridge Natural History",
+    "credit": "Mammalia · Book by Frank E. Beddard",
+    "source": "https://commons.wikimedia.org/wiki/File:Cambridge_Natural_History_Mammalia_Fig_213.jpg",
+    "sourceName": "Wikimedia Commons",
+    "rights": "Public domain",
+    "rightsHref": "https://creativecommons.org/publicdomain/mark/1.0/",
+    "dateNote": "Figure 213 in the 1902 Mammalia volume. Beddard is the book’s author."
+  },
+  {
+    "id": "tenants-of-the-trees-1907",
+    "originalDimensions": [
+      2022,
+      3200
+    ],
+    "originalSha256": "271a21259d67f65c70fa8d31f5327d11c5099eb4377a954b78e4c4e2de2968e8",
+    "download": "https://upload.wikimedia.org/wikipedia/commons/2/2f/Tenants_of_the_trees_%28Plate_4%29_%287067436015%29.jpg",
+    "retrieved": "2026-10-10",
+    "treatment": "Resized and encoded as WebP. Entire source image retained without cropping, retouching, or recoloring.",
+    "image": {
+      "file": "tenants-of-the-trees-1907.webp",
+      "width": 1600,
+      "height": 2532,
+      "bytes": 776632
+    },
+    "thumbnail": {
+      "file": "tenants-of-the-trees-1907-small.webp",
+      "width": 800,
+      "height": 1266,
+      "bytes": 206338
+    },
+    "year": 1907,
+    "title": "Tenants of the Trees",
+    "credit": "Louis Rhead",
+    "source": "https://commons.wikimedia.org/wiki/File:Tenants_of_the_trees_(Plate_4)_(7067436015).jpg",
+    "sourceName": "Biodiversity Heritage Library via Wikimedia Commons",
+    "rights": "Public domain",
+    "rightsHref": "https://creativecommons.org/publicdomain/mark/1.0/",
+    "dateNote": "Plate 4 from Clarence Hawkes’s 1907 book, illustrated by Louis Rhead.",
+    "primarySource": "https://www.biodiversitylibrary.org/page/6478781"
+  },
+  {
+    "id": "bobby-coon-1918",
+    "originalDimensions": [
+      1366,
+      1884
+    ],
+    "originalSha256": "74cd86ce6d344731c8f32fa9724375009bc4a0b77e043bf384967f86d40b2562",
+    "download": "https://www.gutenberg.org/cache/epub/46951/images/0020.jpg",
+    "retrieved": "2026-10-10",
+    "treatment": "Resized and encoded as WebP. Entire source image retained without cropping, retouching, or recoloring.",
+    "image": {
+      "file": "bobby-coon-1918.webp",
+      "width": 1366,
+      "height": 1884,
+      "bytes": 355246
+    },
+    "thumbnail": {
+      "file": "bobby-coon-1918-small.webp",
+      "width": 800,
+      "height": 1103,
+      "bytes": 174822
+    },
+    "year": 1918,
+    "title": "The Adventures of Bobby Coon",
+    "credit": "Harrison Cady",
+    "source": "https://www.gutenberg.org/cache/epub/46951/pg46951-images.html",
+    "sourceName": "Project Gutenberg",
+    "rights": "Public domain in the United States",
+    "rightsHref": "https://www.gutenberg.org/ebooks/46951",
+    "dateNote": "Illustration on page 3 of Thornton W. Burgess’s book. The digitized title page gives the year as 1918."
+  }
+]

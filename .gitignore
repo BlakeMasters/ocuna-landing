@@ -27,6 +27,8 @@ scripts/puppet-trace-comparison.png
 scripts/*
 !scripts/prerender.mjs
 !scripts/verify-docs.mjs
+!scripts/build-le-raton-font.py
+!scripts/font-source/
 
 # Source sprite archives & duplicates (site uses site-public/sprites/)
 sprites/

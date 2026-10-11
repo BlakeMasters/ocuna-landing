@@ -1,0 +1,2775 @@
+{
+  "family": "Le Raton",
+  "version": "1.100",
+  "unitsPerEm": 1000,
+  "glyphs": 225,
+  "mappedCharacters": 223,
+  "features": [
+    "liga",
+    "kern"
+  ],
+  "sourceCoverage": {
+    "directlyTracedLetters": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H",
+      "I",
+      "J",
+      "L",
+      "O",
+      "P",
+      "R",
+      "S",
+      "T",
+      "V",
+      "X",
+      "Z",
+      "a",
+      "b",
+      "c",
+      "d",
+      "e",
+      "f",
+      "g",
+      "h",
+      "i",
+      "l",
+      "m",
+      "n",
+      "o",
+      "p",
+      "r",
+      "s",
+      "t",
+      "u",
+      "v",
+      "x",
+      "y"
+    ],
+    "directlyTracedDigits": [
+      "0",
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8",
+      "9"
+    ],
+    "interpretedLetters": [
+      "K",
+      "M",
+      "N",
+      "Q",
+      "U",
+      "W",
+      "Y",
+      "j",
+      "k",
+      "q",
+      "w",
+      "z"
+    ]
+  },
+  "glyphProvenance": {
+    ".notdef": {},
+    "space": {},
+    "A": {
+      "method": "traced",
+      "source": "agouti",
+      "crop": [
+        111,
+        2120,
+        182,
+        2185
+      ],
+      "threshold": 132,
+      "baseline": 2179,
+      "scale": 14.8,
+      "notes": "Ink contours cleaned and normalized; long descenders shortened for digital typesetting.",
+      "retainedInkComponents": 1,
+      "selection": "Small marginal annotation visually compared with Le Raton; writer and annotation date unconfirmed.",
+      "neighborInkRemoved": [
+        [
+          [
+            0,
+            0
+          ],
+          [
+            29,
+            0
+          ],
+          [
+            29,
+            38
+          ],
+          [
+            0,
+            38
+          ]
+        ],
+        [
+          [
+            66,
+            49
+          ],
+          [
+            71,
+            49
+          ],
+          [
+            71,
+            65
+          ],
+          [
+            64,
+            65
+          ]
+        ]
+      ]
+    },
+    "B": {
+      "method": "traced",
+      "source": "buffle",
+      "crop": [
+        190,
+        3206,
+        248,
+        3309
+      ],
+      "threshold": 132,
+      "baseline": 3304,
+      "scale": 8.6,
+      "notes": "Ink contours cleaned and normalized; long descenders shortened for digital typesetting.",
+      "retainedInkComponents": 1,
+      "selection": "Small marginal annotation visually compared with Le Raton; writer and annotation date unconfirmed."
+    },
+    "C": {
+      "method": "traced",
+      "source": "civette",
+      "crop": [
+        157,
+        2130,
+        200,
+        2190
+      ],
+      "threshold": 132,
+      "baseline": 2184,
+      "scale": 15.8,
+      "notes": "Ink contours cleaned and normalized; long descenders shortened for digital typesetting.",
+      "retainedInkComponents": 1,
+      "selection": "Small marginal annotation visually compared with Le Raton; writer and annotation date unconfirmed.",
+      "neighborInkRemoved": [
+        [
+          [
+            32,
+            28
+          ],
+          [
+            43,
+            28
+          ],
+          [
+            43,
+            60
+          ],
+          [
+            32,
+            60
+          ]
+        ]
+      ]
+    },
+    "D": {
+      "method": "traced",
+      "source": "dromadaire",
+      "crop": [
+        124,
+        2460,
+        164,
+        2526
+      ],
+      "threshold": 132,
+      "baseline": 2521,
+      "scale": 13.8,
+      "notes": "Ink contours cleaned and normalized; long descenders shortened for digital typesetting.",
+      "retainedInkComponents": 1,
+      "selection": "Small marginal annotation visually compared with Le Raton; writer and annotation date unconfirmed."
+    },
+    "E": {
+      "method": "traced",
+      "source": "ecureuil",
+      "crop": [
+        60,
+        2175,
+        105,
+        2242
+      ],
+      "threshold": 132,
+      "baseline": 2237,
+      "scale": 14.0,
+      "notes": "Ink contours cleaned and normalized; long descenders shortened for digital typesetting.",
+      "retainedInkComponents": 1,
+      "selection": "Small marginal annotation visually compared with Le Raton; writer and annotation date unconfirmed.",
+      "neighborInkRemoved": [
+        [
+          [
+            36,
+            38
+          ],
+          [
+            45,
+            38
+          ],
+          [
+            45,
+            55
+          ],
+          [
+            36,
+            55
+          ]
+        ]
+      ]
+    },
+    "F": {
+      "method": "traced",
+      "source": "furet",
+      "crop": [
+        179,
+        3248,
+        250,
+        3330
+      ],
+      "threshold": 132,
+      "baseline": 3322,
+      "scale": 11.2,
+      "notes": "Ink contours cleaned and normalized; long descenders shortened for digital typesetting.",
+      "retainedInkComponents": 2,
+      "selection": "Small marginal annotation visually compared with Le Raton; writer and annotation date unconfirmed.",
+      "neighborInkRemoved": [
+        [
+          [
+            47,
+            40
+          ],
+          [
+            71,
+            40
+          ],
+          [
+            71,
+            82
+          ],
+          [
+            47,
+            82
+          ]
+        ]
+      ]
+    },
+    "G": {
+      "method": "traced",
+      "source": "genette",
+      "crop": [
+        135,
+        2364,
+        193,
+        2470
+      ],
+      "threshold": 132,
+      "baseline": 2424,
+      "scale": 15.3,
+      "notes": "Ink contours cleaned and normalized; long descenders shortened for digital typesetting.",
+      "retainedInkComponents": 1,
+      "selection": "Small marginal annotation visually compared with Le Raton; writer and annotation date unconfirmed.",
+      "neighborInkRemoved": [
+        [
+          [
+            42,
+            33
+          ],
+          [
+            58,
+            33
+          ],
+          [
+            58,
+            106
+          ],
+          [
+            42,
+            106
+          ]
+        ]
+      ]
+    },
+    "H": {
+      "method": "traced",
+      "source": "hyene",
+      "crop": [
+        151,
+        2390,
+        202,
+        2458
+      ],
+      "threshold": 132,
+      "baseline": 2454,
+      "scale": 13.8,
+      "notes": "Ink contours cleaned and normalized; long descenders shortened for digital typesetting.",
+      "retainedInkComponents": 1,
+      "selection": "Small marginal annotation visually compared with Le Raton; writer and annotation date unconfirmed.",
+      "neighborInkRemoved": [
+        [
+          [
+            42,
+            25
+          ],
+          [
+            51,
+            25
+          ],
+          [
+            51,
+            68
+          ],
+          [
+            42,
+            68
+          ]
+        ]
+      ]
+    },
+    "I": {
+      "method": "traced",
+      "source": "raton",
+      "crop": [
+        710,
+        3183,
+        731,
+        3229
+      ],
+      "threshold": 132,
+      "baseline": 3226,
+      "scale": 17.0,
+      "notes": "Ink contours cleaned and normalized; long descenders shortened for digital typesetting."
+    },
+    "J": {
+      "method": "traced",
+      "source": "jaguar",
+      "crop": [
+        90,
+        2412,
+        176,
+        2518
+      ],
+      "threshold": 132,
+      "baseline": 2467,
+      "scale": 15.6,
+      "notes": "Ink contours cleaned and normalized; long descenders shortened for digital typesetting.",
+      "retainedInkComponents": 1,
+      "selection": "Small marginal annotation visually compared with Le Raton; writer and annotation date unconfirmed.",
+      "neighborInkRemoved": [
+        [
+          [
+            0,
+            0
+          ],
+          [
+            32,
+            0
+          ],
+          [
+            32,
+            65
+          ],
+          [
+            0,
+            65
+          ]
+        ],
+        [
+          [
+            80,
+            26
+          ],
+          [
+            86,
+            26
+          ],
+          [
+            86,
+            51
+          ],
+          [
+            80,
+            51
+          ]
+        ]
+      ],
+      "spacing": {
+        "xShift": -960,
+        "advance": 432,
+        "notes": "Body spacing; original flourish overhang retained."
+      }
+    },
+    "K": {
+      "method": "drawn",
+      "notes": "New centerline drawing matched to the inspected annotation hand.",
+      "paths": [
+        "M53 15 L139 812 M495 823 C360 640 213 494 105 358 M190 435 C273 430 299 142 375 43 C400 17 443 46 478 74"
+      ],
+      "slant": 0.24,
+      "verticalStroke": 110,
+      "horizontalStroke": 28
+    },
+    "L": {
+      "method": "traced",
+      "source": "raton",
+      "crop": [
+        94,
+        3148,
+        149,
+        3244
+      ],
+      "threshold": 132,
+      "baseline": 3240,
+      "scale": 10.8,
+      "notes": "Ink contours cleaned and normalized; long descenders shortened for digital typesetting."
+    },
+    "M": {
+      "method": "drawn",
+      "notes": "New centerline drawing matched to the inspected annotation hand.",
+      "paths": [
+        "M32 21 L124 810 C136 869 158 798 170 746 L199 167 L469 804 C503 872 496 778 488 719 L403 51 C398 7 443 27 483 62"
+      ],
+      "slant": 0.24,
+      "verticalStroke": 110,
+      "horizontalStroke": 28
+    },
+    "N": {
+      "method": "drawn",
+      "notes": "New centerline drawing matched to the inspected annotation hand.",
+      "paths": [
+        "M39 11 L137 820 C156 872 172 736 189 652 L281 65 C295 -8 313 115 333 234 L424 816"
+      ],
+      "slant": 0.24,
+      "verticalStroke": 110,
+      "horizontalStroke": 28
+    },
+    "O": {
+      "method": "traced",
+      "source": "ondatra",
+      "crop": [
+        121,
+        2456,
+        155,
+        2498
+      ],
+      "threshold": 132,
+      "baseline": 2492,
+      "scale": 23.0,
+      "notes": "Ink contours cleaned and normalized; long descenders shortened for digital typesetting.",
+      "retainedInkComponents": 1,
+      "selection": "Small marginal annotation visually compared with Le Raton; writer and annotation date unconfirmed."
+    },
+    "P": {
+      "method": "traced",
+      "source": "palmiste",
+      "crop": [
+        164,
+        2463,
+        220,
+        2533
+      ],
+      "threshold": 132,
+      "baseline": 2528,
+      "scale": 12.8,
+      "notes": "Ink contours cleaned and normalized; long descenders shortened for digital typesetting.",
+      "retainedInkComponents": 1,
+      "selection": "Small marginal annotation visually compared with Le Raton; writer and annotation date unconfirmed.",
+      "neighborInkRemoved": [
+        [
+          [
+            45,
+            40
+          ],
+          [
+            56,
+            40
+          ],
+          [
+            56,
+            70
+          ],
+          [
+            45,
+            70
+          ]
+        ]
+      ]
+    },
+    "Q": {
+      "method": "drawn",
+      "notes": "New centerline drawing matched to the inspected annotation hand.",
+      "paths": [
+        "M425 756 C306 892 134 751 70 505 C-5 241 37 44 152 20 C289 -8 429 191 463 427 C488 584 487 724 425 756",
+        "M219 111 C279 -28 331 -148 441 -104 C498 -84 519 -53 533 -30"
+      ],
+      "slant": 0.24,
+      "verticalStroke": 110,
+      "horizontalStroke": 28
+    },
+    "R": {
+      "method": "traced",
+      "source": "raton",
+      "crop": [
+        218,
+        3152,
+        277,
+        3243
+      ],
+      "threshold": 132,
+      "baseline": 3240,
+      "scale": 10.4,
+      "notes": "Ink contours cleaned and normalized; long descenders shortened for digital typesetting."
+    },
+    "S": {
+      "method": "traced",
+      "source": "serotine",
+      "crop": [
+        190,
+        1218,
+        237,
+        1276
+      ],
+      "threshold": 132,
+      "baseline": 1272,
+      "scale": 15.2,
+      "notes": "Ink contours cleaned and normalized; long descenders shortened for digital typesetting.",
+      "retainedInkComponents": 1,
+      "selection": "Small marginal annotation visually compared with Le Raton; writer and annotation date unconfirmed.",
+      "neighborInkRemoved": [
+        [
+          [
+            28,
+            28
+          ],
+          [
+            47,
+            28
+          ],
+          [
+            47,
+            58
+          ],
+          [
+            28,
+            58
+          ]
+        ]
+      ]
+    },
+    "T": {
+      "method": "traced",
+      "source": "renard",
+      "crop": [
+        577,
+        3177,
+        638,
+        3235
+      ],
+      "threshold": 132,
+      "baseline": 3232,
+      "scale": 14.0,
+      "notes": "Ink contours cleaned and normalized; long descenders shortened for digital typesetting."
+    },
+    "U": {
+      "method": "drawn",
+      "notes": "New centerline drawing matched to the inspected annotation hand.",
+      "paths": [
+        "M76 807 C58 579 2 39 151 24 C326 20 401 608 447 815 L349 48 C351 1 397 26 433 61"
+      ],
+      "slant": 0.24,
+      "verticalStroke": 110,
+      "horizontalStroke": 28
+    },
+    "V": {
+      "method": "traced",
+      "source": "raton",
+      "crop": [
+        662,
+        3183,
+        701,
+        3229
+      ],
+      "threshold": 132,
+      "baseline": 3226,
+      "scale": 17.0,
+      "notes": "Ink contours cleaned and normalized; long descenders shortened for digital typesetting."
+    },
+    "W": {
+      "method": "drawn",
+      "notes": "New centerline drawing matched to the inspected annotation hand.",
+      "paths": [
+        "M60 804 L105 45 C112 -8 156 126 189 226 L390 807 L371 51 C374 -7 420 123 455 237 L653 820"
+      ],
+      "slant": 0.24,
+      "verticalStroke": 110,
+      "horizontalStroke": 28
+    },
+    "X": {
+      "method": "traced",
+      "source": "buffle",
+      "crop": [
+        644,
+        3240,
+        692,
+        3306
+      ],
+      "threshold": 132,
+      "baseline": 3300,
+      "scale": 13.5,
+      "notes": "Ink contours cleaned and normalized; long descenders shortened for digital typesetting.",
+      "retainedInkComponents": 1,
+      "selection": "Small marginal annotation visually compared with Le Raton; writer and annotation date unconfirmed."
+    },
+    "Y": {
+      "method": "drawn",
+      "notes": "New centerline drawing matched to the inspected annotation hand.",
+      "paths": [
+        "M40 800 C104 807 109 633 147 514 C183 384 240 381 299 485 L461 825 M299 484 L218 5"
+      ],
+      "slant": 0.24,
+      "verticalStroke": 110,
+      "horizontalStroke": 28
+    },
+    "Z": {
+      "method": "traced",
+      "source": "zibet",
+      "crop": [
+        134,
+        2411,
+        204,
+        2490
+      ],
+      "threshold": 132,
+      "baseline": 2457,
+      "scale": 18.0,
+      "notes": "Ink contours cleaned and normalized; long descenders shortened for digital typesetting.",
+      "retainedInkComponents": 1,
+      "selection": "Small marginal annotation visually compared with Le Raton; writer and annotation date unconfirmed.",
+      "neighborInkRemoved": [
+        [
+          [
+            45,
+            22
+          ],
+          [
+            70,
+            22
+          ],
+          [
+            70,
+            56
+          ],
+          [
+            45,
+            56
+          ]
+        ]
+      ]
+    },
+    "a": {
+      "method": "traced",
+      "source": "raton",
+      "crop": [
+        267,
+        3198,
+        310,
+        3245
+      ],
+      "threshold": 132,
+      "baseline": 3241,
+      "scale": 10.5,
+      "notes": "Ink contours cleaned and normalized; long descenders shortened for digital typesetting."
+    },
+    "b": {
+      "method": "traced",
+      "source": "zibet",
+      "crop": [
+        204,
+        2402,
+        240,
+        2460
+      ],
+      "threshold": 132,
+      "baseline": 2455,
+      "scale": 16.2,
+      "notes": "Ink contours cleaned and normalized; long descenders shortened for digital typesetting.",
+      "retainedInkComponents": 1,
+      "selection": "Small marginal annotation visually compared with Le Raton; writer and annotation date unconfirmed.",
+      "neighborInkRemoved": [
+        [
+          [
+            0,
+            0
+          ],
+          [
+            7,
+            0
+          ],
+          [
+            7,
+            25
+          ],
+          [
+            0,
+            25
+          ]
+        ],
+        [
+          [
+            29,
+            31
+          ],
+          [
+            36,
+            31
+          ],
+          [
+            36,
+            58
+          ],
+          [
+            29,
+            58
+          ]
+        ]
+      ],
+      "spacing": {
+        "xShift": 0,
+        "advance": 450,
+        "notes": "Body spacing; original flourish overhang retained."
+      }
+    },
+    "c": {
+      "method": "traced",
+      "source": "lynx",
+      "crop": [
+        485,
+        2291,
+        509,
+        2322
+      ],
+      "threshold": 132,
+      "baseline": 2318,
+      "scale": 19.0,
+      "notes": "Ink contours cleaned and normalized; long descenders shortened for digital typesetting.",
+      "retainedInkComponents": 1,
+      "selection": "Small marginal annotation visually compared with Le Raton; writer and annotation date unconfirmed."
+    },
+    "d": {
+      "method": "traced",
+      "source": "renard",
+      "crop": [
+        430,
+        3160,
+        483,
+        3247
+      ],
+      "threshold": 132,
+      "baseline": 3244,
+      "scale": 10.0,
+      "notes": "Ink contours cleaned and normalized; long descenders shortened for digital typesetting."
+    },
+    "e": {
+      "method": "traced",
+      "source": "fouine",
+      "crop": [
+        342,
+        3218,
+        381,
+        3254
+      ],
+      "threshold": 132,
+      "baseline": 3251,
+      "scale": 13.5,
+      "notes": "Ink contours cleaned and normalized; long descenders shortened for digital typesetting."
+    },
+    "f": {
+      "method": "traced",
+      "source": "fouine",
+      "crop": [
+        170,
+        3167,
+        224,
+        3308
+      ],
+      "threshold": 132,
+      "baseline": 3253,
+      "scale": 10.2,
+      "notes": "Ink contours cleaned and normalized; long descenders shortened for digital typesetting."
+    },
+    "g": {
+      "method": "traced",
+      "source": "agouti",
+      "crop": [
+        151,
+        2151,
+        201,
+        2223
+      ],
+      "threshold": 132,
+      "baseline": 2178,
+      "scale": 15.4,
+      "notes": "Ink contours cleaned and normalized; long descenders shortened for digital typesetting.",
+      "retainedInkComponents": 1,
+      "selection": "Small marginal annotation visually compared with Le Raton; writer and annotation date unconfirmed.",
+      "neighborInkRemoved": [
+        [
+          [
+            0,
+            0
+          ],
+          [
+            25,
+            0
+          ],
+          [
+            25,
+            23
+          ],
+          [
+            0,
+            23
+          ]
+        ]
+      ],
+      "spacing": {
+        "xShift": -400,
+        "advance": 420,
+        "notes": "Body spacing; original flourish overhang retained."
+      }
+    },
+    "h": {
+      "method": "traced",
+      "source": "chauves",
+      "crop": [
+        83,
+        2441,
+        112,
+        2507
+      ],
+      "threshold": 132,
+      "baseline": 2502,
+      "scale": 14.8,
+      "notes": "Ink contours cleaned and normalized; long descenders shortened for digital typesetting.",
+      "retainedInkComponents": 2,
+      "selection": "Small marginal annotation visually compared with Le Raton; writer and annotation date unconfirmed.",
+      "neighborInkRemoved": [
+        [
+          [
+            0,
+            0
+          ],
+          [
+            6,
+            0
+          ],
+          [
+            6,
+            44
+          ],
+          [
+            0,
+            44
+          ]
+        ]
+      ]
+    },
+    "i": {
+      "method": "traced",
+      "source": "fouine",
+      "crop": [
+        291,
+        3196,
+        323,
+        3256
+      ],
+      "threshold": 132,
+      "baseline": 3253,
+      "scale": 13.0,
+      "notes": "Ink contours cleaned and normalized; long descenders shortened for digital typesetting."
+    },
+    "j": {
+      "method": "drawn",
+      "notes": "New centerline drawing matched to the inspected annotation hand.",
+      "paths": [
+        "M176 421 L98 -158 C80 -328 -30 -387 -65 -312 C-89 -252 -8 -209 101 -175",
+        "M198 641 L211 659"
+      ],
+      "slant": 0.24,
+      "verticalStroke": 110,
+      "horizontalStroke": 28
+    },
+    "k": {
+      "method": "drawn",
+      "notes": "Curved pen reconstruction with variable pressure, wandering stroke centers, and uneven ink edges; not directly attested.",
+      "paths": [
+        "M54 11 C89 164 94 341 135 533 C160 650 199 761 222 829",
+        "M88 196 C147 295 251 444 288 408 C328 366 231 290 131 226",
+        "M142 225 C200 208 183 60 249 27 C282 11 315 47 344 81"
+      ],
+      "slant": 0.24,
+      "verticalStroke": 110,
+      "horizontalStroke": 28,
+      "penModel": "irregular-curved-pen",
+      "seed": 1756,
+      "guides": [
+        "b",
+        "h",
+        "l"
+      ],
+      "pressureProfiles": [
+        [
+          [
+            0,
+            0.42
+          ],
+          [
+            0.3,
+            0.3
+          ],
+          [
+            0.62,
+            0.42
+          ],
+          [
+            0.87,
+            1.02
+          ],
+          [
+            1,
+            0.68
+          ]
+        ],
+        [
+          [
+            0,
+            0.55
+          ],
+          [
+            0.3,
+            0.7
+          ],
+          [
+            0.56,
+            0.85
+          ],
+          [
+            0.77,
+            0.67
+          ],
+          [
+            1,
+            0.5
+          ]
+        ],
+        [
+          [
+            0,
+            0.73
+          ],
+          [
+            0.4,
+            0.84
+          ],
+          [
+            0.67,
+            0.9
+          ],
+          [
+            1,
+            0.45
+          ]
+        ]
+      ],
+      "edgeVariationFontUnits": 5.5,
+      "centerVariationFontUnits": 6.5
+    },
+    "l": {
+      "method": "traced",
+      "source": "palmiste",
+      "crop": [
+        231,
+        2464,
+        270,
+        2537
+      ],
+      "threshold": 132,
+      "baseline": 2532,
+      "scale": 13.0,
+      "notes": "Ink contours cleaned and normalized; long descenders shortened for digital typesetting.",
+      "retainedInkComponents": 1,
+      "selection": "Small marginal annotation visually compared with Le Raton; writer and annotation date unconfirmed.",
+      "neighborInkRemoved": [
+        [
+          [
+            0,
+            31
+          ],
+          [
+            9,
+            31
+          ],
+          [
+            9,
+            59
+          ],
+          [
+            0,
+            59
+          ]
+        ],
+        [
+          [
+            27,
+            34
+          ],
+          [
+            39,
+            34
+          ],
+          [
+            39,
+            73
+          ],
+          [
+            27,
+            73
+          ]
+        ]
+      ],
+      "spacing": {
+        "xShift": 0,
+        "advance": 330,
+        "notes": "Body spacing; original flourish overhang retained."
+      }
+    },
+    "m": {
+      "method": "traced",
+      "source": "raton",
+      "crop": [
+        549,
+        3197,
+        610,
+        3238
+      ],
+      "threshold": 132,
+      "baseline": 3234,
+      "scale": 11.5,
+      "notes": "Ink contours cleaned and normalized; long descenders shortened for digital typesetting."
+    },
+    "n": {
+      "method": "traced",
+      "source": "raton",
+      "crop": [
+        364,
+        3201,
+        406,
+        3243
+      ],
+      "threshold": 132,
+      "baseline": 3239,
+      "scale": 11.4,
+      "notes": "Ink contours cleaned and normalized; long descenders shortened for digital typesetting."
+    },
+    "o": {
+      "method": "traced",
+      "source": "fouine",
+      "crop": [
+        210,
+        3218,
+        247,
+        3259
+      ],
+      "threshold": 132,
+      "baseline": 3253,
+      "scale": 12.0,
+      "notes": "Ink contours cleaned and normalized; long descenders shortened for digital typesetting."
+    },
+    "p": {
+      "method": "traced",
+      "source": "raton",
+      "crop": [
+        780,
+        3186,
+        827,
+        3285
+      ],
+      "threshold": 132,
+      "baseline": 3228,
+      "scale": 10.5,
+      "notes": "Ink contours cleaned and normalized; long descenders shortened for digital typesetting."
+    },
+    "q": {
+      "method": "drawn",
+      "notes": "Curved pen reconstruction with variable pressure, wandering stroke centers, and uneven ink edges; not directly attested.",
+      "paths": [
+        "M298 405 C251 434 141 345 90 243 C41 145 49 45 104 55 C177 64 270 236 298 405 Z",
+        "M307 408 C294 320 281 213 265 103 C245 -41 211 -222 216 -335 C217 -380 249 -345 280 -314"
+      ],
+      "slant": 0.24,
+      "verticalStroke": 110,
+      "horizontalStroke": 28,
+      "penModel": "irregular-curved-pen",
+      "seed": 1759,
+      "guides": [
+        "a",
+        "g",
+        "y"
+      ],
+      "pressureProfiles": [
+        [
+          [
+            0,
+            0.45
+          ],
+          [
+            0.15,
+            0.7
+          ],
+          [
+            0.34,
+            1.02
+          ],
+          [
+            0.52,
+            0.72
+          ],
+          [
+            0.72,
+            0.75
+          ],
+          [
+            1,
+            0.45
+          ]
+        ],
+        [
+          [
+            0,
+            0.85
+          ],
+          [
+            0.2,
+            0.62
+          ],
+          [
+            0.45,
+            0.4
+          ],
+          [
+            0.74,
+            0.3
+          ],
+          [
+            0.91,
+            0.47
+          ],
+          [
+            1,
+            0.32
+          ]
+        ]
+      ],
+      "edgeVariationFontUnits": 5.5,
+      "centerVariationFontUnits": 6.5
+    },
+    "r": {
+      "method": "traced",
+      "source": "renard",
+      "crop": [
+        396,
+        3203,
+        431,
+        3247
+      ],
+      "threshold": 132,
+      "baseline": 3243,
+      "scale": 11.4,
+      "notes": "Ink contours cleaned and normalized; long descenders shortened for digital typesetting."
+    },
+    "s": {
+      "method": "traced",
+      "source": "palmiste",
+      "crop": [
+        320,
+        2490,
+        352,
+        2540
+      ],
+      "threshold": 132,
+      "baseline": 2531,
+      "scale": 12.0,
+      "notes": "Ink contours cleaned and normalized; long descenders shortened for digital typesetting.",
+      "retainedInkComponents": 1,
+      "selection": "Small marginal annotation visually compared with Le Raton; writer and annotation date unconfirmed.",
+      "neighborInkRemoved": [
+        [
+          [
+            0,
+            0
+          ],
+          [
+            11,
+            0
+          ],
+          [
+            11,
+            30
+          ],
+          [
+            0,
+            30
+          ]
+        ]
+      ]
+    },
+    "t": {
+      "method": "traced",
+      "source": "raton",
+      "crop": [
+        305,
+        3183,
+        349,
+        3244
+      ],
+      "threshold": 132,
+      "baseline": 3240,
+      "scale": 10.5,
+      "notes": "Ink contours cleaned and normalized; long descenders shortened for digital typesetting."
+    },
+    "u": {
+      "method": "traced",
+      "source": "fouine",
+      "crop": [
+        248,
+        3216,
+        290,
+        3257
+      ],
+      "threshold": 132,
+      "baseline": 3253,
+      "scale": 12.0,
+      "notes": "Ink contours cleaned and normalized; long descenders shortened for digital typesetting."
+    },
+    "v": {
+      "method": "traced",
+      "source": "chauves",
+      "crop": [
+        171,
+        2471,
+        196,
+        2505
+      ],
+      "threshold": 132,
+      "baseline": 2500,
+      "scale": 17.5,
+      "notes": "Ink contours cleaned and normalized; long descenders shortened for digital typesetting.",
+      "retainedInkComponents": 1,
+      "selection": "Small marginal annotation visually compared with Le Raton; writer and annotation date unconfirmed."
+    },
+    "w": {
+      "method": "adapted",
+      "from": "u",
+      "notes": "New double-u form constructed from the traced u."
+    },
+    "x": {
+      "method": "traced",
+      "source": "lynx",
+      "crop": [
+        259,
+        2300,
+        291,
+        2330
+      ],
+      "threshold": 132,
+      "baseline": 2327,
+      "scale": 18.0,
+      "notes": "Ink contours cleaned and normalized; long descenders shortened for digital typesetting.",
+      "retainedInkComponents": 1,
+      "selection": "Small marginal annotation visually compared with Le Raton; writer and annotation date unconfirmed."
+    },
+    "y": {
+      "method": "traced",
+      "source": "lynx",
+      "crop": [
+        202,
+        2294,
+        239,
+        2359
+      ],
+      "threshold": 132,
+      "baseline": 2317,
+      "scale": 20.0,
+      "notes": "Ink contours cleaned and normalized; long descenders shortened for digital typesetting.",
+      "retainedInkComponents": 1,
+      "selection": "Small marginal annotation visually compared with Le Raton; writer and annotation date unconfirmed."
+    },
+    "z": {
+      "method": "drawn",
+      "notes": "New centerline drawing matched to the inspected annotation hand.",
+      "paths": [
+        "M39 366 C131 449 234 430 303 389 L57 44 C132 62 217 72 282 30 C334 -19 252 -140 163 -128 C99 -115 164 -33 302 12"
+      ],
+      "slant": 0.24,
+      "verticalStroke": 110,
+      "horizontalStroke": 28
+    },
+    "zero": {
+      "method": "traced",
+      "source": "renard",
+      "crop": [
+        902,
+        3192,
+        932,
+        3232
+      ],
+      "threshold": 132,
+      "baseline": 3229,
+      "scale": 18.5,
+      "notes": "Ink contours cleaned and normalized; long descenders shortened for digital typesetting."
+    },
+    "one": {
+      "method": "traced",
+      "source": "fouine",
+      "crop": [
+        778,
+        3198,
+        795,
+        3241
+      ],
+      "threshold": 132,
+      "baseline": 3236,
+      "scale": 18.0,
+      "notes": "Ink contours cleaned and normalized; long descenders shortened for digital typesetting."
+    },
+    "two": {
+      "method": "traced",
+      "source": "furet",
+      "crop": [
+        780,
+        3266,
+        812,
+        3310
+      ],
+      "threshold": 132,
+      "baseline": 3305,
+      "scale": 19.0,
+      "notes": "Ink contours cleaned and normalized; long descenders shortened for digital typesetting.",
+      "retainedInkComponents": 1,
+      "selection": "Small marginal annotation visually compared with Le Raton; writer and annotation date unconfirmed.",
+      "targetWidth": 340
+    },
+    "three": {
+      "method": "traced",
+      "source": "raton",
+      "crop": [
+        887,
+        3170,
+        914,
+        3232
+      ],
+      "threshold": 132,
+      "baseline": 3228,
+      "scale": 12.3,
+      "notes": "Ink contours cleaned and normalized; long descenders shortened for digital typesetting."
+    },
+    "four": {
+      "method": "traced",
+      "source": "buffle",
+      "crop": [
+        925,
+        3218,
+        963,
+        3306
+      ],
+      "threshold": 132,
+      "baseline": 3302,
+      "scale": 9.4,
+      "notes": "Ink contours cleaned and normalized; long descenders shortened for digital typesetting.",
+      "retainedInkComponents": 1,
+      "selection": "Small marginal annotation visually compared with Le Raton; writer and annotation date unconfirmed.",
+      "targetWidth": 360
+    },
+    "five": {
+      "method": "traced",
+      "source": "raton",
+      "crop": [
+        922,
+        3168,
+        957,
+        3233
+      ],
+      "threshold": 132,
+      "baseline": 3228,
+      "scale": 12.1,
+      "notes": "Ink contours cleaned and normalized; long descenders shortened for digital typesetting."
+    },
+    "six": {
+      "method": "traced",
+      "source": "raton",
+      "crop": [
+        957,
+        3151,
+        1012,
+        3230
+      ],
+      "threshold": 132,
+      "baseline": 3226,
+      "scale": 10.0,
+      "notes": "Ink contours cleaned and normalized; long descenders shortened for digital typesetting."
+    },
+    "seven": {
+      "method": "traced",
+      "source": "dromadaire",
+      "crop": [
+        828,
+        2476,
+        864,
+        2534
+      ],
+      "threshold": 132,
+      "baseline": 2525,
+      "scale": 16.5,
+      "notes": "Ink contours cleaned and normalized; long descenders shortened for digital typesetting.",
+      "retainedInkComponents": 1,
+      "selection": "Small marginal annotation visually compared with Le Raton; writer and annotation date unconfirmed.",
+      "targetWidth": 320
+    },
+    "eight": {
+      "method": "traced",
+      "source": "fouine",
+      "crop": [
+        804,
+        3180,
+        839,
+        3246
+      ],
+      "threshold": 132,
+      "baseline": 3242,
+      "scale": 11.8,
+      "notes": "Ink contours cleaned and normalized; long descenders shortened for digital typesetting."
+    },
+    "nine": {
+      "method": "traced",
+      "source": "agouti",
+      "crop": [
+        585,
+        2146,
+        620,
+        2190
+      ],
+      "threshold": 132,
+      "baseline": 2186,
+      "scale": 20.0,
+      "notes": "Ink contours cleaned and normalized; long descenders shortened for digital typesetting.",
+      "retainedInkComponents": 1,
+      "selection": "Small marginal annotation visually compared with Le Raton; writer and annotation date unconfirmed.",
+      "targetWidth": 360
+    },
+    "period": {
+      "method": "traced",
+      "source": "raton",
+      "crop": [
+        416,
+        3212,
+        437,
+        3231
+      ],
+      "threshold": 132,
+      "baseline": 3231,
+      "scale": 8.0,
+      "notes": "Ink contours cleaned and normalized; long descenders shortened for digital typesetting."
+    },
+    "comma": {
+      "method": "drawn",
+      "notes": "New centerline drawing matched to the inspected annotation hand.",
+      "paths": [
+        "M100 26 C109 -36 54 -114 17 -149"
+      ],
+      "slant": 0.24,
+      "verticalStroke": 110,
+      "horizontalStroke": 28
+    },
+    "colon": {
+      "method": "adapted",
+      "from": "period"
+    },
+    "semicolon": {
+      "method": "adapted",
+      "from": "period"
+    },
+    "quotesingle": {
+      "method": "drawn",
+      "notes": "New centerline drawing matched to the inspected annotation hand.",
+      "paths": [
+        "M122 760 L91 626"
+      ],
+      "slant": 0.24,
+      "verticalStroke": 110,
+      "horizontalStroke": 28
+    },
+    "quotedbl": {
+      "method": "drawn",
+      "notes": "New centerline drawing matched to the inspected annotation hand.",
+      "paths": [
+        "M85 760 L55 625",
+        "M232 760 L202 625"
+      ],
+      "slant": 0.24,
+      "verticalStroke": 110,
+      "horizontalStroke": 28
+    },
+    "hyphen": {
+      "method": "drawn",
+      "notes": "New centerline drawing matched to the inspected annotation hand.",
+      "paths": [
+        "M40 255 L285 270"
+      ],
+      "slant": 0.24,
+      "verticalStroke": 110,
+      "horizontalStroke": 28
+    },
+    "underscore": {
+      "method": "drawn",
+      "notes": "New centerline drawing matched to the inspected annotation hand.",
+      "paths": [
+        "M14 -140 L520 -140"
+      ],
+      "slant": 0.24,
+      "verticalStroke": 110,
+      "horizontalStroke": 28
+    },
+    "parenleft": {
+      "method": "drawn",
+      "notes": "New centerline drawing matched to the inspected annotation hand.",
+      "paths": [
+        "M226 823 C98 664 6 200 74 -123"
+      ],
+      "slant": 0.24,
+      "verticalStroke": 110,
+      "horizontalStroke": 28
+    },
+    "parenright": {
+      "method": "drawn",
+      "notes": "New centerline drawing matched to the inspected annotation hand.",
+      "paths": [
+        "M70 823 C211 700 241 195 89 -123"
+      ],
+      "slant": 0.24,
+      "verticalStroke": 110,
+      "horizontalStroke": 28
+    },
+    "bracketleft": {
+      "method": "drawn",
+      "notes": "New centerline drawing matched to the inspected annotation hand.",
+      "paths": [
+        "M221 805 L98 805 L42 -90 L184 -90"
+      ],
+      "slant": 0.24,
+      "verticalStroke": 110,
+      "horizontalStroke": 28
+    },
+    "bracketright": {
+      "method": "drawn",
+      "notes": "New centerline drawing matched to the inspected annotation hand.",
+      "paths": [
+        "M47 805 L187 805 L119 -90 L-1 -90"
+      ],
+      "slant": 0.24,
+      "verticalStroke": 110,
+      "horizontalStroke": 28
+    },
+    "braceleft": {
+      "method": "drawn",
+      "notes": "New centerline drawing matched to the inspected annotation hand.",
+      "paths": [
+        "M265 805 C93 863 178 533 65 398 C170 233 21 -49 189 -101"
+      ],
+      "slant": 0.24,
+      "verticalStroke": 110,
+      "horizontalStroke": 28
+    },
+    "braceright": {
+      "method": "drawn",
+      "notes": "New centerline drawing matched to the inspected annotation hand.",
+      "paths": [
+        "M47 805 C219 863 134 533 247 398 C142 233 291 -49 123 -101"
+      ],
+      "slant": 0.24,
+      "verticalStroke": 110,
+      "horizontalStroke": 28
+    },
+    "slash": {
+      "method": "drawn",
+      "notes": "New centerline drawing matched to the inspected annotation hand.",
+      "paths": [
+        "M17 -85 L355 850"
+      ],
+      "slant": 0.24,
+      "verticalStroke": 110,
+      "horizontalStroke": 28
+    },
+    "backslash": {
+      "method": "drawn",
+      "notes": "New centerline drawing matched to the inspected annotation hand.",
+      "paths": [
+        "M75 850 L369 -85"
+      ],
+      "slant": 0.24,
+      "verticalStroke": 110,
+      "horizontalStroke": 28
+    },
+    "question": {
+      "method": "drawn",
+      "notes": "New centerline drawing matched to the inspected annotation hand.",
+      "paths": [
+        "M28 579 C128 761 298 758 337 622 C380 467 162 376 145 219"
+      ],
+      "slant": 0.24,
+      "verticalStroke": 110,
+      "horizontalStroke": 28
+    },
+    "exclam": {
+      "method": "drawn",
+      "notes": "New centerline drawing matched to the inspected annotation hand.",
+      "paths": [
+        "M116 788 L53 222"
+      ],
+      "slant": 0.24,
+      "verticalStroke": 110,
+      "horizontalStroke": 28
+    },
+    "plus": {
+      "method": "drawn",
+      "notes": "New centerline drawing matched to the inspected annotation hand.",
+      "paths": [
+        "M195 557 L160 80",
+        "M-15 299 L380 312"
+      ],
+      "slant": 0.24,
+      "verticalStroke": 110,
+      "horizontalStroke": 28
+    },
+    "equal": {
+      "method": "drawn",
+      "notes": "New centerline drawing matched to the inspected annotation hand.",
+      "paths": [
+        "M17 422 L386 432",
+        "M-3 227 L368 237"
+      ],
+      "slant": 0.24,
+      "verticalStroke": 110,
+      "horizontalStroke": 28
+    },
+    "less": {
+      "method": "drawn",
+      "notes": "New centerline drawing matched to the inspected annotation hand.",
+      "paths": [
+        "M336 564 L36 288 L265 60"
+      ],
+      "slant": 0.24,
+      "verticalStroke": 110,
+      "horizontalStroke": 28
+    },
+    "greater": {
+      "method": "drawn",
+      "notes": "New centerline drawing matched to the inspected annotation hand.",
+      "paths": [
+        "M40 564 L318 288 L59 60"
+      ],
+      "slant": 0.24,
+      "verticalStroke": 110,
+      "horizontalStroke": 28
+    },
+    "asterisk": {
+      "method": "drawn",
+      "notes": "New centerline drawing matched to the inspected annotation hand.",
+      "paths": [
+        "M155 736 L126 432",
+        "M9 646 L280 514",
+        "M283 660 L6 502"
+      ],
+      "slant": 0.24,
+      "verticalStroke": 110,
+      "horizontalStroke": 28
+    },
+    "numbersign": {
+      "method": "drawn",
+      "notes": "New centerline drawing matched to the inspected annotation hand.",
+      "paths": [
+        "M98 707 L17 6",
+        "M311 707 L231 6",
+        "M-25 454 L382 461",
+        "M-39 242 L369 249"
+      ],
+      "slant": 0.24,
+      "verticalStroke": 110,
+      "horizontalStroke": 28
+    },
+    "dollar": {
+      "method": "drawn",
+      "notes": "New centerline drawing matched to the inspected annotation hand.",
+      "paths": [
+        "M315 692 C230 840 71 735 93 590 C115 448 292 344 216 159 C175 54 54 28 1 115",
+        "M254 878 L118 -84"
+      ],
+      "slant": 0.24,
+      "verticalStroke": 110,
+      "horizontalStroke": 28
+    },
+    "percent": {
+      "method": "drawn",
+      "notes": "New centerline drawing matched to the inspected annotation hand.",
+      "paths": [
+        "M40 1 L510 794",
+        "M203 750 C112 865 16 595 95 555 C176 517 258 667 203 750",
+        "M446 224 C348 342 263 75 346 30 C420 -14 498 140 446 224"
+      ],
+      "slant": 0.24,
+      "verticalStroke": 110,
+      "horizontalStroke": 28
+    },
+    "ampersand": {
+      "method": "drawn",
+      "notes": "New centerline drawing matched to the inspected annotation hand.",
+      "paths": [
+        "M434 436 C338 203 111 -37 25 71 C-56 169 130 347 218 523 C270 638 232 820 139 764 C25 690 85 331 298 79 C352 17 411 59 433 101"
+      ],
+      "slant": 0.24,
+      "verticalStroke": 110,
+      "horizontalStroke": 28
+    },
+    "at": {
+      "method": "drawn",
+      "notes": "New centerline drawing matched to the inspected annotation hand.",
+      "paths": [
+        "M407 477 C293 531 208 417 195 318 C175 201 294 197 359 329 L405 482 L372 274 C366 202 488 193 521 367 C570 641 245 728 84 549 C-89 356 5 62 240 58 C352 56 446 91 506 140"
+      ],
+      "slant": 0.24,
+      "verticalStroke": 110,
+      "horizontalStroke": 28
+    },
+    "bar": {
+      "method": "drawn",
+      "notes": "New centerline drawing matched to the inspected annotation hand.",
+      "paths": [
+        "M86 817 L3 -95"
+      ],
+      "slant": 0.24,
+      "verticalStroke": 110,
+      "horizontalStroke": 28
+    },
+    "asciitilde": {
+      "method": "drawn",
+      "notes": "New centerline drawing matched to the inspected annotation hand.",
+      "paths": [
+        "M22 350 C136 507 222 215 334 373"
+      ],
+      "slant": 0.24,
+      "verticalStroke": 110,
+      "horizontalStroke": 28
+    },
+    "asciicircum": {
+      "method": "drawn",
+      "notes": "New centerline drawing matched to the inspected annotation hand.",
+      "paths": [
+        "M39 601 L185 815 L304 598"
+      ],
+      "slant": 0.24,
+      "verticalStroke": 110,
+      "horizontalStroke": 28
+    },
+    "grave": {
+      "method": "drawn",
+      "notes": "New centerline drawing matched to the inspected annotation hand.",
+      "paths": [
+        "M107 819 L204 663"
+      ],
+      "slant": 0.24,
+      "verticalStroke": 110,
+      "horizontalStroke": 28
+    },
+    "endash": {
+      "method": "drawn",
+      "notes": "New centerline drawing matched to the inspected annotation hand.",
+      "paths": [
+        "M40 255 L545 270"
+      ],
+      "slant": 0.24,
+      "verticalStroke": 110,
+      "horizontalStroke": 28
+    },
+    "emdash": {
+      "method": "drawn",
+      "notes": "New centerline drawing matched to the inspected annotation hand.",
+      "paths": [
+        "M40 255 L800 270"
+      ],
+      "slant": 0.24,
+      "verticalStroke": 110,
+      "horizontalStroke": 28
+    },
+    "quoteleft": {
+      "method": "adapted",
+      "notes": "New matching character adapted from a traced form; not directly attested.",
+      "transform": [
+        -1,
+        0,
+        0,
+        1,
+        0,
+        0
+      ]
+    },
+    "quoteright": {
+      "method": "adapted",
+      "notes": "New matching character adapted from a traced form; not directly attested.",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0
+      ]
+    },
+    "quotedblleft": {
+      "method": "adapted",
+      "notes": "New matching character adapted from a traced form; not directly attested.",
+      "transform": [
+        -1,
+        0,
+        0,
+        1,
+        0,
+        0
+      ]
+    },
+    "quotedblright": {
+      "method": "adapted",
+      "notes": "New matching character adapted from a traced form; not directly attested.",
+      "transform": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0
+      ]
+    },
+    "periodcentered": {
+      "method": "adapted",
+      "from": "period"
+    },
+    "multiply": {
+      "method": "drawn",
+      "notes": "New centerline drawing matched to the inspected annotation hand.",
+      "paths": [
+        "M55 502 L365 112",
+        "M365 502 L55 112"
+      ],
+      "slant": 0.24,
+      "verticalStroke": 110,
+      "horizontalStroke": 28
+    },
+    "arrowleft": {
+      "method": "drawn",
+      "notes": "New centerline drawing matched to the inspected annotation hand.",
+      "paths": [
+        "M480 315 L7 315 M183 489 L7 315 L158 139"
+      ],
+      "slant": 0.24,
+      "verticalStroke": 110,
+      "horizontalStroke": 28
+    },
+    "uni2197": {
+      "method": "drawn",
+      "notes": "New centerline drawing matched to the inspected annotation hand.",
+      "paths": [
+        "M20 81 L403 500 M150 500 L403 500 L403 246"
+      ],
+      "slant": 0.24,
+      "verticalStroke": 110,
+      "horizontalStroke": 28
+    },
+    "Le.liga": {
+      "method": "traced",
+      "source": "raton",
+      "crop": [
+        93,
+        3148,
+        184,
+        3244
+      ],
+      "threshold": 132,
+      "baseline": 3240,
+      "scale": 10.5,
+      "notes": "Ink contours cleaned and normalized; long descenders shortened for digital typesetting."
+    },
+    "Raton.liga": {
+      "method": "traced",
+      "source": "raton",
+      "crop": [
+        218,
+        3152,
+        408,
+        3245
+      ],
+      "threshold": 132,
+      "baseline": 3240,
+      "scale": 10.4,
+      "notes": "Ink contours cleaned and normalized; long descenders shortened for digital typesetting."
+    },
+    "Agrave": {
+      "method": "composed",
+      "from": [
+        "A",
+        "grave"
+      ]
+    },
+    "Aacute": {
+      "method": "composed",
+      "from": [
+        "A",
+        "acute"
+      ]
+    },
+    "Acircumflex": {
+      "method": "composed",
+      "from": [
+        "A",
+        "circumflex"
+      ]
+    },
+    "Atilde": {
+      "method": "composed",
+      "from": [
+        "A",
+        "tilde"
+      ]
+    },
+    "Adieresis": {
+      "method": "composed",
+      "from": [
+        "A",
+        "dieresis"
+      ]
+    },
+    "Aring": {
+      "method": "composed",
+      "from": [
+        "A",
+        "ring"
+      ]
+    },
+    "Ccedilla": {
+      "method": "composed",
+      "from": [
+        "C",
+        "cedilla"
+      ]
+    },
+    "Egrave": {
+      "method": "composed",
+      "from": [
+        "E",
+        "grave"
+      ]
+    },
+    "Eacute": {
+      "method": "composed",
+      "from": [
+        "E",
+        "acute"
+      ]
+    },
+    "Ecircumflex": {
+      "method": "composed",
+      "from": [
+        "E",
+        "circumflex"
+      ]
+    },
+    "Edieresis": {
+      "method": "composed",
+      "from": [
+        "E",
+        "dieresis"
+      ]
+    },
+    "Igrave": {
+      "method": "composed",
+      "from": [
+        "I",
+        "grave"
+      ]
+    },
+    "Iacute": {
+      "method": "composed",
+      "from": [
+        "I",
+        "acute"
+      ]
+    },
+    "Icircumflex": {
+      "method": "composed",
+      "from": [
+        "I",
+        "circumflex"
+      ]
+    },
+    "Idieresis": {
+      "method": "composed",
+      "from": [
+        "I",
+        "dieresis"
+      ]
+    },
+    "Ntilde": {
+      "method": "composed",
+      "from": [
+        "N",
+        "tilde"
+      ]
+    },
+    "Ograve": {
+      "method": "composed",
+      "from": [
+        "O",
+        "grave"
+      ]
+    },
+    "Oacute": {
+      "method": "composed",
+      "from": [
+        "O",
+        "acute"
+      ]
+    },
+    "Ocircumflex": {
+      "method": "composed",
+      "from": [
+        "O",
+        "circumflex"
+      ]
+    },
+    "Otilde": {
+      "method": "composed",
+      "from": [
+        "O",
+        "tilde"
+      ]
+    },
+    "Odieresis": {
+      "method": "composed",
+      "from": [
+        "O",
+        "dieresis"
+      ]
+    },
+    "Ugrave": {
+      "method": "composed",
+      "from": [
+        "U",
+        "grave"
+      ]
+    },
+    "Uacute": {
+      "method": "composed",
+      "from": [
+        "U",
+        "acute"
+      ]
+    },
+    "Ucircumflex": {
+      "method": "composed",
+      "from": [
+        "U",
+        "circumflex"
+      ]
+    },
+    "Udieresis": {
+      "method": "composed",
+      "from": [
+        "U",
+        "dieresis"
+      ]
+    },
+    "Yacute": {
+      "method": "composed",
+      "from": [
+        "Y",
+        "acute"
+      ]
+    },
+    "agrave": {
+      "method": "composed",
+      "from": [
+        "a",
+        "grave"
+      ]
+    },
+    "aacute": {
+      "method": "composed",
+      "from": [
+        "a",
+        "acute"
+      ]
+    },
+    "acircumflex": {
+      "method": "composed",
+      "from": [
+        "a",
+        "circumflex"
+      ]
+    },
+    "atilde": {
+      "method": "composed",
+      "from": [
+        "a",
+        "tilde"
+      ]
+    },
+    "adieresis": {
+      "method": "composed",
+      "from": [
+        "a",
+        "dieresis"
+      ]
+    },
+    "aring": {
+      "method": "composed",
+      "from": [
+        "a",
+        "ring"
+      ]
+    },
+    "ccedilla": {
+      "method": "composed",
+      "from": [
+        "c",
+        "cedilla"
+      ]
+    },
+    "egrave": {
+      "method": "composed",
+      "from": [
+        "e",
+        "grave"
+      ]
+    },
+    "eacute": {
+      "method": "composed",
+      "from": [
+        "e",
+        "acute"
+      ]
+    },
+    "ecircumflex": {
+      "method": "composed",
+      "from": [
+        "e",
+        "circumflex"
+      ]
+    },
+    "edieresis": {
+      "method": "composed",
+      "from": [
+        "e",
+        "dieresis"
+      ]
+    },
+    "igrave": {
+      "method": "composed",
+      "from": [
+        "i",
+        "grave"
+      ]
+    },
+    "iacute": {
+      "method": "composed",
+      "from": [
+        "i",
+        "acute"
+      ]
+    },
+    "icircumflex": {
+      "method": "composed",
+      "from": [
+        "i",
+        "circumflex"
+      ]
+    },
+    "idieresis": {
+      "method": "composed",
+      "from": [
+        "i",
+        "dieresis"
+      ]
+    },
+    "ntilde": {
+      "method": "composed",
+      "from": [
+        "n",
+        "tilde"
+      ]
+    },
+    "ograve": {
+      "method": "composed",
+      "from": [
+        "o",
+        "grave"
+      ]
+    },
+    "oacute": {
+      "method": "composed",
+      "from": [
+        "o",
+        "acute"
+      ]
+    },
+    "ocircumflex": {
+      "method": "composed",
+      "from": [
+        "o",
+        "circumflex"
+      ]
+    },
+    "otilde": {
+      "method": "composed",
+      "from": [
+        "o",
+        "tilde"
+      ]
+    },
+    "odieresis": {
+      "method": "composed",
+      "from": [
+        "o",
+        "dieresis"
+      ]
+    },
+    "ugrave": {
+      "method": "composed",
+      "from": [
+        "u",
+        "grave"
+      ]
+    },
+    "uacute": {
+      "method": "composed",
+      "from": [
+        "u",
+        "acute"
+      ]
+    },
+    "ucircumflex": {
+      "method": "composed",
+      "from": [
+        "u",
+        "circumflex"
+      ]
+    },
+    "udieresis": {
+      "method": "composed",
+      "from": [
+        "u",
+        "dieresis"
+      ]
+    },
+    "yacute": {
+      "method": "composed",
+      "from": [
+        "y",
+        "acute"
+      ]
+    },
+    "ydieresis": {
+      "method": "composed",
+      "from": [
+        "y",
+        "dieresis"
+      ]
+    },
+    "Aogonek": {
+      "method": "composed",
+      "from": [
+        "A",
+        "ogonek"
+      ]
+    },
+    "aogonek": {
+      "method": "composed",
+      "from": [
+        "a",
+        "ogonek"
+      ]
+    },
+    "Cacute": {
+      "method": "composed",
+      "from": [
+        "C",
+        "acute"
+      ]
+    },
+    "cacute": {
+      "method": "composed",
+      "from": [
+        "c",
+        "acute"
+      ]
+    },
+    "Ccircumflex": {
+      "method": "composed",
+      "from": [
+        "C",
+        "circumflex"
+      ]
+    },
+    "ccircumflex": {
+      "method": "composed",
+      "from": [
+        "c",
+        "circumflex"
+      ]
+    },
+    "Eogonek": {
+      "method": "composed",
+      "from": [
+        "E",
+        "ogonek"
+      ]
+    },
+    "eogonek": {
+      "method": "composed",
+      "from": [
+        "e",
+        "ogonek"
+      ]
+    },
+    "Gcircumflex": {
+      "method": "composed",
+      "from": [
+        "G",
+        "circumflex"
+      ]
+    },
+    "gcircumflex": {
+      "method": "composed",
+      "from": [
+        "g",
+        "circumflex"
+      ]
+    },
+    "uni0122": {
+      "method": "composed",
+      "from": [
+        "G",
+        "cedilla"
+      ]
+    },
+    "uni0123": {
+      "method": "composed",
+      "from": [
+        "g",
+        "cedilla"
+      ]
+    },
+    "Hcircumflex": {
+      "method": "composed",
+      "from": [
+        "H",
+        "circumflex"
+      ]
+    },
+    "hcircumflex": {
+      "method": "composed",
+      "from": [
+        "h",
+        "circumflex"
+      ]
+    },
+    "Itilde": {
+      "method": "composed",
+      "from": [
+        "I",
+        "tilde"
+      ]
+    },
+    "itilde": {
+      "method": "composed",
+      "from": [
+        "i",
+        "tilde"
+      ]
+    },
+    "Iogonek": {
+      "method": "composed",
+      "from": [
+        "I",
+        "ogonek"
+      ]
+    },
+    "iogonek": {
+      "method": "composed",
+      "from": [
+        "i",
+        "ogonek"
+      ]
+    },
+    "Jcircumflex": {
+      "method": "composed",
+      "from": [
+        "J",
+        "circumflex"
+      ]
+    },
+    "jcircumflex": {
+      "method": "composed",
+      "from": [
+        "j",
+        "circumflex"
+      ]
+    },
+    "uni0136": {
+      "method": "composed",
+      "from": [
+        "K",
+        "cedilla"
+      ]
+    },
+    "uni0137": {
+      "method": "composed",
+      "from": [
+        "k",
+        "cedilla"
+      ]
+    },
+    "Lacute": {
+      "method": "composed",
+      "from": [
+        "L",
+        "acute"
+      ]
+    },
+    "lacute": {
+      "method": "composed",
+      "from": [
+        "l",
+        "acute"
+      ]
+    },
+    "uni013B": {
+      "method": "composed",
+      "from": [
+        "L",
+        "cedilla"
+      ]
+    },
+    "uni013C": {
+      "method": "composed",
+      "from": [
+        "l",
+        "cedilla"
+      ]
+    },
+    "Nacute": {
+      "method": "composed",
+      "from": [
+        "N",
+        "acute"
+      ]
+    },
+    "nacute": {
+      "method": "composed",
+      "from": [
+        "n",
+        "acute"
+      ]
+    },
+    "uni0145": {
+      "method": "composed",
+      "from": [
+        "N",
+        "cedilla"
+      ]
+    },
+    "uni0146": {
+      "method": "composed",
+      "from": [
+        "n",
+        "cedilla"
+      ]
+    },
+    "Racute": {
+      "method": "composed",
+      "from": [
+        "R",
+        "acute"
+      ]
+    },
+    "racute": {
+      "method": "composed",
+      "from": [
+        "r",
+        "acute"
+      ]
+    },
+    "uni0156": {
+      "method": "composed",
+      "from": [
+        "R",
+        "cedilla"
+      ]
+    },
+    "uni0157": {
+      "method": "composed",
+      "from": [
+        "r",
+        "cedilla"
+      ]
+    },
+    "Sacute": {
+      "method": "composed",
+      "from": [
+        "S",
+        "acute"
+      ]
+    },
+    "sacute": {
+      "method": "composed",
+      "from": [
+        "s",
+        "acute"
+      ]
+    },
+    "Scircumflex": {
+      "method": "composed",
+      "from": [
+        "S",
+        "circumflex"
+      ]
+    },
+    "scircumflex": {
+      "method": "composed",
+      "from": [
+        "s",
+        "circumflex"
+      ]
+    },
+    "Scedilla": {
+      "method": "composed",
+      "from": [
+        "S",
+        "cedilla"
+      ]
+    },
+    "scedilla": {
+      "method": "composed",
+      "from": [
+        "s",
+        "cedilla"
+      ]
+    },
+    "uni0162": {
+      "method": "composed",
+      "from": [
+        "T",
+        "cedilla"
+      ]
+    },
+    "uni0163": {
+      "method": "composed",
+      "from": [
+        "t",
+        "cedilla"
+      ]
+    },
+    "Utilde": {
+      "method": "composed",
+      "from": [
+        "U",
+        "tilde"
+      ]
+    },
+    "utilde": {
+      "method": "composed",
+      "from": [
+        "u",
+        "tilde"
+      ]
+    },
+    "Uring": {
+      "method": "composed",
+      "from": [
+        "U",
+        "ring"
+      ]
+    },
+    "uring": {
+      "method": "composed",
+      "from": [
+        "u",
+        "ring"
+      ]
+    },
+    "Uogonek": {
+      "method": "composed",
+      "from": [
+        "U",
+        "ogonek"
+      ]
+    },
+    "uogonek": {
+      "method": "composed",
+      "from": [
+        "u",
+        "ogonek"
+      ]
+    },
+    "Wcircumflex": {
+      "method": "composed",
+      "from": [
+        "W",
+        "circumflex"
+      ]
+    },
+    "wcircumflex": {
+      "method": "composed",
+      "from": [
+        "w",
+        "circumflex"
+      ]
+    },
+    "Ycircumflex": {
+      "method": "composed",
+      "from": [
+        "Y",
+        "circumflex"
+      ]
+    },
+    "ycircumflex": {
+      "method": "composed",
+      "from": [
+        "y",
+        "circumflex"
+      ]
+    },
+    "Ydieresis": {
+      "method": "composed",
+      "from": [
+        "Y",
+        "dieresis"
+      ]
+    },
+    "Zacute": {
+      "method": "composed",
+      "from": [
+        "Z",
+        "acute"
+      ]
+    },
+    "zacute": {
+      "method": "composed",
+      "from": [
+        "z",
+        "acute"
+      ]
+    },
+    "oslash": {
+      "method": "composed",
+      "from": [
+        "o",
+        "slash"
+      ]
+    },
+    "Oslash": {
+      "method": "composed",
+      "from": [
+        "O",
+        "slash"
+      ]
+    },
+    "lslash": {
+      "method": "composed",
+      "from": [
+        "l",
+        "slash"
+      ]
+    },
+    "Lslash": {
+      "method": "composed",
+      "from": [
+        "L",
+        "slash"
+      ]
+    },
+    "ae": {
+      "method": "composed",
+      "from": [
+        "a",
+        "e"
+      ]
+    },
+    "AE": {
+      "method": "composed",
+      "from": [
+        "A",
+        "E"
+      ]
+    },
+    "oe": {
+      "method": "composed",
+      "from": [
+        "o",
+        "e"
+      ]
+    },
+    "OE": {
+      "method": "composed",
+      "from": [
+        "O",
+        "E"
+      ]
+    },
+    "ellipsis": {
+      "method": "composed",
+      "from": [
+        "period"
+      ]
+    }
+  },
+  "files": [
+    {
+      "file": "LeRaton-Regular.ttf",
+      "bytes": 61044,
+      "sha256": "f9e5a9fa4e9c23a86b750ecb405c5512d4e938729607450d4e18c041a100b308"
+    },
+    {
+      "file": "LeRaton-Regular.woff",
+      "bytes": 24916,
+      "sha256": "4217817aca1a2955e6ea45b475fceb777b2f0ad6e8f3fa55b778dd01c224fed5"
+    }
+  ]
+}

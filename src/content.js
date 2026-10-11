@@ -96,7 +96,7 @@ export const pageMeta = {
   },
   "/404": {
     title: "Page not found | Ocuna",
-    description: "This path is not a page on ocuna-ai.com. Return home, open Ocura, or read the Ocura OSS docs.",
+    description: "Page not found. Return to Ocuna or browse a gallery of historical raccoon illustrations.",
   },
 };
 

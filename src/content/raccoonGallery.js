@@ -1,0 +1,110 @@
+const PUBLIC_DOMAIN = {
+  rights: "Public domain",
+  rightsHref: "https://creativecommons.org/publicdomain/mark/1.0/",
+};
+
+export const NOT_FOUND = {
+  title: "Page not found.",
+  message: "The page you’re looking for isn’t here. You can head home, or spend a moment with these raccoons.",
+  galleryTitle: "Raccoons through the years",
+  actions: [
+    { label: "Back to home", href: "" },
+    { label: "Field Notes", href: "research" },
+  ],
+};
+
+// Dates refer to the drawing or the scanned edition, never the upload date.
+// Book authors are identified as authors where the illustrator is unknown.
+export const RACCOON_GALLERY = [
+  {
+    id: "le-raton-1756",
+    year: 1756,
+    title: "Le Raton",
+    credit: "Jacques de Sève",
+    description: "A drawing for Buffon’s natural history, with the raccoon set in a carefully composed landscape.",
+    dateNote: "The drawing is dated 1756; it was prepared for Buffon’s 1760 volume.",
+    alt: "A raccoon with a ringed tail in a framed landscape drawing, with rocks, plants, and distant buildings.",
+    width: 1600,
+    height: 2226,
+    sourceName: "Bibliothèque nationale de France via Wikimedia Commons",
+    sourceHref: "https://commons.wikimedia.org/wiki/File:Le_Raton._-_dessin_-_De_Seve_1756._-_btv1b10528231v.jpg",
+    primaryHref: "https://gallica.bnf.fr/ark:/12148/btv1b10528231v",
+    ...PUBLIC_DOMAIN,
+  },
+  {
+    id: "audubon-raccoon-1845",
+    year: 1845,
+    title: "Raccoon, male",
+    credit: "John James Audubon · John T. Bowen",
+    description: "A lithograph with applied watercolor from The Viviparous Quadrupeds of North America, showing a raccoon on a branch.",
+    dateNote: "Drawn by Audubon; lithographed, printed, and colored by Bowen. The print is dated 1845.",
+    alt: "A large brown raccoon crouching on a mossy tree branch in a hand-colored Audubon lithograph.",
+    width: 1600,
+    height: 1210,
+    sourceName: "Amon Carter Museum of American Art",
+    sourceHref: "https://www.cartermuseum.org/collection/procyon-lotor-cuvier-raccoon-male-natural-size-1965147",
+    ...PUBLIC_DOMAIN,
+  },
+  {
+    id: "the-racoon-1869",
+    year: 1869,
+    title: "Picture Natural History",
+    credit: "Book by Mary E. C. Boutell",
+    description: "A compact black-and-white illustration for a Victorian natural-history book, captioned “The Racoon.”",
+    dateNote: "The source dates the book illustration to 1869. The illustrator is not identified in the record.",
+    alt: "A black-and-white raccoon in profile on the ground, with the original caption The Racoon beneath it.",
+    width: 883,
+    height: 566,
+    sourceName: "Wikimedia Commons",
+    sourceHref: "https://commons.wikimedia.org/wiki/File:Picture_Natural_History_-_No_17_-_The_Racoon.png",
+    ...PUBLIC_DOMAIN,
+  },
+  {
+    id: "cambridge-raccoon-1902",
+    year: 1902,
+    title: "The Cambridge Natural History",
+    credit: "Mammalia · Book by Frank E. Beddard",
+    description: "A detailed illustration of Procyon lotor walking along a fallen branch, from the volume devoted to mammals.",
+    dateNote: "Figure 213 in the 1902 Mammalia volume. Beddard is the book’s author.",
+    alt: "A finely drawn raccoon walking to the left along a fallen branch, its striped tail extending behind it.",
+    width: 837,
+    height: 443,
+    sourceName: "Wikimedia Commons",
+    sourceHref: "https://commons.wikimedia.org/wiki/File:Cambridge_Natural_History_Mammalia_Fig_213.jpg",
+    ...PUBLIC_DOMAIN,
+  },
+  {
+    id: "tenants-of-the-trees-1907",
+    year: 1907,
+    title: "Tenants of the Trees",
+    credit: "Louis Rhead",
+    description: "Rhead brings color and woodland detail to a raccoon’s encounter with a woodcock and its nest.",
+    dateNote: "Plate 4 from Clarence Hawkes’s 1907 book, illustrated by Louis Rhead.",
+    alt: "A raccoon beside a fallen tree, looking toward a woodcock and eggs among richly colored woodland leaves.",
+    width: 1600,
+    height: 2532,
+    sourceName: "Biodiversity Heritage Library via Wikimedia Commons",
+    sourceHref: "https://commons.wikimedia.org/wiki/File:Tenants_of_the_trees_(Plate_4)_(7067436015).jpg",
+    primaryHref: "https://www.biodiversitylibrary.org/page/6478781",
+    ...PUBLIC_DOMAIN,
+  },
+  {
+    id: "bobby-coon-1918",
+    year: 1918,
+    title: "The Adventures of Bobby Coon",
+    credit: "Harrison Cady",
+    description: "Cady gives Bobby Coon clothes and a walking stick, turning the raccoon into a storybook character.",
+    dateNote: "Illustration on page 3 of Thornton W. Burgess’s book. The digitized title page gives the year as 1918.",
+    alt: "Bobby Coon, wearing a coat and carrying a walking stick, takes a walk through a snowy forest.",
+    width: 1366,
+    height: 1884,
+    sourceName: "Project Gutenberg",
+    sourceHref: "https://www.gutenberg.org/cache/epub/46951/pg46951-images.html",
+    rights: "Public domain in the United States",
+    rightsHref: "https://www.gutenberg.org/ebooks/46951",
+  },
+];
+
+export function galleryImagePath(art, thumbnail = false) {
+  return `raccoon-gallery/${art.id}${thumbnail ? "-small" : ""}.webp`;
+}

@@ -1,0 +1,32 @@
+{
+  "note": "The small marginal annotation style was compared visually with Le Raton. This does not identify the writer or establish when the annotations were added. Coordinates refer to the exact scan variant and hash in sources.json.",
+  "samples": {
+    "B": {"source": "buffle", "crop": [190, 3206, 248, 3309], "baseline": 3304, "scale": 8.6},
+    "F": {"source": "furet", "crop": [179, 3248, 250, 3330], "baseline": 3322, "scale": 11.2, "keepComponents": 2, "remove": [[[47,40],[71,40],[71,82],[47,82]]]},
+    "l": {"source": "palmiste", "crop": [231, 2464, 270, 2537], "baseline": 2532, "scale": 13.0, "advance": 330, "remove": [[[0,31],[9,31],[9,59],[0,59]],[[27,34],[39,34],[39,73],[27,73]]]},
+    "X": {"source": "buffle", "crop": [644, 3240, 692, 3306], "baseline": 3300, "scale": 13.5},
+    "2": {"source": "furet", "crop": [780, 3266, 812, 3310], "baseline": 3305, "scale": 19.0, "targetWidth": 340},
+    "4": {"source": "buffle", "crop": [925, 3218, 963, 3306], "baseline": 3302, "scale": 9.4, "targetWidth": 360},
+    "A": {"source": "agouti", "crop": [111, 2120, 182, 2185], "baseline": 2179, "scale": 14.8, "remove": [[[0,0],[29,0],[29,38],[0,38]],[[66,49],[71,49],[71,65],[64,65]]]},
+    "J": {"source": "jaguar", "crop": [90, 2412, 176, 2518], "baseline": 2467, "scale": 15.6, "xShift": -960, "advance": 432, "remove": [[[0,0],[32,0],[32,65],[0,65]],[[80,26],[86,26],[86,51],[80,51]]]},
+    "g": {"source": "agouti", "crop": [151, 2151, 201, 2223], "baseline": 2178, "scale": 15.4, "xShift": -400, "advance": 420, "remove": [[[0,0],[25,0],[25,23],[0,23]]]},
+    "P": {"source": "palmiste", "crop": [164, 2463, 220, 2533], "baseline": 2528, "scale": 12.8, "remove": [[[45,40],[56,40],[56,70],[45,70]]]},
+    "s": {"source": "palmiste", "crop": [320, 2490, 352, 2540], "baseline": 2531, "scale": 12.0, "remove": [[[0,0],[11,0],[11,30],[0,30]]]},
+    "C": {"source": "civette", "crop": [157, 2130, 200, 2190], "baseline": 2184, "scale": 15.8, "remove": [[[32,28],[43,28],[43,60],[32,60]]]},
+    "S": {"source": "serotine", "crop": [190, 1218, 237, 1276], "baseline": 1272, "scale": 15.2, "remove": [[[28,28],[47,28],[47,58],[28,58]]]},
+    "y": {"source": "lynx", "crop": [202, 2294, 239, 2359], "baseline": 2317, "scale": 20.0},
+    "x": {"source": "lynx", "crop": [259, 2300, 291, 2330], "baseline": 2327, "scale": 18.0},
+    "c": {"source": "lynx", "crop": [485, 2291, 509, 2322], "baseline": 2318, "scale": 19.0},
+    "v": {"source": "chauves", "crop": [171, 2471, 196, 2505], "baseline": 2500, "scale": 17.5},
+    "h": {"source": "chauves", "crop": [83, 2441, 112, 2507], "baseline": 2502, "scale": 14.8, "keepComponents": 2, "remove": [[[0,0],[6,0],[6,44],[0,44]]]},
+    "D": {"source": "dromadaire", "crop": [124, 2460, 164, 2526], "baseline": 2521, "scale": 13.8},
+    "G": {"source": "genette", "crop": [135, 2364, 193, 2470], "baseline": 2424, "scale": 15.3, "remove": [[[42,33],[58,33],[58,106],[42,106]]]},
+    "H": {"source": "hyene", "crop": [151, 2390, 202, 2458], "baseline": 2454, "scale": 13.8, "remove": [[[42,25],[51,25],[51,68],[42,68]]]},
+    "O": {"source": "ondatra", "crop": [121, 2456, 155, 2498], "baseline": 2492, "scale": 23.0},
+    "E": {"source": "ecureuil", "crop": [60, 2175, 105, 2242], "baseline": 2237, "scale": 14.0, "remove": [[[36,38],[45,38],[45,55],[36,55]]]},
+    "Z": {"source": "zibet", "crop": [134, 2411, 204, 2490], "baseline": 2457, "scale": 18.0, "remove": [[[45,22],[70,22],[70,56],[45,56]]]},
+    "b": {"source": "zibet", "crop": [204, 2402, 240, 2460], "baseline": 2455, "scale": 16.2, "advance": 450, "remove": [[[0,0],[7,0],[7,25],[0,25]],[[29,31],[36,31],[36,58],[29,58]]]},
+    "7": {"source": "dromadaire", "crop": [828, 2476, 864, 2534], "baseline": 2525, "scale": 16.5, "targetWidth": 320},
+    "9": {"source": "agouti", "crop": [585, 2146, 620, 2190], "baseline": 2186, "scale": 20.0, "targetWidth": 360}
+  }
+}
