@@ -1,0 +1,985 @@
+{
+  "version": "1.160",
+  "previousLocalVersion": "1.120",
+  "publication": "local only",
+  "references": {
+    "scans": "sources.json",
+    "metricAndPairDecisions": "spacing.json"
+  },
+  "checks": {
+    "all113BaseInkShapesUnchanged": true,
+    "untouchedBaseRecords": 106,
+    "translatedTracedLetters": [
+      "Z",
+      "c",
+      "f",
+      "i",
+      "s",
+      "u",
+      "y"
+    ],
+    "reconstructedStrokeFillUnchanged": true,
+    "LeAndRatonLigatureRecordsUnchanged": true,
+    "actualGPOSMatchesSpacingDefinitions": true,
+    "wordSpaceMatchesObservedLeRatonGapWithinOneFontUnit": true,
+    "all225CompiledGlyphOutlinesUnchangedFrom1130": true,
+    "all225HorizontalMetricsUnchangedFrom1130": true,
+    "sourcePairsUnchangedFrom1130": true,
+    "capitalToCapitalPairsUnchanged": true,
+    "changedPairMinimumSampledInkClearanceAtLeast60FontUnits": true
+  },
+  "letters": [
+    {
+      "letter": "A",
+      "decision": "optical pair spacing revised; ink and advance retained",
+      "previousAdvance": 1101,
+      "candidateAdvance": 1101,
+      "previousInkBounds": [
+        265,
+        1049
+      ],
+      "candidateInkBounds": [
+        265,
+        1049
+      ],
+      "inkShapeUnchanged": true,
+      "reason": "Only lowercase combinations with excessive digital gaps are tightened. Accented and composed following letters are checked for clearance. Capital-to-capital spacing is retained."
+    },
+    {
+      "letter": "B",
+      "decision": "retained",
+      "previousAdvance": 549,
+      "candidateAdvance": 549,
+      "previousInkBounds": [
+        62,
+        501
+      ],
+      "candidateInkBounds": [
+        62,
+        501
+      ],
+      "inkShapeUnchanged": true,
+      "reason": "No additional source-supported metric correction in this pass. Existing digitization or reconstructed metric retained; this is not a claim that its spacing is historically attested."
+    },
+    {
+      "letter": "C",
+      "decision": "optical pair spacing revised; ink and advance retained",
+      "previousAdvance": 729,
+      "candidateAdvance": 729,
+      "previousInkBounds": [
+        107,
+        692
+      ],
+      "candidateInkBounds": [
+        107,
+        692
+      ],
+      "inkShapeUnchanged": true,
+      "reason": "Only lowercase combinations with excessive digital gaps are tightened. Accented and composed following letters are checked for clearance. Capital-to-capital spacing is retained."
+    },
+    {
+      "letter": "D",
+      "decision": "retained",
+      "previousAdvance": 602,
+      "candidateAdvance": 602,
+      "previousInkBounds": [
+        97,
+        566
+      ],
+      "candidateInkBounds": [
+        97,
+        566
+      ],
+      "inkShapeUnchanged": true,
+      "reason": "No additional source-supported metric correction in this pass. Existing digitization or reconstructed metric retained; this is not a claim that its spacing is historically attested."
+    },
+    {
+      "letter": "E",
+      "decision": "optical pair spacing revised; ink and advance retained",
+      "previousAdvance": 680,
+      "candidateAdvance": 680,
+      "previousInkBounds": [
+        98,
+        630
+      ],
+      "candidateInkBounds": [
+        98,
+        630
+      ],
+      "inkShapeUnchanged": true,
+      "reason": "Only lowercase combinations with excessive digital gaps are tightened. Accented and composed following letters are checked for clearance. Capital-to-capital spacing is retained."
+    },
+    {
+      "letter": "F",
+      "decision": "optical pair spacing revised; ink and advance retained",
+      "previousAdvance": 845,
+      "candidateAdvance": 845,
+      "previousInkBounds": [
+        118,
+        812
+      ],
+      "candidateInkBounds": [
+        118,
+        812
+      ],
+      "inkShapeUnchanged": true,
+      "reason": "Only lowercase combinations with excessive digital gaps are tightened. Accented and composed following letters are checked for clearance. Capital-to-capital spacing is retained."
+    },
+    {
+      "letter": "G",
+      "decision": "optical pair spacing revised; ink and advance retained",
+      "previousAdvance": 937,
+      "candidateAdvance": 937,
+      "previousInkBounds": [
+        135,
+        870
+      ],
+      "candidateInkBounds": [
+        135,
+        870
+      ],
+      "inkShapeUnchanged": true,
+      "reason": "Only lowercase combinations with excessive digital gaps are tightened. Accented and composed following letters are checked for clearance. Capital-to-capital spacing is retained."
+    },
+    {
+      "letter": "H",
+      "decision": "optical pair spacing revised; ink and advance retained",
+      "previousAdvance": 754,
+      "candidateAdvance": 754,
+      "previousInkBounds": [
+        97,
+        718
+      ],
+      "candidateInkBounds": [
+        97,
+        718
+      ],
+      "inkShapeUnchanged": true,
+      "reason": "Only lowercase combinations with excessive digital gaps are tightened. Accented and composed following letters are checked for clearance. Capital-to-capital spacing is retained."
+    },
+    {
+      "letter": "I",
+      "decision": "optical pair spacing revised; ink and advance retained",
+      "previousAdvance": 407,
+      "candidateAdvance": 407,
+      "previousInkBounds": [
+        79,
+        334
+      ],
+      "candidateInkBounds": [
+        79,
+        334
+      ],
+      "inkShapeUnchanged": true,
+      "reason": "Only lowercase combinations with excessive digital gaps are tightened. Accented and composed following letters are checked for clearance. Capital-to-capital spacing is retained."
+    },
+    {
+      "letter": "J",
+      "decision": "retained",
+      "previousAdvance": 432,
+      "candidateAdvance": 432,
+      "previousInkBounds": [
+        -495,
+        394
+      ],
+      "candidateInkBounds": [
+        -495,
+        394
+      ],
+      "inkShapeUnchanged": true,
+      "reason": "No additional source-supported metric correction in this pass. Existing digitization or reconstructed metric retained; this is not a claim that its spacing is historically attested."
+    },
+    {
+      "letter": "K",
+      "decision": "optical pair spacing revised; ink and advance retained",
+      "previousAdvance": 754,
+      "candidateAdvance": 754,
+      "previousInkBounds": [
+        30,
+        712
+      ],
+      "candidateInkBounds": [
+        30,
+        712
+      ],
+      "inkShapeUnchanged": true,
+      "reason": "Only lowercase combinations with excessive digital gaps are tightened. Accented and composed following letters are checked for clearance. Capital-to-capital spacing is retained."
+    },
+    {
+      "letter": "L",
+      "decision": "retained",
+      "previousAdvance": 644,
+      "candidateAdvance": 644,
+      "previousInkBounds": [
+        50,
+        611
+      ],
+      "candidateInkBounds": [
+        50,
+        611
+      ],
+      "inkShapeUnchanged": true,
+      "reason": "No additional source-supported metric correction in this pass. Existing digitization or reconstructed metric retained; this is not a claim that its spacing is historically attested."
+    },
+    {
+      "letter": "M",
+      "decision": "optical pair spacing revised; ink and advance retained",
+      "previousAdvance": 770,
+      "candidateAdvance": 770,
+      "previousInkBounds": [
+        30,
+        728
+      ],
+      "candidateInkBounds": [
+        30,
+        728
+      ],
+      "inkShapeUnchanged": true,
+      "reason": "Only lowercase combinations with excessive digital gaps are tightened. Accented and composed following letters are checked for clearance. Capital-to-capital spacing is retained."
+    },
+    {
+      "letter": "N",
+      "decision": "optical pair spacing revised; ink and advance retained",
+      "previousAdvance": 711,
+      "candidateAdvance": 711,
+      "previousInkBounds": [
+        30,
+        668
+      ],
+      "candidateInkBounds": [
+        30,
+        668
+      ],
+      "inkShapeUnchanged": true,
+      "reason": "Only lowercase combinations with excessive digital gaps are tightened. Accented and composed following letters are checked for clearance. Capital-to-capital spacing is retained."
+    },
+    {
+      "letter": "O",
+      "decision": "optical pair spacing revised; ink and advance retained",
+      "previousAdvance": 832,
+      "candidateAdvance": 832,
+      "previousInkBounds": [
+        143,
+        764
+      ],
+      "candidateInkBounds": [
+        143,
+        764
+      ],
+      "inkShapeUnchanged": true,
+      "reason": "Only lowercase combinations with excessive digital gaps are tightened. Accented and composed following letters are checked for clearance. Capital-to-capital spacing is retained."
+    },
+    {
+      "letter": "P",
+      "decision": "optical pair spacing revised; ink and advance retained",
+      "previousAdvance": 767,
+      "candidateAdvance": 767,
+      "previousInkBounds": [
+        182,
+        732
+      ],
+      "candidateInkBounds": [
+        182,
+        732
+      ],
+      "inkShapeUnchanged": true,
+      "reason": "Only lowercase combinations with excessive digital gaps are tightened. Accented and composed following letters are checked for clearance. Capital-to-capital spacing is retained."
+    },
+    {
+      "letter": "Q",
+      "decision": "retained",
+      "previousAdvance": 832,
+      "candidateAdvance": 832,
+      "previousInkBounds": [
+        143,
+        764
+      ],
+      "candidateInkBounds": [
+        143,
+        764
+      ],
+      "inkShapeUnchanged": true,
+      "reason": "No additional source-supported metric correction in this pass. Existing digitization or reconstructed metric retained; this is not a claim that its spacing is historically attested."
+    },
+    {
+      "letter": "R",
+      "decision": "retained",
+      "previousAdvance": 664,
+      "candidateAdvance": 664,
+      "previousInkBounds": [
+        59,
+        631
+      ],
+      "candidateInkBounds": [
+        59,
+        631
+      ],
+      "inkShapeUnchanged": true,
+      "reason": "No additional source-supported metric correction in this pass. Existing digitization or reconstructed metric retained; this is not a claim that its spacing is historically attested."
+    },
+    {
+      "letter": "S",
+      "decision": "optical pair spacing revised; ink and advance retained",
+      "previousAdvance": 764,
+      "candidateAdvance": 764,
+      "previousInkBounds": [
+        74,
+        727
+      ],
+      "candidateInkBounds": [
+        74,
+        727
+      ],
+      "inkShapeUnchanged": true,
+      "reason": "Only lowercase combinations with excessive digital gaps are tightened. Accented and composed following letters are checked for clearance. Capital-to-capital spacing is retained."
+    },
+    {
+      "letter": "T",
+      "decision": "optical pair spacing revised; ink and advance retained",
+      "previousAdvance": 904,
+      "candidateAdvance": 904,
+      "previousInkBounds": [
+        98,
+        854
+      ],
+      "candidateInkBounds": [
+        98,
+        854
+      ],
+      "inkShapeUnchanged": true,
+      "reason": "Only lowercase combinations with excessive digital gaps are tightened. Accented and composed following letters are checked for clearance. Capital-to-capital spacing is retained."
+    },
+    {
+      "letter": "U",
+      "decision": "optical pair spacing revised; ink and advance retained",
+      "previousAdvance": 672,
+      "candidateAdvance": 672,
+      "previousInkBounds": [
+        30,
+        630
+      ],
+      "candidateInkBounds": [
+        30,
+        630
+      ],
+      "inkShapeUnchanged": true,
+      "reason": "Only lowercase combinations with excessive digital gaps are tightened. Accented and composed following letters are checked for clearance. Capital-to-capital spacing is retained."
+    },
+    {
+      "letter": "V",
+      "decision": "optical pair spacing revised; ink and advance retained",
+      "previousAdvance": 713,
+      "candidateAdvance": 713,
+      "previousInkBounds": [
+        79,
+        674
+      ],
+      "candidateInkBounds": [
+        79,
+        674
+      ],
+      "inkShapeUnchanged": true,
+      "reason": "Only lowercase combinations with excessive digital gaps are tightened. Accented and composed following letters are checked for clearance. Capital-to-capital spacing is retained."
+    },
+    {
+      "letter": "W",
+      "decision": "optical pair spacing revised; ink and advance retained",
+      "previousAdvance": 880,
+      "candidateAdvance": 880,
+      "previousInkBounds": [
+        30,
+        838
+      ],
+      "candidateInkBounds": [
+        30,
+        838
+      ],
+      "inkShapeUnchanged": true,
+      "reason": "Only lowercase combinations with excessive digital gaps are tightened. Accented and composed following letters are checked for clearance. Capital-to-capital spacing is retained."
+    },
+    {
+      "letter": "X",
+      "decision": "optical pair spacing revised; ink and advance retained",
+      "previousAdvance": 698,
+      "candidateAdvance": 698,
+      "previousInkBounds": [
+        68,
+        622
+      ],
+      "candidateInkBounds": [
+        68,
+        622
+      ],
+      "inkShapeUnchanged": true,
+      "reason": "Only lowercase combinations with excessive digital gaps are tightened. Accented and composed following letters are checked for clearance. Capital-to-capital spacing is retained."
+    },
+    {
+      "letter": "Y",
+      "decision": "optical pair spacing revised; ink and advance retained",
+      "previousAdvance": 558,
+      "candidateAdvance": 558,
+      "previousInkBounds": [
+        30,
+        516
+      ],
+      "candidateInkBounds": [
+        30,
+        516
+      ],
+      "inkShapeUnchanged": true,
+      "reason": "Only lowercase combinations with excessive digital gaps are tightened. Accented and composed following letters are checked for clearance. Capital-to-capital spacing is retained."
+    },
+    {
+      "letter": "Z",
+      "decision": "optical pair spacing revised; ink and advance retained",
+      "previousAdvance": 1310,
+      "candidateAdvance": 648,
+      "previousInkBounds": [
+        100,
+        1270
+      ],
+      "candidateInkBounds": [
+        -170,
+        1000
+      ],
+      "inkShapeUnchanged": true,
+      "reason": "Only lowercase combinations with excessive digital gaps are tightened. Accented and composed following letters are checked for clearance. Capital-to-capital spacing is retained."
+    },
+    {
+      "letter": "a",
+      "decision": "retained",
+      "previousAdvance": 502,
+      "candidateAdvance": 502,
+      "previousInkBounds": [
+        28,
+        469
+      ],
+      "candidateInkBounds": [
+        28,
+        469
+      ],
+      "inkShapeUnchanged": true,
+      "reason": "No additional source-supported metric correction in this pass. Existing digitization or reconstructed metric retained; this is not a claim that its spacing is historically attested."
+    },
+    {
+      "letter": "b",
+      "decision": "retained",
+      "previousAdvance": 450,
+      "candidateAdvance": 450,
+      "previousInkBounds": [
+        28,
+        595
+      ],
+      "candidateInkBounds": [
+        28,
+        595
+      ],
+      "inkShapeUnchanged": true,
+      "reason": "No additional source-supported metric correction in this pass. Existing digitization or reconstructed metric retained; this is not a claim that its spacing is historically attested."
+    },
+    {
+      "letter": "c",
+      "decision": "body spacing revised",
+      "previousAdvance": 506,
+      "candidateAdvance": 430,
+      "previousInkBounds": [
+        104,
+        408
+      ],
+      "candidateInkBounds": [
+        28,
+        332
+      ],
+      "inkShapeUnchanged": true,
+      "reason": "Remove blank extraction margin before the c in cervier. Retain the existing right bearing, consistent with the visible c-to-e gap."
+    },
+    {
+      "letter": "d",
+      "decision": "retained",
+      "previousAdvance": 580,
+      "candidateAdvance": 580,
+      "previousInkBounds": [
+        28,
+        548
+      ],
+      "candidateInkBounds": [
+        28,
+        548
+      ],
+      "inkShapeUnchanged": true,
+      "reason": "No additional source-supported metric correction in this pass. Existing digitization or reconstructed metric retained; this is not a claim that its spacing is historically attested."
+    },
+    {
+      "letter": "e",
+      "decision": "retained",
+      "previousAdvance": 576,
+      "candidateAdvance": 576,
+      "previousInkBounds": [
+        28,
+        528
+      ],
+      "candidateInkBounds": [
+        28,
+        528
+      ],
+      "inkShapeUnchanged": true,
+      "reason": "No additional source-supported metric correction in this pass. Existing digitization or reconstructed metric retained; this is not a claim that its spacing is historically attested."
+    },
+    {
+      "letter": "f",
+      "decision": "body spacing revised",
+      "previousAdvance": 601,
+      "candidateAdvance": 458,
+      "previousInkBounds": [
+        48,
+        569
+      ],
+      "candidateInkBounds": [
+        -95,
+        426
+      ],
+      "inkShapeUnchanged": true,
+      "reason": "Use the upper stem and crossbar for placement. The Fouine descender extends left; let it overhang while preserving the existing right bearing."
+    },
+    {
+      "letter": "g",
+      "decision": "retained",
+      "previousAdvance": 420,
+      "candidateAdvance": 420,
+      "previousInkBounds": [
+        -218,
+        383
+      ],
+      "candidateInkBounds": [
+        -218,
+        383
+      ],
+      "inkShapeUnchanged": true,
+      "reason": "No additional source-supported metric correction in this pass. Existing digitization or reconstructed metric retained; this is not a claim that its spacing is historically attested."
+    },
+    {
+      "letter": "h",
+      "decision": "retained",
+      "previousAdvance": 479,
+      "candidateAdvance": 479,
+      "previousInkBounds": [
+        28,
+        442
+      ],
+      "candidateInkBounds": [
+        28,
+        442
+      ],
+      "inkShapeUnchanged": true,
+      "reason": "No additional source-supported metric correction in this pass. Existing digitization or reconstructed metric retained; this is not a claim that its spacing is historically attested."
+    },
+    {
+      "letter": "i",
+      "decision": "body spacing revised",
+      "previousAdvance": 466,
+      "candidateAdvance": 258,
+      "previousInkBounds": [
+        54,
+        392
+      ],
+      "candidateInkBounds": [
+        28,
+        366
+      ],
+      "inkShapeUnchanged": true,
+      "reason": "The leaning dot belongs above the following letter in Fouine. Use the narrow stem for the default advance; the final bearing is an optical interpretation, not a measured historical advance."
+    },
+    {
+      "letter": "j",
+      "decision": "retained",
+      "previousAdvance": 371,
+      "candidateAdvance": 371,
+      "previousInkBounds": [
+        -226,
+        301
+      ],
+      "candidateInkBounds": [
+        -226,
+        301
+      ],
+      "inkShapeUnchanged": true,
+      "reason": "No additional source-supported metric correction in this pass. Existing digitization or reconstructed metric retained; this is not a claim that its spacing is historically attested."
+    },
+    {
+      "letter": "k",
+      "decision": "retained",
+      "previousAdvance": 502,
+      "candidateAdvance": 502,
+      "previousInkBounds": [
+        30,
+        460
+      ],
+      "candidateInkBounds": [
+        30,
+        460
+      ],
+      "inkShapeUnchanged": true,
+      "reason": "No additional source-supported metric correction in this pass. Existing digitization or reconstructed metric retained; this is not a claim that its spacing is historically attested."
+    },
+    {
+      "letter": "l",
+      "decision": "retained",
+      "previousAdvance": 330,
+      "candidateAdvance": 330,
+      "previousInkBounds": [
+        28,
+        522
+      ],
+      "candidateInkBounds": [
+        28,
+        522
+      ],
+      "inkShapeUnchanged": true,
+      "reason": "No additional source-supported metric correction in this pass. Existing digitization or reconstructed metric retained; this is not a claim that its spacing is historically attested."
+    },
+    {
+      "letter": "m",
+      "decision": "retained",
+      "previousAdvance": 752,
+      "candidateAdvance": 752,
+      "previousInkBounds": [
+        28,
+        695
+      ],
+      "candidateInkBounds": [
+        28,
+        695
+      ],
+      "inkShapeUnchanged": true,
+      "reason": "No additional source-supported metric correction in this pass. Existing digitization or reconstructed metric retained; this is not a claim that its spacing is historically attested."
+    },
+    {
+      "letter": "n",
+      "decision": "retained",
+      "previousAdvance": 529,
+      "candidateAdvance": 529,
+      "previousInkBounds": [
+        28,
+        484
+      ],
+      "candidateInkBounds": [
+        28,
+        484
+      ],
+      "inkShapeUnchanged": true,
+      "reason": "No additional source-supported metric correction in this pass. Existing digitization or reconstructed metric retained; this is not a claim that its spacing is historically attested."
+    },
+    {
+      "letter": "o",
+      "decision": "retained",
+      "previousAdvance": 494,
+      "candidateAdvance": 494,
+      "previousInkBounds": [
+        28,
+        436
+      ],
+      "candidateInkBounds": [
+        28,
+        436
+      ],
+      "inkShapeUnchanged": true,
+      "reason": "No additional source-supported metric correction in this pass. Existing digitization or reconstructed metric retained; this is not a claim that its spacing is historically attested."
+    },
+    {
+      "letter": "p",
+      "decision": "retained",
+      "previousAdvance": 544,
+      "candidateAdvance": 544,
+      "previousInkBounds": [
+        28,
+        511
+      ],
+      "candidateInkBounds": [
+        28,
+        511
+      ],
+      "inkShapeUnchanged": true,
+      "reason": "No additional source-supported metric correction in this pass. Existing digitization or reconstructed metric retained; this is not a claim that its spacing is historically attested."
+    },
+    {
+      "letter": "q",
+      "decision": "retained",
+      "previousAdvance": 488,
+      "candidateAdvance": 488,
+      "previousInkBounds": [
+        30,
+        446
+      ],
+      "candidateInkBounds": [
+        30,
+        446
+      ],
+      "inkShapeUnchanged": true,
+      "reason": "No additional source-supported metric correction in this pass. Existing digitization or reconstructed metric retained; this is not a claim that its spacing is historically attested."
+    },
+    {
+      "letter": "r",
+      "decision": "retained",
+      "previousAdvance": 449,
+      "candidateAdvance": 449,
+      "previousInkBounds": [
+        28,
+        416
+      ],
+      "candidateInkBounds": [
+        28,
+        416
+      ],
+      "inkShapeUnchanged": true,
+      "reason": "No additional source-supported metric correction in this pass. Existing digitization or reconstructed metric retained; this is not a claim that its spacing is historically attested."
+    },
+    {
+      "letter": "s",
+      "decision": "body spacing revised",
+      "previousAdvance": 434,
+      "candidateAdvance": 386,
+      "previousInkBounds": [
+        76,
+        304
+      ],
+      "candidateInkBounds": [
+        28,
+        256
+      ],
+      "inkShapeUnchanged": true,
+      "reason": "Remove blank extraction margin before the long s in Palmiste. Retain its existing right bearing and descending shape."
+    },
+    {
+      "letter": "t",
+      "decision": "retained",
+      "previousAdvance": 512,
+      "candidateAdvance": 512,
+      "previousInkBounds": [
+        28,
+        480
+      ],
+      "candidateInkBounds": [
+        28,
+        480
+      ],
+      "inkShapeUnchanged": true,
+      "reason": "No additional source-supported metric correction in this pass. Existing digitization or reconstructed metric retained; this is not a claim that its spacing is historically attested."
+    },
+    {
+      "letter": "u",
+      "decision": "body spacing revised",
+      "previousAdvance": 554,
+      "candidateAdvance": 506,
+      "previousInkBounds": [
+        76,
+        520
+      ],
+      "candidateInkBounds": [
+        28,
+        472
+      ],
+      "inkShapeUnchanged": true,
+      "reason": "Remove blank extraction margin before the u in Fouine. Measure ou and ui separately from the original word."
+    },
+    {
+      "letter": "v",
+      "decision": "retained",
+      "previousAdvance": 488,
+      "candidateAdvance": 488,
+      "previousInkBounds": [
+        28,
+        448
+      ],
+      "candidateInkBounds": [
+        28,
+        448
+      ],
+      "inkShapeUnchanged": true,
+      "reason": "No additional source-supported metric correction in this pass. Existing digitization or reconstructed metric retained; this is not a claim that its spacing is historically attested."
+    },
+    {
+      "letter": "w",
+      "decision": "retained",
+      "previousAdvance": 621,
+      "candidateAdvance": 621,
+      "previousInkBounds": [
+        30,
+        578
+      ],
+      "candidateInkBounds": [
+        30,
+        578
+      ],
+      "inkShapeUnchanged": true,
+      "reason": "No additional source-supported metric correction in this pass. Existing digitization or reconstructed metric retained; this is not a claim that its spacing is historically attested."
+    },
+    {
+      "letter": "x",
+      "decision": "retained",
+      "previousAdvance": 626,
+      "candidateAdvance": 626,
+      "previousInkBounds": [
+        28,
+        586
+      ],
+      "candidateInkBounds": [
+        28,
+        586
+      ],
+      "inkShapeUnchanged": true,
+      "reason": "No additional source-supported metric correction in this pass. Existing digitization or reconstructed metric retained; this is not a claim that its spacing is historically attested."
+    },
+    {
+      "letter": "y",
+      "decision": "body spacing revised",
+      "previousAdvance": 790,
+      "candidateAdvance": 562,
+      "previousInkBounds": [
+        88,
+        688
+      ],
+      "candidateInkBounds": [
+        -140,
+        460
+      ],
+      "inkShapeUnchanged": true,
+      "reason": "The Lynx caption puts n beside the upper body while the long descender passes below it. Remove crop padding before the body; retain the previous right bearing."
+    },
+    {
+      "letter": "z",
+      "decision": "retained",
+      "previousAdvance": 414,
+      "candidateAdvance": 414,
+      "previousInkBounds": [
+        30,
+        372
+      ],
+      "candidateInkBounds": [
+        30,
+        372
+      ],
+      "inkShapeUnchanged": true,
+      "reason": "No additional source-supported metric correction in this pass. Existing digitization or reconstructed metric retained; this is not a claim that its spacing is historically attested."
+    }
+  ],
+  "metricAuditBaselineVersion": "1.120",
+  "capitalPairAuditBaselineVersion": "1.130",
+  "capitalPairSpacingAudit": {
+    "version": "1.140",
+    "baselineVersion": "1.130",
+    "capitalsReviewed": 26,
+    "method": "Facing extrema sampled immediately above and below every integer font-unit height of the compiled polygons.",
+    "threshold": 305,
+    "target": 175,
+    "minimumVariantClearance": 60,
+    "capitalsAdjusted": [
+      "A",
+      "C",
+      "E",
+      "F",
+      "G",
+      "H",
+      "I",
+      "K",
+      "M",
+      "N",
+      "O",
+      "P",
+      "S",
+      "T",
+      "U",
+      "V",
+      "W",
+      "X",
+      "Y",
+      "Z"
+    ],
+    "capitalVariantsAdjusted": [
+      "À",
+      "Á",
+      "Â",
+      "Ã",
+      "Ä",
+      "Å",
+      "Ç",
+      "È",
+      "É",
+      "Ê",
+      "Ë",
+      "Ì",
+      "Í",
+      "Î",
+      "Ï",
+      "Ñ",
+      "Ò",
+      "Ó",
+      "Ô",
+      "Õ",
+      "Ö",
+      "Ù",
+      "Ú",
+      "Û",
+      "Ü",
+      "Ý",
+      "Ą",
+      "Ć",
+      "Ĉ",
+      "Ę",
+      "Ĝ",
+      "Ģ",
+      "Ĥ",
+      "Ĩ",
+      "Į",
+      "Ķ",
+      "Ń",
+      "Ņ",
+      "Ś",
+      "Ŝ",
+      "Ş",
+      "Ţ",
+      "Ũ",
+      "Ů",
+      "Ų",
+      "Ŵ",
+      "Ŷ",
+      "Ÿ",
+      "Ź"
+    ],
+    "basePairs": 293,
+    "accentedAndComposedPairs": 2181,
+    "worstCandidateClearance": 60.0,
+    "evidence": "Optical correction based on digital ink geometry, not directly attested handwriting."
+  },
+  "MKRefinementAudit": {
+    "baseline": "1.140",
+    "capitals": [
+      "M",
+      "K"
+    ],
+    "basePairAdjustments": {
+      "Ma": -75,
+      "Ka": -100
+    },
+    "changedPairs": 152,
+    "otherCapitalsSpacingUnchanged": true,
+    "all225OutlinesAndAdvancesUnchanged": true,
+    "sourcePairsWordSpaceLigaturesUnchanged": true,
+    "minimumSampledClearance": 62.001,
+    "reference": "User Aa-Za review, with digital facing-ink checks; optical refinement, not historical tracing."
+  },
+  "URefinementAudit": {
+    "baseline": "1.150",
+    "capitals": [
+      "U"
+    ],
+    "basePairAdjustments": {
+      "Ua": -50
+    },
+    "changedPairs": 656,
+    "otherCapitalsSpacingUnchanged": true,
+    "all225OutlinesAndAdvancesUnchanged": true,
+    "sourcePairsWordSpaceLigaturesUnchanged": true,
+    "minimumSampledClearance": 64.385,
+    "reference": "User Aa-Za review, with digital facing-ink checks; optical refinement, not historical tracing."
+  }
+}

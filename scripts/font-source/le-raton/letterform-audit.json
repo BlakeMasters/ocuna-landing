@@ -1,0 +1,663 @@
+{
+  "scope": "All 52 alphabetic forms visually reviewed against the saved ink traces and margin proofs.",
+  "baselineVersion": "1.100",
+  "candidateVersion": "1.120",
+  "baselineFontSha256": "f9e5a9fa4e9c23a86b750ecb405c5512d4e938729607450d4e18c041a100b308",
+  "changedLetters": [
+    "K",
+    "M",
+    "N",
+    "Q",
+    "U",
+    "W",
+    "Y",
+    "j",
+    "k",
+    "q",
+    "w",
+    "z"
+  ],
+  "preservedTracedLetters": 40,
+  "preservedTracedDigits": 10,
+  "diagnosticNote": "Edge lengths are an outline inspection aid, not a handwriting-quality score. Authentic traces can contain long edges. Q inherits those of O intentionally.",
+  "alphabet": [
+    {
+      "letter": "A",
+      "method": "traced",
+      "decision": "preserved source trace"
+    },
+    {
+      "letter": "B",
+      "method": "traced",
+      "decision": "preserved source trace"
+    },
+    {
+      "letter": "C",
+      "method": "traced",
+      "decision": "preserved source trace"
+    },
+    {
+      "letter": "D",
+      "method": "traced",
+      "decision": "preserved source trace"
+    },
+    {
+      "letter": "E",
+      "method": "traced",
+      "decision": "preserved source trace"
+    },
+    {
+      "letter": "F",
+      "method": "traced",
+      "decision": "preserved source trace"
+    },
+    {
+      "letter": "G",
+      "method": "traced",
+      "decision": "preserved source trace"
+    },
+    {
+      "letter": "H",
+      "method": "traced",
+      "decision": "preserved source trace"
+    },
+    {
+      "letter": "I",
+      "method": "traced",
+      "decision": "preserved source trace"
+    },
+    {
+      "letter": "J",
+      "method": "traced",
+      "decision": "preserved source trace"
+    },
+    {
+      "letter": "K",
+      "method": "drawn",
+      "decision": "revised interpreted form",
+      "issue": "Rigid upright and diagonal; flat stroke ends.",
+      "revision": "Curved stem, rising arm and lower leg with separate pressure profiles.",
+      "guides": [
+        "H",
+        "A",
+        "R"
+      ],
+      "outlineInspection": {
+        "before": {
+          "longestEdge": 165.7,
+          "perimeterOver100Units": 0.335,
+          "advance": 794
+        },
+        "after": {
+          "longestEdge": 43.2,
+          "perimeterOver100Units": 0.0,
+          "advance": 754
+        }
+      },
+      "inkFill": "union-of-swept-nib-sections"
+    },
+    {
+      "letter": "L",
+      "method": "traced",
+      "decision": "preserved source trace"
+    },
+    {
+      "letter": "M",
+      "method": "drawn",
+      "decision": "revised interpreted form",
+      "issue": "Long parallel rails, angular joins and almost uniform thickness.",
+      "revision": "Uneven curved stems, softened turns and lighter connecting strokes.",
+      "guides": [
+        "H",
+        "A",
+        "m"
+      ],
+      "outlineInspection": {
+        "before": {
+          "longestEdge": 441.8,
+          "perimeterOver100Units": 0.375,
+          "advance": 834
+        },
+        "after": {
+          "longestEdge": 39.1,
+          "perimeterOver100Units": 0.0,
+          "advance": 770
+        }
+      },
+      "inkFill": "union-of-swept-nib-sections"
+    },
+    {
+      "letter": "N",
+      "method": "drawn",
+      "decision": "revised interpreted form",
+      "issue": "Straight outside stems and a rigid diagonal.",
+      "revision": "Curved entry, wandering stems and a varied-pressure diagonal.",
+      "guides": [
+        "H",
+        "A",
+        "n"
+      ],
+      "outlineInspection": {
+        "before": {
+          "longestEdge": 278.5,
+          "perimeterOver100Units": 0.26,
+          "advance": 755
+        },
+        "after": {
+          "longestEdge": 37.7,
+          "perimeterOver100Units": 0.0,
+          "advance": 711
+        }
+      },
+      "inkFill": "union-of-swept-nib-sections"
+    },
+    {
+      "letter": "O",
+      "method": "traced",
+      "decision": "preserved source trace"
+    },
+    {
+      "letter": "P",
+      "method": "traced",
+      "decision": "preserved source trace"
+    },
+    {
+      "letter": "Q",
+      "method": "composed",
+      "decision": "revised interpreted form",
+      "issue": "Regular smooth oval unlike the surviving O ink.",
+      "revision": "Actual traced O outline plus a separately drawn curved tail.",
+      "guides": [
+        "O",
+        "g",
+        "y"
+      ],
+      "outlineInspection": {
+        "before": {
+          "longestEdge": 114.0,
+          "perimeterOver100Units": 0.022,
+          "advance": 733
+        },
+        "after": {
+          "longestEdge": 308.6,
+          "perimeterOver100Units": 0.409,
+          "advance": 832
+        }
+      },
+      "inkFill": "union-of-swept-nib-sections"
+    },
+    {
+      "letter": "R",
+      "method": "traced",
+      "decision": "preserved source trace"
+    },
+    {
+      "letter": "S",
+      "method": "traced",
+      "decision": "preserved source trace"
+    },
+    {
+      "letter": "T",
+      "method": "traced",
+      "decision": "preserved source trace"
+    },
+    {
+      "letter": "U",
+      "method": "drawn",
+      "decision": "revised interpreted form",
+      "issue": "Straight doubled right stem, flat top and regular bowl.",
+      "revision": "Asymmetric curved bowl and return stem with rounded nib endings.",
+      "guides": [
+        "H",
+        "u",
+        "v"
+      ],
+      "outlineInspection": {
+        "before": {
+          "longestEdge": 311.3,
+          "perimeterOver100Units": 0.324,
+          "advance": 726
+        },
+        "after": {
+          "longestEdge": 51.9,
+          "perimeterOver100Units": 0.0,
+          "advance": 672
+        }
+      },
+      "inkFill": "union-of-swept-nib-sections"
+    },
+    {
+      "letter": "V",
+      "method": "traced",
+      "decision": "preserved source trace"
+    },
+    {
+      "letter": "W",
+      "method": "drawn",
+      "decision": "revised interpreted form",
+      "issue": "Straight repeated stems, sharp joins and uniform long edges.",
+      "revision": "Independent curved strokes, uneven valleys and varied nib pressure.",
+      "guides": [
+        "V",
+        "H",
+        "v",
+        "u"
+      ],
+      "outlineInspection": {
+        "before": {
+          "longestEdge": 358.0,
+          "perimeterOver100Units": 0.392,
+          "advance": 909
+        },
+        "after": {
+          "longestEdge": 35.6,
+          "perimeterOver100Units": 0.0,
+          "advance": 880
+        }
+      },
+      "inkFill": "union-of-swept-nib-sections"
+    },
+    {
+      "letter": "X",
+      "method": "traced",
+      "decision": "preserved source trace"
+    },
+    {
+      "letter": "Y",
+      "method": "drawn",
+      "decision": "revised interpreted form",
+      "issue": "Rigid fork and ruler-like descending stroke.",
+      "revision": "Curved fork, lighter wandering descent and a small terminal turn.",
+      "guides": [
+        "V",
+        "H",
+        "y"
+      ],
+      "outlineInspection": {
+        "before": {
+          "longestEdge": 217.8,
+          "perimeterOver100Units": 0.242,
+          "advance": 605
+        },
+        "after": {
+          "longestEdge": 44.0,
+          "perimeterOver100Units": 0.0,
+          "advance": 558
+        }
+      },
+      "inkFill": "union-of-swept-nib-sections"
+    },
+    {
+      "letter": "Z",
+      "method": "traced",
+      "decision": "preserved source trace"
+    },
+    {
+      "letter": "a",
+      "method": "traced",
+      "decision": "preserved source trace"
+    },
+    {
+      "letter": "b",
+      "method": "traced",
+      "decision": "preserved source trace"
+    },
+    {
+      "letter": "c",
+      "method": "traced",
+      "decision": "preserved source trace"
+    },
+    {
+      "letter": "d",
+      "method": "traced",
+      "decision": "preserved source trace"
+    },
+    {
+      "letter": "e",
+      "method": "traced",
+      "decision": "preserved source trace"
+    },
+    {
+      "letter": "f",
+      "method": "traced",
+      "decision": "preserved source trace"
+    },
+    {
+      "letter": "g",
+      "method": "traced",
+      "decision": "preserved source trace"
+    },
+    {
+      "letter": "h",
+      "method": "traced",
+      "decision": "preserved source trace"
+    },
+    {
+      "letter": "i",
+      "method": "traced",
+      "decision": "preserved source trace"
+    },
+    {
+      "letter": "j",
+      "method": "drawn",
+      "decision": "revised interpreted form",
+      "issue": "Straight broad stem, artificial slash dot, excessive descender spacing.",
+      "revision": "Curved stem and descender, actual i dot, and spacing from the upper body.",
+      "guides": [
+        "i",
+        "g",
+        "y"
+      ],
+      "outlineInspection": {
+        "before": {
+          "longestEdge": 119.6,
+          "perimeterOver100Units": 0.119,
+          "advance": 669
+        },
+        "after": {
+          "longestEdge": 75.8,
+          "perimeterOver100Units": 0.0,
+          "advance": 371
+        }
+      },
+      "inkFill": "union-of-swept-nib-sections"
+    },
+    {
+      "letter": "k",
+      "method": "drawn",
+      "decision": "preserved pen path; corrected overlapping ink fill",
+      "inkFill": "union-of-swept-nib-sections",
+      "outlineInspection": {
+        "before": {
+          "longestEdge": 33.9,
+          "perimeterOver100Units": 0.0,
+          "advance": 497
+        },
+        "after": {
+          "longestEdge": 33.9,
+          "perimeterOver100Units": 0.0,
+          "advance": 502
+        }
+      }
+    },
+    {
+      "letter": "l",
+      "method": "traced",
+      "decision": "preserved source trace"
+    },
+    {
+      "letter": "m",
+      "method": "traced",
+      "decision": "preserved source trace"
+    },
+    {
+      "letter": "n",
+      "method": "traced",
+      "decision": "preserved source trace"
+    },
+    {
+      "letter": "o",
+      "method": "traced",
+      "decision": "preserved source trace"
+    },
+    {
+      "letter": "p",
+      "method": "traced",
+      "decision": "preserved source trace"
+    },
+    {
+      "letter": "q",
+      "method": "drawn",
+      "decision": "preserved pen path; corrected overlapping ink fill",
+      "inkFill": "union-of-swept-nib-sections",
+      "outlineInspection": {
+        "before": {
+          "longestEdge": 36.7,
+          "perimeterOver100Units": 0.0,
+          "advance": 486
+        },
+        "after": {
+          "longestEdge": 36.7,
+          "perimeterOver100Units": 0.0,
+          "advance": 488
+        }
+      }
+    },
+    {
+      "letter": "r",
+      "method": "traced",
+      "decision": "preserved source trace"
+    },
+    {
+      "letter": "s",
+      "method": "traced",
+      "decision": "preserved source trace"
+    },
+    {
+      "letter": "t",
+      "method": "traced",
+      "decision": "preserved source trace"
+    },
+    {
+      "letter": "u",
+      "method": "traced",
+      "decision": "preserved source trace"
+    },
+    {
+      "letter": "v",
+      "method": "traced",
+      "decision": "preserved source trace"
+    },
+    {
+      "letter": "w",
+      "method": "drawn",
+      "decision": "revised interpreted form",
+      "issue": "Repeated identical u ink and duplicated joins; too wide in words.",
+      "revision": "One continuous curved gesture with unequal bowls and closer spacing.",
+      "guides": [
+        "u",
+        "v",
+        "m"
+      ],
+      "outlineInspection": {
+        "before": {
+          "longestEdge": 241.5,
+          "perimeterOver100Units": 0.169,
+          "advance": 864
+        },
+        "after": {
+          "longestEdge": 38.5,
+          "perimeterOver100Units": 0.0,
+          "advance": 621
+        }
+      },
+      "inkFill": "union-of-swept-nib-sections"
+    },
+    {
+      "letter": "x",
+      "method": "traced",
+      "decision": "preserved source trace"
+    },
+    {
+      "letter": "y",
+      "method": "traced",
+      "decision": "preserved source trace"
+    },
+    {
+      "letter": "z",
+      "method": "drawn",
+      "decision": "revised interpreted form",
+      "issue": "Straight diagonal, smooth geometric loop and sharp turns.",
+      "revision": "Bent diagonal, loose lower loop, uneven edges and pressure.",
+      "guides": [
+        "Z",
+        "n",
+        "y"
+      ],
+      "outlineInspection": {
+        "before": {
+          "longestEdge": 270.1,
+          "perimeterOver100Units": 0.189,
+          "advance": 507
+        },
+        "after": {
+          "longestEdge": 32.2,
+          "perimeterOver100Units": 0.0,
+          "advance": 414
+        }
+      },
+      "inkFill": "union-of-swept-nib-sections"
+    }
+  ],
+  "strokeFillCorrection": {
+    "previousLocalVersion": "1.110",
+    "candidateVersion": "1.120",
+    "cause": "Even-odd filling of a self-intersecting stroke outline cancelled overlapping ink.",
+    "correction": "Union of independently painted nib-sweep sections, rounded contacts and caps. Retraced interiors are solid in letters without counters; sub-nib pinholes are sealed elsewhere.",
+    "penPathsPressureAndSeedsPreserved": true,
+    "sourceTracedGlyphsPreserved": true,
+    "coverageChecks": [
+      {
+        "letter": "K",
+        "sampledNibCenters": 510,
+        "previousUnpaintedNibCenters": 2,
+        "currentUnpaintedNibCenters": 0,
+        "previousEnclosedWhitespaceAreas": [
+          614.6,
+          45.9
+        ],
+        "currentEnclosedWhitespaceAreas": []
+      },
+      {
+        "letter": "M",
+        "sampledNibCenters": 774,
+        "previousUnpaintedNibCenters": 53,
+        "currentUnpaintedNibCenters": 0,
+        "previousEnclosedWhitespaceAreas": [
+          927.9,
+          44.8,
+          15.5,
+          5813.0,
+          3382.0
+        ],
+        "currentEnclosedWhitespaceAreas": []
+      },
+      {
+        "letter": "N",
+        "sampledNibCenters": 603,
+        "previousUnpaintedNibCenters": 89,
+        "currentUnpaintedNibCenters": 0,
+        "previousEnclosedWhitespaceAreas": [
+          1361.8,
+          10686.2
+        ],
+        "currentEnclosedWhitespaceAreas": []
+      },
+      {
+        "letter": "Q",
+        "sampledNibCenters": 116,
+        "previousUnpaintedNibCenters": 0,
+        "currentUnpaintedNibCenters": 0,
+        "previousEnclosedWhitespaceAreas": [],
+        "currentEnclosedWhitespaceAreas": []
+      },
+      {
+        "letter": "U",
+        "sampledNibCenters": 629,
+        "previousUnpaintedNibCenters": 86,
+        "currentUnpaintedNibCenters": 0,
+        "previousEnclosedWhitespaceAreas": [
+          25.9,
+          10430.5
+        ],
+        "currentEnclosedWhitespaceAreas": []
+      },
+      {
+        "letter": "W",
+        "sampledNibCenters": 773,
+        "previousUnpaintedNibCenters": 23,
+        "currentUnpaintedNibCenters": 0,
+        "previousEnclosedWhitespaceAreas": [
+          232.8,
+          999.8,
+          2884.2
+        ],
+        "currentEnclosedWhitespaceAreas": []
+      },
+      {
+        "letter": "Y",
+        "sampledNibCenters": 360,
+        "previousUnpaintedNibCenters": 0,
+        "currentUnpaintedNibCenters": 0,
+        "previousEnclosedWhitespaceAreas": [],
+        "currentEnclosedWhitespaceAreas": []
+      },
+      {
+        "letter": "j",
+        "sampledNibCenters": 246,
+        "previousUnpaintedNibCenters": 0,
+        "currentUnpaintedNibCenters": 0,
+        "previousEnclosedWhitespaceAreas": [],
+        "currentEnclosedWhitespaceAreas": []
+      },
+      {
+        "letter": "k",
+        "sampledNibCenters": 437,
+        "previousUnpaintedNibCenters": 0,
+        "currentUnpaintedNibCenters": 0,
+        "previousEnclosedWhitespaceAreas": [
+          96.0,
+          397.6,
+          187.9,
+          135.5,
+          394.0,
+          32.9,
+          15.0
+        ],
+        "currentEnclosedWhitespaceAreas": []
+      },
+      {
+        "letter": "q",
+        "sampledNibCenters": 440,
+        "previousUnpaintedNibCenters": 0,
+        "currentUnpaintedNibCenters": 0,
+        "previousEnclosedWhitespaceAreas": [
+          147.2,
+          16586.9
+        ],
+        "currentEnclosedWhitespaceAreas": [
+          16586.9
+        ]
+      },
+      {
+        "letter": "w",
+        "sampledNibCenters": 528,
+        "previousUnpaintedNibCenters": 199,
+        "currentUnpaintedNibCenters": 0,
+        "previousEnclosedWhitespaceAreas": [
+          12.8,
+          11.4,
+          8649.0,
+          10501.0
+        ],
+        "currentEnclosedWhitespaceAreas": []
+      },
+      {
+        "letter": "z",
+        "sampledNibCenters": 334,
+        "previousUnpaintedNibCenters": 20,
+        "currentUnpaintedNibCenters": 0,
+        "previousEnclosedWhitespaceAreas": [
+          5902.8,
+          776.4,
+          336.1,
+          60.0,
+          19.8
+        ],
+        "currentEnclosedWhitespaceAreas": [
+          5902.8
+        ]
+      }
+    ]
+  }
+}

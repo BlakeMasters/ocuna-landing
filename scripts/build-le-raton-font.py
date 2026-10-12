@@ -16,7 +16,7 @@ from fontTools.ttLib import TTFont
 ROOT=Path(__file__).resolve().parents[1]
 SOURCE=ROOT/"scripts"/"font-source"/"le-raton"/"glyphs.json"
 OUTPUT=ROOT/"site-public"/"fonts"
-VERSION="1.100"
+VERSION="1.160"
 
 SYMBOLS={
     ".":"period",",":"comma",":":"colon",";":"semicolon","'":"quotesingle",
@@ -50,6 +50,9 @@ def normalize_winding(points):
 
 def build():
     definition=json.loads(SOURCE.read_text(encoding="utf-8"))
+    spacing_path=SOURCE.parent/"spacing.json"
+    spacing=json.loads(spacing_path.read_text(encoding="utf-8"))
+    assert spacing["version"]==VERSION
     outlines=definition["glyphs"]
     glyphs={};metrics={};cmap={};provenance={}
 
@@ -67,7 +70,7 @@ def build():
         provenance[name]=record.get("provenance",{})
 
     add(".notdef",{"advance":530,"contours":[[[30,0],[30,720],[480,720],[480,0]],[[75,50],[425,50],[425,670],[75,670]]]})
-    add("space",{"advance":285,"contours":[]})
+    add("space",{"advance":spacing["wordSpace"]["advance"],"contours":[]})
     cmap[32]="space";cmap[160]="space"
     for char in "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789":
         name=glyph_name(char);add(name,outlines[char]);cmap[ord(char)]=name
@@ -136,12 +139,18 @@ feature liga {
   sub L e by Le.liga;
   sub R a t o n by Raton.liga;
 } liga;
-feature kern {
-  pos T o -55; pos T h -40; pos R a -35; pos P a -40;
-  pos L a -25; pos o o -18; pos f o -30; pos n o -15;
-  pos A d -20; pos C a -25; pos B o -20; pos F o -30;
-  pos V a -35; pos W a -35; pos Y e -35;
-} kern;"""
+"""
+    pairs=spacing["sourcePairs"]+spacing["retainedOpticalPairs"]
+    capital_spacing=spacing.get("capitalPairSpacing",{})
+    for group in capital_spacing.get("groups",[]):
+        pairs+=[{"pair":group["capital"]+second,"adjustment":amount}
+                for second,amount in group["adjustments"].items()]
+    assert len({record["pair"] for record in pairs})==len(pairs)
+    features+="feature kern {\n"
+    for record in pairs:
+        first,second=record["pair"]
+        features+=f"  pos {glyph_name(first)} {glyph_name(second)} {record['adjustment']};\n"
+    features+="} kern;"
     addOpenTypeFeaturesFromString(builder.font,features)
     OUTPUT.mkdir(parents=True,exist_ok=True)
     ttf=OUTPUT/"LeRaton-Regular.ttf"
@@ -154,6 +163,14 @@ feature kern {
     direct=lambda c: outlines[c]["provenance"]["method"]=="traced"
     report={"family":"Le Raton","version":VERSION,"unitsPerEm":1000,
         "glyphs":len(glyphs),"mappedCharacters":len(cmap),"features":["liga","kern"],
+        "spacing":{"reference":"spacing.json","sha256":hashlib.sha256(spacing_path.read_bytes()).hexdigest(),
+            "spaceAdvance":spacing["wordSpace"]["advance"],
+            "translatedForms":list(spacing["glyphMetrics"]),
+            "sourceInformedPairs":[record["pair"] for record in spacing["sourcePairs"]],
+            "retainedOpticalPairs":[record["pair"] for record in spacing["retainedOpticalPairs"]],
+            "capitalPairSpacing":{"capitals":[group["capital"] for group in capital_spacing.get("groups",[])],
+                "pairs":sum(len(group["adjustments"]) for group in capital_spacing.get("groups",[])),
+                "evidence":"Digital optical correction; not historical pair measurements."}},
         "sourceCoverage":{"directlyTracedLetters":[c for c in alphabet if direct(c)],
             "directlyTracedDigits":[c for c in "0123456789" if direct(c)],
             "interpretedLetters":[c for c in alphabet if not direct(c)]},

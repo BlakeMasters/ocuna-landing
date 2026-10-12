@@ -1,6 +1,6 @@
 {
   "family": "Le Raton",
-  "version": "1.100",
+  "version": "1.160",
   "unitsPerEm": 1000,
   "glyphs": 225,
   "mappedCharacters": 223,
@@ -8,6 +8,114 @@
     "liga",
     "kern"
   ],
+  "spacing": {
+    "reference": "spacing.json",
+    "sha256": "63543f7a6ac2e4c000c4d7c64746da8897c6d2fb99d5cc9a6f9ca38f909b08c3",
+    "spaceAdvance": 305,
+    "translatedForms": [
+      "i",
+      "y",
+      "Z",
+      "c",
+      "s",
+      "u",
+      "f"
+    ],
+    "sourceInformedPairs": [
+      "Ra",
+      "at",
+      "fo",
+      "ou",
+      "ui",
+      "rd",
+      "yn",
+      "Zi"
+    ],
+    "retainedOpticalPairs": [
+      "Pa",
+      "La",
+      "oo",
+      "no",
+      "Ad",
+      "Ca",
+      "Bo"
+    ],
+    "capitalPairSpacing": {
+      "capitals": [
+        "A",
+        "C",
+        "E",
+        "F",
+        "G",
+        "H",
+        "I",
+        "K",
+        "M",
+        "N",
+        "O",
+        "P",
+        "S",
+        "T",
+        "U",
+        "V",
+        "W",
+        "X",
+        "Y",
+        "Z",
+        "À",
+        "Á",
+        "Â",
+        "Ã",
+        "Ä",
+        "Å",
+        "Ç",
+        "È",
+        "É",
+        "Ê",
+        "Ë",
+        "Ì",
+        "Í",
+        "Î",
+        "Ï",
+        "Ñ",
+        "Ò",
+        "Ó",
+        "Ô",
+        "Õ",
+        "Ö",
+        "Ù",
+        "Ú",
+        "Û",
+        "Ü",
+        "Ý",
+        "Ą",
+        "Ć",
+        "Ĉ",
+        "Ę",
+        "Ĝ",
+        "Ģ",
+        "Ĥ",
+        "Ĩ",
+        "Į",
+        "Ķ",
+        "Ń",
+        "Ņ",
+        "Ś",
+        "Ŝ",
+        "Ş",
+        "Ţ",
+        "Ũ",
+        "Ů",
+        "Ų",
+        "Ŵ",
+        "Ŷ",
+        "Ÿ",
+        "Ź"
+      ],
+      "pairs": 3282,
+      "evidence": "Digital optical correction; not historical pair measurements."
+    }
+  },
   "sourceCoverage": {
     "directlyTracedLetters": [
       "A",
@@ -422,13 +530,95 @@
     },
     "K": {
       "method": "drawn",
-      "notes": "New centerline drawing matched to the inspected annotation hand.",
+      "notes": "Curved pen reconstruction with variable pressure, wandering stroke centers, and uneven ink edges; not directly attested.",
       "paths": [
-        "M53 15 L139 812 M495 823 C360 640 213 494 105 358 M190 435 C273 430 299 142 375 43 C400 17 443 46 478 74"
+        "M45 14 C76 215 100 428 139 648 C149 715 183 787 203 822",
+        "M124 359 C188 466 314 619 375 713 C407 765 455 823 477 820 C506 817 473 773 444 754",
+        "M167 414 C253 414 245 187 334 62 C368 12 413 54 458 80"
       ],
       "slant": 0.24,
       "verticalStroke": 110,
-      "horizontalStroke": 28
+      "horizontalStroke": 28,
+      "penModel": "irregular-curved-pen",
+      "seed": 17560,
+      "guides": [
+        "H",
+        "A",
+        "R"
+      ],
+      "pressureProfiles": [
+        [
+          [
+            0,
+            0.35
+          ],
+          [
+            0.28,
+            0.32
+          ],
+          [
+            0.62,
+            0.48
+          ],
+          [
+            0.87,
+            0.86
+          ],
+          [
+            1,
+            0.47
+          ]
+        ],
+        [
+          [
+            0,
+            0.35
+          ],
+          [
+            0.33,
+            0.4
+          ],
+          [
+            0.65,
+            0.55
+          ],
+          [
+            0.87,
+            0.72
+          ],
+          [
+            1,
+            0.37
+          ]
+        ],
+        [
+          [
+            0,
+            0.54
+          ],
+          [
+            0.32,
+            0.75
+          ],
+          [
+            0.58,
+            0.88
+          ],
+          [
+            0.79,
+            0.65
+          ],
+          [
+            1,
+            0.35
+          ]
+        ]
+      ],
+      "edgeVariationFontUnits": 5.5,
+      "centerVariationFontUnits": 6.5,
+      "inkFill": "union-of-swept-nib-sections",
+      "solidStrokeInteriors": true,
+      "maximumSealedPinholeAreaFontUnits2": 100
     },
     "L": {
       "method": "traced",
@@ -446,23 +636,131 @@
     },
     "M": {
       "method": "drawn",
-      "notes": "New centerline drawing matched to the inspected annotation hand.",
+      "notes": "Curved pen reconstruction with variable pressure, wandering stroke centers, and uneven ink edges; not directly attested.",
       "paths": [
-        "M32 21 L124 810 C136 869 158 798 170 746 L199 167 L469 804 C503 872 496 778 488 719 L403 51 C398 7 443 27 483 62"
+        "M36 16 C67 257 104 534 139 782 C143 825 171 793 177 711 C187 563 175 335 206 125 C266 307 383 664 450 799 C473 844 493 810 485 741 C452 509 410 218 415 69 C418 13 454 36 488 72"
       ],
       "slant": 0.24,
       "verticalStroke": 110,
-      "horizontalStroke": 28
+      "horizontalStroke": 28,
+      "penModel": "irregular-curved-pen",
+      "seed": 17561,
+      "guides": [
+        "H",
+        "A",
+        "m"
+      ],
+      "pressureProfiles": [
+        [
+          [
+            0,
+            0.34
+          ],
+          [
+            0.17,
+            0.42
+          ],
+          [
+            0.24,
+            0.77
+          ],
+          [
+            0.34,
+            0.76
+          ],
+          [
+            0.43,
+            0.34
+          ],
+          [
+            0.56,
+            0.3
+          ],
+          [
+            0.67,
+            0.73
+          ],
+          [
+            0.73,
+            0.9
+          ],
+          [
+            0.85,
+            0.56
+          ],
+          [
+            0.96,
+            0.37
+          ],
+          [
+            1,
+            0.4
+          ]
+        ]
+      ],
+      "edgeVariationFontUnits": 5.5,
+      "centerVariationFontUnits": 6.5,
+      "inkFill": "union-of-swept-nib-sections",
+      "solidStrokeInteriors": true,
+      "maximumSealedPinholeAreaFontUnits2": 100
     },
     "N": {
       "method": "drawn",
-      "notes": "New centerline drawing matched to the inspected annotation hand.",
+      "notes": "Curved pen reconstruction with variable pressure, wandering stroke centers, and uneven ink edges; not directly attested.",
       "paths": [
-        "M39 11 L137 820 C156 872 172 736 189 652 L281 65 C295 -8 313 115 333 234 L424 816"
+        "M39 13 C79 226 102 536 139 815 C155 842 158 765 162 668 C171 421 233 94 269 40 C284 124 341 449 383 711 C397 766 414 795 438 815"
       ],
       "slant": 0.24,
       "verticalStroke": 110,
-      "horizontalStroke": 28
+      "horizontalStroke": 28,
+      "penModel": "irregular-curved-pen",
+      "seed": 17562,
+      "guides": [
+        "H",
+        "A",
+        "n"
+      ],
+      "pressureProfiles": [
+        [
+          [
+            0,
+            0.32
+          ],
+          [
+            0.24,
+            0.47
+          ],
+          [
+            0.34,
+            0.79
+          ],
+          [
+            0.53,
+            0.86
+          ],
+          [
+            0.65,
+            0.46
+          ],
+          [
+            0.79,
+            0.28
+          ],
+          [
+            0.95,
+            0.5
+          ],
+          [
+            1,
+            0.69
+          ]
+        ]
+      ],
+      "edgeVariationFontUnits": 5.5,
+      "centerVariationFontUnits": 6.5,
+      "inkFill": "union-of-swept-nib-sections",
+      "solidStrokeInteriors": true,
+      "maximumSealedPinholeAreaFontUnits2": 100
     },
     "O": {
       "method": "traced",
@@ -517,15 +815,58 @@
       ]
     },
     "Q": {
-      "method": "drawn",
-      "notes": "New centerline drawing matched to the inspected annotation hand.",
+      "method": "composed",
+      "notes": "Traced O body with a curved pen-drawn tail; Q itself is not directly attested.",
       "paths": [
-        "M425 756 C306 892 134 751 70 505 C-5 241 37 44 152 20 C289 -8 429 191 463 427 C488 584 487 724 425 756",
-        "M219 111 C279 -28 331 -148 441 -104 C498 -84 519 -53 533 -30"
+        "M210 112 C260 62 280 -63 363 -118 C421 -156 481 -121 528 -70"
       ],
       "slant": 0.24,
       "verticalStroke": 110,
-      "horizontalStroke": 28
+      "horizontalStroke": 28,
+      "penModel": "irregular-curved-pen",
+      "seed": 17563,
+      "guides": [
+        "O",
+        "g",
+        "y"
+      ],
+      "pressureProfiles": [
+        [
+          [
+            0,
+            0.36
+          ],
+          [
+            0.29,
+            0.59
+          ],
+          [
+            0.53,
+            0.71
+          ],
+          [
+            0.73,
+            0.44
+          ],
+          [
+            1,
+            0.27
+          ]
+        ]
+      ],
+      "edgeVariationFontUnits": 5.5,
+      "centerVariationFontUnits": 6.5,
+      "inkFill": "union-of-swept-nib-sections",
+      "solidStrokeInteriors": false,
+      "maximumSealedPinholeAreaFontUnits2": 100,
+      "from": [
+        "O",
+        "drawn tail"
+      ],
+      "tailOffset": [
+        320,
+        0
+      ]
     },
     "R": {
       "method": "traced",
@@ -593,13 +934,65 @@
     },
     "U": {
       "method": "drawn",
-      "notes": "New centerline drawing matched to the inspected annotation hand.",
+      "notes": "Curved pen reconstruction with variable pressure, wandering stroke centers, and uneven ink edges; not directly attested.",
       "paths": [
-        "M76 807 C58 579 2 39 151 24 C326 20 401 608 447 815 L349 48 C351 1 397 26 433 61"
+        "M80 801 C75 626 34 285 63 123 C74 56 112 20 158 52 C255 113 334 431 393 672 C406 729 424 781 444 811 C425 694 397 511 378 319 C365 181 351 85 367 53 C379 22 420 59 452 91"
       ],
       "slant": 0.24,
       "verticalStroke": 110,
-      "horizontalStroke": 28
+      "horizontalStroke": 28,
+      "penModel": "irregular-curved-pen",
+      "seed": 17564,
+      "guides": [
+        "H",
+        "u",
+        "v"
+      ],
+      "pressureProfiles": [
+        [
+          [
+            0,
+            0.77
+          ],
+          [
+            0.22,
+            0.67
+          ],
+          [
+            0.34,
+            0.38
+          ],
+          [
+            0.48,
+            0.29
+          ],
+          [
+            0.63,
+            0.42
+          ],
+          [
+            0.72,
+            0.84
+          ],
+          [
+            0.87,
+            0.63
+          ],
+          [
+            0.94,
+            0.4
+          ],
+          [
+            1,
+            0.31
+          ]
+        ]
+      ],
+      "edgeVariationFontUnits": 5.5,
+      "centerVariationFontUnits": 6.5,
+      "inkFill": "union-of-swept-nib-sections",
+      "solidStrokeInteriors": true,
+      "maximumSealedPinholeAreaFontUnits2": 100
     },
     "V": {
       "method": "traced",
@@ -617,13 +1010,66 @@
     },
     "W": {
       "method": "drawn",
-      "notes": "New centerline drawing matched to the inspected annotation hand.",
+      "notes": "Curved pen reconstruction with variable pressure, wandering stroke centers, and uneven ink edges; not directly attested.",
       "paths": [
-        "M60 804 L105 45 C112 -8 156 126 189 226 L390 807 L371 51 C374 -7 420 123 455 237 L653 820"
+        "M55 812 C67 490 71 247 94 74 C108 13 166 195 216 330 C278 513 331 709 375 796 C412 879 357 451 361 91 C361 12 423 196 481 347 C574 545 620 730 660 816"
       ],
       "slant": 0.24,
       "verticalStroke": 110,
-      "horizontalStroke": 28
+      "horizontalStroke": 28,
+      "penModel": "irregular-curved-pen",
+      "seed": 17565,
+      "guides": [
+        "V",
+        "H",
+        "v",
+        "u"
+      ],
+      "pressureProfiles": [
+        [
+          [
+            0,
+            0.75
+          ],
+          [
+            0.2,
+            0.6
+          ],
+          [
+            0.27,
+            0.33
+          ],
+          [
+            0.43,
+            0.3
+          ],
+          [
+            0.53,
+            0.69
+          ],
+          [
+            0.66,
+            0.73
+          ],
+          [
+            0.74,
+            0.39
+          ],
+          [
+            0.87,
+            0.31
+          ],
+          [
+            1,
+            0.58
+          ]
+        ]
+      ],
+      "edgeVariationFontUnits": 5.5,
+      "centerVariationFontUnits": 6.5,
+      "inkFill": "union-of-swept-nib-sections",
+      "solidStrokeInteriors": true,
+      "maximumSealedPinholeAreaFontUnits2": 100
     },
     "X": {
       "method": "traced",
@@ -643,13 +1089,72 @@
     },
     "Y": {
       "method": "drawn",
-      "notes": "New centerline drawing matched to the inspected annotation hand.",
+      "notes": "Curved pen reconstruction with variable pressure, wandering stroke centers, and uneven ink edges; not directly attested.",
       "paths": [
-        "M40 800 C104 807 109 633 147 514 C183 384 240 381 299 485 L461 825 M299 484 L218 5"
+        "M51 796 C65 718 55 552 97 465 C131 396 193 434 239 505 C299 595 373 744 416 818",
+        "M242 504 C221 380 175 176 168 86 C164 11 208 26 249 64"
       ],
       "slant": 0.24,
       "verticalStroke": 110,
-      "horizontalStroke": 28
+      "horizontalStroke": 28,
+      "penModel": "irregular-curved-pen",
+      "seed": 17566,
+      "guides": [
+        "V",
+        "H",
+        "y"
+      ],
+      "pressureProfiles": [
+        [
+          [
+            0,
+            0.67
+          ],
+          [
+            0.25,
+            0.76
+          ],
+          [
+            0.47,
+            0.51
+          ],
+          [
+            0.72,
+            0.34
+          ],
+          [
+            1,
+            0.63
+          ]
+        ],
+        [
+          [
+            0,
+            0.49
+          ],
+          [
+            0.33,
+            0.34
+          ],
+          [
+            0.66,
+            0.27
+          ],
+          [
+            0.89,
+            0.69
+          ],
+          [
+            1,
+            0.36
+          ]
+        ]
+      ],
+      "edgeVariationFontUnits": 5.5,
+      "centerVariationFontUnits": 6.5,
+      "inkFill": "union-of-swept-nib-sections",
+      "solidStrokeInteriors": true,
+      "maximumSealedPinholeAreaFontUnits2": 100
     },
     "Z": {
       "method": "traced",
@@ -685,7 +1190,13 @@
             56
           ]
         ]
-      ]
+      ],
+      "layoutSpacing": {
+        "xShift": -270,
+        "advance": 648,
+        "reference": "spacing.json",
+        "notes": "The Zibet caption puts i beside the upper zigzag and above the long lower flourish. Space from the upper body; its default right bearing is an optical interpretation."
+      }
     },
     "a": {
       "method": "traced",
@@ -774,7 +1285,13 @@
       "scale": 19.0,
       "notes": "Ink contours cleaned and normalized; long descenders shortened for digital typesetting.",
       "retainedInkComponents": 1,
-      "selection": "Small marginal annotation visually compared with Le Raton; writer and annotation date unconfirmed."
+      "selection": "Small marginal annotation visually compared with Le Raton; writer and annotation date unconfirmed.",
+      "layoutSpacing": {
+        "xShift": -76,
+        "advance": 430,
+        "reference": "spacing.json",
+        "notes": "Remove blank extraction margin before the c in cervier. Retain the existing right bearing, consistent with the visible c-to-e gap."
+      }
     },
     "d": {
       "method": "traced",
@@ -816,7 +1333,13 @@
       "threshold": 132,
       "baseline": 3253,
       "scale": 10.2,
-      "notes": "Ink contours cleaned and normalized; long descenders shortened for digital typesetting."
+      "notes": "Ink contours cleaned and normalized; long descenders shortened for digital typesetting.",
+      "layoutSpacing": {
+        "xShift": -143,
+        "advance": 458,
+        "reference": "spacing.json",
+        "notes": "Use the upper stem and crossbar for placement. The Fouine descender extends left; let it overhang while preserving the existing right bearing."
+      }
     },
     "g": {
       "method": "traced",
@@ -907,18 +1430,69 @@
       "threshold": 132,
       "baseline": 3253,
       "scale": 13.0,
-      "notes": "Ink contours cleaned and normalized; long descenders shortened for digital typesetting."
+      "notes": "Ink contours cleaned and normalized; long descenders shortened for digital typesetting.",
+      "layoutSpacing": {
+        "xShift": -26,
+        "advance": 258,
+        "reference": "spacing.json",
+        "notes": "The leaning dot belongs above the following letter in Fouine. Use the narrow stem for the default advance; the final bearing is an optical interpretation, not a measured historical advance."
+      }
     },
     "j": {
       "method": "drawn",
-      "notes": "New centerline drawing matched to the inspected annotation hand.",
+      "notes": "Curved pen-drawn j stem and descender with the directly traced i dot; j itself is not directly attested.",
       "paths": [
-        "M176 421 L98 -158 C80 -328 -30 -387 -65 -312 C-89 -252 -8 -209 101 -175",
-        "M198 641 L211 659"
+        "M152 399 C135 291 107 140 81 -28 C65 -146 51 -257 11 -312 C-23 -358 -81 -346 -86 -311 C-90 -274 -43 -243 13 -237"
       ],
       "slant": 0.24,
       "verticalStroke": 110,
-      "horizontalStroke": 28
+      "horizontalStroke": 28,
+      "penModel": "irregular-curved-pen",
+      "seed": 17567,
+      "guides": [
+        "i",
+        "g",
+        "y"
+      ],
+      "pressureProfiles": [
+        [
+          [
+            0,
+            0.78
+          ],
+          [
+            0.19,
+            0.63
+          ],
+          [
+            0.47,
+            0.29
+          ],
+          [
+            0.68,
+            0.28
+          ],
+          [
+            0.83,
+            0.68
+          ],
+          [
+            1,
+            0.33
+          ]
+        ]
+      ],
+      "edgeVariationFontUnits": 5.5,
+      "centerVariationFontUnits": 6.5,
+      "inkFill": "union-of-swept-nib-sections",
+      "solidStrokeInteriors": false,
+      "maximumSealedPinholeAreaFontUnits2": 100,
+      "dotFrom": "i",
+      "dotOffset": [
+        -91,
+        0
+      ],
+      "spacing": "Upper body sets advance; the curved descender overhangs."
     },
     "k": {
       "method": "drawn",
@@ -1003,7 +1577,10 @@
         ]
       ],
       "edgeVariationFontUnits": 5.5,
-      "centerVariationFontUnits": 6.5
+      "centerVariationFontUnits": 6.5,
+      "inkFill": "union-of-swept-nib-sections",
+      "solidStrokeInteriors": true,
+      "maximumSealedPinholeAreaFontUnits2": 100
     },
     "l": {
       "method": "traced",
@@ -1192,7 +1769,10 @@
         ]
       ],
       "edgeVariationFontUnits": 5.5,
-      "centerVariationFontUnits": 6.5
+      "centerVariationFontUnits": 6.5,
+      "inkFill": "union-of-swept-nib-sections",
+      "solidStrokeInteriors": false,
+      "maximumSealedPinholeAreaFontUnits2": 100
     },
     "r": {
       "method": "traced",
@@ -1242,7 +1822,13 @@
             30
           ]
         ]
-      ]
+      ],
+      "layoutSpacing": {
+        "xShift": -48,
+        "advance": 386,
+        "reference": "spacing.json",
+        "notes": "Remove blank extraction margin before the long s in Palmiste. Retain its existing right bearing and descending shape."
+      }
     },
     "t": {
       "method": "traced",
@@ -1270,7 +1856,13 @@
       "threshold": 132,
       "baseline": 3253,
       "scale": 12.0,
-      "notes": "Ink contours cleaned and normalized; long descenders shortened for digital typesetting."
+      "notes": "Ink contours cleaned and normalized; long descenders shortened for digital typesetting.",
+      "layoutSpacing": {
+        "xShift": -48,
+        "advance": 506,
+        "reference": "spacing.json",
+        "notes": "Remove blank extraction margin before the u in Fouine. Measure ou and ui separately from the original word."
+      }
     },
     "v": {
       "method": "traced",
@@ -1289,9 +1881,70 @@
       "selection": "Small marginal annotation visually compared with Le Raton; writer and annotation date unconfirmed."
     },
     "w": {
-      "method": "adapted",
-      "from": "u",
-      "notes": "New double-u form constructed from the traced u."
+      "method": "drawn",
+      "notes": "Curved pen reconstruction with variable pressure, wandering stroke centers, and uneven ink edges; not directly attested.",
+      "paths": [
+        "M82 410 C71 328 42 168 64 78 C77 27 120 39 154 94 C200 169 235 329 252 427 C242 329 221 177 236 94 C246 37 290 32 326 83 C383 160 442 332 467 422 C445 304 418 151 427 73 C433 30 472 51 515 95"
+      ],
+      "slant": 0.24,
+      "verticalStroke": 110,
+      "horizontalStroke": 28,
+      "penModel": "irregular-curved-pen",
+      "seed": 17568,
+      "guides": [
+        "u",
+        "v",
+        "m"
+      ],
+      "pressureProfiles": [
+        [
+          [
+            0,
+            0.61
+          ],
+          [
+            0.11,
+            0.81
+          ],
+          [
+            0.21,
+            0.35
+          ],
+          [
+            0.32,
+            0.29
+          ],
+          [
+            0.43,
+            0.85
+          ],
+          [
+            0.56,
+            0.68
+          ],
+          [
+            0.66,
+            0.3
+          ],
+          [
+            0.77,
+            0.43
+          ],
+          [
+            0.89,
+            0.75
+          ],
+          [
+            1,
+            0.34
+          ]
+        ]
+      ],
+      "edgeVariationFontUnits": 5.5,
+      "centerVariationFontUnits": 6.5,
+      "inkFill": "union-of-swept-nib-sections",
+      "solidStrokeInteriors": true,
+      "maximumSealedPinholeAreaFontUnits2": 100
     },
     "x": {
       "method": "traced",
@@ -1323,17 +1976,71 @@
       "scale": 20.0,
       "notes": "Ink contours cleaned and normalized; long descenders shortened for digital typesetting.",
       "retainedInkComponents": 1,
-      "selection": "Small marginal annotation visually compared with Le Raton; writer and annotation date unconfirmed."
+      "selection": "Small marginal annotation visually compared with Le Raton; writer and annotation date unconfirmed.",
+      "layoutSpacing": {
+        "xShift": -228,
+        "advance": 562,
+        "reference": "spacing.json",
+        "notes": "The Lynx caption puts n beside the upper body while the long descender passes below it. Remove crop padding before the body; retain the previous right bearing."
+      }
     },
     "z": {
       "method": "drawn",
-      "notes": "New centerline drawing matched to the inspected annotation hand.",
+      "notes": "Curved pen reconstruction with variable pressure, wandering stroke centers, and uneven ink edges; not directly attested.",
       "paths": [
-        "M39 366 C131 449 234 430 303 389 L57 44 C132 62 217 72 282 30 C334 -19 252 -140 163 -128 C99 -115 164 -33 302 12"
+        "M46 367 C127 427 215 432 277 393 C239 306 156 184 70 69 C123 78 212 79 261 42 C315 1 269 -115 187 -133 C127 -146 116 -91 169 -46 C204 -16 251 -9 301 8"
       ],
       "slant": 0.24,
       "verticalStroke": 110,
-      "horizontalStroke": 28
+      "horizontalStroke": 28,
+      "penModel": "irregular-curved-pen",
+      "seed": 17569,
+      "guides": [
+        "Z",
+        "n",
+        "y"
+      ],
+      "pressureProfiles": [
+        [
+          [
+            0,
+            0.43
+          ],
+          [
+            0.14,
+            0.67
+          ],
+          [
+            0.34,
+            0.44
+          ],
+          [
+            0.48,
+            0.56
+          ],
+          [
+            0.61,
+            0.53
+          ],
+          [
+            0.77,
+            0.3
+          ],
+          [
+            0.9,
+            0.39
+          ],
+          [
+            1,
+            0.25
+          ]
+        ]
+      ],
+      "edgeVariationFontUnits": 5.5,
+      "centerVariationFontUnits": 6.5,
+      "inkFill": "union-of-swept-nib-sections",
+      "solidStrokeInteriors": false,
+      "maximumSealedPinholeAreaFontUnits2": 100
     },
     "zero": {
       "method": "traced",
@@ -2763,13 +3470,13 @@
   "files": [
     {
       "file": "LeRaton-Regular.ttf",
-      "bytes": 61044,
-      "sha256": "f9e5a9fa4e9c23a86b750ecb405c5512d4e938729607450d4e18c041a100b308"
+      "bytes": 82940,
+      "sha256": "adbf717cf8794409cdd55e5e606496d75cfaab62222a91307dd9220741b053fd"
     },
     {
       "file": "LeRaton-Regular.woff",
-      "bytes": 24916,
-      "sha256": "4217817aca1a2955e6ea45b475fceb777b2f0ad6e8f3fa55b778dd01c224fed5"
+      "bytes": 32128,
+      "sha256": "559d917a2b9676b98f5de0772c8e35f0b723e0154ec0709b665f17458dd8e7c1"
     }
   ]
 }
