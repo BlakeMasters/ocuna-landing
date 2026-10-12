@@ -151,6 +151,24 @@ unchanged from 1.150. This is an optical adjustment to the reconstructed `U`,
 not a measurement of historical handwriting. The configuration and audit
 retain the earlier refinements and record the separate 1.150 baseline.
 
+Version 1.170 restores the left bowl of `d` from the same *Le Renard* scan.
+The original extraction began at scan x=430 and cut through that bowl,
+leaving two disconnected ink pieces and flat vertical clipping edges. The
+crop now begins at x=419. Its original placement and 580-unit advance stay
+fixed, while the entry ink can overhang the preceding letter. The left
+bearing changes from 28 to -82 units. Every other source trace, pen
+reconstruction, pair adjustment, and original ligature is retained.
+
+The font contains ink outlines only; its counters and margins are transparent.
+The apparent erasure beside `n` in “found” was missing source ink in `d`.
+No paper-colored box is used to separate letters. The extraction script
+supports `--characters d` for a selective source correction, and the audits
+record the expanded crop and unchanged records. Source boundary flags also
+include connected entry/exit strokes and neighbouring ink, so they are
+visually inspected rather than automatically filled or expanded.
+The 404 font URLs include the version so visitors fetch the corrected outlines
+even when their browsers cached the previous release.
+
 Traces retain the irregular contours of the surviving ink. Neighbouring marks
 and paper spots were masked out; detached strokes belonging to `F` and `h`
 were retained. Long descenders were shortened for live text. The letters
@@ -202,7 +220,7 @@ glyph's method, the traced and interpreted alphabet, and final file hashes.
 
 - `site-public/fonts/LeRaton-Regular.ttf`: installable TrueType font.
 - `site-public/fonts/LeRaton-Regular.woff`: compressed font served by the site.
-- Family: `Le Raton`; style: `Regular`; version: `1.160`.
+- Family: `Le Raton`; style: `Regular`; version: `1.170`.
 - 225 glyphs and 223 mapped characters, including the alphabet, digits,
   punctuation, common French accents, and navigation arrows.
 - OpenType features: standard ligatures (`liga`) and pair spacing (`kern`).

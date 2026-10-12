@@ -1,7 +1,7 @@
 @font-face {
   font-family: "Le Raton";
-  src: url("/fonts/LeRaton-Regular.woff") format("woff"),
-    url("/fonts/LeRaton-Regular.ttf") format("truetype");
+  src: url("/fonts/LeRaton-Regular.woff?v=1.170") format("woff"),
+    url("/fonts/LeRaton-Regular.ttf?v=1.170") format("truetype");
   font-style: normal;
   font-weight: 400;
   font-display: swap;

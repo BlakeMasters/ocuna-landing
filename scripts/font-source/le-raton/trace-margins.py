@@ -12,6 +12,7 @@ DEST = ROOT
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument("scan_directory", type=Path, help="Folder containing raton.jpg, renard.jpg, and fouine.jpg from sources.json")
 parser.add_argument("--additional-scan-directory", type=Path, help="Folder containing the additional scan variants listed in sources.json")
+parser.add_argument("--characters", help="Re-extract only these individual characters, preserving other saved traces")
 args = parser.parse_args()
 SCANS_DIRECTORY = args.scan_directory
 SCANS = {
@@ -38,7 +39,7 @@ SAMPLES = {
     "p": ("raton", [720, 56, 767, 155], 98, 10.5),
     "T": ("renard", [477, 77, 538, 135], 132, 14.0),
     "r": ("renard", [296, 103, 331, 147], 143, 11.4),
-    "d": ("renard", [330, 60, 383, 147], 144, 10.0),
+    "d": ("renard", [319, 60, 383, 147], 144, 10.0),
     "e": ("fouine", [302, 68, 341, 104], 101, 13.5),
     "f": ("fouine", [130, 17, 184, 158], 103, 10.2),
     "u": ("fouine", [208, 66, 250, 107], 103, 12.0),
@@ -129,6 +130,18 @@ def trace(key, sample):
         if "advance" in sample or "xShift" in sample:
             provenance["spacing"] = {"xShift":sample.get("xShift",0), "advance":advance,
                                       "notes":"Body spacing; original flourish overhang retained."}
+    if key == "d":
+        # The previous left crop cut through d's bowl, leaving two disconnected
+        # pieces and a flat vertical gap. Restore source ink to the left while
+        # preserving its existing origin, advance, and tall return stroke.
+        shift = -110
+        outlines = [[[x+shift,y] for x,y in points] for points in outlines]
+        advance = 580
+        provenance["cropRestoration"] = {
+            "previousCrop": [430,3160,483,3247],
+            "xShift": shift, "advance": advance,
+            "notes": "Restore the complete left bowl from the same Le Renard scan. Entry ink overhangs the previous character; no paper-colored mask or invented stroke is used."
+        }
     return {"advance": advance, "contours": outlines, "provenance": provenance}
 
 if __name__ == "__main__":
@@ -138,10 +151,24 @@ if __name__ == "__main__":
         if hashlib.sha256(path.read_bytes()).hexdigest() != source["sha256"]:
             raise ValueError(f"Source scan differs from the inspected original: {path}")
     DEST.mkdir(parents=True, exist_ok=True)
-    glyphs = {key: trace(key,sample) for key,sample in SAMPLES.items()}
-    if args.additional_scan_directory:
+    if args.characters:
+        saved = DEST / "traced-glyphs.json"
+        if not saved.exists():
+            raise ValueError("A partial extraction requires existing saved traces")
+        glyphs = json.loads(saved.read_text(encoding="utf-8"))["glyphs"]
+        for key in args.characters:
+            sample = SAMPLES.get(key, ADDITIONAL.get(key))
+            if sample is None:
+                raise ValueError(f"No source sample for {key}")
+            source = sample["source"] if isinstance(sample,dict) else sample[0]
+            if source not in SCANS:
+                raise ValueError(f"The additional scan directory is required for {key}")
+            glyphs[key] = trace(key,sample)
+    else:
+        glyphs = {key: trace(key,sample) for key,sample in SAMPLES.items()}
+    if args.additional_scan_directory and not args.characters:
         glyphs.update({key: trace(key, sample) for key, sample in ADDITIONAL.items()})
-    elif (DEST / "traced-glyphs.json").exists():
+    elif not args.characters and (DEST / "traced-glyphs.json").exists():
         # Re-extracting the initial three scans must preserve later attested forms.
         prior = json.loads((DEST / "traced-glyphs.json").read_text(encoding="utf-8"))["glyphs"]
         glyphs.update({key: record for key, record in prior.items() if key in ADDITIONAL})
