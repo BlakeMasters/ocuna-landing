@@ -1,6 +1,6 @@
 {
   "family": "Le Raton",
-  "version": "1.170",
+  "version": "1.180",
   "unitsPerEm": 1000,
   "glyphs": 225,
   "mappedCharacters": 223,
@@ -10,7 +10,7 @@
   ],
   "spacing": {
     "reference": "spacing.json",
-    "sha256": "b35d497877cd7a4ad95c13b1455b0225edc8c5805b74c6bf525dedd723a39483",
+    "sha256": "c3f87c8cd350fef1bd7a0759c6ba2099df807e91c51bf27cbfba310b66621e1c",
     "spaceAdvance": 305,
     "translatedForms": [
       "i",
@@ -624,15 +624,26 @@
       "method": "traced",
       "source": "raton",
       "crop": [
-        94,
-        3148,
-        149,
-        3244
+        92,
+        3142,
+        174,
+        3247
       ],
       "threshold": 132,
       "baseline": 3240,
       "scale": 10.8,
-      "notes": "Ink contours cleaned and normalized; long descenders shortened for digital typesetting."
+      "notes": "Ink contours cleaned and normalized; long descenders shortened for digital typesetting.",
+      "cropRestoration": {
+        "previousCrop": [
+          94,
+          3148,
+          149,
+          3244
+        ],
+        "xShift": -21.6,
+        "advance": 644,
+        "notes": "Restore the entire tall stem from the original Le Raton caption. Segment the neighbouring e at the connected foot; keep the original L origin and advance."
+      }
     },
     "M": {
       "method": "drawn",
@@ -1698,15 +1709,26 @@
       "method": "traced",
       "source": "raton",
       "crop": [
-        780,
-        3186,
-        827,
-        3285
+        756,
+        3184,
+        838,
+        3290
       ],
       "threshold": 132,
       "baseline": 3228,
       "scale": 10.5,
-      "notes": "Ink contours cleaned and normalized; long descenders shortened for digital typesetting."
+      "notes": "Ink contours cleaned and normalized; long descenders shortened for digital typesetting.",
+      "cropRestoration": {
+        "previousCrop": [
+          780,
+          3186,
+          827,
+          3285
+        ],
+        "xShift": -252,
+        "advance": 544,
+        "notes": "Restore the complete narrow descender loop and upper hook from the original page abbreviation. Exclude the separate preceding dot; keep the original origin, advance, and descender scaling."
+      }
     },
     "q": {
       "method": "drawn",
@@ -3481,13 +3503,13 @@
   "files": [
     {
       "file": "LeRaton-Regular.ttf",
-      "bytes": 82948,
-      "sha256": "7749449d4dddb8d7f182017d1125e0ededacb3850bbac7ce6a94684d8d3b4dbe"
+      "bytes": 83268,
+      "sha256": "3ac438d9e41e521917e0a8635a3b53412c9b24b17189df4ecf8329d6fab5c3b6"
     },
     {
       "file": "LeRaton-Regular.woff",
-      "bytes": 32136,
-      "sha256": "ef3b83ccd692f94dd2166ac4054ba8d3fb622736c1de102fa1783fb4d23f9259"
+      "bytes": 32256,
+      "sha256": "b07075a4e6cfb50d0056673d270b1cfad6693306098edb879caba5ccdd035573"
     }
   ]
 }

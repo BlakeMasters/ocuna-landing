@@ -169,6 +169,17 @@ visually inspected rather than automatically filled or expanded.
 The 404 font URLs include the version so visitors fetch the corrected outlines
 even when their browsers cached the previous release.
 
+Version 1.180 restores `L` and `p` from the original *Le Raton* caption.
+The `L` crop had clipped its tall upper stem; the expanded selection retains
+that stem and separates the neighbouring `e` at their connected foot. The
+source's page-abbreviation `p` has a long narrow loop and a small hooked top.
+Its former crop lost the left lower turn and part of the hook. The expanded
+selection keeps the entire loop and excludes a separate preceding dot.
+The font still uses its existing 0.64 scale below the baseline for descenders.
+Both letters retain their original origins and advances. The connected `Le`
+and `Raton` ligatures and every kerning value remain unchanged. The audits
+record these source restorations separately from the previous pen reconstructions.
+
 Traces retain the irregular contours of the surviving ink. Neighbouring marks
 and paper spots were masked out; detached strokes belonging to `F` and `h`
 were retained. Long descenders were shortened for live text. The letters
@@ -220,7 +231,7 @@ glyph's method, the traced and interpreted alphabet, and final file hashes.
 
 - `site-public/fonts/LeRaton-Regular.ttf`: installable TrueType font.
 - `site-public/fonts/LeRaton-Regular.woff`: compressed font served by the site.
-- Family: `Le Raton`; style: `Regular`; version: `1.170`.
+- Family: `Le Raton`; style: `Regular`; version: `1.180`.
 - 225 glyphs and 223 mapped characters, including the alphabet, digits,
   punctuation, common French accents, and navigation arrows.
 - OpenType features: standard ligatures (`liga`) and pair spacing (`kern`).

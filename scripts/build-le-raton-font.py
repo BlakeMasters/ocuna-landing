@@ -16,7 +16,7 @@ from fontTools.ttLib import TTFont
 ROOT=Path(__file__).resolve().parents[1]
 SOURCE=ROOT/"scripts"/"font-source"/"le-raton"/"glyphs.json"
 OUTPUT=ROOT/"site-public"/"fonts"
-VERSION="1.170"
+VERSION="1.180"
 
 SYMBOLS={
     ".":"period",",":"comma",":":"colon",";":"semicolon","'":"quotesingle",

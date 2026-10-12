@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "version": "1.170",
+  "version": "1.180",
   "unitsPerEm": 1000,
   "reference": "Surviving marginal handwriting, not confirmed author intent. Source identities and exact scan hashes are recorded in sources.json.",
   "method": "Inspect full caption words. Remove crop margins or let detached dots and flourishes overhang. Convert observed pair ink separation into font units; do not stretch words to force a facsimile.",

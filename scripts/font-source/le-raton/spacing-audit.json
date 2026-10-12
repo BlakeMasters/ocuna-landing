@@ -1,7 +1,7 @@
 {
-  "version": "1.170",
+  "version": "1.180",
   "previousLocalVersion": "1.120",
-  "publication": "Correction to the published 1.160 font; validated before promotion.",
+  "publication": "Corrections to the published font; source restoration validated before promotion.",
   "references": {
     "scans": "sources.json",
     "metricAndPairDecisions": "spacing.json"
@@ -1792,5 +1792,49 @@
     ],
     "currentCapitalDMinimumClearance": 18.001,
     "lowercaseNDMinimumInkClearance": 3.0
+  },
+  "LPSourceCropRestoration": {
+    "version": "1.180",
+    "baseline": "1.170",
+    "letters": [
+      "L",
+      "p"
+    ],
+    "L": {
+      "oldCrop": [
+        94,
+        3148,
+        149,
+        3244
+      ],
+      "restoredCrop": [
+        92,
+        3142,
+        174,
+        3247
+      ],
+      "advance": 644,
+      "decision": "Restore the clipped upper stem from the same Le Raton scan, excluding the neighbouring e at their connected foot."
+    },
+    "p": {
+      "oldCrop": [
+        780,
+        3186,
+        827,
+        3285
+      ],
+      "restoredCrop": [
+        756,
+        3184,
+        838,
+        3290
+      ],
+      "advance": 544,
+      "decision": "The source p has a long narrow descender loop and hooked top. Restore the clipped lower turn and hook, remove the separate preceding dot, and retain existing 0.64 descender scaling."
+    },
+    "other51SavedTraceRecordsUnchanged": true,
+    "allAdvancesAndKerningDefinitionsUnchanged": true,
+    "sourceInkOnly": true,
+    "originalLeAndRatonLigaturesUnchanged": true
   }
 }

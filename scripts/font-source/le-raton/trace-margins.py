@@ -29,14 +29,14 @@ if args.additional_scan_directory:
 # Coordinates are measured in the inspected annotation crops, not the artwork.
 # Connected entry/exit strokes are retained; individual characters use modest spacing.
 SAMPLES = {
-    "L": ("raton", [34, 18, 89, 114], 110, 10.8),
+    "L": ("raton", [32, 12, 114, 117], 110, 10.8),
     "R": ("raton", [158, 22, 217, 113], 110, 10.4),
     "a": ("raton", [207, 68, 250, 115], 111, 10.5),
     "t": ("raton", [245, 53, 289, 114], 110, 10.5),
     "o": ("fouine", [170, 68, 207, 109], 103, 12.0),
     "n": ("raton", [304, 71, 346, 113], 109, 11.4),
     "m": ("raton", [489, 67, 550, 108], 104, 11.5),
-    "p": ("raton", [720, 56, 767, 155], 98, 10.5),
+    "p": ("raton", [696, 54, 778, 160], 98, 10.5),
     "T": ("renard", [477, 77, 538, 135], 132, 14.0),
     "r": ("renard", [296, 103, 331, 147], 143, 11.4),
     "d": ("renard", [319, 60, 383, 147], 144, 10.0),
@@ -55,6 +55,15 @@ SAMPLES = {
     "period": ("raton", [356, 82, 377, 101], 101, 8.0),
     "Le": ("raton", [33, 18, 124, 114], 110, 10.5),
     "Raton": ("raton", [158, 22, 348, 115], 110, 10.4),
+}
+
+SOURCE_CROP_RESTORATIONS = {
+    "d": {"previousCrop":[430,3160,483,3247],"xShift":-110,"advance":580,
+          "notes":"Restore the complete left bowl from the same Le Renard scan. Entry ink overhangs the previous character; no paper-colored mask or invented stroke is used."},
+    "L": {"previousCrop":[94,3148,149,3244],"xShift":-21.6,"advance":644,
+          "notes":"Restore the entire tall stem from the original Le Raton caption. Segment the neighbouring e at the connected foot; keep the original L origin and advance."},
+    "p": {"previousCrop":[780,3186,827,3285],"xShift":-252,"advance":544,
+          "notes":"Restore the complete narrow descender loop and upper hook from the original page abbreviation. Exclude the separate preceding dot; keep the original origin, advance, and descender scaling."},
 }
 
 def trace(key, sample):
@@ -77,10 +86,22 @@ def trace(key, sample):
         mask[26:,39:] = 0  # Period after the abbreviation is a separate glyph.
     if key == "V" and not is_additional:
         mask[18:,33:] = 0  # Exclude the adjacent Roman numeral I.
+    if key == "L":
+        # The e starts above L's connected foot. Its removal must not clip the
+        # much taller L stem, which extends to the right of the old crop.
+        neighbour = np.array([[153,3202],[174,3202],[174,3247],[159,3247],[153,3238]])
+        neighbour = neighbour - np.array(absolute[:2])
+        cv2.fillPoly(mask,[neighbour.astype(np.int32)],0)
     if is_additional:
         for polygon in sample.get("remove", []):
             cv2.fillPoly(mask, [np.array(polygon, dtype=np.int32)], 0)
     mask = cv2.morphologyEx(mask, cv2.MORPH_CLOSE, np.ones((2,2), np.uint8))
+    if key == "p":
+        # The expanded crop includes a separate preceding punctuation mark.
+        # The complete p loop is a single connected ink component.
+        count, labels, stats, _ = cv2.connectedComponentsWithStats(mask)
+        keep = max(range(1,count),key=lambda index: stats[index,cv2.CC_STAT_AREA])
+        mask = np.where(labels==keep,255,0).astype(np.uint8)
     if is_additional:
         # Detached pieces of adjoining letters are not part of the specimen.
         # F has a genuinely detached upper stroke; preserve both of its parts.
@@ -98,7 +119,7 @@ def trace(key, sample):
         simplified = cv2.approxPolyDP(contour, 0.48, True).reshape(-1,2)
         points=[]
         for x,y in simplified:
-            px = float(x)*scale+28
+            px = float(x)*scale+28+SOURCE_CROP_RESTORATIONS.get(key,{}).get("xShift",0)
             py = float(baseline-box[1]-y)*scale
             if py < 0:
                 py *= 0.64  # Long reference descenders fit a usable digital line.
@@ -130,18 +151,10 @@ def trace(key, sample):
         if "advance" in sample or "xShift" in sample:
             provenance["spacing"] = {"xShift":sample.get("xShift",0), "advance":advance,
                                       "notes":"Body spacing; original flourish overhang retained."}
-    if key == "d":
-        # The previous left crop cut through d's bowl, leaving two disconnected
-        # pieces and a flat vertical gap. Restore source ink to the left while
-        # preserving its existing origin, advance, and tall return stroke.
-        shift = -110
-        outlines = [[[x+shift,y] for x,y in points] for points in outlines]
-        advance = 580
-        provenance["cropRestoration"] = {
-            "previousCrop": [430,3160,483,3247],
-            "xShift": shift, "advance": advance,
-            "notes": "Restore the complete left bowl from the same Le Renard scan. Entry ink overhangs the previous character; no paper-colored mask or invented stroke is used."
-        }
+    if key in SOURCE_CROP_RESTORATIONS:
+        layout=SOURCE_CROP_RESTORATIONS[key]
+        advance=layout["advance"]
+        provenance["cropRestoration"]=layout
     return {"advance": advance, "contours": outlines, "provenance": provenance}
 
 if __name__ == "__main__":
