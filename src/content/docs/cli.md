@@ -1,6 +1,6 @@
 # Command-line reference
 
-Version 0.4.0.
+Version 0.5.0.
 
 The `ocura-oss` command records trusted local command attempts, creates metadata branches, compares branch evidence, and verifies project-local state.
 
@@ -21,6 +21,9 @@ Commands run against one project root. Unless `--root PATH` is supplied, the roo
 | `branch` | Create a metadata-only child pathway |
 | `compare` | Compare a source run with runs on its child pathways |
 | `verify` | Recheck records, relationships, and referenced logs |
+| `manifest` | Print one checksum line per verified record, to keep elsewhere |
+| `attempts` | List runs that have started and are not yet finalized |
+| `recover` | Close attempts whose recording process stopped |
 | `demo` | Run the complete workflow in a new retained directory |
 
 Run `ocura-oss COMMAND --help` for command-specific help.
@@ -37,7 +40,7 @@ Run `ocura-oss COMMAND --help` for command-specific help.
 
 `--param KEY=VALUE` records a string label. The option is repeatable. Keys must begin with a letter or underscore and may then contain letters, digits, underscores, periods, or hyphens. Keys and values must not be empty. A key may appear only once in one invocation.
 
-Declared parameters do not configure the child process. Pass process arguments after `--` in `run`.
+Declared parameters do not configure the child process. Pass process arguments after `--` in `run`. To declare a value once and also pass it, use `run --substitute` and write `{KEY}` in the command, quoted in PowerShell.
 
 ### JSON output
 
@@ -49,7 +52,7 @@ Every command accepts `--json`. JSON mode writes one result document to standard
 
 Default summaries and listing output omit command arguments, environment values, and log contents. `run` streams child output unless `--quiet` or `--json` is present, so streamed output is separate from the final summary.
 
-Raw atom records retain command arguments, and log files retain command output. Keep secrets out of command arguments, declared parameters, branch reasons, and output.
+Raw atom records retain command arguments, and log files retain command output. Keep secrets out of command arguments, declared parameters, branch reasons, and output. When a run cannot avoid one, `run --mask-arg` keeps a command token out of the records and `run --no-capture` keeps output off disk; see [keeping sensitive values out of records](/docs/state#stored-information-keeping-sensitive-values-out-of-records).
 
 ## `init`
 
@@ -100,7 +103,9 @@ ocura-oss init --root ./experiment --name "batch study"
 Run one trusted local command and record terminal evidence.
 
 ```text
-ocura-oss run [--root PATH] [--pathway ID] [--param KEY=VALUE] [--quiet] [--json] -- COMMAND...
+ocura-oss run [--root PATH] [--pathway ID] [--param KEY=VALUE] [--quiet] [--json]
+              [--no-capture] [--mask-arg POSITION] [--substitute]
+              [--context] [--context-file PATH] -- COMMAND...
 ```
 
 The `--` separator is required. Ocura OSS options belong before it. Every token after it is passed to the child command as one argument token.
@@ -114,6 +119,11 @@ The `--` separator is required. Ocura OSS options belong before it. Every token 
 | `--param KEY=VALUE` | string pair | none | Declared run parameter; repeatable |
 | `--quiet` | flag | false | Retain output without mirroring it to the terminal |
 | `--json` | flag | false | Emit one result as JSON; retain child output in logs without streaming |
+| `--no-capture` | flag | false | Retain no stdout or stderr; the record states that output was not captured |
+| `--mask-arg POSITION` | integer | none | Record `<masked>` in place of the `COMMAND` token at this zero-based position; repeatable |
+| `--substitute` | flag | false | Replace `{KEY}` in `COMMAND` tokens with that parameter's value |
+| `--context` | flag | false | Record the platform and the git revision and dirty state at launch |
+| `--context-file PATH` | path | none | Record the size and SHA-256 of this file at launch; repeatable |
 | `COMMAND...` | argument tokens | required | Executable and arguments placed after `--` |
 
 #### Execution
@@ -122,17 +132,27 @@ The command runs with `shell=False` and the project root as its working director
 
 Stdout and stderr are captured as separate files under `.ocura-oss/logs/`. Unless `--quiet` or `--json` is present, the same bytes are also streamed to the terminal.
 
+With `--no-capture`, no log files are written. Output still streams to the terminal unless `--quiet` or `--json` is present, and is otherwise discarded.
+
+`--mask-arg POSITION` counts `COMMAND` tokens from zero, so position 0 is the executable. The command receives the real token; the attempt and atom records store `<masked>` there and list the position. Masking does not alter output, so a command that prints the value still writes it to a captured log. A position outside `COMMAND` is rejected before anything runs.
+
+With `--substitute`, each `{KEY}` in a `COMMAND` token is replaced by that parameter's value before the command launches. A value comes from this run's `--param` declarations first and then from the pathway's effective parameters, so a run on a branch can use the branch's values without restating them. Every parameter used this way is recorded as a declared parameter of the run, and the recorded command is the substituted one. Write `{{` or `}}` for a literal brace. A placeholder with no value, or an unbalanced brace, is rejected before anything runs. Without `--substitute`, braces are passed through untouched. Quote a placeholder, as in `"{batch}"`, when the shell is PowerShell: it reads bare braces as a script block and does not pass them to the command.
+
+`--context` and `--context-file` add an optional `context` object to the record; see [optional launch context](/docs/state#stored-information-optional-launch-context). Neither runs or reads anything unless it is present.
+
 One run produces:
 
 - one atom containing timing, outcome, declared parameters, command arguments, and log metadata
-- one stdout log and one stderr log
+- one stdout log and one stderr log, unless `--no-capture` is present
 - one branchable terminal chokepoint
 
-A passing command records `passed`. A nonzero return code records `failed`. A launch error records `launch_failed`. The first Ctrl+C records `interrupted` with partial output retained. A second Ctrl+C exits immediately and may leave that attempt unrecorded.
+The attempt is journaled under `.ocura-oss/attempts/` before the command launches, and that entry is removed once the atom and chokepoint are written.
+
+A passing command records `passed`. A nonzero return code records `failed`. A launch error records `launch_failed`. The first Ctrl+C records `interrupted` with partial output retained. A second Ctrl+C exits immediately; so does a killed `run` process. Either leaves the attempt unfinished until [`recover`](#recover) closes it as `abandoned`. The command itself may still be running at that point: Ocura OSS does not stop it.
 
 #### Text output
 
-The final text summary includes the atom, chokepoint, pathway, outcome, duration, log paths, and the return code or launch category when available. It does not repeat command arguments.
+The final text summary includes the atom, chokepoint, pathway, outcome, duration, log paths, and the return code or launch category when available. With `--no-capture`, it states `output: not captured` in place of the log paths. It does not repeat command arguments.
 
 #### JSON output
 
@@ -145,8 +165,9 @@ The final text summary includes the atom, chokepoint, pathway, outcome, duration
 | `duration_seconds` | number | Recorded elapsed command time |
 | `return_code` | integer or null | Child exit status when available |
 | `launch_error_category` | string or null | Error category or `interrupted` |
-| `stdout_log` | string | Project-relative stdout log path |
-| `stderr_log` | string | Project-relative stderr log path |
+| `output_capture` | string | `full`, or `none` when `--no-capture` was used |
+| `stdout_log` | string or null | Project-relative stdout log path; null without capture |
+| `stderr_log` | string or null | Project-relative stderr log path; null without capture |
 
 Use returned IDs to continue the [automated workflow](/docs/automation). The [training example](/docs/examples) provides an executable client.
 
@@ -167,6 +188,24 @@ ocura-oss run -- python script.py --epochs 4
 
 ```console
 ocura-oss run --pathway pathway-<id> --param batch=4 --quiet -- python script.py --batch 4
+```
+
+Declare a value once and pass it to the command:
+
+```console
+ocura-oss run --param batch=4 --substitute -- python train.py --batch "{batch}"
+```
+
+Record the revision, the platform, and the digest of a lock file with the run:
+
+```console
+ocura-oss run --context --context-file requirements.lock -- python train.py
+```
+
+Keep a token out of the records and its output off disk. Position 3 is the value after `--token`:
+
+```console
+ocura-oss run --no-capture --mask-arg 3 -- python upload.py --token <value>
 ```
 
 ## `pathways`
@@ -233,7 +272,7 @@ Each entry contains:
 | `id` | string | Chokepoint identifier |
 | `pathway_id` | string | Pathway that owns the source atom |
 | `atom_id` | string | Recorded command attempt |
-| `outcome` | string | `passed`, `failed`, `launch_failed`, or `interrupted` |
+| `outcome` | string | `passed`, `failed`, `launch_failed`, `interrupted`, or `abandoned` |
 | `created_at` | string | UTC ISO 8601 timestamp |
 | `branchable` | boolean | Whether the chokepoint can serve as a branch source |
 
@@ -268,7 +307,7 @@ ocura-oss branch --from CHOKEPOINT_ID --reason TEXT [--param KEY=VALUE] [--root 
 
 #### Verification and state effects
 
-Before writing, `branch` validates the chokepoint, its atom, its pathway, their relationships, and both referenced logs. Missing, checksum-mismatched, nonterminal, nonbranchable, or otherwise unverifiable sources are rejected.
+Before writing, `branch` validates the chokepoint, its atom, its pathway, their relationships, and the logs the atom recorded. Missing, checksum-mismatched, nonterminal, nonbranchable, or otherwise unverifiable sources are rejected.
 
 The child inherits the parent's effective parameters and applies the supplied overrides. The operation records the parent pathway, source chokepoint, reason, creation time, and effective parameters.
 
@@ -311,7 +350,9 @@ ocura-oss compare [--from CHOKEPOINT_ID] [--root PATH] [--json]
 
 With `--from`, comparison verifies the selected source and the child evidence used in the result.
 
-Without `--from`, the complete state must pass verification before Ocura OSS selects the newest chokepoint referenced by a child pathway. A state with no child pathways selects its newest terminal chokepoint and reports `no_branch`. A malformed record, broken reference, unverified log, orphaned log file, or unexpected log directory anywhere in state blocks automatic selection.
+It also reads and validates every pathway record to discover children, and every atom record when the selected source has children. An unrelated malformed or checksum-invalid pathway or atom record can therefore block an explicit comparison. This does not verify every unrelated log or relationship.
+
+Without `--from`, the complete state must pass verification before Ocura OSS selects the newest chokepoint referenced by a child pathway. A state with no child pathways selects its newest terminal chokepoint and reports `no_branch`. A malformed record, broken reference, unverified log, orphaned log file, unexpected log directory, atom without a chokepoint, or abandoned attempt anywhere in state blocks automatic selection. Attempts that another process is still recording do not.
 
 #### Comparison state
 
@@ -341,7 +382,7 @@ The top-level document contains:
 
 Each child contains its pathway ID, reason, source chokepoint, pathway parameter delta, source run, optional child run, optional run parameter delta, and `missing_evidence` flag.
 
-A run summary contains `id`, `pathway_id`, `outcome`, `started_at`, `duration_seconds`, and `return_code`.
+A run summary contains `id`, `pathway_id`, `outcome`, `started_at`, `duration_seconds`, and `return_code`. `duration_seconds` is null for an `abandoned` run, and the text view prints `abandoned (duration unknown)`.
 
 #### Exit status
 
@@ -355,7 +396,7 @@ A run summary contains `id`, `pathway_id`, `outcome`, `started_at`, `duration_se
 Recheck every state record and every log referenced by a recorded run.
 
 ```text
-ocura-oss verify [--root PATH] [--json]
+ocura-oss verify [--root PATH] [--json] [--against FILE]
 ```
 
 #### Options
@@ -364,6 +405,7 @@ ocura-oss verify [--root PATH] [--json]
 | --- | --- | --- | --- |
 | `--root PATH` | path | current directory | Project root containing initialized state |
 | `--json` | flag | false | Emit counts and the complete problem list as JSON |
+| `--against FILE` | path | none | Manifest retained from an earlier `manifest`; every record it lists must still be present and unchanged |
 
 #### Checks
 
@@ -374,10 +416,15 @@ Verification covers:
 - required fields and outcome invariants
 - den, pathway, atom, and chokepoint references
 - pathway lineage cycles and source-parent agreement
+- that every atom has exactly one chokepoint
 - referenced log containment, existence, byte count, and SHA-256 digest
 - unreferenced files and unexpected directories under `.ocura-oss/logs/`
+- unfinished attempts
+- with `--against`, that every retained manifest entry is still present with the same checksum
 
-`logs_checked` counts individual logs that passed verification. A valid atom normally contributes two logs.
+`logs_checked` counts individual logs that passed verification. A valid atom normally contributes two logs, and none when it was recorded without capture.
+
+Verification may run while other processes record runs under the same root. An attempt that a live process is still recording is listed under `attempts.running` and is not a problem; its logs are not checked until it is finalized. An abandoned attempt is a problem until [`recover`](#recover) closes it.
 
 #### JSON output
 
@@ -385,20 +432,139 @@ Verification covers:
 | --- | --- | --- |
 | `den` | string | Den identifier |
 | `status` | string | `ok` or `failed` |
+| `digest` | string or null | SHA-256 of the manifest when the state is intact; null otherwise |
 | `counts.pathways` | integer | Pathway records found |
 | `counts.atoms` | integer | Atom records found |
 | `counts.chokepoints` | integer | Chokepoint records found |
 | `counts.logs_checked` | integer | Referenced logs that passed verification |
+| `attempts.running` | array | Identifiers of attempts a live process is still recording |
+| `attempts.abandoned` | array | Identifiers of attempts whose recorder stopped; each is also a problem |
 | `problems` | array | Objects containing `record` and `problem` strings |
 
-Verification establishes consistency among local records and logs. It does not establish authorship or reproduce external execution conditions.
+The text view prints the digest on its own line when the state is intact.
+
+Verification establishes consistency among local records and logs. It does not establish authorship or reproduce external execution conditions. Checksums kept inside the state cannot show that a record was rewritten together with its checksum; `--against` with a manifest kept elsewhere can.
 
 #### Exit status
 
 | Status | Meaning |
 | --- | --- |
 | 0 | No verification problems were found |
-| 2 | State was missing, unreadable, malformed, inconsistent, or failed verification |
+| 2 | State was missing, unreadable, malformed, inconsistent, or failed verification; or the `--against` file was unreadable, malformed, or listed no records |
+
+## `manifest`
+
+Verify the complete state, then print one checksum line for every record.
+
+```text
+ocura-oss manifest [--root PATH] [--json]
+```
+
+#### Options
+
+| Option | Type | Default | Description |
+| --- | --- | --- | --- |
+| `--root PATH` | path | current directory | Project root containing initialized state |
+| `--json` | flag | false | Emit the digest and entries as JSON |
+
+#### Output
+
+Each line is `KIND ID CHECKSUM`, where `KIND` is `den`, `pathway`, `atom`, or `chokepoint` and `CHECKSUM` is that record's stored SHA-256. Lines are sorted. JSON mode returns `{"digest": "...", "entries": [...]}`; the digest is the SHA-256 of the lines, each terminated by a newline.
+
+Keep the output where this state's writers cannot change it and pass it to `verify --against` later. See [retained manifests](/docs/state#verification-retained-manifests) for what that detects and its limits.
+
+A manifest is printed only for a state that verifies completely. Attempts still being recorded are not records yet and are not listed.
+
+#### Exit status
+
+| Status | Meaning |
+| --- | --- |
+| 0 | The state verified and the manifest was emitted |
+| 2 | State was missing or failed verification; no manifest was emitted |
+
+## `attempts`
+
+List runs that have started and are not yet finalized, oldest first.
+
+```text
+ocura-oss attempts [--root PATH] [--json]
+```
+
+#### Options
+
+| Option | Type | Default | Description |
+| --- | --- | --- | --- |
+| `--root PATH` | path | current directory | Project root containing initialized state |
+| `--json` | flag | false | Emit one machine-readable JSON document |
+
+#### Output
+
+Each entry contains:
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `id` | string | Identifier of the atom the attempt becomes when finalized |
+| `pathway_id` | string | Pathway the run was started on |
+| `started_at` | string | UTC ISO 8601 timestamp |
+| `state` | string | `running` while a live process is recording it; `abandoned` once that process has stopped |
+
+JSON mode returns `{"attempts": [...]}`. Command arguments and log contents are not included. A finalized run is an atom and is not listed, so the list is empty when nothing is running and nothing was abandoned.
+
+#### Exit status
+
+| Status | Meaning |
+| --- | --- |
+| 0 | The validated list was emitted |
+| 2 | State was missing, malformed, inconsistent, or unreadable |
+
+## `recover`
+
+Close every attempt whose recording process stopped before finalizing it.
+
+```text
+ocura-oss recover [--root PATH] [--json]
+```
+
+#### Options
+
+| Option | Type | Default | Description |
+| --- | --- | --- | --- |
+| `--root PATH` | path | current directory | Project root containing initialized state |
+| `--json` | flag | false | Emit the closed attempts as JSON |
+
+#### Behavior
+
+Each abandoned attempt is closed according to how far its recorder got:
+
+| Action | When | Result |
+| --- | --- | --- |
+| `abandoned` | No outcome had been recorded | An atom with outcome `abandoned` and its terminal chokepoint |
+| `completed` | The atom existed without its chokepoint | The missing chokepoint, with the atom's recorded outcome |
+| `cleared` | The atom and chokepoint both existed | The leftover attempt entry is removed |
+
+An `abandoned` atom has no finish time, duration, or return code; none is invented. Output captured before the recorder stopped is retained and measured, so it verifies afterward.
+
+Running attempts are left alone, so `recover` is safe to call while other runs are in flight. Run it only after the abandoned command itself has stopped: a command that outlived its recorder can keep writing to logs that recovery has already measured.
+
+#### JSON output
+
+JSON mode returns `{"recovered": [...]}`. Each entry contains:
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `atom_id` | string | Atom the attempt was closed as |
+| `chokepoint_id` | string | That atom's terminal chokepoint |
+| `pathway_id` | string | Pathway containing the atom |
+| `action` | string | `abandoned`, `completed`, or `cleared` |
+
+The text view prints one line per closed attempt and a final `recovered: N` count.
+
+#### Exit status
+
+| Status | Meaning |
+| --- | --- |
+| 0 | Every abandoned attempt was closed, including when there were none |
+| 2 | State was missing, or an attempt record or its evidence was malformed or unreadable |
 
 ## `demo`
 

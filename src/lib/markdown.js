@@ -126,8 +126,13 @@ export function renderMarkdown(markdown) {
       const items = [];
       const start = Number(line.match(/^\d+/)[0]);
       while (index < lines.length && /^\d+\. /.test(lines[index])) {
-        items.push(`<li>${renderInline(lines[index].replace(/^\d+\. /, ""))}</li>`);
+        const item = [lines[index].replace(/^\d+\. /, "")];
         index += 1;
+        while (index < lines.length && /^\s{2,}\S/.test(lines[index])) {
+          item.push(lines[index].trim());
+          index += 1;
+        }
+        items.push(`<li>${renderInline(item.join(" "))}</li>`);
       }
       html.push(`<ol${start === 1 ? "" : ` start="${start}"`}>${items.join("")}</ol>`);
       continue;
@@ -146,8 +151,13 @@ export function renderMarkdown(markdown) {
     if (line.startsWith("- ")) {
       const items = [];
       while (index < lines.length && lines[index].startsWith("- ")) {
-        items.push(`<li>${renderInline(lines[index].slice(2))}</li>`);
+        const item = [lines[index].slice(2)];
         index += 1;
+        while (index < lines.length && /^\s{2,}\S/.test(lines[index])) {
+          item.push(lines[index].trim());
+          index += 1;
+        }
+        items.push(`<li>${renderInline(item.join(" "))}</li>`);
       }
       html.push(`<ul>${items.join("")}</ul>`);
       continue;

@@ -1,6 +1,6 @@
 # Ocura OSS
 
-Version 0.4.0.
+Version 0.5.0.
 
 A local execution ledger for recording, branching, and comparing command runs.
 
@@ -12,17 +12,35 @@ records and logs before branching or comparing them.
 Use it from your terminal, Python scripts, or an AI agent with a shell. The CLI
 provides JSON output throughout the workflow; the Python API returns typed results.
 
-## New in 0.4.0
+## New in 0.5.0
 
-`Store.read_verified_log()` returns recorded stdout or stderr as bytes after checking
-their exact byte count and SHA-256 digest against the stored atom. Use it when a
-script needs to consume saved output, including metrics or failure diagnostics.
-Decoding and interpretation remain with your script.
+**Version 0.5.0 changes the record format to schema 2. It cannot read or convert a
+`.ocura-oss/` directory written by 0.4 or earlier.** Commands pointed at old state stop
+with exit status 2 and leave it untouched. Stay on 0.4 for a project whose records you
+still need (`python -m pip install "ocura-oss<0.5"`), or move the old directory aside
+and run `ocura-oss init`. See [upgrading from 0.4](/docs/state#format-compatibility-upgrading-from-0-4)
+before you upgrade.
 
-The autoregressive example now uses this reader to reconstruct its report. The
-core runtime still uses only the standard library, and the state format is unchanged.
-See the [Python API](/docs/api#store-store-read-verified-log) for the method and its
-verification scope.
+- **Unfinished runs stay visible.** Each run is journaled before its command starts.
+  If the recording process is interrupted twice or killed, `ocura-oss attempts` shows
+  the attempt and `ocura-oss recover` closes it as `abandoned` without inventing an outcome.
+- **Several runs can share one root.** Concurrent `run` processes are supported, and
+  `verify` and `compare` work while runs are in flight.
+- **Sensitive values can stay out of records.** `run --no-capture` writes no output
+  to disk, and `run --mask-arg` stores a placeholder for a chosen command token.
+- **One declaration can label and configure a run.** `run --substitute` fills `{KEY}`
+  in the command from the declared parameters and records what it used.
+- **Launch context is available on request.** `run --context` records the platform and
+  git revision; `--context-file` records a file's digest.
+- **Later rewrites can be detected.** `ocura-oss manifest` prints checksums to keep
+  elsewhere, and `verify --against` checks the state against them.
+- **Verification is stricter.** Every atom must have exactly one chokepoint.
+- **Format changes follow a stated rule.** Readers ignore fields they do not know,
+  so later releases can add optional fields without another format break.
+
+The core runtime still uses only the standard library. See
+[state and verification](/docs/state) for the format, attempts,
+concurrent use, and the limits of each option.
 
 ## Install and try
 
@@ -57,11 +75,12 @@ metrics, such as validation loss or accuracy.
 
 **Parameters are recorded labels.** Set actual inputs in your command as well:
 `--param batch=4 -- python train.py --batch 4`. Each run records its own labels.
+To declare a value once, add `--substitute` and write `"{batch}"` in the command.
 
 Omit `--json` for terminal output. By default, `run` streams the command's output
 while retaining stdout and stderr logs; `--json` or `--quiet` keeps that output in
 the logs without streaming. A first Ctrl+C records an interrupted attempt; a
-second exits immediately and may leave that attempt unrecorded.
+second exits immediately and leaves the attempt for `ocura-oss recover` to close.
 
 ## Autoregressive example: PyTorch, JAX, and Ray
 
@@ -107,13 +126,13 @@ exit codes, parameter labels, and how to inspect earlier attempts.
 
 ## Documentation
 
+- [Scripts and AI agents](/docs/automation): JSON workflows and verified output consumption
 - [CLI reference](/docs/cli): every command, JSON fields, and exit codes
 - [Python API](/docs/api): functions, typed results, and `Store`
 - [State and verification](/docs/state): records and checks
 - [Autoregressive example](/docs/examples): PyTorch, JAX, and Ray
-- [Hosted documentation](https://ocuna-ai.com/docs): the currently published release
 
-Repository references describe this checkout and remain readable directly on GitHub.
+These references describe the published 0.5.0 release. Source links point to the matching release commit.
 
 ## Local state and operating model
 
@@ -123,8 +142,9 @@ a **chokepoint** identifies terminal evidence from which a branch can be created
 
 Each branch records its source and reason. It represents a new line of work;
 workspace files, process state, and model weights are managed by the workload.
-One mutating process per state root is supported at a time. Delete `.ocura-oss/`
-to discard that project's records. Legacy `.ocura/` records are unsupported.
+Several processes may record runs under one state root at once. Delete `.ocura-oss/`
+to discard that project's records. State from 0.4 and earlier, and legacy `.ocura/`
+records, are unsupported.
 
 Commands run with `shell=False` in the project root and inherit the invoking
 environment's permissions. Use trusted, owner-authorized workloads. For generated
@@ -132,16 +152,26 @@ or otherwise untrusted commands, provide isolation and permissions through your
 execution environment; Ocura OSS itself does not sandbox or restrict them.
 
 Records retain command arguments, parameter labels, reasons, and output. Keep secrets
-out of these fields. SHA-256 checksums detect local inconsistencies; they do not
+out of these fields; `run --mask-arg` and `run --no-capture` cover a command token or
+output that cannot be avoided. SHA-256 checksums detect local inconsistencies; they do not
 authenticate authorship or prevent a writer from replacing records and checksums.
 
 ## Project status
 
-Ocura OSS is research software under [MPL-2.0](https://github.com/BlakeMasters/ocura-oss/blob/main/LICENSE). The 0.x interface and record
+Ocura OSS is research software under [MPL-2.0](https://github.com/BlakeMasters/ocura-oss/blob/9b1e07276e83868ffb2dce4570e0dce0e84be8c5/LICENSE). The 0.x interface and record
 format may change before 1.0, and there is no production support commitment.
 
 The package adapts an early Ocura research concept. Current Ocura engine development
 is a separate project.
 
-Bug reports and focused pull requests are welcome. See [Contributing](https://github.com/BlakeMasters/ocura-oss/blob/main/CONTRIBUTING.md)
-and the [security policy](https://github.com/BlakeMasters/ocura-oss/blob/main/SECURITY.md).
+Bug reports and focused pull requests are welcome. See [Contributing](https://github.com/BlakeMasters/ocura-oss/blob/9b1e07276e83868ffb2dce4570e0dce0e84be8c5/CONTRIBUTING.md)
+and the [security policy](https://github.com/BlakeMasters/ocura-oss/blob/9b1e07276e83868ffb2dce4570e0dce0e84be8c5/SECURITY.md).
+
+## Command help
+
+The installed command also provides command-specific usage:
+
+```console
+ocura-oss --help
+ocura-oss run --help
+```

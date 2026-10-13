@@ -1,5 +1,5 @@
 export const DOC_PAGES = [
-  { route: "/docs", label: "Overview", crumb: "Overview", file: "ocura-oss.md", repositoryPath: "README.md" },
+  { route: "/docs", label: "Overview", crumb: "Overview", file: "ocura-oss.md", repositoryPath: "docs/index.md" },
   { route: "/docs/cli", label: "CLI reference", crumb: "CLI reference", file: "cli.md", repositoryPath: "docs/cli.md" },
   { route: "/docs/api", label: "Python API", crumb: "Python API reference", file: "api.md", repositoryPath: "docs/python-api.md" },
   { route: "/docs/automation", label: "Scripts and AI agents", crumb: "Scripts and AI agents", file: "automation.md", repositoryPath: "docs/automation.md" },

@@ -81,6 +81,7 @@ function applyDocument(html, route, isNotFound = false) {
   next = replaceFirst(next, /<meta property="og:image" content="[^"]*" \/>/, `<meta property="og:image" content="${origin}${meta.image ?? "/images/ocuna_logo.png"}" />`);
   const docPage = DOC_PAGES.find((page) => page.route === route);
   if (docPage && !isNotFound) {
+    next = next.replace("<body>", '<body class="docs-route">');
     next = next.replace("</head>", `<link rel="alternate" type="text/markdown" href="${origin}/docs/${docPage.file}" title="Markdown" />\n</head>`);
   }
 

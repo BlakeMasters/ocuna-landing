@@ -46,7 +46,6 @@ export default function DocsPage({ route }) {
   const markdown = markdownByFile[page.file];
   const headings = useMemo(() => extractHeadings(markdown), [markdown]);
   const html = useMemo(() => renderMarkdown(markdown), [markdown]);
-  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [fontSizePx, setFontSizePx] = useState(readStoredFontSize);
   const fontSizeIndex = FONT_SIZE_STEPS.indexOf(fontSizePx);
 
@@ -63,55 +62,30 @@ export default function DocsPage({ route }) {
     }
   }, [fontSizePx]);
 
-  useEffect(() => {
-    if (!sidebarOpen) return undefined;
-    document.body.classList.add("docs-sidebar-open");
-    function onKeyDown(event) {
-      if (event.key === "Escape") setSidebarOpen(false);
-    }
-    window.addEventListener("keydown", onKeyDown);
-    return () => {
-      document.body.classList.remove("docs-sidebar-open");
-      window.removeEventListener("keydown", onKeyDown);
-    };
-  }, [sidebarOpen]);
-
-  function closeSidebar() {
-    setSidebarOpen(false);
-  }
-
-  function toggleSidebar() {
-    setSidebarOpen((open) => !open);
-  }
-
-  function decreaseFontSize() {
-    if (fontSizeIndex <= 0) return;
-    setFontSizePx(FONT_SIZE_STEPS[fontSizeIndex - 1]);
-  }
-
-  function increaseFontSize() {
-    if (fontSizeIndex >= FONT_SIZE_STEPS.length - 1) return;
-    setFontSizePx(FONT_SIZE_STEPS[fontSizeIndex + 1]);
+  function isPlainClick(event) {
+    return !event.defaultPrevented && event.button === 0 &&
+      !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey;
   }
 
   function handleTocClick(event, headingId) {
+    if (!isPlainClick(event)) return;
     const target = document.getElementById(headingId);
     if (!target) return;
     event.preventDefault();
-    closeSidebar();
     target.tabIndex = -1;
     target.scrollIntoView({ block: "start" });
     target.focus({ preventScroll: true });
-    window.history.replaceState({}, "", `#${headingId}`);
+    window.history.replaceState({}, "", "#" + headingId);
   }
 
   function handleProseClick(event) {
     const link = event.target.closest("a[href]");
-    if (!link || event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey) {
-      return;
-    }
+    if (!link || !isPlainClick(event)) return;
     const href = link.getAttribute("href");
-    if (!href?.startsWith("/") || href.startsWith("//")) {
+    if (!href?.startsWith("/") || href.startsWith("//")) return;
+    const target = new URL(href, window.location.origin);
+    if (target.pathname === window.location.pathname && target.hash) {
+      handleTocClick(event, decodeURIComponent(target.hash.slice(1)));
       return;
     }
     event.preventDefault();
@@ -121,9 +95,8 @@ export default function DocsPage({ route }) {
   }
 
   function handlePageClick(event, href) {
-    if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey) return;
+    if (!isPlainClick(event)) return;
     event.preventDefault();
-    closeSidebar();
     window.history.pushState({}, "", pagePath(href));
     window.dispatchEvent(new PopStateEvent("popstate"));
     window.scrollTo({ top: 0 });
@@ -131,150 +104,89 @@ export default function DocsPage({ route }) {
 
   return (
     <main className="docs-page" id="top" tabIndex={-1}>
-      <button
-        type="button"
-        className={`docs-sidebar-backdrop${sidebarOpen ? " is-visible" : ""}`}
-        aria-hidden={!sidebarOpen}
-        tabIndex={sidebarOpen ? 0 : -1}
-        onClick={closeSidebar}
-      />
-
-      <aside
-        className={`docs-sidebar${sidebarOpen ? " is-open" : ""}`}
-        id="docs-sidebar"
-        aria-label="Documentation navigation"
-        aria-hidden={!sidebarOpen}
-      >
-        <div className="docs-sidebar-header">
-          <p>Contents</p>
-          <button type="button" className="docs-sidebar-close" onClick={closeSidebar}>
-            Close
-          </button>
-        </div>
-
-        <div className="docs-sidebar-body">
-          <div className="docs-sidebar-group">
-            <p>Documentation</p>
-            <nav>
-              {DOC_PAGES.map((item) => (
-                <a
-                  aria-current={item.route === page.route ? "page" : undefined}
-                  className={item.route === page.route ? "is-current" : undefined}
-                  href={pagePath(item.route)}
-                  key={item.route}
-                  onClick={(event) => handlePageClick(event, item.route)}
-                >
-                  {item.label}
-                </a>
-              ))}
-            </nav>
+      <div className="shell docs-layout">
+        <aside className="docs-sidebar" id="docs-sidebar" aria-label="Documentation navigation">
+          <div className="docs-sidebar-header">
+            <p>Ocura OSS <span>v{OCURA_OSS_VERSION}</span></p>
           </div>
 
-          {headings.length > 0 && (
+          <div className="docs-sidebar-body">
             <div className="docs-sidebar-group">
-              <p>On this page</p>
-              <nav>
-                {headings.map((heading) => (
+              <nav aria-label="Documentation sections">
+                {DOC_PAGES.map((item) => (
                   <a
-                    className={heading.level > 2 ? "is-sub" : undefined}
-                    href={`#${heading.id}`}
-                    key={heading.id}
-                    onClick={(event) => handleTocClick(event, heading.id)}
+                    aria-current={item.route === page.route ? "page" : undefined}
+                    className={item.route === page.route ? "is-current" : undefined}
+                    href={pagePath(item.route)}
+                    key={item.route}
+                    onClick={(event) => handlePageClick(event, item.route)}
                   >
-                    {heading.text}
+                    {item.label}
                   </a>
                 ))}
               </nav>
             </div>
-          )}
 
-          <div className="docs-sidebar-group">
-            <p>Project</p>
-            <nav>
-              <a href={OCURA_OSS_PYPI}>PyPI</a>
-              <a href={OCURA_OSS_REPO}>Source code</a>
-              <a href={`${OCURA_OSS_REPO}/blob/main/CHANGELOG.md`}>Changelog</a>
-              <a href={`${OCURA_OSS_REPO}/blob/main/CONTRIBUTING.md`}>Contributing</a>
-            </nav>
+            {headings.length > 0 && (
+              <div className="docs-sidebar-group">
+                <p>On this page</p>
+                <nav aria-label="On this page">
+                  {headings.map((heading) => (
+                    <a
+                      className={heading.level > 2 ? "is-sub" : undefined}
+                      href={"#" + heading.id}
+                      key={heading.id}
+                      onClick={(event) => handleTocClick(event, heading.id)}
+                    >
+                      {heading.text}
+                    </a>
+                  ))}
+                </nav>
+              </div>
+            )}
+
+            <div className="docs-sidebar-group">
+              <p>Project</p>
+              <nav aria-label="Project links">
+                <a href={OCURA_OSS_PYPI}>PyPI</a>
+                <a href={OCURA_OSS_REPO + "/tree/" + OCURA_OSS_SOURCE_REF}>Source code</a>
+                <a href={OCURA_OSS_REPO + "/blob/" + OCURA_OSS_SOURCE_REF + "/CHANGELOG.md"}>Changelog</a>
+                <a href={OCURA_OSS_REPO + "/blob/" + OCURA_OSS_SOURCE_REF + "/CONTRIBUTING.md"}>Contributing</a>
+              </nav>
+            </div>
           </div>
-        </div>
-      </aside>
 
-      <div className="docs-floating-actions">
-        <button
-          type="button"
-          className={`docs-sidebar-toggle${sidebarOpen ? " is-hidden" : ""}`}
-          aria-expanded={sidebarOpen}
-          aria-controls="docs-sidebar"
-          aria-label="Open documentation contents"
-          onClick={toggleSidebar}
-        >
-          Contents
-        </button>
-        <div className="docs-text-size" aria-label="Text size">
-          <button
-            type="button"
-            className="docs-text-size-btn"
-            aria-label="Smaller text"
-            disabled={fontSizeIndex <= 0}
-            onClick={decreaseFontSize}
-          >
-            A−
-          </button>
-          <span className="docs-text-size-label">{fontSizePx}px</span>
-          <button
-            type="button"
-            className="docs-text-size-btn"
-            aria-label="Larger text"
-            disabled={fontSizeIndex >= FONT_SIZE_STEPS.length - 1}
-            onClick={increaseFontSize}
-          >
-            A+
-          </button>
-        </div>
-      </div>
-
-      <div className="shell docs-layout">
-        <aside className="docs-section-nav" aria-label="Documentation sections">
-          <p className="docs-section-kicker">
-            Ocura OSS
-            <span>v{OCURA_OSS_VERSION}</span>
-          </p>
-          <nav>
-            {DOC_PAGES.map((item) => (
-              <a
-                aria-current={item.route === page.route ? "page" : undefined}
-                className={item.route === page.route ? "is-current" : undefined}
-                href={pagePath(item.route)}
-                key={item.route}
-                onClick={(event) => handlePageClick(event, item.route)}
+          <div className="docs-sidebar-footer">
+            <div className="docs-text-size" role="group" aria-label="Text size">
+              <button
+                type="button"
+                className="docs-text-size-btn"
+                aria-label="Smaller text"
+                disabled={fontSizeIndex <= 0}
+                onClick={() => setFontSizePx(FONT_SIZE_STEPS[fontSizeIndex - 1])}
               >
-                {item.label}
-              </a>
-            ))}
-          </nav>
-          <div className="docs-section-group">
-            <p>Project</p>
-            <a href={OCURA_OSS_PYPI}>PyPI</a>
-            <a href={OCURA_OSS_REPO}>Source code</a>
-            <a href={`${OCURA_OSS_REPO}/blob/main/CHANGELOG.md`}>Changelog</a>
-            <a href={`${OCURA_OSS_REPO}/blob/main/CONTRIBUTING.md`}>Contributing</a>
+                A−
+              </button>
+              <span className="docs-text-size-label" aria-live="polite">{fontSizePx}px</span>
+              <button
+                type="button"
+                className="docs-text-size-btn"
+                aria-label="Larger text"
+                disabled={fontSizeIndex >= FONT_SIZE_STEPS.length - 1}
+                onClick={() => setFontSizePx(FONT_SIZE_STEPS[fontSizeIndex + 1])}
+              >
+                A+
+              </button>
+            </div>
           </div>
         </aside>
 
-        <article
-          className="docs-main"
-          style={{ "--docs-font-size": `${fontSizePx}px` }}
-        >
+        <article className="docs-main" style={{ "--docs-font-size": fontSizePx + "px" }}>
           <nav className="docs-source-links" aria-label="Alternative documentation formats">
-            <a href={pagePath(`docs/${page.file}`)}>Read Markdown</a>
-            <a href={`${OCURA_OSS_REPO}/blob/${OCURA_OSS_SOURCE_REF}/${page.repositoryPath}`}>Read on GitHub</a>
+            <a href={pagePath("docs/" + page.file)}>Read Markdown</a>
+            <a href={OCURA_OSS_REPO + "/blob/" + OCURA_OSS_SOURCE_REF + "/" + page.repositoryPath}>Read on GitHub</a>
           </nav>
-          <div
-            className="docs-prose"
-            dangerouslySetInnerHTML={{ __html: html }}
-            onClick={handleProseClick}
-          />
+          <div className="docs-prose" dangerouslySetInnerHTML={{ __html: html }} onClick={handleProseClick} />
         </article>
       </div>
     </main>

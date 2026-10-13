@@ -1,6 +1,6 @@
 # Scripts and AI agents
 
-Version 0.4.0.
+Version 0.5.0.
 
 Ocura OSS can be called from a shell, a Python program, or an AI agent's existing
 command tool. Use it when you want a durable record connecting a baseline to later
@@ -17,8 +17,14 @@ variations, with reasons, outputs, and verification.
 
 All invocations must use the intended `--root`. The returned IDs connect the steps
 without scraping text. Parameters label the record; set actual command arguments
-separately. Handle nonzero exits: `run` still returns a recorded result for a failed
+separately, or pass `--substitute` and write `{KEY}` in the command so one
+declaration does both. A program that builds the argument list itself needs no
+quoting; a PowerShell command line must quote the placeholder. Handle nonzero exits: `run` still returns a recorded result for a failed
 command, interruption, or launch failure. See [CLI](/docs/cli).
+
+If a `run` process is killed before it returns a result, its attempt remains
+unfinished. `attempts --json` lists it, `verify --json` reports it as a problem, and
+`recover --json` closes it as `abandoned` once the command itself has stopped.
 
 The [autoregressive example](/docs/examples) is an executable
 client of this interface, with PyTorch/JAX choices and an optional Ray Core executor.
@@ -26,7 +32,7 @@ The [Python API](/docs/api) provides the same operations with typed results.
 
 ## Consume saved output
 
-In 0.4.0, a Python caller can read verified bytes directly from a retained atom ID:
+A Python caller can read verified bytes directly from a retained atom ID:
 
 ```python
 import json
@@ -58,6 +64,8 @@ verify the other stream, or verify the complete ledger. Keep the workflow's full
 An AI agent can follow that instruction inside its existing execution environment.
 The caller supplies command permissions and isolation. Ocura records and checks
 local evidence; its checksums detect inconsistency without authenticating the writer.
+When the caller must be able to tell whether records were rewritten afterward, save
+`manifest` output outside the agent's reach and check it with `verify --against`.
 
 ## Revisiting an experiment
 
@@ -66,7 +74,8 @@ use explicit `compare --from ID` to return to that baseline. Automatic compariso
 selects the newest source with child pathways, which may be a different experiment
 once more work is added.
 
-Serialize writes to a shared root. For parallel independent experiments, use separate
-project roots and manage workload files separately. Ray workers in the supplied
-example return their metrics to the recorded driver command; they never mutate
-the same Ocura root concurrently.
+Several processes may record runs under one root at the same time, and `verify` and
+`compare --from ID` work while they do. Ocura OSS keeps its own records apart; the
+commands still share the project root as their working directory, so keep their
+workload files apart or give independent experiments separate roots. Ray workers in
+the supplied example return their metrics to one recorded driver command.

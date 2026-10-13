@@ -1,5 +1,6 @@
 import {
   CONTACT_EMAIL,
+  OCURA_OSS_PYPI,
   OCURA_OSS_REPO,
   OCURA_OSS_SOURCE_REF,
   OCURA_OSS_VERSION,
@@ -15,10 +16,10 @@ import { TENANTS_PLATE, TENANTS_PLATE_STYLE } from "./illustrations.js";
 import { HOME } from "./home.js";
 import { galleryImagePath, NOT_FOUND, RACCOON_GALLERY } from "./raccoonGallery.js";
 
-function navHtml(styled = false) {
+function navHtml(styled = false, headerClass = "not-found-static-header") {
   return `
 ${styled ? '<a class="skip-link" href="#top">Skip to content</a>' : ""}
-<header${styled ? ' class="shell site-header not-found-static-header"' : ""}>
+<header${styled ? ` class="shell site-header ${headerClass}"` : ""}>
   <a${styled ? ' class="brand" aria-label="Ocuna home"' : ""} href="/">${styled ? '<img src="/images/ocuna_title_logo_nobackground.webp" alt="Ocuna" />' : "Ocuna"}</a>
   <nav${styled ? ' class="nav" aria-label="Primary navigation"' : ""}>
     <a href="/">Home</a>
@@ -164,27 +165,43 @@ ${footerHtml()}`;
   if (isDocRoute(route)) {
     const page = DOC_PAGES.find((item) => item.route === route);
     const toc = extractHeadings(markdown)
-      .map((heading) => `<a href="#${escapeHtml(heading.id)}">${escapeHtml(heading.text)}</a>`)
-      .join(" ");
+      .map((heading) => `<a${heading.level > 2 ? ' class="is-sub"' : ""} href="#${escapeHtml(heading.id)}">${escapeHtml(heading.text)}</a>`)
+      .join("\n");
     const body = renderMarkdown(markdown);
-    return `${navHtml()}
-<main>
-  <aside>
-    <nav aria-label="Documentation sections">
-      ${DOC_PAGES.map((item) => `<a href="${item.route}">${item.label}</a>`).join("\n      ")}
-    </nav>
-  </aside>
-  <article>
-    <p>Ocura OSS ${OCURA_OSS_VERSION}</p>
-    <nav aria-label="Alternative documentation formats">
-      <a href="/docs/${page.file}">Read Markdown</a>
-      <a href="${OCURA_OSS_REPO}/blob/${OCURA_OSS_SOURCE_REF}/${page.repositoryPath}">Read on GitHub</a>
-    </nav>
-    <nav aria-label="On this page">${toc}</nav>
-    ${body}
-  </article>
+    return `${navHtml(true, "")}
+<main class="docs-page" id="top" tabindex="-1">
+  <div class="shell docs-layout">
+    <aside class="docs-sidebar" id="docs-sidebar" aria-label="Documentation navigation">
+      <div class="docs-sidebar-header"><p>Ocura OSS <span>v${OCURA_OSS_VERSION}</span></p></div>
+      <div class="docs-sidebar-body">
+        <div class="docs-sidebar-group">
+          <nav aria-label="Documentation sections">
+            ${DOC_PAGES.map((item) => `<a${item.route === route ? ' class="is-current" aria-current="page"' : ""} href="${item.route}">${item.label}</a>`).join("\n")}
+          </nav>
+        </div>
+        <div class="docs-sidebar-group"><p>On this page</p><nav aria-label="On this page">${toc}</nav></div>
+        <div class="docs-sidebar-group">
+          <p>Project</p>
+          <nav aria-label="Project links">
+            <a href="${OCURA_OSS_PYPI}">PyPI</a>
+            <a href="${OCURA_OSS_REPO}/tree/${OCURA_OSS_SOURCE_REF}">Source code</a>
+            <a href="${OCURA_OSS_REPO}/blob/${OCURA_OSS_SOURCE_REF}/CHANGELOG.md">Changelog</a>
+            <a href="${OCURA_OSS_REPO}/blob/${OCURA_OSS_SOURCE_REF}/CONTRIBUTING.md">Contributing</a>
+          </nav>
+        </div>
+      </div>
+      <div class="docs-sidebar-footer"><a href="#top">Back to top</a></div>
+    </aside>
+    <article class="docs-main">
+      <nav class="docs-source-links" aria-label="Alternative documentation formats">
+        <a href="/docs/${page.file}">Read Markdown</a>
+        <a href="${OCURA_OSS_REPO}/blob/${OCURA_OSS_SOURCE_REF}/${page.repositoryPath}">Read on GitHub</a>
+      </nav>
+      <div class="docs-prose">${body}</div>
+    </article>
+  </div>
 </main>
-${footerHtml()}`;
+${footerHtml(true)}`;
   }
 
   if (route === "/contact") {

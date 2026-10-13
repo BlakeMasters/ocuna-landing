@@ -14,6 +14,8 @@ assert.equal(new Set(DOC_PAGES.map((page) => page.route)).size, DOC_PAGES.length
 const rendered = new Map();
 assert.equal(renderMarkdown("1. First\n2. Second\n\n> A quoted\n> instruction."),
   "<ol><li>First</li><li>Second</li></ol>\n<blockquote><p>A quoted instruction.</p></blockquote>");
+assert.equal(renderMarkdown("- First line\n  with `wrapped text`.\n- Second item\n\nAfter the list."),
+  "<ul><li>First line with <code>wrapped text</code>.</li><li>Second item</li></ul>\n<p>After the list.</p>");
 
 for (const page of DOC_PAGES) {
   assert.ok(knownRoutes.has(page.route) && pageMeta[page.route], page.route);
@@ -25,6 +27,9 @@ for (const page of DOC_PAGES) {
   assert.equal(alias, html, `${page.route}: direct HTML alias matches`);
   assert.ok(source.includes(`Version ${OCURA_OSS_VERSION}.`), page.route);
   assert.ok(html.includes(renderMarkdown(source)), `${page.route}: full content without JavaScript`);
+  assert.ok(html.includes('<body class="docs-route">'), `${page.route}: static documentation theme`);
+  assert.ok(html.includes('class="docs-sidebar" id="docs-sidebar"'), `${page.route}: visible static sidebar`);
+  assert.ok(html.includes('aria-label="On this page"'), `${page.route}: static contents navigation`);
   assert.ok(html.includes(`href="${SITE_ORIGIN}${page.route}"`), `${page.route}: canonical URL`);
   assert.ok(html.includes(`type="text/markdown" href="${SITE_ORIGIN}/docs/${page.file}"`));
   assert.ok(html.includes(`href="/docs/${page.file}">Read Markdown</a>`));
@@ -52,7 +57,8 @@ for (const [route, html] of rendered) {
 
 const cli = await readFile("src/content/docs/cli.md", "utf8");
 assert.ok(cli.includes("[--name NAME] [--json]"));
-assert.ok(cli.includes("[--quiet] [--json] -- COMMAND..."));
+assert.match(cli, /\[--quiet\] \[--json\]\s+\[--no-capture\] \[--mask-arg POSITION\] \[--substitute\]/);
+assert.ok(cli.includes("[--context] [--context-file PATH] -- COMMAND..."));
 assert.ok(cli.includes("`default_pathway_id`") && cli.includes("`launch_error_category`"));
 assert.ok(!cli.includes("do not provide JSON mode"));
 const missing = await readFile("dist/404.html", "utf8");
