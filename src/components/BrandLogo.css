@@ -1,0 +1,32 @@
+.brand-logo {
+  position: relative;
+  display: block;
+  line-height: 0;
+}
+
+.brand-logo > img { clip-path: var(--brand-logo-clip, none); }
+
+.brand-logo__walker {
+  position: absolute;
+  top: 11%;
+  left: 26%;
+  width: 48%;
+  height: auto;
+  aspect-ratio: 960 / 440;
+  display: block;
+  fill: currentColor;
+  opacity: var(--brand-walker-opacity, 0);
+  pointer-events: none;
+}
+
+.brand-logo[data-walking="true"] {
+  --brand-logo-clip: polygon(0 0, 26% 0, 26% 48.5%, 73% 48.5%, 73% 0, 100% 0, 100% 100%, 0 100%);
+  --brand-walker-opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .brand-logo[data-walking="true"] {
+    --brand-logo-clip: none;
+    --brand-walker-opacity: 0;
+  }
+}

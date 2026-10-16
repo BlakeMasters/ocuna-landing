@@ -11,6 +11,7 @@ import {
   SITE_ORIGIN,
 } from "./content.js";
 import ContactPage from "./components/ContactPage.jsx";
+import BrandLogo from "./components/BrandLogo.jsx";
 import CritterPage from "./components/CritterPage.jsx";
 import DocsPage from "./components/DocsPage.jsx";
 import LandingPage from "./components/LandingPage.jsx";
@@ -288,7 +289,7 @@ function SiteHeader({ route, kind, onNavigate }) {
         aria-label="Ocuna home"
         onClick={(event) => onNavigate(event, "/")}
       >
-        <img src={asset("images/ocuna_title_logo_nobackground.webp")} alt="Ocuna" />
+        <BrandLogo />
       </a>
       <nav className="nav" aria-label="Primary navigation">
         <a

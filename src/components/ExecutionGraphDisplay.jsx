@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import { branchNodes, chokepointNode, normalNodes } from "../ocuraDemoData.js";
-import { HOME } from "../content/home.js";
 import ThinkingOrb from "./ThinkingOrb.jsx";
 import {
   createExecutionPlayback, EXECUTION_SOURCE, EXECUTION_STILL_MS,
@@ -42,13 +41,9 @@ export default function ExecutionGraphDisplay({ animate }) {
   return (
     <section className="system-execution-section" id="ocura" aria-labelledby="execution-display-title" ref={section} data-phase={frame.id} data-time={frame.time.toFixed(0)} data-playing={animate && visible && pageVisible}>
       <div className="shell">
-        <header className="system-section-heading">
-          <h2 id="execution-display-title">{HOME.executionTitle}</h2>
-          <p>{HOME.executionIntroduction}</p>
-        </header>
         <div className="execution-display">
           <figure className="execution-topology">
-            <h3>Execution graph</h3>
+            <h3 id="execution-display-title">Execution graph</h3>
             <div className="execution-topology-grid" ref={graph} role="img" aria-label="main() reaches a chokepoint. The normal path calls hello_world(), and a separate branch calls review_path(). Each produces its own output.">
               <svg className="execution-connections" viewBox={`0 0 ${width} 392`} preserveAspectRatio="none" aria-hidden="true">
                 {Object.entries(routes).map(([id, points]) => <polyline key={id} points={points.map((point) => point.join(",")).join(" ")} className={`execution-wire${id.startsWith("review") ? " is-branch" : ""}${frame.completed.includes(destinations[id]) || frame.packet?.edge === id ? " is-traversed" : ""}`} />)}

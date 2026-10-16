@@ -54,11 +54,11 @@ body.critter-route {
 }
 
 body.research-route {
-  --products-surface: #f5f2ea;
-  --products-line: #d5d9cf;
-  --products-ink: #25362f;
-  --products-muted: #687069;
-  --products-accent: #9b512f;
+  --products-surface: var(--field-paper, #f4eedf);
+  --products-line: var(--field-line, #c9d1b9);
+  --products-ink: var(--field-ink, #234334);
+  --products-muted: var(--field-muted, #5b6958);
+  --products-accent: var(--field-accent, #984b2f);
   --products-accent-ink: #fffaf2;
 }
 

@@ -10,9 +10,6 @@ export const HOME = {
   runtimeTitle: "Compute follows the work.",
   runtimeIntroduction:
     "Ocura directs compute across an execution frontier. The scheduler places work, holds budgets, and reuses results across training and inference branches. You build the pipeline; the runtime governs what runs, what waits, and what continues.",
-  executionTitle: "Explore the execution graph.",
-  executionIntroduction:
-    "An illustrative Python run pauses at a chokepoint, opens a review branch, and keeps each output connected to its path.",
   capabilities: [
     {
       id: "training",

@@ -1,10 +1,3 @@
-body.research-route:has(.field-index-page) {
-  --field-paper: #f4eedf;
-  --field-ink: #234334;
-  --field-muted: #5b6958;
-  --field-line: #c9d1b9;
-  --field-accent: #984b2f;
-}
 .field-index-page { isolation: isolate; }
 .field-index-page .field-shell { position: relative; z-index: 1; }
 .field-index-page .field-feature { background: #dce6cf; }

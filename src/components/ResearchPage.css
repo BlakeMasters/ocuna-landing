@@ -1,9 +1,14 @@
 body.research-route {
-  --field-paper: #f5f2ea;
-  --field-ink: #25362f;
-  --field-muted: #687069;
-  --field-line: #d5d9cf;
-  --field-accent: #9b512f;
+  --field-paper: #f4eedf;
+  --field-ink: #234334;
+  --field-muted: #5b6958;
+  --field-line: #c9d1b9;
+  --field-accent: #984b2f;
+  --field-panel: #e2e7d3;
+  --paper: var(--field-paper);
+  --ink: var(--field-ink);
+  --muted: var(--field-muted);
+  --line: var(--field-line);
   color: var(--field-ink);
   background: var(--field-paper);
   min-width: 0;
@@ -52,7 +57,7 @@ body.research-route .footer-contact { font-size: 13px; }
 .field-article-heading h1 { font-family: var(--critter-display); font-size: clamp(44px, 6vw, 76px); line-height: 1.07; font-weight: 450; letter-spacing: -.045em; }
 .field-article-byline { display: flex; gap: 14px; align-items: center; font-size: 12px; margin-top: 28px; }
 .field-article-date { display: block; margin-top: 6px; font-size: 12px; color: var(--field-muted); }
-.field-article-cover { width: min(100%, 970px); margin: 0 auto 56px; background: #eeeadf; }
+.field-article-cover { width: min(100%, 970px); margin: 0 auto 56px; background: var(--field-paper); }
 .field-article-cover > img { display: block; width: 100%; height: auto; max-height: 500px; object-fit: contain; mix-blend-mode: multiply; }
 .field-feature-image img.field-art-original, .field-thumbnail.field-art-original { object-fit: contain; mix-blend-mode: normal; background: #000; }
 .field-feature-image:has(.field-art-original) { background: #000; aspect-ratio: 1.5; }
@@ -83,9 +88,9 @@ body.research-route .footer-contact { font-size: 13px; }
 .field-article-contents a:hover { color: var(--field-accent); }
 .field-prose section { scroll-margin-top: 30px; margin-bottom: 38px; }
 .field-prose h2 { font-family: var(--critter-display); font-weight: 450; font-size: 31px; letter-spacing: -.025em; margin-bottom: 20px; }
-.field-prose p { font-family: Georgia, serif; font-size: 18px; line-height: 1.85; color: #3c4942; margin-bottom: 20px; }
+.field-prose p { font-family: Georgia, serif; font-size: 18px; line-height: 1.85; color: var(--field-ink); margin-bottom: 20px; }
 .field-prose p a { text-decoration: underline; text-underline-offset: 3px; }
-.field-prose pre { max-width: 100%; overflow-x: auto; padding: 24px; background: #e6e8df; border-left: 2px solid var(--field-accent); font-family: var(--mono); font-size: 12px; line-height: 1.8; }
+.field-prose pre { max-width: 100%; overflow-x: auto; padding: 24px; background: var(--field-panel); border-left: 2px solid var(--field-accent); font-family: var(--mono); font-size: 12px; line-height: 1.8; }
 .field-source-links { padding-left: 18px; font-size: 13px; line-height: 1.8; }
 .field-source-links a { text-decoration: underline; text-underline-offset: 4px; }
 .field-source-links svg { display: inline; width: 13px; height: 13px; vertical-align: middle; }
