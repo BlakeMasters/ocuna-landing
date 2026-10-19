@@ -3,7 +3,7 @@ import path from "node:path";
 import { jsonLdGraph } from "../src/content/jsonld.js";
 import { crawlableHtml } from "../src/content/crawlable.js";
 import { SITE_ORIGIN, OCURA_OSS_REPO, OCURA_OSS_SOURCE_REF, OCURA_OSS_VERSION, pageMeta } from "../src/content.js";
-import { DOC_PAGES } from "../src/content/docPages.js";
+import { DOC_PAGES, DOCS_ORIGIN } from "../src/content/docPages.js";
 import { RESEARCH_ROUTES } from "../src/content/research.js";
 
 const origin = SITE_ORIGIN;
@@ -47,8 +47,9 @@ function escapeJsonLd(value) {
 function applyDocument(html, route, isNotFound = false) {
   const key = isNotFound ? "/404" : route;
   const meta = pageMeta[key];
+  const docPage = !isNotFound && DOC_PAGES.find((page) => page.route === route);
   const canonicalPath = route === "/ocuna" ? "/" : route;
-  const canonical = `${origin}${canonicalPath === "/" ? "/" : canonicalPath}`;
+  const canonical = docPage ? docPage.destination : `${origin}${canonicalPath === "/" ? "/" : canonicalPath}`;
   const rootHtml = crawlableHtml(
     isNotFound ? "/404" : route,
     documentation.get(route) ?? "",
@@ -79,10 +80,11 @@ function applyDocument(html, route, isNotFound = false) {
   next = replaceFirst(next, /<div id="root"><\/div>/, `<div id="root">${rootHtml}</div>`);
   next = replaceFirst(next, /<meta property="og:type" content="[^"]*" \/>/, `<meta property="og:type" content="${meta.type ?? "website"}" />`);
   next = replaceFirst(next, /<meta property="og:image" content="[^"]*" \/>/, `<meta property="og:image" content="${origin}${meta.image ?? "/images/ocuna_logo.png"}" />`);
-  const docPage = DOC_PAGES.find((page) => page.route === route);
   if (docPage && !isNotFound) {
+    const redirect = `window.location.replace(${JSON.stringify(docPage.destination)} + window.location.search + window.location.hash);`;
+    next = next.replace("<head>", `<head>\n<script id="docs-redirect">${redirect}</script>`);
     next = next.replace("<body>", '<body class="docs-route">');
-    next = next.replace("</head>", `<link rel="alternate" type="text/markdown" href="${origin}/docs/${docPage.file}" title="Markdown" />\n</head>`);
+    next = next.replace("</head>", `<link rel="alternate" type="text/markdown" href="${DOCS_ORIGIN}/docs/${docPage.file}" title="Markdown" />\n</head>`);
   }
 
   if (isNotFound) {
@@ -133,4 +135,4 @@ await Promise.all(
   ),
 );
 
-await writeFile("dist/llms.txt", `# Ocura OSS ${OCURA_OSS_VERSION}\n\nA local execution ledger for recording, branching, and comparing command runs. Use the JSON CLI or typed Python API from a terminal, script, or AI agent.\n\n## Documentation\n\n${DOC_PAGES.map((page) => `- [${page.label}](${origin}/docs/${page.file})`).join("\n")}\n\n## Source\n\n- [Version ${OCURA_OSS_VERSION}](${OCURA_OSS_REPO}/tree/${OCURA_OSS_SOURCE_REF})\n- [Repository training example](${OCURA_OSS_REPO}/tree/${OCURA_OSS_SOURCE_REF}/examples/autoregressive)\n\nExamples are repository-only. The core package has no runtime dependencies. Commands inherit their execution environment's permissions; checksums verify local consistency.\n`);
+await writeFile("dist/llms.txt", `# Ocura OSS ${OCURA_OSS_VERSION}\n\nA local execution ledger for recording, branching, and comparing command runs. Use the JSON CLI or typed Python API from a terminal, script, or AI agent.\n\n## Documentation\n\n${DOC_PAGES.map((page) => `- [${page.label}](${DOCS_ORIGIN}/docs/${page.file})`).join("\n")}\n\n## Source\n\n- [Version ${OCURA_OSS_VERSION}](${OCURA_OSS_REPO}/tree/${OCURA_OSS_SOURCE_REF})\n- [Repository training example](${OCURA_OSS_REPO}/tree/${OCURA_OSS_SOURCE_REF}/examples/autoregressive)\n\nExamples are repository-only. The core package has no runtime dependencies. Commands inherit their execution environment's permissions; checksums verify local consistency.\n`);

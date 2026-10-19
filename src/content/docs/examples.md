@@ -122,7 +122,7 @@ python examples/autoregressive/ray_train.py --backend jax --steps 40
 
 The experiment driver uses `python -m ocura_oss` and parses JSON results. It is a
 normal script; an AI agent with a shell can drive the same commands. See the
-[automation guide](/docs/automation) for caller instructions and exit handling.
+[automation guide](https://protention.dev/automation/) for caller instructions and exit handling.
 
 Core tests do not require frameworks. To exercise both real backends, install both
 backend requirement files and set `OCURA_OSS_EXAMPLE_TESTS=local`. Set it to `ray`

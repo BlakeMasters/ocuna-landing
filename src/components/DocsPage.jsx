@@ -50,6 +50,10 @@ export default function DocsPage({ route }) {
   const fontSizeIndex = FONT_SIZE_STEPS.indexOf(fontSizePx);
 
   useEffect(() => {
+    window.location.replace(page.destination + window.location.search + window.location.hash);
+  }, [page.destination]);
+
+  useEffect(() => {
     const sidebarBody = document.querySelector("#docs-sidebar .docs-sidebar-body");
     if (sidebarBody) sidebarBody.scrollTop = 0;
   }, [route]);
@@ -182,6 +186,7 @@ export default function DocsPage({ route }) {
         </aside>
 
         <article className="docs-main" style={{ "--docs-font-size": fontSizePx + "px" }}>
+          <p>Documentation has moved to <a href={page.destination}>protention.dev</a>.</p>
           <nav className="docs-source-links" aria-label="Alternative documentation formats">
             <a href={pagePath("docs/" + page.file)}>Read Markdown</a>
             <a href={OCURA_OSS_REPO + "/blob/" + OCURA_OSS_SOURCE_REF + "/" + page.repositoryPath}>Read on GitHub</a>

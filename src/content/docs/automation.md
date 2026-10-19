@@ -20,15 +20,15 @@ without scraping text. Parameters label the record; set actual command arguments
 separately, or pass `--substitute` and write `{KEY}` in the command so one
 declaration does both. A program that builds the argument list itself needs no
 quoting; a PowerShell command line must quote the placeholder. Handle nonzero exits: `run` still returns a recorded result for a failed
-command, interruption, or launch failure. See [CLI](/docs/cli).
+command, interruption, or launch failure. See [CLI](https://protention.dev/cli/).
 
 If a `run` process is killed before it returns a result, its attempt remains
 unfinished. `attempts --json` lists it, `verify --json` reports it as a problem, and
 `recover --json` closes it as `abandoned` once the command itself has stopped.
 
-The [autoregressive example](/docs/examples) is an executable
+The [autoregressive example](https://protention.dev/examples/) is an executable
 client of this interface, with PyTorch/JAX choices and an optional Ray Core executor.
-The [Python API](/docs/api) provides the same operations with typed results.
+The [Python API](https://protention.dev/api/) provides the same operations with typed results.
 
 ## Consume saved output
 
@@ -51,7 +51,7 @@ Missing, unreadable, or inconsistent evidence raises `StoreError`.
 
 This method reads the whole selected log into memory. It does not parse metrics,
 verify the other stream, or verify the complete ledger. Keep the workflow's full
-`verify` step; see [state and verification](/docs/state) for the distinction.
+`verify` step; see [state and verification](https://protention.dev/state/) for the distinction.
 
 ## Example instruction for a caller
 

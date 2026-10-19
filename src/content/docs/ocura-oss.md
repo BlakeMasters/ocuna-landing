@@ -18,7 +18,7 @@ provides JSON output throughout the workflow; the Python API returns typed resul
 `.ocura-oss/` directory written by 0.4 or earlier.** Commands pointed at old state stop
 with exit status 2 and leave it untouched. Stay on 0.4 for a project whose records you
 still need (`python -m pip install "ocura-oss<0.5"`), or move the old directory aside
-and run `ocura-oss init`. See [upgrading from 0.4](/docs/state#format-compatibility-upgrading-from-0-4)
+and run `ocura-oss init`. See [upgrading from 0.4](https://protention.dev/state/#format-compatibility-upgrading-from-0-4)
 before you upgrade.
 
 - **Unfinished runs stay visible.** Each run is journaled before its command starts.
@@ -39,7 +39,7 @@ before you upgrade.
   so later releases can add optional fields without another format break.
 
 The core runtime still uses only the standard library. See
-[state and verification](/docs/state) for the format, attempts,
+[state and verification](https://protention.dev/state/) for the format, attempts,
 concurrent use, and the limits of each option.
 
 ## Install and try
@@ -84,7 +84,7 @@ second exits immediately and leaves the attempt for `ocura-oss recover` to close
 
 ## Autoregressive example: PyTorch, JAX, and Ray
 
-The [autoregressive example](/docs/examples) trains a small
+The [autoregressive example](https://protention.dev/examples/) trains a small
 character-level next-token model on an included text corpus. Choose PyTorch or
 JAX, run a baseline and a longer-training variant, then reconstruct the comparison
 from saved evidence. An optional Ray Core executor runs either backend as a local
@@ -118,19 +118,19 @@ comparison = compare(baseline.chokepoint.id, root=root)
 
 Use `Store(root).read_verified_log(atom_id, stream="stdout")` to consume verified
 output bytes. The method also accepts `stream="stderr"`; use `verify(root)` for a
-complete state check. See the [Python API](/docs/api#store-store-read-verified-log).
+complete state check. See the [Python API](https://protention.dev/api/#store-store-read-verified-log).
 
 An agent can use the same CLI or Python workflow inside its existing execution
-environment. The [automation guide](/docs/automation) explains JSON results,
+environment. The [automation guide](https://protention.dev/automation/) explains JSON results,
 exit codes, parameter labels, and how to inspect earlier attempts.
 
 ## Documentation
 
-- [Scripts and AI agents](/docs/automation): JSON workflows and verified output consumption
-- [CLI reference](/docs/cli): every command, JSON fields, and exit codes
-- [Python API](/docs/api): functions, typed results, and `Store`
-- [State and verification](/docs/state): records and checks
-- [Autoregressive example](/docs/examples): PyTorch, JAX, and Ray
+- [Scripts and AI agents](https://protention.dev/automation/): JSON workflows and verified output consumption
+- [CLI reference](https://protention.dev/cli/): every command, JSON fields, and exit codes
+- [Python API](https://protention.dev/api/): functions, typed results, and `Store`
+- [State and verification](https://protention.dev/state/): records and checks
+- [Autoregressive example](https://protention.dev/examples/): PyTorch, JAX, and Ray
 
 These references describe the published 0.5.0 release. Source links point to the matching release commit.
 
@@ -158,14 +158,14 @@ authenticate authorship or prevent a writer from replacing records and checksums
 
 ## Project status
 
-Ocura OSS is research software under [MPL-2.0](https://github.com/BlakeMasters/ocura-oss/blob/9b1e07276e83868ffb2dce4570e0dce0e84be8c5/LICENSE). The 0.x interface and record
+Ocura OSS is research software under [MPL-2.0](https://github.com/Protention/ocura-oss/blob/9b1e07276e83868ffb2dce4570e0dce0e84be8c5/LICENSE). The 0.x interface and record
 format may change before 1.0, and there is no production support commitment.
 
 The package adapts an early Ocura research concept. Current Ocura engine development
 is a separate project.
 
-Bug reports and focused pull requests are welcome. See [Contributing](https://github.com/BlakeMasters/ocura-oss/blob/9b1e07276e83868ffb2dce4570e0dce0e84be8c5/CONTRIBUTING.md)
-and the [security policy](https://github.com/BlakeMasters/ocura-oss/blob/9b1e07276e83868ffb2dce4570e0dce0e84be8c5/SECURITY.md).
+Bug reports and focused pull requests are welcome. See [Contributing](https://github.com/Protention/ocura-oss/blob/9b1e07276e83868ffb2dce4570e0dce0e84be8c5/CONTRIBUTING.md)
+and the [security policy](https://github.com/Protention/ocura-oss/blob/9b1e07276e83868ffb2dce4570e0dce0e84be8c5/SECURITY.md).
 
 ## Command help
 

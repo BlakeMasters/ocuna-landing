@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
-import { DOC_PAGES } from "../src/content/docPages.js";
+import { runInNewContext } from "node:vm";
+import { DOC_PAGES, DOCS_ORIGIN } from "../src/content/docPages.js";
 import { OCURA_OSS_REPO, OCURA_OSS_SOURCE_REF, OCURA_OSS_VERSION, SITE_ORIGIN, knownRoutes, pageMeta } from "../src/content.js";
 import { extractHeadings, renderMarkdown } from "../src/lib/markdown.js";
 
@@ -30,12 +31,22 @@ for (const page of DOC_PAGES) {
   assert.ok(html.includes('<body class="docs-route">'), `${page.route}: static documentation theme`);
   assert.ok(html.includes('class="docs-sidebar" id="docs-sidebar"'), `${page.route}: visible static sidebar`);
   assert.ok(html.includes('aria-label="On this page"'), `${page.route}: static contents navigation`);
-  assert.ok(html.includes(`href="${SITE_ORIGIN}${page.route}"`), `${page.route}: canonical URL`);
-  assert.ok(html.includes(`type="text/markdown" href="${SITE_ORIGIN}/docs/${page.file}"`));
+  assert.ok(html.includes(`rel="canonical" href="${page.destination}"`), `${page.route}: new canonical URL`);
+  assert.ok(html.includes(`type="text/markdown" href="${DOCS_ORIGIN}/docs/${page.file}"`));
+  assert.ok(html.includes(`Documentation has moved to <a href="${page.destination}">`), `${page.route}: migration fallback`);
+  const redirect = html.match(/<script id="docs-redirect">(.*?)<\/script>/s)?.[1];
+  assert.ok(redirect, `${page.route}: early redirect`);
+  let destination;
+  runInNewContext(redirect, { window: { location: {
+    search: "?from=old-markdown",
+    hash: "#" + extractHeadings(source)[0].id,
+    replace: (url) => { destination = url; },
+  } } });
+  assert.equal(destination, `${page.destination}?from=old-markdown#${extractHeadings(source)[0].id}`, `${page.route}: preserves query and fragment`);
   assert.ok(html.includes(`href="/docs/${page.file}">Read Markdown</a>`));
   assert.ok(html.includes(`${OCURA_OSS_REPO}/blob/${OCURA_OSS_SOURCE_REF}/${page.repositoryPath}`));
-  assert.ok(sitemap.includes(`<loc>${SITE_ORIGIN}${page.route}</loc>`));
-  assert.ok(index.includes(`${SITE_ORIGIN}/docs/${page.file}`));
+  assert.ok(!sitemap.includes(`<loc>${SITE_ORIGIN}${page.route}</loc>`));
+  assert.ok(index.includes(`${DOCS_ORIGIN}/docs/${page.file}`));
   for (const other of DOC_PAGES) assert.ok(html.includes(`href="${other.route}"`));
   for (const heading of extractHeadings(source)) {
     assert.ok(html.includes(`id="${heading.id}"`), `${page.route}: heading ${heading.id}`);
@@ -64,4 +75,4 @@ assert.ok(!cli.includes("do not provide JSON mode"));
 const missing = await readFile("dist/404.html", "utf8");
 assert.ok(missing.includes('name="robots" content="noindex"'));
 assert.ok(!missing.includes('rel="canonical"'));
-console.log(`Verified ${DOC_PAGES.length} documentation routes: complete static HTML, Markdown parity, aliases, navigation, metadata, source links, headings, sitemap, and discovery index.`);
+console.log(`Verified ${DOC_PAGES.length} documentation redirects: query and fragment preservation, canonical URLs, complete fallback HTML, Markdown parity, aliases, navigation, metadata, source links, headings, sitemap, and discovery index.`);

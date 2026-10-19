@@ -193,6 +193,7 @@ ${footerHtml()}`;
       <div class="docs-sidebar-footer"><a href="#top">Back to top</a></div>
     </aside>
     <article class="docs-main">
+      <p>Documentation has moved to <a href="${page.destination}">protention.dev</a>.</p>
       <nav class="docs-source-links" aria-label="Alternative documentation formats">
         <a href="/docs/${page.file}">Read Markdown</a>
         <a href="${OCURA_OSS_REPO}/blob/${OCURA_OSS_SOURCE_REF}/${page.repositoryPath}">Read on GitHub</a>

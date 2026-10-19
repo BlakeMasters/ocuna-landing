@@ -1,11 +1,12 @@
-import { DOC_PAGES } from "./content/docPages.js";
+import { DOC_PAGES, DOCS_ORIGIN } from "./content/docPages.js";
 import { RESEARCH_META, RESEARCH_ROUTES } from "./content/research.js";
 import { FOUR1 } from "./content/four1.js";
 import { CRITTER } from "./content/critter.js";
 
 export const SITE_ORIGIN = "https://ocuna-ai.com";
 export const CONTACT_EMAIL = "business@ocuna-ai.com";
-export const OCURA_OSS_REPO = "https://github.com/BlakeMasters/ocura-oss";
+export const OCURA_OSS_REPO = "https://github.com/Protention/ocura-oss";
+export const OCURA_OSS_DOCS = `${DOCS_ORIGIN}/`;
 export const OCURA_OSS_PYPI = "https://pypi.org/project/ocura-oss/";
 export const OCURA_OSS_VERSION = "0.5.0";
 export const OCURA_OSS_SOURCE_REF = "9b1e07276e83868ffb2dce4570e0dce0e84be8c5";

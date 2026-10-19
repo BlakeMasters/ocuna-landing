@@ -55,7 +55,7 @@ Within one schema version, a record changes only by gaining optional fields:
 
 The repository keeps a small ledger written by 0.5.0 as a test fixture. Every later release that keeps schema 2 must verify it unchanged.
 
-This describes how the format changes. It is not a commitment that schema 2 is final: the 0.x status in the [overview](/docs#project-status) still applies.
+This describes how the format changes. It is not a commitment that schema 2 is final: the 0.x status in the [overview](https://protention.dev/#project-status) still applies.
 
 ### Upgrading from 0.4
 
@@ -193,7 +193,7 @@ unrelated records, or the whole ledger. Continue to use `verify()` or
 `Store.verify_state()` for a complete check. It does not lock the ledger or provide
 an atomic snapshot; returned bytes remain unchanged if the file changes afterward.
 An atom recorded without output capture has no log, and the read raises `StoreError`.
-See the [Python API](/docs/api#store-store-read-verified-log) for usage and errors.
+See the [Python API](https://protention.dev/api/#store-store-read-verified-log) for usage and errors.
 
 ## Stored information
 

@@ -24,7 +24,7 @@ In 0.5.0, `run(parameters=...)` requires a `dict` or `None`; convert other mappi
 
 Invalid parameter declarations in `run()` and `branch()` can raise `ocura_oss.model.ValidationError`. This exception is defined in `ocura_oss.model` and is not a subclass of `StoreError`, so catching only `StoreError` does not catch these parameter errors.
 
-Use these operations from a script or an AI agent inside its existing execution environment. The [automation guide](/docs/automation) describes caller responsibilities; the [training example](/docs/examples) supplies PyTorch/JAX workloads with an optional local Ray executor.
+Use these operations from a script or an AI agent inside its existing execution environment. The [automation guide](https://protention.dev/automation/) describes caller responsibilities; the [training example](https://protention.dev/examples/) supplies PyTorch/JAX workloads with an optional local Ray executor.
 
 ## Workflow example
 
@@ -179,7 +179,7 @@ Each position in `masked_arguments` must index `command`; position 0 is the exec
 
 With `substitute=True`, a value comes from `parameters` first and then from the pathway's effective parameters. The returned atom's `command` is the substituted command, and its `declared_parameters` are `parameters` plus every parameter a placeholder used. `{{` and `}}` are literal braces; a placeholder without a value, or an unbalanced brace, raises `StoreError` before anything runs. Braces are untouched when `substitute` is false.
 
-`context` and `context_files` fill the returned atom's `context` with a `RunContext`; it is `None` when neither is used. Nothing is queried, executed, or read for context otherwise. See [optional launch context](/docs/state#stored-information-optional-launch-context) for what is recorded and what it does not establish.
+`context` and `context_files` fill the returned atom's `context` with a `RunContext`; it is `None` when neither is used. Nothing is queried, executed, or read for context otherwise. See [optional launch context](https://protention.dev/state/#stored-information-optional-launch-context) for what is recorded and what it does not establish.
 
 The attempt is journaled under `.ocura-oss/attempts/` before the command launches. One atom and one branchable terminal chokepoint are written after the command ends, and the journal entry is then removed. A second Ctrl+C, or a killed process, leaves the entry in place; `recover()` closes it. Several processes may call `run()` against one root at the same time.
 
@@ -343,7 +343,7 @@ Verification checks record envelopes, checksums, identifiers, filenames, require
 
 It may run while other processes record runs under the same root. An attempt that a live process is still recording appears in `running_attempts` and is not a problem. An abandoned attempt is a problem until `recover()` closes it.
 
-When the state is intact, `report.manifest` holds one `KIND ID CHECKSUM` line per verified record and `report.digest` is the SHA-256 of those lines. Retain the manifest where this state's writers cannot change it and pass it back as `against` to detect a record that was rewritten together with its checksum. Records added since are allowed. See [retained manifests](/docs/state#verification-retained-manifests).
+When the state is intact, `report.manifest` holds one `KIND ID CHECKSUM` line per verified record and `report.digest` is the SHA-256 of those lines. Retain the manifest where this state's writers cannot change it and pass it back as `against` to detect a record that was rewritten together with its checksum. Records added since are allowed. See [retained manifests](https://protention.dev/state/#verification-retained-manifests).
 
 Verification establishes local consistency among records and logs. Authorship and execution-environment reproduction require separate evidence.
 
@@ -1536,4 +1536,4 @@ Several processes may record runs under one state root at the same time, and ver
 
 Raw atoms retain command arguments and logs retain command output. Keep secrets out of command arguments, parameter mappings, branch reasons, and output. Where one cannot be avoided, `masked_arguments` keeps a command token out of the records and `capture=False` keeps output off disk.
 
-For command syntax and exit status, see the [CLI reference](/docs/cli). For the record layout and execution boundary, see the [documentation overview](/docs).
+For command syntax and exit status, see the [CLI reference](https://protention.dev/cli/). For the record layout and execution boundary, see the [documentation overview](https://protention.dev/).

@@ -1,5 +1,6 @@
 import {
   CONTACT_EMAIL,
+  OCURA_OSS_DOCS,
   OCURA_OSS_PYPI,
   OCURA_OSS_REPO,
   OCURA_OSS_VERSION,
@@ -52,7 +53,7 @@ export function jsonLdGraph() {
         "@type": "SoftwareSourceCode",
         "@id": `${SITE_ORIGIN}/docs#ocura-oss`,
         name: "Ocura OSS",
-        url: `${SITE_ORIGIN}/docs`,
+        url: OCURA_OSS_DOCS,
         codeRepository: OCURA_OSS_REPO,
         license: "https://www.mozilla.org/MPL/2.0/",
         programmingLanguage: "Python",

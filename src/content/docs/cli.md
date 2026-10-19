@@ -52,7 +52,7 @@ Every command accepts `--json`. JSON mode writes one result document to standard
 
 Default summaries and listing output omit command arguments, environment values, and log contents. `run` streams child output unless `--quiet` or `--json` is present, so streamed output is separate from the final summary.
 
-Raw atom records retain command arguments, and log files retain command output. Keep secrets out of command arguments, declared parameters, branch reasons, and output. When a run cannot avoid one, `run --mask-arg` keeps a command token out of the records and `run --no-capture` keeps output off disk; see [keeping sensitive values out of records](/docs/state#stored-information-keeping-sensitive-values-out-of-records).
+Raw atom records retain command arguments, and log files retain command output. Keep secrets out of command arguments, declared parameters, branch reasons, and output. When a run cannot avoid one, `run --mask-arg` keeps a command token out of the records and `run --no-capture` keeps output off disk; see [keeping sensitive values out of records](https://protention.dev/state/#stored-information-keeping-sensitive-values-out-of-records).
 
 ## `init`
 
@@ -138,7 +138,7 @@ With `--no-capture`, no log files are written. Output still streams to the termi
 
 With `--substitute`, each `{KEY}` in a `COMMAND` token is replaced by that parameter's value before the command launches. A value comes from this run's `--param` declarations first and then from the pathway's effective parameters, so a run on a branch can use the branch's values without restating them. Every parameter used this way is recorded as a declared parameter of the run, and the recorded command is the substituted one. Write `{{` or `}}` for a literal brace. A placeholder with no value, or an unbalanced brace, is rejected before anything runs. Without `--substitute`, braces are passed through untouched. Quote a placeholder, as in `"{batch}"`, when the shell is PowerShell: it reads bare braces as a script block and does not pass them to the command.
 
-`--context` and `--context-file` add an optional `context` object to the record; see [optional launch context](/docs/state#stored-information-optional-launch-context). Neither runs or reads anything unless it is present.
+`--context` and `--context-file` add an optional `context` object to the record; see [optional launch context](https://protention.dev/state/#stored-information-optional-launch-context). Neither runs or reads anything unless it is present.
 
 One run produces:
 
@@ -169,7 +169,7 @@ The final text summary includes the atom, chokepoint, pathway, outcome, duration
 | `stdout_log` | string or null | Project-relative stdout log path; null without capture |
 | `stderr_log` | string or null | Project-relative stderr log path; null without capture |
 
-Use returned IDs to continue the [automated workflow](/docs/automation). The [training example](/docs/examples) provides an executable client.
+Use returned IDs to continue the [automated workflow](https://protention.dev/automation/). The [training example](https://protention.dev/examples/) provides an executable client.
 
 #### Exit status
 
@@ -471,7 +471,7 @@ ocura-oss manifest [--root PATH] [--json]
 
 Each line is `KIND ID CHECKSUM`, where `KIND` is `den`, `pathway`, `atom`, or `chokepoint` and `CHECKSUM` is that record's stored SHA-256. Lines are sorted. JSON mode returns `{"digest": "...", "entries": [...]}`; the digest is the SHA-256 of the lines, each terminated by a newline.
 
-Keep the output where this state's writers cannot change it and pass it to `verify --against` later. See [retained manifests](/docs/state#verification-retained-manifests) for what that detects and its limits.
+Keep the output where this state's writers cannot change it and pass it to `verify --against` later. See [retained manifests](https://protention.dev/state/#verification-retained-manifests) for what that detects and its limits.
 
 A manifest is printed only for a state that verifies completely. Attempts still being recorded are not records yet and are not listed.
 
@@ -623,4 +623,4 @@ Argument parsing errors also use status 2.
 
 `run` executes command tokens directly with `shell=False`. Ocura OSS does not sandbox commands, restrict network access, contain hostile code, or guarantee process-tree isolation.
 
-Use owner-authorized workloads inside an execution environment with suitable permissions and isolation. See [state and verification](/docs/state) and [Python API reference](/docs/api) for the corresponding programmatic contract.
+Use owner-authorized workloads inside an execution environment with suitable permissions and isolation. See [state and verification](https://protention.dev/state/) and [Python API reference](https://protention.dev/api/) for the corresponding programmatic contract.
