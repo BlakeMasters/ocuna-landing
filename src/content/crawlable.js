@@ -18,10 +18,10 @@ import { galleryImagePath, NOT_FOUND, RACCOON_GALLERY } from "./raccoonGallery.j
 
 function navHtml(styled = false, headerClass = "not-found-static-header") {
   return `
-${styled ? '<a class="skip-link" href="#top">Skip to content</a>' : ""}
+<a class="skip-link" href="#top">Skip to content</a>
 <header${styled ? ` class="shell site-header ${headerClass}"` : ""}>
   <a${styled ? ' class="brand" aria-label="Ocuna home"' : ""} href="/">${styled ? '<img src="/images/ocuna_title_logo_nobackground.webp" alt="Ocuna" />' : "Ocuna"}</a>
-  <nav${styled ? ' class="nav" aria-label="Primary navigation"' : ""}>
+  <nav${styled ? ' class="nav"' : ""} aria-label="Primary navigation">
     <a href="/">Home</a>
     <a href="/#work">Ocura</a>
     <a href="/four1">Four1</a>
@@ -62,7 +62,7 @@ function raccoonArtworkHtml(art, featured = false) {
 
 function wrap(title, body) {
   return `${navHtml()}
-<main>
+<main id="top" tabindex="-1">
   <h1>${title}</h1>
   ${body}
 </main>
@@ -100,14 +100,14 @@ function landingBody(extra = "") {
 }
 
 function researchImageHtml(image, priority = false) {
-  const img = `<img src="/research/${escapeHtml(image.file)}" alt="${escapeHtml(image.alt)}" width="${image.width}" height="${image.height}" loading="${priority ? "eager" : "lazy"}" style="max-width:100%;height:auto" />`;
+  const img = `<img src="/research/${escapeHtml(image.file)}" alt="${escapeHtml(image.alt)}" width="${image.width}" height="${image.height}" loading="${priority ? "eager" : "lazy"}" fetchpriority="${priority ? "high" : "auto"}" decoding="async" style="max-width:100%;height:auto" />`;
   return image.href ? `<a href="${escapeHtml(image.href)}">${img}</a>` : img;
 }
 
 function researchMediaHtml(media, priority = false) {
   const visual = media.layout === "event"
     ? `<div class="field-event-panel"><div class="field-event-marks">${media.marks.map((mark) => `<div class="field-event-mark field-event-mark-${escapeHtml(mark.kind)}">${researchImageHtml(mark, priority)}</div>`).join("")}</div><div class="field-event-art">${researchImageHtml(media.image, priority)}</div></div>`
-    : researchImageHtml(media.image);
+    : researchImageHtml(media.image, priority);
   return `<figure class="field-media field-media-${escapeHtml(media.layout)}${media.theme ? ` field-media-${escapeHtml(media.theme)}` : ""}">${visual}<figcaption>${escapeHtml(media.caption)}${media.credit ? ` <a href="${escapeHtml(media.credit.href)}">${escapeHtml(media.credit.label)}</a>.` : ""}</figcaption></figure>`;
 }
 
@@ -116,8 +116,8 @@ export function crawlableHtml(route, markdown = "") {
     return wrap(
       "Field Notes",
       `<section aria-label="Research notes">
-        ${RESEARCH_POSTS.map((post) => `<article>
-          <figure><img src="/research/${escapeHtml(RESEARCH_ART[post.art].file)}" width="${RESEARCH_ART[post.art].width ?? 1536}" height="${RESEARCH_ART[post.art].height ?? 1024}" style="max-width:100%;height:auto" alt="${escapeHtml(RESEARCH_ART[post.art].alt)}" /></figure>
+        ${RESEARCH_POSTS.map((post, index) => `<article>
+          <figure><img src="/research/${escapeHtml(RESEARCH_ART[post.art].file)}" width="${RESEARCH_ART[post.art].width ?? 1536}" height="${RESEARCH_ART[post.art].height ?? 1024}" loading="${index === 0 ? "eager" : "lazy"}" fetchpriority="${index === 0 ? "high" : "auto"}" decoding="async" style="max-width:100%;height:auto" alt="${escapeHtml(RESEARCH_ART[post.art].alt)}" /></figure>
           <p>${escapeHtml(post.category)} · <time datetime="${escapeHtml(post.date)}">${escapeHtml(post.dateLabel)}</time> · ${escapeHtml(post.readTime)}</p>
           <h2><a href="/research/${escapeHtml(post.slug)}">${escapeHtml(post.title)}</a></h2>
         </article>`).join("\n")}
@@ -134,6 +134,7 @@ export function crawlableHtml(route, markdown = "") {
     <p><a href="/research">All field notes</a></p>
     <p>${escapeHtml(researchPost.category)}</p>
     <h1>${escapeHtml(researchPost.title)}</h1>
+    <p>Ocuna Research</p>
     <p><time datetime="${escapeHtml(researchPost.date)}">${escapeHtml(researchPost.dateLabel)}</time> · ${escapeHtml(researchPost.readTime)}</p>
     ${researchPost.cover ? researchMediaHtml(researchPost.cover, true) : `<figure><img src="/research/${escapeHtml(illustration.file)}" width="${illustration.width ?? 1536}" height="${illustration.height ?? 1024}" style="max-width:100%;height:auto" alt="${escapeHtml(illustration.alt)}" /></figure>`}
     <nav aria-label="On this page">${researchPost.sections.map((section) => `<a href="#${escapeHtml(section.id)}">${escapeHtml(section.title)}</a>`).join(" ")}</nav>

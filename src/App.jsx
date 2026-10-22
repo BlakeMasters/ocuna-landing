@@ -1,6 +1,8 @@
 import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { asset, pagePath, routeFromLocation } from "./assets.js";
 import "./components/CritterPage.css";
+import "./components/DocsPage.css";
+import "./components/NotFoundPage.css";
 import "./components/PaperPage.css";
 import {
   CONTACT_EMAIL,
@@ -12,19 +14,18 @@ import {
 } from "./content.js";
 import ContactPage from "./components/ContactPage.jsx";
 import BrandLogo from "./components/BrandLogo.jsx";
-import CritterPage from "./components/CritterPage.jsx";
-import DocsPage from "./components/DocsPage.jsx";
-import LandingPage from "./components/LandingPage.jsx";
-import NotFoundPage from "./components/NotFoundPage.jsx";
-import { ParticleProvider } from "./components/particles/ParticleContext.jsx";
+import SystemHomePage from "./components/SystemHomePage.jsx";
 import { jsonLdGraph } from "./content/jsonld.js";
-import { isDocRoute } from "./content/docPages.js";
+import { DOC_PAGES, isDocRoute } from "./content/docPages.js";
 import { RESEARCH_ROUTES } from "./content/research.js";
 import "./components/ProductMenu.css";
 
 const LANDING_KINDS = new Set(["home", "ocuna", "ocura"]);
 const PAPER_KINDS = new Set(["contact", "notfound"]);
 const RESEARCH_ROUTE_SET = new Set(RESEARCH_ROUTES);
+const CritterPage = lazy(() => import("./components/CritterPage.jsx"));
+const DocsPage = lazy(() => import("./components/DocsPage.jsx"));
+const NotFoundPage = lazy(() => import("./components/NotFoundPage.jsx"));
 const ResearchPage = lazy(() => import("./components/ResearchPage.jsx"));
 const Four1Page = lazy(() => import("./components/Four1Page.jsx"));
 // Retain the OnVeil page for local work without including it in a release.
@@ -59,8 +60,9 @@ function pageKind(route) {
   return "notfound";
 }
 
-function canonicalPath(route) {
-  return route === "/ocuna" ? "/" : route;
+function canonicalUrl(route) {
+  return DOC_PAGES.find((page) => page.route === route)?.destination
+    ?? `${SITE_ORIGIN}${route === "/ocuna" ? "/" : route}`;
 }
 
 function scrollToId(id) {
@@ -112,7 +114,7 @@ export default function App() {
       return;
     }
 
-    const canonical = `https://ocuna-ai.com${canonicalPath(route) === "/" ? "/" : canonicalPath(route)}`;
+    const canonical = canonicalUrl(route);
 
     let ogUrl = document.querySelector('meta[property="og:url"]');
     if (!ogUrl) {
@@ -139,8 +141,8 @@ export default function App() {
       script.type = "application/ld+json";
       document.head.append(script);
     }
-    script.textContent = JSON.stringify(jsonLdGraph());
-  }, []);
+    script.textContent = JSON.stringify(jsonLdGraph(kind === "notfound" ? "/404" : route));
+  }, [kind, route]);
 
   useEffect(() => {
     document.body.classList.toggle("onveil-route", isOnVeilPage);
@@ -243,7 +245,7 @@ export default function App() {
   const footer = <SiteFooter isOnVeilPage={isOnVeilPage} onNavigate={navigate} />;
 
   let page = <NotFoundPage />;
-  if (isLandingPage) page = <LandingPage />;
+  if (isLandingPage) page = <SystemHomePage />;
   if (kind === "docs") page = <DocsPage route={route} />;
   if (kind === "contact") page = <ContactPage />;
   if (kind === "critter") page = <CritterPage />;
@@ -265,14 +267,12 @@ export default function App() {
     <>
       <a className="skip-link" href="#top">Skip to content</a>
       {header}
-      {page}
+      <Suspense fallback={<div className="shell" role="status">Loading page…</div>}>
+        {page}
+      </Suspense>
       {footer}
     </>
   );
-
-  if (isLandingPage) {
-    return <ParticleProvider>{shell}</ParticleProvider>;
-  }
 
   return shell;
 }

@@ -38,6 +38,9 @@ jobs:
       - name: Verify documentation routes and exports
         run: npm run verify:docs
 
+      - name: Verify crawler content and initial bundle budgets
+        run: npm run verify:site
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:

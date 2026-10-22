@@ -27,6 +27,7 @@ scripts/puppet-trace-comparison.png
 scripts/*
 !scripts/prerender.mjs
 !scripts/verify-docs.mjs
+!scripts/verify-site.mjs
 !scripts/build-le-raton-font.py
 !scripts/font-source/
 

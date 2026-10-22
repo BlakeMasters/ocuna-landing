@@ -10,7 +10,7 @@ export default function ResearchMedia({ media, priority = false }) {
     {media.layout === "event" ? <div className="field-event-panel">
       <div className="field-event-marks">{media.marks.map((mark) => <div className={`field-event-mark field-event-mark-${mark.kind}`} key={mark.file}><MediaImage image={mark} priority={priority} /></div>)}</div>
       <div className="field-event-art"><MediaImage image={media.image} priority={priority} /></div>
-    </div> : <MediaImage image={media.image} />}
+    </div> : <MediaImage image={media.image} priority={priority} />}
     <figcaption>{media.caption}{media.credit && <> <a href={media.credit.href}>{media.credit.label}</a>.</>}</figcaption>
   </figure>;
 }
