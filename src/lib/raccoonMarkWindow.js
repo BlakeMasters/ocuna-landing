@@ -2,6 +2,7 @@ import { buildMarkField, drawMarkField } from "./imageMarks.js";
 
 const PAPER = "#f8f7f4";
 const FPS = 12;
+const ASCII_SPEED = 1.75;
 const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
 
 // Keep both halves of the window on the artwork, including at either edge.
@@ -75,7 +76,7 @@ export function mountRaccoonMarkWindow(host, { image, artwork, pointerTarget = h
       context.globalAlpha = .16;
       context.drawImage(source, 0, 0, width, height);
       context.globalAlpha = 1;
-      drawMarkField(context, fields[index], { time: elapsed / 1000, animate: !reduced.matches });
+      drawMarkField(context, fields[index], { time: elapsed / 1000 * (fields[index].mode === "ascii" ? ASCII_SPEED : 1), animate: !reduced.matches });
     });
     if (import.meta.env?.DEV) {
       host.dataset.paintMs = (performance.now() - started).toFixed(2);
