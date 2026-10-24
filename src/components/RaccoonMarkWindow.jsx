@@ -44,8 +44,10 @@ export default function RaccoonMarkWindow({ animate }) {
         decoding="async"
         style={{ width: `${width / crop.width * 100}%`, height: `${height / crop.height * 100}%`, left: `${-crop.x / crop.width * 100}%`, top: `${-crop.y / crop.height * 100}%`, filter: HOME_RACCOON.filter }}
       />
-      <canvas className="hero-raccoon__marks hero-raccoon__marks--ascii" aria-hidden="true" />
-      <canvas className="hero-raccoon__marks hero-raccoon__marks--hatch" aria-hidden="true" />
+      <div className="hero-raccoon__effect" aria-hidden="true">
+        <div className="hero-raccoon__band hero-raccoon__band--ascii"><canvas className="hero-raccoon__marks" /></div>
+        <div className="hero-raccoon__band hero-raccoon__band--hatch"><canvas className="hero-raccoon__marks" /></div>
+      </div>
     </div>
   );
 }
