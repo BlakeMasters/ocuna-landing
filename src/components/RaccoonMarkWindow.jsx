@@ -3,7 +3,7 @@ import { asset } from "../assets.js";
 import { HOME_RACCOON } from "../content/homeArtwork.js";
 import "./RaccoonMarkWindow.css";
 
-export default function RaccoonMarkWindow({ animate, pointerTarget }) {
+export default function RaccoonMarkWindow({ animate }) {
   const hostRef = useRef(null);
   const imageRef = useRef(null);
   const controllerRef = useRef(null);
@@ -19,14 +19,13 @@ export default function RaccoonMarkWindow({ animate, pointerTarget }) {
       controllerRef.current = mountRaccoonMarkWindow(hostRef.current, {
         image,
         artwork: HOME_RACCOON,
-        pointerTarget: pointerTarget.current,
         animate: animateRef.current,
       });
     }).catch(() => {
       if (!disposed) hostRef.current.dataset.state = "original";
     });
     return () => { disposed = true; controllerRef.current?.dispose(); controllerRef.current = null; };
-  }, [pointerTarget]);
+  }, []);
 
   useEffect(() => { controllerRef.current?.setAnimating(animate); }, [animate]);
 
@@ -47,7 +46,6 @@ export default function RaccoonMarkWindow({ animate, pointerTarget }) {
       />
       <canvas className="hero-raccoon__marks hero-raccoon__marks--ascii" aria-hidden="true" />
       <canvas className="hero-raccoon__marks hero-raccoon__marks--hatch" aria-hidden="true" />
-      <input className="hero-raccoon__position" type="range" min="0" max="100" defaultValue="45" aria-label="Move the artwork effect window" aria-valuetext="45% across the artwork" />
     </div>
   );
 }

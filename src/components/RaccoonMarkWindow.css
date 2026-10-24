@@ -1,7 +1,7 @@
 .hero-raccoon {
-  --mark-left: 26%;
-  --mark-middle: 45%;
-  --mark-right: 64%;
+  --mark-top: 0%;
+  --mark-middle: 19%;
+  --mark-bottom: 38%;
   position: relative;
   min-width: 0;
   width: 100%;
@@ -14,11 +14,8 @@
 }
 .hero-raccoon__original { position: absolute; display: block; max-width: none; object-fit: fill; mix-blend-mode: multiply; }
 .hero-raccoon__marks { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; pointer-events: none; }
-.hero-raccoon__marks--ascii { clip-path: inset(0 calc(100% - var(--mark-middle)) 0 var(--mark-left)); }
-.hero-raccoon__marks--hatch { clip-path: inset(0 calc(100% - var(--mark-right)) 0 var(--mark-middle)); }
+.hero-raccoon__marks--ascii { clip-path: inset(var(--mark-top) 0 calc(100% - var(--mark-middle)) 0); }
+.hero-raccoon__marks--hatch { clip-path: inset(var(--mark-middle) 0 calc(100% - var(--mark-bottom)) 0); }
 .hero-raccoon[data-state="ready"] .hero-raccoon__marks { animation: hero-raccoon-reveal 1.4s ease .8s both; animation-play-state: var(--mark-play-state, paused); }
-.hero-raccoon__position { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: ew-resize; touch-action: pan-y; visibility: hidden; }
-.hero-raccoon[data-state="ready"] .hero-raccoon__position { visibility: visible; }
-.hero-raccoon:has(.hero-raccoon__position:focus-visible) { outline: 2px solid var(--system-teal); outline-offset: -6px; }
 @keyframes hero-raccoon-reveal { from { opacity: 0; } to { opacity: 1; } }
 @media (prefers-reduced-motion: reduce) { .hero-raccoon[data-state="ready"] .hero-raccoon__marks { animation: none; opacity: 1; } }

@@ -7,17 +7,27 @@ const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
 
 // Keep both halves of the window on the artwork, including at either edge.
 export function markWindowBounds(position, share = .38) {
-  const width = clamp(Number.isFinite(share) ? share : .38, 0, 1);
+  const height = clamp(Number.isFinite(share) ? share : .38, 0, 1);
   const fraction = clamp(Number.isFinite(position) ? position : .45, 0, 1);
-  const left = fraction * (1 - width);
-  return { left, middle: left + width / 2, right: left + width };
+  const top = fraction * (1 - height);
+  return { top, middle: top + height / 2, bottom: top + height };
 }
 
-/** A cached image field: cursor movement changes CSS clipping, never pixel reads. */
-export function mountRaccoonMarkWindow(host, { image, artwork, pointerTarget = host, animate = true }) {
+// Sweep while the artwork is visible, rather than over the entire long page.
+// The first screen starts at the top; scrolling back up reverses the same path.
+export function markScrollProgress(bounds, viewportHeight, scrollY) {
+  if (!Number.isFinite(bounds?.top) || !Number.isFinite(bounds?.height) || bounds.height <= 0
+    || !Number.isFinite(viewportHeight) || viewportHeight <= 0 || !Number.isFinite(scrollY)) return 0;
+  const pageTop = bounds.top + scrollY;
+  const start = Math.max(0, pageTop - viewportHeight * .85);
+  const end = Math.max(start + 1, pageTop + bounds.height * .35);
+  return clamp((scrollY - start) / (end - start), 0, 1);
+}
+
+/** A cached image field: page scrolling changes CSS clipping, never pixel reads. */
+export function mountRaccoonMarkWindow(host, { image, artwork, animate = true }) {
   const canvases = [...host.querySelectorAll("canvas")];
   const contexts = canvases.map((canvas) => canvas.getContext("2d"));
-  const input = host.querySelector("input");
   const source = document.createElement("canvas");
   const sourceContext = source.getContext("2d");
   const sample = document.createElement("canvas");
@@ -27,44 +37,31 @@ export function mountRaccoonMarkWindow(host, { image, artwork, pointerTarget = h
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
   let fields = [];
   let width = 0, height = 0;
-  let timer, pointerFrame;
+  let timer, scrollFrame;
   let disposed = false, onscreen = false;
   let elapsed = 0, lastTick;
-  let position = .45, targetPosition = .45;
 
   function setClipping(value) {
     const bounds = markWindowBounds(value);
-    for (const key of ["left", "middle", "right"]) host.style.setProperty(`--mark-${key}`, `${(bounds[key] * 100).toFixed(3)}%`);
-    input.value = String(Math.round(value * 100));
-    input.setAttribute("aria-valuetext", `${Math.round(value * 100)}% across the artwork`);
+    for (const key of ["top", "middle", "bottom"]) host.style.setProperty(`--mark-${key}`, `${(bounds[key] * 100).toFixed(3)}%`);
   }
 
-  function followPointer() {
-    pointerFrame = undefined;
-    if (disposed || document.hidden || !onscreen) return;
-    position += (targetPosition - position) * .2;
-    if (Math.abs(targetPosition - position) < .001) position = targetPosition;
-    setClipping(position);
-    if (position !== targetPosition) pointerFrame = requestAnimationFrame(followPointer);
+  function updateScroll() {
+    setClipping(reduced.matches ? .45 : markScrollProgress(host.getBoundingClientRect(), window.innerHeight, window.scrollY));
   }
 
-  function move(value, immediate = false) {
-    if (disposed || !Number.isFinite(value)) return;
-    targetPosition = clamp(value, 0, 1);
-    if (immediate || reduced.matches || !animate) {
-      cancelAnimationFrame(pointerFrame);
-      pointerFrame = undefined;
-      position = targetPosition;
-      setClipping(position);
-    } else if (pointerFrame === undefined) pointerFrame = requestAnimationFrame(followPointer);
+  function scrollActive() {
+    return !disposed && animate && !reduced.matches && onscreen && !document.hidden && fields.length > 0;
   }
 
-  function onPointer(event) {
-    if (!onscreen || document.hidden || event.pointerType === "touch") return;
-    const bounds = pointerTarget.getBoundingClientRect();
-    if (bounds.width) move((event.clientX - bounds.left) / bounds.width);
+  function onScroll() {
+    if (!scrollActive() || scrollFrame !== undefined) return;
+    // Coalesce native scroll events into one layout read and clip update.
+    scrollFrame = requestAnimationFrame(() => {
+      scrollFrame = undefined;
+      if (scrollActive()) updateScroll();
+    });
   }
-  const onInput = () => move(Number(input.value) / 100, true);
 
   function paint() {
     if (!fields.length || disposed) return;
@@ -97,21 +94,14 @@ export function mountRaccoonMarkWindow(host, { image, artwork, pointerTarget = h
   function refresh() {
     clearTimeout(timer);
     timer = undefined;
+    cancelAnimationFrame(scrollFrame);
+    scrollFrame = undefined;
     lastTick = undefined;
     const playing = active();
     host.dataset.playback = playing ? "playing" : "paused";
     host.style.setProperty("--mark-play-state", playing ? "running" : "paused");
-    if (document.hidden || !onscreen) {
-      cancelAnimationFrame(pointerFrame);
-      pointerFrame = undefined;
-      return;
-    }
-    if (reduced.matches || !animate) {
-      cancelAnimationFrame(pointerFrame);
-      pointerFrame = undefined;
-      position = targetPosition;
-      setClipping(position);
-    }
+    if (document.hidden || !onscreen) return;
+    if (reduced.matches || animate) updateScroll();
     paint();
     if (playing) timer = setTimeout(tick, 1000 / FPS);
   }
@@ -174,12 +164,12 @@ export function mountRaccoonMarkWindow(host, { image, artwork, pointerTarget = h
   const intersection = new IntersectionObserver(([entry]) => { onscreen = entry.isIntersecting; refresh(); });
   resizeObserver.observe(host);
   intersection.observe(host);
-  pointerTarget.addEventListener("pointermove", onPointer, { passive: true });
-  input.addEventListener("input", onInput);
+  window.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("resize", onScroll, { passive: true });
   image.addEventListener?.("load", sourceLoaded);
   reduced.addEventListener("change", refresh);
   document.addEventListener("visibilitychange", refresh);
-  setClipping(position);
+  setClipping(reduced.matches ? .45 : 0);
   resize();
 
   return {
@@ -187,10 +177,10 @@ export function mountRaccoonMarkWindow(host, { image, artwork, pointerTarget = h
     dispose() {
       disposed = true;
       clearTimeout(timer);
-      cancelAnimationFrame(pointerFrame);
+      cancelAnimationFrame(scrollFrame);
       resizeObserver.disconnect(); intersection.disconnect();
-      pointerTarget.removeEventListener("pointermove", onPointer);
-      input.removeEventListener("input", onInput);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
       image.removeEventListener?.("load", sourceLoaded);
       reduced.removeEventListener("change", refresh);
       document.removeEventListener("visibilitychange", refresh);

@@ -38,7 +38,7 @@ export default function SystemHero({ motionEnabled, onToggleMotion }) {
           <p>{HOME.introduction}</p>
         </div>
         <div className="system-hero-visuals">
-          <RaccoonMarkWindow animate={playing && isInView && pageVisible} pointerTarget={sectionRef} />
+          <RaccoonMarkWindow animate={playing && isInView && pageVisible} />
           <figure className="system-map">
             <div className="system-map-stage">
               <AdaptiveGrid enabled={playing && isInView && pageVisible} />

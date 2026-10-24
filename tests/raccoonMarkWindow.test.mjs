@@ -1,9 +1,9 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { HOME_RACCOON } from "../src/content/homeArtwork.js";
-import { markWindowBounds, mountRaccoonMarkWindow } from "../src/lib/raccoonMarkWindow.js";
+import { markScrollProgress, markWindowBounds, mountRaccoonMarkWindow } from "../src/lib/raccoonMarkWindow.js";
 
-function environment(t, { width = 540, height = 312, noCanvas = false, tainted = false } = {}) {
+function environment(t, { width = 540, height = 312, noCanvas = false, tainted = false, initialScroll = 0 } = {}) {
   const timers = new Map(), frames = new Map(), observers = [], reads = [], imageDraws = [];
   const listeners = () => ({
     events: new Map(),
@@ -27,14 +27,13 @@ function environment(t, { width = 540, height = 312, noCanvas = false, tainted =
     return value;
   }
   const surfaces = [canvas(), canvas()];
-  const input = { ...listeners(), value: "45", setAttribute(name, value) { this[name] = value; } };
+  const win = { ...listeners(), innerHeight: 900, scrollY: initialScroll, devicePixelRatio: 3, matchMedia: () => media };
   const properties = new Map();
   const host = {
     ...listeners(), dataset: { state: "original" },
     style: { setProperty(name, value) { properties.set(name, value); } },
-    getBoundingClientRect: () => ({ width, height, left: 0 }),
+    getBoundingClientRect: () => ({ width, height, left: 0, top: 400 - win.scrollY }),
     querySelectorAll: () => surfaces,
-    querySelector: () => input,
   };
   const media = { ...listeners(), matches: false };
   const document = { ...listeners(), hidden: false, createElement: () => canvas() };
@@ -44,7 +43,7 @@ function environment(t, { width = 540, height = 312, noCanvas = false, tainted =
     disconnect() { this.disconnected = true; }
   };
   const globals = {
-    document, window: { devicePixelRatio: 3, matchMedia: () => media },
+    document, window: win,
     performance: { now: () => now },
     ResizeObserver: Observer, IntersectionObserver: Observer,
     requestAnimationFrame(callback) { frames.set(++serial, callback); return serial; },
@@ -64,7 +63,7 @@ function environment(t, { width = 540, height = 312, noCanvas = false, tainted =
     }
   });
   return {
-    host, input, image, imageDraws, media, document, controller, properties, observers, reads, timers, frames, surfaces,
+    host, win, image, imageDraws, media, document, controller, properties, observers, reads, timers, frames, surfaces,
     get paints() { return paints; },
     show(value = true) { observers[1].callback([{ isIntersecting: value }]); },
     hide(value) { document.hidden = value; document.events.get("visibilitychange")(); },
@@ -75,7 +74,7 @@ function environment(t, { width = 540, height = 312, noCanvas = false, tainted =
       assert.ok(timer.delay >= 1000 / 12);
       timers.delete(id); now += timer.delay; timer.callback();
     },
-    pointer(value, pointerType = "mouse") { host.events.get("pointermove")({ clientX: value * width, pointerType }); },
+    scroll(value) { win.scrollY = value; win.events.get("scroll")(); },
     settle() {
       for (let n = 0; frames.size && n < 100; n += 1) {
         const [id, callback] = frames.entries().next().value;
@@ -86,26 +85,52 @@ function environment(t, { width = 540, height = 312, noCanvas = false, tainted =
   };
 }
 
-test("both effect halves remain inside the artwork at either cursor edge", () => {
-  assert.deepEqual(markWindowBounds(0), { left: 0, middle: .19, right: .38 });
-  assert.deepEqual(markWindowBounds(1), { left: .62, middle: .81, right: 1 });
+test("both effect halves remain inside the artwork at the top and bottom", () => {
+  assert.deepEqual(markWindowBounds(0), { top: 0, middle: .19, bottom: .38 });
+  assert.deepEqual(markWindowBounds(1), { top: .62, middle: .81, bottom: 1 });
   assert.deepEqual(markWindowBounds(-1), markWindowBounds(0));
   assert.deepEqual(markWindowBounds(2), markWindowBounds(1));
 });
 
-test("pointer, range input and animation reuse samples; touch does not hijack scrolling", t => {
+test("page scroll sweeps down and back up using cached samples and one frame per batch", t => {
   const env = environment(t);
   assert.equal(env.reads.length, 2);
   env.show();
-  env.pointer(1); env.settle();
-  assert.equal(env.properties.get("--mark-right"), "100.000%");
+  assert.equal(env.properties.get("--mark-top"), "0.000%");
+  env.scroll(200); env.scroll(300); env.scroll(600);
+  assert.equal(env.frames.size, 1, "Many scroll events schedule only one layout read");
+  const paints = env.paints;
+  env.settle();
+  assert.equal(env.properties.get("--mark-bottom"), "100.000%");
+  assert.equal(env.paints, paints, "Scroll movement only changes clipping");
   env.tick(); env.tick();
-  env.pointer(0, "touch");
+  env.scroll(0); env.settle();
+  assert.equal(env.properties.get("--mark-top"), "0.000%");
   assert.equal(env.frames.size, 0);
-  env.input.value = "0"; env.input.events.get("input")();
-  assert.equal(env.properties.get("--mark-left"), "0.000%");
-  assert.equal(env.input["aria-valuetext"], "0% across the artwork");
+  assert.equal(env.host.events.size, 0, "No cursor or gesture handlers are attached to the image");
   assert.equal(env.reads.length, 2, "Moving the window and animating never read pixels again");
+});
+
+test("scroll progress covers visible artwork and handles an image initially below the fold", () => {
+  assert.equal(markScrollProgress({ top: 400, height: 312 }, 900, 0), 0);
+  const middle = markScrollProgress({ top: 150, height: 312 }, 900, 250);
+  assert.ok(middle > .4 && middle < .6);
+  assert.equal(markScrollProgress({ top: -200, height: 312 }, 900, 600), 1);
+  assert.equal(markScrollProgress({ top: 1800, height: 312 }, 900, 0), 0);
+  assert.equal(markScrollProgress({ top: 900, height: 312 }, 900, 900), 0);
+  assert.equal(markScrollProgress({ top: -312, height: 312 }, 900, 2112), 1);
+  assert.equal(markScrollProgress({ top: 400, height: 0 }, 900, 0), 0);
+});
+
+test("restored scroll and viewport-height changes sync clipping without resampling", t => {
+  const env = environment(t, { initialScroll: 250 });
+  env.show();
+  const previousTop = env.properties.get("--mark-top");
+  assert.ok(parseFloat(previousTop) > 0);
+  env.win.innerHeight = 300;
+  env.win.events.get("resize")(); env.settle();
+  assert.notEqual(env.properties.get("--mark-top"), previousTop);
+  assert.equal(env.reads.length, 2);
 });
 
 test("large high-DPR displays keep sampling bounded and ignore duplicate resize callbacks", t => {
@@ -128,38 +153,45 @@ test("responsive images use the CSS crop without density-corrected source-pixel 
   assert.equal(env.reads.length, 4, "A changed responsive source rebuilds both fields");
 });
 
-test("pause, visibility and reduced motion stop scheduling while manual adjustment remains available", t => {
+test("pause, visibility and reduced motion stop both glyph and scroll movement", t => {
   const env = environment(t);
   env.show(); env.tick();
   env.controller.setAnimating(false);
   assert.equal(env.timers.size, 0);
   assert.equal(env.properties.get("--mark-play-state"), "paused");
   const paints = env.paints;
-  env.pointer(1);
+  const top = env.properties.get("--mark-top");
+  env.scroll(300);
   assert.equal(env.frames.size, 0);
-  assert.equal(env.paints, paints, "Manual movement only updates clipping");
+  assert.equal(env.properties.get("--mark-top"), top, "Pause freezes the band as well as the characters");
+  assert.equal(env.paints, paints);
   env.controller.setAnimating(true);
   env.hide(true);
+  env.scroll(0);
   assert.equal(env.timers.size, 0);
+  assert.equal(env.frames.size, 0);
   env.hide(false);
   assert.equal(env.timers.size, 1);
   env.show(false);
+  env.scroll(600);
   assert.equal(env.timers.size, 0);
+  assert.equal(env.frames.size, 0);
   env.show(); env.reduce(true);
   assert.equal(env.timers.size, 0);
-  env.pointer(0);
+  const still = env.properties.get("--mark-top");
+  env.scroll(0);
   assert.equal(env.frames.size, 0);
-  assert.equal(env.properties.get("--mark-left"), "0.000%");
+  assert.equal(env.properties.get("--mark-top"), still, "Reduced motion keeps a fixed band while the page scrolls");
 });
 
 test("disposal cancels both queues and removes every observer and event listener", t => {
   const env = environment(t);
-  env.show(); env.pointer(1);
+  env.show(); env.scroll(200);
   assert.equal(env.frames.size, 1);
   env.controller.dispose();
   assert.equal(env.frames.size + env.timers.size, 0);
   assert.ok(env.observers.every(observer => observer.disconnected));
-  for (const target of [env.host, env.input, env.image, env.document, env.media]) assert.equal(target.events.size, 0);
+  for (const target of [env.host, env.win, env.image, env.document, env.media]) assert.equal(target.events.size, 0);
 });
 
 test("unavailable canvas or unreadable images leave the original illustration", t => {
