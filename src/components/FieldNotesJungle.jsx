@@ -8,7 +8,8 @@ export default function FieldNotesJungle({ paused }) {
   const pausedRef = useRef(paused);
 
   useEffect(() => {
-    const motion = createResearchJungle(canvasRef.current, canvasRef.current.parentElement);
+    const style = import.meta.env.DEV && new URLSearchParams(window.location.search).get("background") === "original" ? "original" : "ascii";
+    const motion = createResearchJungle(canvasRef.current, canvasRef.current.parentElement, { style });
     motionRef.current = motion;
     motion.setPaused(pausedRef.current);
     return () => { motion.dispose(); motionRef.current = null; };

@@ -1,0 +1,26 @@
+.image-marks { position: relative; width: 100%; aspect-ratio: 2 / 1; overflow: hidden; isolation: isolate; }
+.image-marks__source, .image-marks__canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.image-marks__source { object-fit: contain; }
+.image-marks__labels { position: absolute; top: 22px; left: 24px; right: 24px; display: flex; justify-content: space-between; color: #dce2d7; font-size: 13px; pointer-events: none; }
+.image-marks__labels span { background: #080c0ccc; border-radius: 4px; padding: 7px 10px; }
+.image-marks[data-tone="paper"] .image-marks__labels span { color: #2e3930; background: #f5f0e5e6; }
+.image-marks__comparison { position: absolute; z-index: 2; inset: 0; margin: 0; width: 100%; height: 100%; opacity: 0; cursor: ew-resize; touch-action: pan-y; }
+.image-marks__divider { position: absolute; z-index: 1; top: 0; bottom: 0; left: var(--split); width: 1px; background: #ecf1e2aa; pointer-events: none; }
+.image-marks__divider > span { position: absolute; top: 50%; left: 50%; width: 48px; height: 48px; transform: translate(-50%, -50%); border-radius: 50%; background: #1a2522d9; border: 1px solid #e3e8d7aa; display: flex; align-items: center; justify-content: center; gap: 12px; font-size: 25px; color: #edf0e5; box-shadow: 0 0 0 6px #111d1b33; }
+.image-marks__comparison:focus-visible ~ .image-marks__divider > span { outline: 3px solid #e9bd87; outline-offset: 5px; }
+.image-marks__loading { position: absolute; inset: 0; display: grid; place-items: center; font-size: 15px; color: #a9b3a8; background: #0c101066; }
+.image-marks--fixed { aspect-ratio: 3 / 2; pointer-events: none; }
+.image-marks--quiet:has(> .image-marks__comparison:focus-visible) { outline: 2px solid #984b2f; outline-offset: 4px; }
+.image-marks--reveal .image-marks__canvas { opacity: 0; }
+.image-marks--reveal[data-state="ready"] .image-marks__canvas { animation: image-marks-reveal 1.8s ease .6s both; animation-play-state: var(--image-play-state, paused); }
+@keyframes image-marks-reveal { from { opacity: 0; } to { opacity: 1; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .image-marks--reveal[data-state="ready"] .image-marks__canvas { animation: none; opacity: 1; }
+}
+
+@media (max-width: 600px) {
+  .image-marks:not(.image-marks--fixed) { aspect-ratio: 4 / 3; }
+  .image-marks__labels { top: 12px; left: 12px; right: 12px; font-size: 11px; }
+  .image-marks__divider > span { width: 38px; height: 38px; gap: 9px; font-size: 22px; }
+}

@@ -1,5 +1,15 @@
+import { buildMarkField, drawMarkField } from "./imageMarks.js";
+
 const PAPER = "244, 238, 223";
 const GROWTH_END = 14;
+const ASCII_MAX_SAMPLES = 20_000;
+const ASCII_CELL_SIZE = 9;
+const ASCII_PAINT_FPS = 12;
+const ASCII_GROWTH_FPS = 8;
+const ASCII_SETTLED_FPS = 4;
+const ASCII_HOLD_SECONDS = 3;
+const ASCII_FADE_SECONDS = 2;
+const ASCII_UNDERLAY_OPACITY = 0.26;
 const progress = (time, start, duration) => Math.max(0, Math.min(1, (time - start) / duration));
 const unfurl = (time, start, duration = 1.4) => {
   const t = progress(time, start, duration);
@@ -287,9 +297,14 @@ export function drawResearchJungle(context, width, height, time, compact = false
   context.restore();
 }
 
-export function createResearchJungle(canvas, scene) {
+export function createResearchJungle(canvas, scene, { style = "original" } = {}) {
   const context = canvas.getContext("2d", { alpha: true });
   if (!context) return { setPaused() {}, dispose() {} };
+  // Render the existing scene directly into a small sample grid. Pixel reads
+  // stay below 20,000 samples, independent of the visible canvas's DPR.
+  const source = style === "ascii" ? document.createElement("canvas") : null;
+  const sourceContext = source?.getContext("2d", { willReadFrequently: true });
+  let renderStyle = sourceContext ? "ascii" : "original";
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
   const compact = window.matchMedia("(max-width: 700px)");
   const forced = window.matchMedia("(forced-colors: active)");
@@ -297,6 +312,7 @@ export function createResearchJungle(canvas, scene) {
   let vines = [];
   let previous = null, lastPaint = 0, frame = 0;
   let paused = false, inView = false, disposed = false;
+  let field = null, nextSourceTime = 0, sourceRevision = 0;
 
   function state() {
     if (reduced.matches || forced.matches) return "reduced";
@@ -305,17 +321,81 @@ export function createResearchJungle(canvas, scene) {
     return paused ? "paused" : "running";
   }
 
-  function paint() {
+  function rebuildSource(time) {
+    sourceContext.setTransform(source.width / width, 0, 0, source.height / height, 0, 0);
+    drawResearchJungle(sourceContext, width, height, time, compact.matches, vines);
+    field = buildMarkField(sourceContext.getImageData(0, 0, source.width, source.height), {
+      width, height, cellSize: ASCII_CELL_SIZE, mode: "ascii", tone: "paper",
+    });
+    sourceRevision += 1;
+    const interval = 1 / (time < GROWTH_END ? ASCII_GROWTH_FPS : ASCII_SETTLED_FPS);
+    // Advance a source deadline instead of rebuilding on every glyph frame.
+    nextSourceTime = Math.max(nextSourceTime + interval, time + interval * 0.05);
+  }
+
+  function paint(forceSource = false) {
+    const paintStarted = import.meta.env.DEV ? performance.now() : 0;
+    const still = reduced.matches || forced.matches;
+    const time = still ? GROWTH_END : elapsed;
+    let asciiBlend = 0;
     context.setTransform(dpr, 0, 0, dpr, 0, 0);
-    drawResearchJungle(context, width, height, reduced.matches || forced.matches ? GROWTH_END : elapsed, compact.matches, vines);
+    if (renderStyle === "ascii") {
+      try {
+        asciiBlend = still ? 1 : unfurl(time, ASCII_HOLD_SECONDS, ASCII_FADE_SECONDS);
+        if (asciiBlend > 0 && (forceSource || !field || time >= nextSourceTime)) rebuildSource(time);
+        // Keep the original drawing crisp while the ASCII arrives. In the last
+        // second, hand its now-faint underlay to the bounded sample canvas.
+        const sourceBlend = still ? 1 : unfurl(time, ASCII_HOLD_SECONDS + ASCII_FADE_SECONDS - 1, 1);
+        if (sourceBlend < 1) {
+          drawResearchJungle(context, width, height, time, compact.matches, vines);
+          context.fillStyle = `rgb(${PAPER})`;
+          context.globalAlpha = asciiBlend * (1 - ASCII_UNDERLAY_OPACITY);
+          context.fillRect(0, 0, width, height);
+        } else {
+          context.clearRect(0, 0, width, height);
+          context.fillStyle = `rgb(${PAPER})`;
+          context.globalAlpha = 1;
+          context.fillRect(0, 0, width, height);
+        }
+        if (sourceBlend > 0) {
+          if (sourceBlend < 1) {
+            context.globalAlpha = sourceBlend;
+            context.fillRect(0, 0, width, height);
+          }
+          context.globalAlpha = ASCII_UNDERLAY_OPACITY * sourceBlend;
+          context.imageSmoothingEnabled = true;
+          context.drawImage(source, 0, 0, width, height);
+        }
+        context.globalAlpha = 1;
+        // The cached field follows plant growth and sway at a slower cadence;
+        // glyph changes use the same frozen scene clock as the original art.
+        if (asciiBlend > 0) drawMarkField(context, field, { time, animate: !still, strength: asciiBlend });
+      } catch {
+        // A missing sampling capability leaves the original scene available.
+        renderStyle = "original";
+        asciiBlend = 0;
+        context.globalAlpha = 1;
+        field = null;
+      }
+    }
+    if (renderStyle === "original") drawResearchJungle(context, width, height, time, compact.matches, vines);
     canvas.dataset.growth = progress(elapsed, 0, GROWTH_END).toFixed(3);
+    if (import.meta.env.DEV) {
+      canvas.dataset.style = renderStyle;
+      canvas.dataset.asciiBlend = asciiBlend.toFixed(3);
+      canvas.dataset.cellCount = String(field?.cells.length ?? 0);
+      canvas.dataset.sourceRevision = String(sourceRevision);
+      canvas.dataset.paintMs = (performance.now() - paintStarted).toFixed(2);
+    }
   }
 
   function tick(timestamp) {
     if (disposed || state() !== "running") return;
     if (previous !== null) elapsed += Math.min(100, timestamp - previous) / 1000;
     previous = timestamp;
-    if (timestamp - lastPaint >= 1000 / (compact.matches ? 18 : 24)) {
+    const transitioning = elapsed < ASCII_HOLD_SECONDS + ASCII_FADE_SECONDS;
+    const fps = renderStyle === "ascii" && !transitioning ? ASCII_PAINT_FPS : compact.matches ? 18 : 24;
+    if (timestamp - lastPaint >= 1000 / fps) {
       paint();
       lastPaint = timestamp;
     }
@@ -334,6 +414,7 @@ export function createResearchJungle(canvas, scene) {
   function resize() {
     if (disposed) return;
     const rect = scene.getBoundingClientRect();
+    if (rect.width <= 0 || rect.height <= 0) return;
     width = rect.width;
     height = rect.height;
     // A static-motion preference shows the mature scene without replaying growth.
@@ -343,7 +424,14 @@ export function createResearchJungle(canvas, scene) {
     dpr = Math.min(window.devicePixelRatio || 1, compact.matches ? 1 : 1.25);
     canvas.width = Math.max(1, Math.round(width * dpr));
     canvas.height = Math.max(1, Math.round(height * dpr));
-    paint();
+    if (renderStyle === "ascii") {
+      const cell = Math.max(ASCII_CELL_SIZE, Math.sqrt(width * height / (ASCII_MAX_SAMPLES * 1.65)));
+      source.width = Math.max(1, Math.min(ASCII_MAX_SAMPLES, Math.ceil(width / cell)));
+      source.height = Math.max(1, Math.min(Math.floor(ASCII_MAX_SAMPLES / source.width), Math.ceil(height / (cell * 1.65))));
+      field = null;
+      nextSourceTime = reduced.matches || forced.matches ? GROWTH_END : elapsed;
+    }
+    paint(true);
     sync();
   }
 

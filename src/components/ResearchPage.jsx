@@ -5,14 +5,30 @@ import { renderInline } from "../lib/markdown.js";
 import ResearchMedia from "./ResearchMedia.jsx";
 import FieldNotesJungle from "./FieldNotesJungle.jsx";
 import NappingRaccoon from "./NappingRaccoon.jsx";
+import ImageMarks from "./ImageMarks.jsx";
 import "./ResearchPage.css";
 
 function Arrow({ diagonal = false }) {
   return <svg className="field-arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d={diagonal ? "M6 18 18 6M6 6h12v12" : "M4 12h15m-6-6 6 6-6 6"} /></svg>;
 }
 
-function NoteArt({ kind, thumbnail = false, priority = false }) {
+function NoteArt({ kind, thumbnail = false, priority = false, animate = true }) {
+  const [split, setSplit] = useState(45);
   const illustration = RESEARCH_ART[kind] ?? RESEARCH_ART.trail;
+  if (kind === "trail") {
+    return <ImageMarks
+      className="field-art-ascii"
+      src={asset(`research/${illustration.file}`)}
+      alt={thumbnail ? "" : illustration.alt}
+      imageWidth={illustration.width ?? 1536}
+      imageHeight={illustration.height ?? 1024}
+      loading={thumbnail ? "lazy" : "eager"}
+      fetchPriority={priority ? "high" : undefined}
+      mode="ascii" tone="paper" split={split} onSplitChange={setSplit} underlay={0.16}
+      cellSize={thumbnail ? 4 : 7} glow={false} animate={animate}
+      interactive={!thumbnail} showLabels={false} showHandle={false} reveal canvasId={thumbnail ? "field-note-ascii" : undefined}
+    />;
+  }
   return <img className={[thumbnail && "field-thumbnail", illustration.original && "field-art-original"].filter(Boolean).join(" ") || undefined} src={asset(`research/${illustration.file}`)} alt={thumbnail ? "" : illustration.alt} style={illustration.fit ? { objectFit: illustration.fit } : undefined} loading={thumbnail ? "lazy" : "eager"} fetchPriority={priority ? "high" : undefined} width={illustration.width ?? 1536} height={illustration.height ?? 1024} />;
 }
 
@@ -35,7 +51,7 @@ function ResearchIndex({ onNavigate }) {
         </div>
         <button className="field-motion" type="button" aria-pressed={paused}
           aria-label={paused ? "Resume Field Notes animations" : "Pause Field Notes animations"}
-          aria-controls="field-jungle field-napping-raccoon" onClick={() => setPaused((value) => !value)}>
+          aria-controls="field-jungle field-napping-raccoon field-note-ascii" onClick={() => setPaused((value) => !value)}>
           <svg viewBox="0 0 16 16" aria-hidden="true">
             {paused ? <path d="m5 3 8 5-8 5Z" /> : <path d="M4 3h3v10H4zm5 0h3v10H9z" />}
           </svg>
@@ -49,7 +65,7 @@ function ResearchIndex({ onNavigate }) {
             <p className="field-feature-meta">{featured.category} <span>·</span> {featured.readTime}</p>
           </div>
           <figure className="field-feature-image">
-            <NoteArt kind={featured.art} priority />
+            <NoteArt kind={featured.art} priority animate={!paused} />
           </figure>
         </ArticleLink>
       </section>
@@ -57,7 +73,7 @@ function ResearchIndex({ onNavigate }) {
       <section className="field-notebook" aria-label="More field notes">
         <div className="field-entries">
           {posts.map((post) => <ArticleLink key={post.slug} post={post} onNavigate={onNavigate} className="field-entry">
-            <div className="field-entry-art"><NoteArt kind={post.art} thumbnail /></div>
+            <div className="field-entry-art"><NoteArt kind={post.art} thumbnail animate={!paused} /></div>
             <div className="field-entry-copy"><p className="field-category">{post.category}</p><h2>{post.title}</h2><div className="field-entry-meta">{post.readTime}</div></div>
             <Arrow diagonal />
           </ArticleLink>)}
