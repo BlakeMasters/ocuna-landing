@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { HOME_RACCOON } from "../src/content/homeArtwork.js";
-import { markWindowBounds, stepMarkSpring, mountRaccoonMarkWindow } from "../src/lib/raccoonMarkWindow.js";
+import { buildMixedMarkFields, markWindowBounds, stepMarkSpring, mountRaccoonMarkWindow } from "../src/lib/raccoonMarkWindow.js";
 
 function environment(t, { width = 540, height = 312, noCanvas = false, tainted = false } = {}) {
   const timers = new Map(), frames = new Map(), observers = [], reads = [], imageDraws = [];
@@ -26,7 +26,7 @@ function environment(t, { width = 540, height = 312, noCanvas = false, tainted =
     value.getContext = () => noCanvas ? null : context;
     return value;
   }
-  const surfaces = [canvas(), canvas()];
+  const surfaces = [canvas()];
   const win = { ...listeners(), devicePixelRatio: 3, matchMedia: () => media };
   const properties = new Map();
   const host = {
@@ -105,18 +105,41 @@ test("the whole band clears the artwork above and below, with a centered middle 
 test("spring motion accelerates, slows to a stop, and behaves consistently at 30 and 60 fps", () => {
   const trace = [];
   let value = 0, velocity = 0;
-  for (let n = 0; n < 30; n += 1) {
+  for (let n = 0; n < 120; n += 1) {
     const next = stepMarkSpring(value, velocity, 1, 1 / 60);
     trace.push(next.value - value);
     assert.ok(next.value >= value && next.value <= 1, "No bounce or overshoot");
+    assert.ok(Math.abs(next.velocity) <= 1.6, "Travel speed stays capped");
+    assert.ok(next.value - value <= 1.6 / 60 + 1e-10, "Displacement also respects the speed cap");
     ({ value, velocity } = next);
   }
   assert.ok(trace[1] > trace[0], "Motion picks up speed from rest");
-  assert.ok(trace[8] < trace[4], "Motion slows as it approaches the target");
+  assert.ok(trace[45] < trace[15], "Motion slows as it approaches the target");
   assert.equal(value, 1);
   let slower = { value: 0, velocity: 0 };
-  for (let n = 0; n < 15; n += 1) slower = stepMarkSpring(slower.value, slower.velocity, 1, 1 / 30);
+  for (let n = 0; n < 60; n += 1) slower = stepMarkSpring(slower.value, slower.velocity, 1, 1 / 30);
   assert.equal(slower.value, value);
+});
+
+test("characters and diagonals share one grid without overlap or a half-and-half boundary", () => {
+  const width = 24, height = 16;
+  const data = new Uint8ClampedArray(width * height * 4);
+  for (let offset = 0; offset < data.length; offset += 4) data.set([80, 80, 80, 255], offset);
+  const samples = { width, height, data };
+  const fields = buildMixedMarkFields(samples, { width: 240, height: 160 });
+  const occupied = new Set();
+  for (const field of fields) {
+    for (const cell of field.cells) {
+      const key = `${cell.column}:${cell.row}`;
+      assert.ok(!occupied.has(key), "Each source cell contributes exactly one kind of mark");
+      occupied.add(key);
+    }
+    for (const upper of [true, false]) for (const left of [true, false]) {
+      assert.ok(field.cells.some(cell => (cell.row < height / 2) === upper && (cell.column < width / 2) === left), "Both mark types appear in every quadrant");
+    }
+  }
+  assert.equal(occupied.size, width * height);
+  assert.deepEqual(buildMixedMarkFields(samples, { width: 240, height: 160 }), fields, "The mixture stays stable while moving");
 });
 
 test("local pointer movement eases vertically without repainting or resampling", t => {
@@ -133,7 +156,7 @@ test("local pointer movement eases vertically without repainting or resampling",
   assert.ok(Math.abs(env.y - markWindowBounds(.8).top * 312) < .02);
   assert.equal(env.paints, paints, "Motion changes transforms only");
   env.tick(); env.tick();
-  assert.equal(env.reads.length, 2);
+  assert.equal(env.reads.length, 1);
   assert.equal(env.win.events.has("scroll"), false);
 });
 
@@ -174,7 +197,7 @@ test("above and below exits slide the band completely off the image", t => {
   env.leave(1.1, .5); env.settle();
   assert.ok(env.y >= 312 - .02);
   assert.equal(env.opacity, 0);
-  assert.equal(env.reads.length, 2);
+  assert.equal(env.reads.length, 1);
 });
 
 test("the exact upper and lower image edges show no band and schedule no glyph work", t => {
@@ -231,7 +254,7 @@ test("large high-DPR displays keep sampling bounded and ignore duplicate resize 
   assert.ok(env.reads.every(([w, h]) => w * h <= 8000));
   assert.equal(env.surfaces[0].width, 16000);
   env.observers[0].callback();
-  assert.equal(env.reads.length, 2);
+  assert.equal(env.reads.length, 1);
 });
 
 test("responsive images preserve the CSS crop and rebuild only when their source changes", t => {
@@ -241,7 +264,7 @@ test("responsive images preserve the CSS crop and rebuild only when their source
   assert.ok(Math.abs(-x / width - crop.x / HOME_RACCOON.width) < 1e-10);
   assert.ok(Math.abs(-y / height - crop.y / HOME_RACCOON.height) < 1e-10);
   env.image.events.get("load")();
-  assert.equal(env.reads.length, 4);
+  assert.equal(env.reads.length, 2);
 });
 
 test("disposal cancels both queues and removes every observer and listener", t => {

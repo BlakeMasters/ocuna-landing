@@ -1,7 +1,7 @@
 .hero-raccoon {
   --mark-opacity: 0;
   --mark-y: 0px;
-  --mark-half-height: 0px;
+  --mark-band-height: 0px;
   position: relative;
   min-width: 0;
   width: 100%;
@@ -14,12 +14,9 @@
 }
 .hero-raccoon__original { position: absolute; display: block; max-width: none; object-fit: fill; mix-blend-mode: multiply; }
 .hero-raccoon__effect { position: absolute; inset: 0; opacity: var(--mark-opacity); pointer-events: none; }
-.hero-raccoon__band { position: absolute; top: 0; left: 0; width: 100%; height: var(--mark-half-height); overflow: hidden; }
+.hero-raccoon__band { position: absolute; top: 0; left: 0; width: 100%; height: var(--mark-band-height); overflow: hidden; transform: translate3d(0, var(--mark-y), 0); }
 .hero-raccoon__marks { position: absolute; top: 0; left: 0; width: 100%; height: var(--mark-height); }
-/* Move the small windows and counter-move their cached images to stay aligned. */
-.hero-raccoon__band--ascii { transform: translate3d(0, var(--mark-y), 0); }
-.hero-raccoon__band--ascii .hero-raccoon__marks { transform: translate3d(0, calc(0px - var(--mark-y)), 0); }
-.hero-raccoon__band--hatch { transform: translate3d(0, calc(var(--mark-y) + var(--mark-half-height)), 0); }
-.hero-raccoon__band--hatch .hero-raccoon__marks { transform: translate3d(0, calc(0px - var(--mark-y) - var(--mark-half-height)), 0); }
+/* Counter-move the cached image so the mixed marks stay on the original. */
+.hero-raccoon__marks { transform: translate3d(0, calc(0px - var(--mark-y)), 0); }
 .hero-raccoon[data-effect-active="true"] .hero-raccoon__effect { will-change: opacity; }
 .hero-raccoon[data-effect-active="true"] :is(.hero-raccoon__band, .hero-raccoon__marks) { will-change: transform; }

@@ -14,9 +14,24 @@ export function markWindowBounds(position, share = WINDOW_SHARE) {
   return { top, middle: top + height / 2, bottom: fraction === 0 ? 0 : top + height };
 }
 
-// Analytic critically damped motion: quick acceleration, a soft stop, no bounce.
-export function stepMarkSpring(value, velocity, target, seconds) {
+// Cap travel speed and acceleration; the exit fade uses fast critical damping.
+export function stepMarkSpring(value, velocity, target, seconds, { maxSpeed = 1.6 } = {}) {
   const dt = clamp(Number.isFinite(seconds) ? seconds : 0, 0, .05);
+  if (maxSpeed !== Infinity) {
+    const steps = Math.max(1, Math.ceil(dt * 120));
+    const step = dt / steps;
+    for (let index = 0; index < steps; index += 1) {
+      const distance = target - value;
+      const desiredSpeed = Math.sign(distance) * Math.min(maxSpeed, Math.abs(distance) * 18, Math.sqrt(24 * Math.abs(distance)));
+      const nextVelocity = velocity + clamp((desiredSpeed - velocity) * (1 - Math.exp(-18 * step)), -12 * step, 12 * step);
+      const nextValue = value + (velocity + nextVelocity) * step / 2;
+      if (distance * (target - nextValue) <= 0) return { value: target, velocity: 0 };
+      value = clamp(nextValue, 0, 1);
+      velocity = clamp(nextVelocity, -maxSpeed, maxSpeed);
+    }
+    if (Math.abs(target - value) < .0005 && Math.abs(velocity) < .005) return { value: target, velocity: 0 };
+    return { value, velocity };
+  }
   const response = 28;
   const error = value - target;
   const impulse = velocity + response * error;
@@ -26,6 +41,25 @@ export function stepMarkSpring(value, velocity, target, seconds) {
   if (Math.abs(target - next) < .0005 && Math.abs(speed) < .005) return { value: target, velocity: 0 };
   if (next < 0 || next > 1) return { value: clamp(next, 0, 1), velocity: 0 };
   return { value: next, velocity: speed };
+}
+
+function asciiCell(cell) {
+  let seed = Math.imul(cell.column + 1, 1597334677) ^ Math.imul(cell.row + 1, 3812015801);
+  seed ^= seed >>> 16;
+  return (seed >>> 0) % 100 < 55;
+}
+
+// One shared grid, one mark per cell: characters and strokes are interleaved.
+export function buildMixedMarkFields(samples, { width, height, cellSize = 6 }) {
+  return ["ascii", "hatch"].map((mode) => {
+    const field = buildMarkField(samples, { width, height, mode, tone: "paper", cellSize });
+    field.cells = field.cells.filter(cell => asciiCell(cell) === (mode === "ascii"));
+    for (const cell of field.cells) {
+      cell.color = "#424a46";
+      cell.opacity = .28 + cell.intensity * .66;
+    }
+    return field;
+  });
 }
 
 /** Only local pointer movement drives the band; idle artwork schedules no work. */
@@ -83,7 +117,7 @@ export function mountRaccoonMarkWindow(host, { image, artwork, animate = true })
     const dt = lastMotion === undefined ? 1 / 60 : (timestamp - lastMotion) / 1000;
     lastMotion = timestamp;
     position = stepMarkSpring(position.value, position.velocity, targetPosition, dt);
-    opacity = stepMarkSpring(opacity.value, opacity.velocity, targetOpacity, dt);
+    opacity = stepMarkSpring(opacity.value, opacity.velocity, targetOpacity, dt, { maxSpeed: Infinity });
     writePose();
     syncPlayback();
     if (position.value !== targetPosition || opacity.value !== targetOpacity
@@ -143,14 +177,16 @@ export function mountRaccoonMarkWindow(host, { image, artwork, animate = true })
   function paint() {
     if (!fields.length || disposed) return;
     const started = import.meta.env?.DEV ? performance.now() : 0;
-    contexts.forEach((context, index) => {
+    contexts.forEach((context) => {
       context.globalAlpha = 1;
       context.fillStyle = PAPER;
       context.fillRect(0, 0, width, height);
       context.globalAlpha = .16;
       context.drawImage(source, 0, 0, width, height);
       context.globalAlpha = 1;
-      drawMarkField(context, fields[index], { time: elapsed / 1000 * (fields[index].mode === "ascii" ? ASCII_SPEED : 1), animate: !reduced.matches });
+      for (const field of fields) {
+        drawMarkField(context, field, { time: elapsed / 1000 * (field.mode === "ascii" ? ASCII_SPEED : 1), animate: !reduced.matches });
+      }
     });
     if (import.meta.env?.DEV) {
       host.dataset.paintMs = (performance.now() - started).toFixed(2);
@@ -199,7 +235,7 @@ export function mountRaccoonMarkWindow(host, { image, artwork, animate = true })
     if (nextWidth <= 0 || nextHeight <= 0 || (width === nextWidth && height === nextHeight)) return;
     width = nextWidth; height = nextHeight;
     host.style.setProperty("--mark-height", `${height}px`);
-    host.style.setProperty("--mark-half-height", `${height * WINDOW_SHARE / 2}px`);
+    host.style.setProperty("--mark-band-height", `${height * WINDOW_SHARE}px`);
     writePose();
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
     canvases.forEach((canvas, index) => {
@@ -217,24 +253,13 @@ export function mountRaccoonMarkWindow(host, { image, artwork, animate = true })
       artwork.width / crop.width * width, artwork.height / crop.height * height);
     sourceContext.filter = "none";
     try {
-      fields = ["ascii", "hatch"].map((mode) => {
-        const cellSize = mode === "ascii" ? 6 : 5;
-        // Cap sampling independently of viewport size or device pixel ratio.
-        const columns = Math.ceil(width / cellSize);
-        const rows = Math.ceil(height / (cellSize * (mode === "ascii" ? 1.65 : 1.4)));
-        const scale = Math.min(1, Math.sqrt(8000 / (columns * rows)));
-        sample.width = Math.max(1, Math.floor(columns * scale));
-        sample.height = Math.max(1, Math.min(Math.floor(rows * scale), Math.floor(8000 / sample.width)));
-        sampleContext.drawImage(source, 0, 0, sample.width, sample.height);
-        const field = buildMarkField(sampleContext.getImageData(0, 0, sample.width, sample.height), { width, height, mode, tone: "paper", cellSize });
-        // The engraving is monochrome. Use a consistent ink so its palest
-        // pencil details still read as characters and strokes at this scale.
-        for (const cell of field.cells) {
-          cell.color = "#424a46";
-          cell.opacity = .28 + cell.intensity * .66;
-        }
-        return field;
-      });
+      const cellSize = 6;
+      const columns = Math.ceil(width / cellSize), rows = Math.ceil(height / (cellSize * 1.65));
+      const scale = Math.min(1, Math.sqrt(8000 / (columns * rows)));
+      sample.width = Math.max(1, Math.floor(columns * scale));
+      sample.height = Math.max(1, Math.min(Math.floor(rows * scale), Math.floor(8000 / sample.width)));
+      sampleContext.drawImage(source, 0, 0, sample.width, sample.height);
+      fields = buildMixedMarkFields(sampleContext.getImageData(0, 0, sample.width, sample.height), { width, height, cellSize });
       host.dataset.state = "ready";
       if (import.meta.env?.DEV) {
         host.dataset.sampleRevision = String((Number(host.dataset.sampleRevision) || 0) + 1);
