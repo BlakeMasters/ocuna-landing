@@ -14,6 +14,7 @@ import { researchStageSvg } from "../components/four1/researchStageArt.js";
 import { CRITTER } from "./critter.js";
 import { TENANTS_PLATE, TENANTS_PLATE_STYLE } from "./illustrations.js";
 import { HOME } from "./home.js";
+import { HOME_RACCOON } from "./homeArtwork.js";
 import { galleryImagePath, NOT_FOUND, RACCOON_GALLERY } from "./raccoonGallery.js";
 
 function navHtml(styled = false, headerClass = "not-found-static-header") {
@@ -69,9 +70,17 @@ function wrap(title, body) {
 ${footerHtml()}`;
 }
 
+function homeArtworkHtml() {
+  const { crop, width, height } = HOME_RACCOON;
+  return `<figure style="position:relative;width:min(100%,540px);aspect-ratio:${crop.width}/${crop.height};overflow:hidden;background:#f8f7f4">
+    <img src="/${HOME_RACCOON.smallSrc}" srcset="/${HOME_RACCOON.smallSrc} 800w, /${HOME_RACCOON.src} 1600w" sizes="(max-width:620px) 100vw, 600px" alt="${escapeHtml(HOME_RACCOON.alt)}" width="${width}" height="${height}" decoding="async" style="position:absolute;max-width:none;width:${width / crop.width * 100}%;height:${height / crop.height * 100}%;left:${-crop.x / crop.width * 100}%;top:${-crop.y / crop.height * 100}%;filter:${HOME_RACCOON.filter};mix-blend-mode:multiply" />
+  </figure>`;
+}
+
 function landingBody(extra = "") {
   return `
       <p>${escapeHtml(HOME.introduction)}</p>
+      ${homeArtworkHtml()}
       <section aria-labelledby="system-partners-title">
         <h2 id="system-partners-title">${escapeHtml(HOME.partnersTitle)}</h2>
         <ul>${HOME.partners.map((partner) => `<li><a href="${escapeHtml(partner.href)}"><img src="/${escapeHtml(partner.logo)}" alt="${escapeHtml(partner.name)}" width="${partner.width}" height="${partner.height}" style="width:auto;height:40px;max-width:100%;filter:grayscale(1)" /></a></li>`).join("\n")}</ul>

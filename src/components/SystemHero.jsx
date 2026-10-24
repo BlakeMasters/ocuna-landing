@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { HOME } from "../content/home.js";
 import TypesetWord, { RecurringTypesetWord } from "./TypesetWord.jsx";
 import DistributedComputeDiagram from "./DistributedComputeDiagram.jsx";
-import WalkingRaccoon from "./WalkingRaccoon.jsx";
+import RaccoonMarkWindow from "./RaccoonMarkWindow.jsx";
 import AdaptiveGrid from "./AdaptiveGrid.jsx";
 
 export function ArrowIcon() {
@@ -37,13 +37,15 @@ export default function SystemHero({ motionEnabled, onToggleMotion }) {
           <h1 id="home-title" aria-label={HOME.headline}><TypesetWord text={HOME.headlineLead} onComplete={() => setLeadComplete(true)} />{" "}<RecurringTypesetWord text={uncertain} enabled={leadComplete && motionEnabled && isInView && pageVisible} />{" "}{headlineEnd.join(" ")}</h1>
           <p>{HOME.introduction}</p>
         </div>
-        <figure className="system-map">
-          <div className="system-map-stage">
-            <AdaptiveGrid enabled={playing && isInView && pageVisible} />
-            <WalkingRaccoon animate={playing && isInView && pageVisible} />
-            <DistributedComputeDiagram />
-          </div>
-        </figure>
+        <div className="system-hero-visuals">
+          <RaccoonMarkWindow animate={playing && isInView && pageVisible} pointerTarget={sectionRef} />
+          <figure className="system-map">
+            <div className="system-map-stage">
+              <AdaptiveGrid enabled={playing && isInView && pageVisible} />
+              <DistributedComputeDiagram />
+            </div>
+          </figure>
+        </div>
         <div className="system-animation-controls">
           <button className="system-motion" type="button" aria-label={playing ? "Pause system animation" : "Play system animation"} aria-pressed={!playing} onClick={onToggleMotion}>
             <svg viewBox="0 0 20 20" aria-hidden="true">{playing ? <path d="M6 4h3v12H6zM12 4h3v12h-3z" /> : <path d="m6 3 10 7-10 7z" />}</svg>

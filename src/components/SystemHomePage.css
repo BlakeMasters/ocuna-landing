@@ -149,11 +149,19 @@ body.landing-route:has(.system-home) .footer-logo-link img { filter: none; }
   transform: translateX(3px);
 }
 
+.system-hero-visuals {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+  align-items: center;
+  gap: clamp(12px, 3vw, 48px);
+  margin-top: 28px;
+}
+
 .system-map {
   position: relative;
   z-index: 1;
   min-width: 0;
-  margin: 8px 0 0;
+  margin: 0;
   pointer-events: none;
 }
 
@@ -482,6 +490,8 @@ body.landing-route:has(.system-home) .footer-logo-link img { filter: none; }
 }
 
 @media (max-width: 620px) {
+  .system-hero-visuals { grid-template-columns: minmax(0, 1fr); gap: 0; margin-top: 20px; }
+  .system-hero-visuals > .hero-raccoon { width: min(100%, 460px); justify-self: center; }
   .system-home { --system-hero-type-size: clamp(1.5rem, 6.8vw, 2.65rem); }
   .system-home .shell,
   body.landing-route:has(.system-home) .site-header,
