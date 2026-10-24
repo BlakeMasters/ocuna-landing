@@ -15,15 +15,17 @@ export function markWindowBounds(position, share = WINDOW_SHARE) {
 }
 
 // Cap travel speed and acceleration; the exit fade uses fast critical damping.
-export function stepMarkSpring(value, velocity, target, seconds, { maxSpeed = 1.6 } = {}) {
+export function stepMarkSpring(value, velocity, target, seconds, { maxSpeed = .88 } = {}) {
   const dt = clamp(Number.isFinite(seconds) ? seconds : 0, 0, .05);
   if (maxSpeed !== Infinity) {
+    // Scale the complete travel response to 55% of its previous pace.
+    const response = 9.9, acceleration = 3.63;
     const steps = Math.max(1, Math.ceil(dt * 120));
     const step = dt / steps;
     for (let index = 0; index < steps; index += 1) {
       const distance = target - value;
-      const desiredSpeed = Math.sign(distance) * Math.min(maxSpeed, Math.abs(distance) * 18, Math.sqrt(24 * Math.abs(distance)));
-      const nextVelocity = velocity + clamp((desiredSpeed - velocity) * (1 - Math.exp(-18 * step)), -12 * step, 12 * step);
+      const desiredSpeed = Math.sign(distance) * Math.min(maxSpeed, Math.abs(distance) * response, Math.sqrt(2 * acceleration * Math.abs(distance)));
+      const nextVelocity = velocity + clamp((desiredSpeed - velocity) * (1 - Math.exp(-response * step)), -acceleration * step, acceleration * step);
       const nextValue = value + (velocity + nextVelocity) * step / 2;
       if (distance * (target - nextValue) <= 0) return { value: target, velocity: 0 };
       value = clamp(nextValue, 0, 1);

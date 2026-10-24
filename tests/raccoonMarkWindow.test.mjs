@@ -79,7 +79,7 @@ function environment(t, { width = 540, height = 312, noCanvas = false, tainted =
       frames.delete(id); callback(now);
     },
     settle() {
-      for (let n = 0; frames.size && n < 100; n += 1) this.frame();
+      for (let n = 0; frames.size && n < 180; n += 1) this.frame();
       assert.equal(frames.size, 0);
     },
     tick() {
@@ -105,19 +105,19 @@ test("the whole band clears the artwork above and below, with a centered middle 
 test("spring motion accelerates, slows to a stop, and behaves consistently at 30 and 60 fps", () => {
   const trace = [];
   let value = 0, velocity = 0;
-  for (let n = 0; n < 120; n += 1) {
+  for (let n = 0; n < 180; n += 1) {
     const next = stepMarkSpring(value, velocity, 1, 1 / 60);
     trace.push(next.value - value);
     assert.ok(next.value >= value && next.value <= 1, "No bounce or overshoot");
-    assert.ok(Math.abs(next.velocity) <= 1.6, "Travel speed stays capped");
-    assert.ok(next.value - value <= 1.6 / 60 + 1e-10, "Displacement also respects the speed cap");
+    assert.ok(Math.abs(next.velocity) <= .88, "Travel speed stays capped");
+    assert.ok(next.value - value <= .88 / 60 + 1e-10, "Displacement also respects the speed cap");
     ({ value, velocity } = next);
   }
   assert.ok(trace[1] > trace[0], "Motion picks up speed from rest");
-  assert.ok(trace[45] < trace[15], "Motion slows as it approaches the target");
+  assert.ok(trace[90] < trace[30], "Motion slows as it approaches the target");
   assert.equal(value, 1);
   let slower = { value: 0, velocity: 0 };
-  for (let n = 0; n < 60; n += 1) slower = stepMarkSpring(slower.value, slower.velocity, 1, 1 / 30);
+  for (let n = 0; n < 90; n += 1) slower = stepMarkSpring(slower.value, slower.velocity, 1, 1 / 30);
   assert.equal(slower.value, value);
 });
 
