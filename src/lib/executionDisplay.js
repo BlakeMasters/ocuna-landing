@@ -1,73 +1,92 @@
-import { graphScripts } from "../ocuraDemoData.js";
+export const EXECUTION_TITLE = "Execution frontier";
+export const EXECUTION_DESCRIPTION = "An example Ocura OSS workflow. A completed baseline has two child branches, each recording its parent and reason. Each variation runs as a separate command and keeps its own outcome and captured logs. Record verification checks local consistency, not workload quality. Compare the recorded runs, then you or your agent chooses what to run next.";
 
-export const EXECUTION_CYCLE_MS = 12500;
-export const EXECUTION_STILL_MS = 9000;
-export const EXECUTION_SOURCE = graphScripts.split
-  .replace(/\n{3,}/g, "\n\n")
-  .replace('point = ocura.chokepoint(reason="before hello_world()")', 'point = ocura.chokepoint(\n        reason="before hello_world()"\n    )')
-  .split("\n");
-const lineOf = (code) => EXECUTION_SOURCE.findIndex((line) => line.trim() === code);
+export const EXECUTION_NODES = [
+  { id: "baseline", label: "Baseline", kind: "record", description: "Baseline: a completed command with its recorded outcome and captured logs." },
+  { id: "warmup", label: "Longer warmup", kind: "branch", description: "Longer warmup: a child branch records the reason and parent; execution is a separate step." },
+  { id: "inputs", label: "New data mix", kind: "branch", description: "New data mix: a child branch records the reason and parent; your command supplies the actual inputs." },
+  { id: "warmupRun", label: "Run & record", kind: "record-logs", description: "Run & record: warmup variation, executed as a separate command with its own outcome and captured logs." },
+  { id: "inputsRun", label: "Run & record", kind: "record-logs", description: "Run & record: data variation, executed as a separate command with its own outcome and captured logs, whether the command succeeds or fails." },
+  { id: "verify", label: "Verify records", kind: "verify", description: "Verify records: check local record and captured-log consistency, not workload quality." },
+  { id: "compare", label: "Compare runs", kind: "compare", description: "Compare runs: review command status, timing, and parameter differences against the baseline; your workflow interprets workload metrics." },
+  { id: "choose", label: "You choose", kind: "choose", description: "You choose: you or your agent decides what to run next." },
+];
+
+export const EXECUTION_CYCLE_MS = 16000;
+export const EXECUTION_STILL_MS = 12800;
 
 const phases = [
-  { at: 0, id: "entry", active: "main", line: lineOf("main()"), detail: "main() starts the run.", completed: [] },
-  { at: 1200, id: "boundary", active: "chokepoint", line: lineOf("point = ocura.chokepoint("), detail: "Execution reaches a decision boundary before hello_world().", completed: ["main"] },
-  { at: 3000, id: "normal", active: "hello", line: lineOf("hello_world()"), detail: "The original path continues through hello_world().", completed: ["main", "chokepoint"] },
-  { at: 4300, id: "normal-output", active: "printHello", line: lineOf('print("hello_world")'), detail: "The normal path writes its output.", completed: ["main", "chokepoint", "hello"] },
-  { at: 5400, id: "branch", active: "chokepoint", line: lineOf("point.split(review_path)"), detail: "A review branch opens from the same decision boundary.", completed: ["main", "chokepoint", "hello", "printHello"] },
-  { at: 6500, id: "review", active: "review", line: lineOf("def review_path():"), detail: "review_path() runs along its own branch.", completed: ["main", "chokepoint", "hello", "printHello"] },
-  { at: 7700, id: "review-output", active: "printReview", line: lineOf('print("review branch")'), detail: "The review branch writes a separate output.", completed: ["main", "chokepoint", "hello", "printHello", "review"] },
-  { at: 8800, id: "complete", active: null, line: null, detail: "Both outputs stay connected to their paths and shared chokepoint.", completed: ["main", "chokepoint", "hello", "printHello", "review", "printReview"] },
+  { at: 0, id: "baseline", active: "baseline", completed: [] },
+  { at: 1400, id: "warmup", active: "warmup", completed: ["baseline"] },
+  { at: 2800, id: "warmupRun", active: "warmupRun", completed: ["baseline", "warmup"] },
+  { at: 4500, id: "inputs", active: "inputs", completed: ["baseline", "warmup", "warmupRun"] },
+  { at: 5900, id: "inputsRun", active: "inputsRun", completed: ["baseline", "warmup", "warmupRun", "inputs"] },
+  { at: 7000, id: "recorded", active: null, completed: ["baseline", "warmup", "warmupRun", "inputs", "inputsRun"] },
+  { at: 8400, id: "verify", active: "verify", completed: ["baseline", "warmup", "warmupRun", "inputs", "inputsRun"] },
+  { at: 10300, id: "compare", active: "compare", completed: ["baseline", "warmup", "warmupRun", "inputs", "inputsRun", "verify"] },
+  { at: 11700, id: "choose", active: "choose", completed: ["baseline", "warmup", "warmupRun", "inputs", "inputsRun", "verify", "compare"] },
+  { at: EXECUTION_STILL_MS, id: "complete", active: null, completed: EXECUTION_NODES.map((node) => node.id) },
 ];
 
 const flights = [
-  { edge: "entry", from: 500, until: 1200 },
-  { edge: "normal", from: 2350, until: 3000 },
-  { edge: "normal-output", from: 3750, until: 4300 },
-  { edge: "review", from: 5750, until: 6500 },
-  { edge: "review-output", from: 7150, until: 7700 },
+  { edge: "baseline-warmup", from: 650, until: 1400 },
+  { edge: "warmup-warmupRun", from: 2050, until: 2800 },
+  { edge: "baseline-inputs", from: 3750, until: 4500 },
+  { edge: "inputs-inputsRun", from: 5150, until: 5900 },
+  { edge: "warmupRun-verify", from: 7300, until: 8400 },
+  { edge: "inputsRun-verify", from: 7300, until: 8400 },
+  { edge: "verify-compare", from: 9500, until: 10300 },
+  { edge: "compare-choose", from: 10900, until: 11700 },
 ];
 
 export function executionFrame(elapsed) {
   const time = ((elapsed % EXECUTION_CYCLE_MS) + EXECUTION_CYCLE_MS) % EXECUTION_CYCLE_MS;
   const phase = phases.findLast((item) => item.at <= time);
-  const flight = flights.find((item) => time >= item.from && time < item.until);
   return {
-    ...phase,
-    time,
-    orb: phase.id === "complete" ? "globe" : phase.id === "branch" ? "connecting" : phase.id.startsWith("review") ? "orbits" : "breathing",
-    output: [time >= 5100, time >= 8500],
-    packet: flight ? { edge: flight.edge, progress: (time - flight.from) / (flight.until - flight.from) } : null,
+    time, id: phase.id, active: phase.active, completed: [...phase.completed],
+    packets: flights.filter((flight) => time >= flight.from && time < flight.until)
+      .map((flight) => ({ edge: flight.edge, progress: (time - flight.from) / (flight.until - flight.from) })),
   };
 }
 
-// The HTML nodes have fixed-height rows, while their columns adapt to the lane.
-export function executionGeometry(width) {
-  const center = width / 2;
-  const left = (width - 24) / 4;
-  const right = width - left;
+function horizontalCurve(from, to) {
+  const middle = (from.right + to.left) / 2;
+  return [[from.right, from.y], [middle, from.y], [middle, to.y], [to.left, to.y]];
+}
+
+function verticalCurve(from, to) {
+  const middle = (from.bottom + to.top) / 2;
+  return [[from.x, from.bottom], [from.x, middle], [to.x, middle], [to.x, to.top]];
+}
+
+export function executionCurves(anchors, compact = false) {
+  if (EXECUTION_NODES.some((node) => !anchors[node.id])) return {};
+  const connect = compact ? verticalCurve : horizontalCurve;
   return {
-    entry: [[center, 62], [center, 110]],
-    normal: [[center, 172], [center, 196], [left, 196], [left, 220]],
-    review: [[center, 172], [center, 196], [right, 196], [right, 220]],
-    "normal-output": [[left, 282], [left, 330]],
-    "review-output": [[right, 282], [right, 330]],
+    "baseline-warmup": connect(anchors.baseline, anchors.warmup),
+    "warmup-warmupRun": connect(anchors.warmup, anchors.warmupRun),
+    "warmupRun-verify": connect(anchors.warmupRun, anchors.verify),
+    "baseline-inputs": connect(anchors.baseline, anchors.inputs),
+    "inputs-inputsRun": connect(anchors.inputs, anchors.inputsRun),
+    "inputsRun-verify": connect(anchors.inputsRun, anchors.verify),
+    "verify-compare": verticalCurve(anchors.verify, anchors.compare),
+    "compare-choose": verticalCurve(anchors.compare, anchors.choose),
   };
 }
 
-export function executionPacket(points, progress) {
-  const lengths = points.slice(1).map((point, index) => Math.hypot(point[0] - points[index][0], point[1] - points[index][1]));
-  let distance = Math.max(0, Math.min(1, progress)) * lengths.reduce((sum, length) => sum + length, 0);
-  for (let index = 0; index < lengths.length; index++) {
-    if (distance <= lengths[index]) {
-      const fraction = lengths[index] ? distance / lengths[index] : 0;
-      return points[index].map((value, axis) => value + (points[index + 1][axis] - value) * fraction);
-    }
-    distance -= lengths[index];
-  }
-  return points.at(-1);
+export function executionCurvePath(curve) {
+  return `M${curve[0].join(",")} C${curve[1].join(",")} ${curve[2].join(",")} ${curve[3].join(",")}`;
 }
 
-// Pauses preserve elapsed time, including viewport and document suspension.
+export function executionCurvePoint(curve, progress) {
+  const t = Math.max(0, Math.min(1, progress)), u = 1 - t;
+  return [0, 1].map((axis) => u ** 3 * curve[0][axis]
+    + 3 * u ** 2 * t * curve[1][axis]
+    + 3 * u * t ** 2 * curve[2][axis]
+    + t ** 3 * curve[3][axis]);
+}
+
+// Suspension keeps elapsed time; resuming never counts time spent offscreen.
 export function createExecutionPlayback(win, onFrame) {
   let elapsed = 0, previous = null, request = 0, running = false, disposed = false, published = -Infinity;
   function tick(now) {
@@ -79,7 +98,7 @@ export function createExecutionPlayback(win, onFrame) {
       published = now;
       onFrame(executionFrame(elapsed));
     }
-    request = win.requestAnimationFrame(tick);
+    if (!disposed && running) request = win.requestAnimationFrame(tick);
   }
   return {
     setRunning(next) {
@@ -89,6 +108,6 @@ export function createExecutionPlayback(win, onFrame) {
       if (running) request = win.requestAnimationFrame(tick);
       else { win.cancelAnimationFrame(request); request = 0; }
     },
-    dispose() { disposed = true; win.cancelAnimationFrame(request); request = 0; },
+    dispose() { disposed = true; running = false; win.cancelAnimationFrame(request); request = 0; },
   };
 }

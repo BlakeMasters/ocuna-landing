@@ -1,8 +1,10 @@
 import {
   CONTACT_EMAIL,
+  OCURA_OSS_DOCS,
   pageMeta,
 } from "../content.js";
 import { OSS } from "./oss.js";
+import { EXECUTION_DESCRIPTION, EXECUTION_NODES, EXECUTION_TITLE } from "../lib/executionDisplay.js";
 import { getResearchPost, RESEARCH_ART, RESEARCH_POSTS } from "./research.js";
 import { escapeHtml, renderInline } from "../lib/markdown.js";
 import { FOUR1 } from "./four1.js";
@@ -65,6 +67,21 @@ function wrap(title, body, beforeTitle = "") {
 ${footerHtml()}`;
 }
 
+function executionGraphHtml() {
+  const nodeHtml = (id, children = "") => {
+    const node = EXECUTION_NODES.find((item) => item.id === id);
+    return `<li aria-label="${escapeHtml(`${node.label}. ${node.description}`)}">${escapeHtml(node.label)}${children}</li>`;
+  };
+  const branches = `<ul aria-label="Variations from the baseline">${[
+    ["warmup", "warmupRun"],
+    ["inputs", "inputsRun"],
+  ].map(([branch, run]) => nodeHtml(branch, `<ol>${nodeHtml(run)}</ol>`)).join("")}</ul>`;
+  return `<section id="ocura" aria-labelledby="execution-display-title">
+        <header><h2 id="execution-display-title">${escapeHtml(EXECUTION_TITLE)}</h2><a href="${OCURA_OSS_DOCS}">Workflow</a></header>
+        <div role="group" aria-label="${escapeHtml(EXECUTION_DESCRIPTION)}"><ol>${nodeHtml("baseline", branches)}${["verify", "compare", "choose"].map((id) => nodeHtml(id)).join("")}</ol></div>
+      </section>`;
+}
+
 function landingBody(extra = "") {
   return `
       <p>${escapeHtml(HOME.introduction)}</p>
@@ -89,7 +106,7 @@ function landingBody(extra = "") {
           ${HOME.capabilities.map((capability) => `<article><h3>${escapeHtml(capability.title)}</h3><h4>${escapeHtml(capability.heading)}</h4><p>${escapeHtml(capability.description)}</p><a href="${capability.href}">${escapeHtml(capability.action)}</a></article>`).join("\n")}
         </div>
       </section>
-      <section id="ocura" aria-labelledby="execution-display-title"><h2 id="execution-display-title">Execution graph</h2><p>The normal path writes <code>hello_world</code>. The review branch writes <code>review branch</code>, with both paths connected to the same chokepoint.</p></section>
+      ${executionGraphHtml()}
       <section id="ocura-oss"><h2>Record, branch, and compare.</h2><p>Ocura OSS is an open-source execution ledger hosted at Protention. Record local command runs and their lineage, branch from a completed run, and compare the evidence.</p><pre><code>python -m pip install ocura-oss</code></pre><a href="${OSS.home}">Visit protention.dev</a><a href="${OSS.api}">Python API</a><a href="${OSS.examples}">Training example</a></section>
       <section><h2>More from Ocuna.</h2><h3><a href="/four1">Four1</a></h3><p>${escapeHtml(FOUR1.definition)}</p><h3><a href="/research/${escapeHtml(RESEARCH_POSTS[0].slug)}">${escapeHtml(RESEARCH_POSTS[0].title)}</a></h3><p>${escapeHtml(RESEARCH_POSTS[0].category)} · ${escapeHtml(RESEARCH_POSTS[0].dateLabel)}</p></section>
       <p id="critter"><a href="/critter-acknowledgement">Critter acknowledgement</a></p>

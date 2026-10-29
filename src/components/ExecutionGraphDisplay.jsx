@@ -1,80 +1,101 @@
-import { useEffect, useRef, useState } from "react";
-import { branchNodes, chokepointNode, normalNodes } from "../ocuraDemoData.js";
-import ThinkingOrb from "./ThinkingOrb.jsx";
+import { useEffect, useId, useRef, useState } from "react";
+import { OCURA_OSS_DOCS } from "../content.js";
 import {
-  createExecutionPlayback, EXECUTION_SOURCE, EXECUTION_STILL_MS,
-  executionFrame, executionGeometry, executionPacket,
+  createExecutionPlayback, EXECUTION_DESCRIPTION, EXECUTION_NODES,
+  EXECUTION_STILL_MS, EXECUTION_TITLE, executionCurvePath, executionCurvePoint,
+  executionCurves, executionFrame,
 } from "../lib/executionDisplay.js";
 import "./ExecutionGraphDisplay.css";
 
-const nodes = [normalNodes[0], chokepointNode, normalNodes[1], branchNodes[0], normalNodes[2], branchNodes[1]];
-const labels = { main: "Entry", chokepoint: "Decision boundary", hello: "Normal path", review: "Review branch", printHello: "Normal output", printReview: "Branch output" };
-const destinations = { entry: "chokepoint", normal: "hello", review: "review", "normal-output": "printHello", "review-output": "printReview" };
+function OperationMark({ kind, markRef }) {
+  return <svg className="frontier-operation-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true" ref={markRef}>
+    {kind === "verify" ? <><path d="M13 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9z" /><path d="M13 3v6h6m-11 6 3 3 5-6" /></> : kind === "compare" ? <><rect x="4" y="5" width="6" height="14" rx="1" /><rect x="14" y="5" width="6" height="14" rx="1" /></> : <path d="m4 3 15 7-6 2-2 7z" />}
+  </svg>;
+}
 
 export default function ExecutionGraphDisplay({ animate }) {
-  const section = useRef(null), graph = useRef(null), playback = useRef(null);
+  const graph = useRef(null), marks = useRef({}), playback = useRef(null);
+  const markerId = `frontier-${useId().replace(/:/g, "")}`;
   const [frame, setFrame] = useState(() => executionFrame(window.matchMedia("(prefers-reduced-motion: reduce)").matches ? EXECUTION_STILL_MS : 0));
-  const [width, setWidth] = useState(600);
+  const [layout, setLayout] = useState({ width: 0, height: 0, compact: false, anchors: {} });
   const [visible, setVisible] = useState(false);
   const [pageVisible, setPageVisible] = useState(() => !document.hidden);
+  const [selected, setSelected] = useState(null);
 
   useEffect(() => {
+    let disposed = false;
+    const compact = window.matchMedia("(max-width: 700px)");
+    const measure = () => {
+      if (disposed || !graph.current) return;
+      const bounds = graph.current.getBoundingClientRect();
+      if (!bounds.width) return;
+      const anchors = Object.fromEntries(EXECUTION_NODES.map(({ id }) => {
+        const mark = marks.current[id].getBoundingClientRect();
+        return [id, { left: mark.left - bounds.left, right: mark.right - bounds.left,
+          top: mark.top - bounds.top, bottom: mark.bottom - bounds.top,
+          x: mark.left - bounds.left + mark.width / 2, y: mark.top - bounds.top + mark.height / 2 }];
+      }));
+      const next = { width: bounds.width, height: bounds.height, compact: compact.matches, anchors };
+      setLayout(previous => JSON.stringify(previous) === JSON.stringify(next) ? previous : next);
+    };
     const controller = createExecutionPlayback(window, setFrame);
     playback.current = controller;
-    const observer = new IntersectionObserver(([entry]) => setVisible(entry.isIntersecting), { threshold: .12 });
-    const resize = new ResizeObserver(([entry]) => { if (entry.contentRect.width > 0) setWidth(entry.contentRect.width); });
+    const intersection = new IntersectionObserver(([entry]) => setVisible(entry.isIntersecting), { threshold: .05 });
+    const resize = new ResizeObserver(measure);
     const onVisibility = () => setPageVisible(!document.hidden);
-    observer.observe(section.current);
+    intersection.observe(graph.current);
     resize.observe(graph.current);
+    compact.addEventListener("change", measure);
     document.addEventListener("visibilitychange", onVisibility);
+    document.fonts?.ready.then(measure);
+    measure();
     return () => {
+      disposed = true;
       controller.dispose(); playback.current = null;
-      observer.disconnect(); resize.disconnect();
+      intersection.disconnect(); resize.disconnect();
+      compact.removeEventListener("change", measure);
       document.removeEventListener("visibilitychange", onVisibility);
     };
   }, []);
 
-  useEffect(() => { playback.current?.setRunning(animate && visible && pageVisible); }, [animate, visible, pageVisible]);
-
-  const routes = executionGeometry(width);
-  const packet = frame.packet && executionPacket(routes[frame.packet.edge], frame.packet.progress);
-  return (
-    <section className="system-execution-section" id="ocura" aria-labelledby="execution-display-title" ref={section} data-phase={frame.id} data-time={frame.time.toFixed(0)} data-playing={animate && visible && pageVisible}>
-      <div className="shell">
-        <div className="execution-display">
-          <figure className="execution-topology">
-            <h3 id="execution-display-title">Execution graph</h3>
-            <div className="execution-topology-grid" ref={graph} role="img" aria-label="main() reaches a chokepoint. The normal path calls hello_world(), and a separate branch calls review_path(). Each produces its own output.">
-              <svg className="execution-connections" viewBox={`0 0 ${width} 392`} preserveAspectRatio="none" aria-hidden="true">
-                {Object.entries(routes).map(([id, points]) => <polyline key={id} points={points.map((point) => point.join(",")).join(" ")} className={`execution-wire${id.startsWith("review") ? " is-branch" : ""}${frame.completed.includes(destinations[id]) || frame.packet?.edge === id ? " is-traversed" : ""}`} />)}
-                {packet && <rect className={`execution-packet${frame.packet.edge.startsWith("review") ? " is-branch" : ""}`} x={packet[0] - 3.5} y={packet[1] - 3.5} width="7" height="7" />}
-              </svg>
-              {nodes.map((node) => <div key={node.id} className={`execution-node execution-node--${node.id}${node.kind.startsWith("branch") ? " is-branch" : ""}${frame.active === node.id ? " is-active" : ""}${frame.completed.includes(node.id) ? " is-complete" : ""}`} aria-hidden="true">
-                <span>{labels[node.id]}</span>
-                <strong>{node.id === "printHello" ? "hello_world" : node.id === "printReview" ? "review branch" : node.label === "chokepoint" ? "chokepoint" : node.label}</strong>
-                {frame.completed.includes(node.id) && <svg className="execution-node-check" viewBox="0 0 16 16" fill="none"><path d="m3 8 3 3 7-7" /></svg>}
-              </div>)}
-            </div>
-            <figcaption className="execution-phase" aria-live="off">{frame.detail}</figcaption>
-          </figure>
-          <div className="execution-workflow">
-            <h3>Python workflow</h3>
-            <pre className="execution-source" aria-label="Illustrative Python workflow"><code>{EXECUTION_SOURCE.map((line, index) => <span key={index} className={`execution-source-line${frame.line === index ? " is-active" : ""}${frame.id.startsWith("review") || frame.id === "branch" ? " is-branch" : ""}`}><span className="execution-line-number" aria-hidden="true">{index + 1}</span>{line || "\u00a0"}</span>)}</code></pre>
-            <div className="execution-output" aria-label="Illustrative run output" aria-live="off">
-              <h3>Run output</h3>
-              <div className="execution-output-body">
-                <div>
-                  <div className={`execution-output-row${frame.output[0] ? " is-ready" : ""}`}><span>Normal path</span><code>{frame.output[0] ? "hello_world" : "Awaiting output"}</code></div>
-                  <div className={`execution-output-row is-branch${frame.output[1] ? " is-ready" : ""}`}><span>Review branch</span><code>{frame.output[1] ? "review branch" : "Awaiting output"}</code></div>
-                </div>
-                <div className="execution-orb" data-state={frame.orb}>
-                  <ThinkingOrb state={frame.orb} size={96} dark={false} paused={!animate || !visible || !pageVisible} aria-label={`Execution state: ${frame.detail}`} />
-                </div>
-              </div>
-            </div>
-          </div>
+  const playing = animate && visible && pageVisible;
+  useEffect(() => { playback.current?.setRunning(playing); }, [playing]);
+  const curves = executionCurves(layout.anchors, layout.compact);
+  const lane = ["warmup", "warmupRun"].includes(selected) ? "warmup" : ["inputs", "inputsRun"].includes(selected) ? "inputs" : null;
+  return <section className="system-execution-section" id="ocura" aria-labelledby="execution-display-title" data-phase={frame.id} data-time={Math.round(frame.time)} data-playing={playing}>
+    <div className="shell">
+      <figure className="execution-display execution-frontier">
+        <header className="frontier-heading">
+          <h2 id="execution-display-title">{EXECUTION_TITLE}</h2>
+          <a className="frontier-workflow-link" href={OCURA_OSS_DOCS}>Workflow</a>
+        </header>
+        <div className="frontier-graph" ref={graph} role="group" aria-label={EXECUTION_DESCRIPTION}>
+          {layout.width > 0 && <svg className="frontier-connections" viewBox={`0 0 ${layout.width} ${layout.height}`} aria-hidden="true">
+            <defs>{["neutral", "active"].map(kind => <marker key={kind} id={`${markerId}-${kind}`} viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M1 1 7 4 1 7" className={`frontier-arrow${kind === "active" ? " is-active" : ""}`} /></marker>)}</defs>
+            {Object.entries(curves).map(([edge, curve]) => {
+              const [from, to] = edge.split("-");
+              const parent = from === "baseline";
+              const traversed = frame.completed.includes(to) || frame.packets.some(packet => packet.edge === edge);
+              const traced = lane && [lane, `${lane}Run`].some(id => from === id || to === id);
+              const active = traversed || traced;
+              return <path key={edge} d={executionCurvePath(curve)} data-edge={edge} className={`frontier-wire${parent ? " is-parent" : ""}${active ? " is-traversed" : ""}`} markerEnd={parent ? undefined : `url(#${markerId}-${active ? "active" : "neutral"})`} />;
+            })}
+            {frame.packets.map(packet => {
+              if (!curves[packet.edge]) return null;
+              const [x, y] = executionCurvePoint(curves[packet.edge], packet.progress);
+              return <rect key={packet.edge} className="frontier-packet" x={x - 2.5} y={y - 2.5} width="5" height="5" />;
+            })}
+          </svg>}
+          {EXECUTION_NODES.map(node => {
+            const record = node.kind === "record" || node.kind === "record-logs";
+            const markRef = element => { marks.current[node.id] = element; };
+            return <button key={node.id} type="button" data-node={node.id} className={`frontier-node frontier-node--${node.id}${record ? " frontier-record" : ""}${node.kind === "branch" ? " frontier-branch" : ""}${frame.active === node.id ? " is-active" : ""}${frame.completed.includes(node.id) ? " is-complete" : ""}${lane && ["baseline", lane, `${lane}Run`].includes(node.id) ? " is-traced" : ""}`} aria-label={node.description} aria-pressed={selected === node.id} onClick={() => setSelected(previous => previous === node.id ? null : node.id)}>
+              {record ? <span className="frontier-sheet" ref={markRef} aria-hidden="true">{node.kind === "record-logs" && <span className="frontier-log" />}</span> : node.kind !== "branch" && <OperationMark kind={node.kind} markRef={markRef} />}
+              <span className="frontier-node-label" ref={node.kind === "branch" ? markRef : undefined}>{node.label}</span>
+            </button>;
+          })}
         </div>
-      </div>
-    </section>
-  );
+      </figure>
+    </div>
+  </section>;
 }
