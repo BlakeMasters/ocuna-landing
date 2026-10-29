@@ -1,0 +1,47 @@
+{
+  "fps": 30,
+  "duration": 110,
+  "loopEntry": 3.4,
+  "sourceHash": "66f311aa0559ef1ab4a3b4eeae8db94181a06f53f41a3842c8b58139159ae37b",
+  "variants": {
+    "desktop": {
+      "width": 1800,
+      "height": 360,
+      "poster": "motion/engraved-desktop-poster-66f311aa0559.png",
+      "intro": {
+        "src": "motion/engraved-desktop-opening-66f311aa0559.mp4",
+        "duration": 3.4,
+        "frames": 102,
+        "bytes": 960810,
+        "sha256": "839ff9efa393fb4810724c989ae6a270fcda846f2f33be8fac82620ed7749d3b"
+      },
+      "loop": {
+        "src": "motion/engraved-desktop-loop-66f311aa0559.mp4",
+        "duration": 110,
+        "frames": 3300,
+        "bytes": 17783024,
+        "sha256": "cdeb7032a4fcbe7977af59816e227777dc5c08d4516258748fb739b8021a312e"
+      }
+    },
+    "mobile": {
+      "width": 800,
+      "height": 500,
+      "poster": "motion/engraved-mobile-poster-66f311aa0559.png",
+      "intro": {
+        "src": "motion/engraved-mobile-opening-66f311aa0559.mp4",
+        "duration": 3.4,
+        "frames": 102,
+        "bytes": 1061465,
+        "sha256": "517a082d625e97b3b0f66b440dd0395abe7307b4ec89ce86a79db512a8760320"
+      },
+      "loop": {
+        "src": "motion/engraved-mobile-loop-66f311aa0559.mp4",
+        "duration": 110,
+        "frames": 3300,
+        "bytes": 19265377,
+        "sha256": "ff9baeb28079184fde1e61a4650870f222a25315f66d281ae85add986dbc076e"
+      }
+    }
+  },
+  "encoder": "ffmpeg version 6.1.1-essentials_build-www.gyan.dev Copyright (c) 2000-2023 the FFmpeg developers"
+}

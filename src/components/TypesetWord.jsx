@@ -11,8 +11,9 @@ function Letters({ text, letters }) {
   return <span className="system-typeset-word" data-typeset={text.toLowerCase()} aria-hidden="true">{letters.map((letter, index) => <span className="system-typeset-letter" data-resolved={letter.resolved} key={index}>{letter.character}</span>)}</span>;
 }
 
-export default function TypesetWord({ text, onComplete }) {
+export default function TypesetWord({ text, onComplete, enabled = true }) {
   const completion = useRef(onComplete);
+  const elapsedTime = useRef(0), completed = useRef(false);
   completion.current = onComplete;
   const [letters, setLetters] = useState(() => window.matchMedia("(prefers-reduced-motion: reduce)").matches
     ? settled(text)
@@ -21,19 +22,19 @@ export default function TypesetWord({ text, onComplete }) {
   useEffect(() => {
     const query = window.matchMedia("(prefers-reduced-motion: reduce)");
     let frame;
-    let finished = false;
+    let finished = completed.current;
     let previousStep = -1;
-    const start = performance.now();
+    const start = performance.now() - elapsedTime.current;
     const finish = () => {
       cancelAnimationFrame(frame);
       if (finished) return;
-      finished = true;
+      finished = true; completed.current = true;
       setLetters(settled(text));
       completion.current?.();
     };
     const onPreferenceChange = () => { if (query.matches) finish(); };
     const tick = (now) => {
-      const elapsed = now - start;
+      const elapsed = now - start; elapsedTime.current = elapsed;
       const step = Math.floor(elapsed / 42);
       if (elapsed >= 260 + (text.length - 1) * 75) {
         finish();
@@ -47,10 +48,10 @@ export default function TypesetWord({ text, onComplete }) {
     };
 
     if (query.matches) finish();
-    else frame = requestAnimationFrame(tick);
+    else if (enabled && !finished) frame = requestAnimationFrame(tick);
     query.addEventListener("change", onPreferenceChange);
     return () => { cancelAnimationFrame(frame); query.removeEventListener("change", onPreferenceChange); };
-  }, [text]);
+  }, [text, enabled]);
 
   return <Letters text={text} letters={letters} />;
 }

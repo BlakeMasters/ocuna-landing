@@ -13,6 +13,7 @@ import {
   SITE_ORIGIN,
 } from "./content.js";
 import ContactPage from "./components/ContactPage.jsx";
+import { PageMotionProvider } from "./components/PageMotion.jsx";
 import BrandLogo from "./components/BrandLogo.jsx";
 import SystemHomePage from "./components/SystemHomePage.jsx";
 import { jsonLdGraph } from "./content/jsonld.js";
@@ -274,7 +275,7 @@ export default function App() {
     </>
   );
 
-  return shell;
+  return <PageMotionProvider active={isLandingPage}>{shell}</PageMotionProvider>;
 }
 
 function SiteHeader({ route, kind, onNavigate }) {

@@ -1,10 +1,11 @@
 import assert from "node:assert/strict";
-import { readFile } from "node:fs/promises";
+import { readFile, readdir } from "node:fs/promises";
 import { gzipSync } from "node:zlib";
 import { knownRoutes, pageMeta, SITE_ORIGIN } from "../src/content.js";
 import { isDocRoute } from "../src/content/docPages.js";
 import { getResearchPost, RESEARCH_POSTS } from "../src/content/research.js";
 import { renderInline } from "../src/lib/markdown.js";
+import { PREPARED_FILM } from "../src/content/preparedFilm.js";
 
 const index = await readFile("dist/llms.txt", "utf8");
 const robots = await readFile("dist/robots.txt", "utf8");
@@ -50,6 +51,11 @@ for (const route of routes) {
   } else {
     assert.equal(article, undefined, `${route}: no unrelated article metadata`);
   }
+  if (["/", "/ocuna", "/ocura"].includes(route)) {
+    const heading = html.indexOf('<h1'), raccoon = html.indexOf('aria-label="Ocuna raccoon"'), engraving = html.indexOf('id="home-engraving"'), following = html.indexOf('aria-labelledby="system-partners-title"');
+    assert.ok(engraving >= 0 && engraving < heading && heading < raccoon && raccoon < following, `${route}: engraving leads the lettering, raccoon and following content`);
+    assert.ok(html.includes(`src="/${PREPARED_FILM.variants.desktop.poster}"`) && html.includes(`srcset="/${PREPARED_FILM.variants.mobile.poster}"`), `${route}: responsive scenic still without JavaScript`);
+  }
   if (route === "/research") {
     assert.deepEqual(page.mainEntity.itemListElement.map((item) => item.name), RESEARCH_POSTS.map((item) => item.title));
     const images = [...html.matchAll(/<img[^>]+src="\/research\/[^>]+>/g)].map(([tag]) => tag);
@@ -75,5 +81,9 @@ for (const file of assets) {
 }
 assert.ok(totals.js > 0 && totals.js <= 350 * 1024, `Initial JavaScript exceeds 350 KiB: ${totals.js}`);
 assert.ok(totals.css > 0 && totals.css <= 120 * 1024, `Initial CSS exceeds 120 KiB: ${totals.css}`);
+const builtFiles = await readdir("dist");
+assert.ok(!builtFiles.includes("motion-study.html"), "Keep the live motion study on the local development server");
+const builtAssets = await readdir("dist/assets");
+assert.ok(!builtAssets.some(file => /(?:motionStudy|engraved(?:Engine|Scenes|Motion\.worker|Geometry\.worker))/.test(file)), "Production animation uses prepared media without live renderer bundles");
 console.log(`Verified ${routes.length} public routes: semantic HTML, agent index, canonical URLs, sitemap, article metadata, image loading, and 404 handling.`);
 console.log(`Initial bytes: ${JSON.stringify(totals)}`);

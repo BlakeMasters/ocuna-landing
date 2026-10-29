@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { usePageMotion } from "./PageMotion.jsx";
 import { asset } from "../assets.js";
 import { brandWalkFrame, BRAND_WALK_VIEWBOX, createBrandWalkPlayback } from "../lib/brandWalk.js";
 import "./BrandLogo.css";
@@ -6,6 +7,7 @@ import "./BrandLogo.css";
 const still = brandWalkFrame(0, 0);
 
 export default function BrandLogo() {
+  const { motionEnabled } = usePageMotion();
   const host = useRef(null), walker = useRef(null), farLeg = useRef(null), mark = useRef(null);
   useEffect(() => {
     const link = host.current.closest("a");
@@ -18,7 +20,7 @@ export default function BrandLogo() {
       walker.current.dataset.time = frame.time.toFixed(1);
     });
     const update = () => {
-      const active = !reduced.matches && visible && !document.hidden
+      const active = motionEnabled && !reduced.matches && visible && !document.hidden
         && ((hover.matches && link.matches(":hover")) || link.matches(":focus-visible"));
       host.current.dataset.walking = String(active);
       walker.current.dataset.playing = String(active);
@@ -40,7 +42,7 @@ export default function BrandLogo() {
       hover.removeEventListener("change", update);
       document.removeEventListener("visibilitychange", update);
     };
-  }, []);
+  }, [motionEnabled]);
   return (
     <span className="brand-logo" ref={host}>
       <img src={asset("images/ocuna_title_logo_nobackground.webp")} alt="Ocuna" />

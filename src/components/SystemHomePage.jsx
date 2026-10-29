@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { usePageMotion } from "./PageMotion.jsx";
 import { asset, pagePath } from "../assets.js";
 import { OCURA_OSS_PYPI, OCURA_OSS_REPO, OCURA_OSS_VERSION } from "../content.js";
 import { HOME } from "../content/home.js";
@@ -139,17 +139,9 @@ function ResearchPanels() {
 }
 
 export default function SystemHomePage() {
-  const [motionEnabled, setMotionEnabled] = useState(() => !window.matchMedia("(prefers-reduced-motion: reduce)").matches);
-  const userMotionChoice = useRef(false);
-  useEffect(() => {
-    const query = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const update = () => { if (!userMotionChoice.current) setMotionEnabled(!query.matches); };
-    query.addEventListener("change", update);
-    return () => query.removeEventListener("change", update);
-  }, []);
-  const toggleMotion = () => { userMotionChoice.current = true; setMotionEnabled((enabled) => !enabled); };
+  const { motionEnabled, toggleMotion } = usePageMotion();
   return (
-    <main className="system-home" id="top" tabIndex={-1}>
+    <main className="system-home" data-motion={motionEnabled ? "playing" : "paused"} id="top" tabIndex={-1}>
       <SystemHero motionEnabled={motionEnabled} onToggleMotion={toggleMotion} />
       <PartnerAcknowledgement />
       <nav className="shell system-product-strip" aria-label="Ocuna systems">

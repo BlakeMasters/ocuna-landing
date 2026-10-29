@@ -35,6 +35,9 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Verify animation and playback
+        run: node --test tests/*.test.mjs
+
       - name: Verify documentation routes and exports
         run: npm run verify:docs
 
