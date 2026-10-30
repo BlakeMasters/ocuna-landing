@@ -5,7 +5,7 @@ import { knownRoutes, pageMeta, SITE_ORIGIN } from "../src/content.js";
 import { getResearchPost, RESEARCH_POSTS } from "../src/content/research.js";
 import { renderInline } from "../src/lib/markdown.js";
 import { PREPARED_FILM } from "../src/content/preparedFilm.js";
-import { homeStartupMarkup } from "../src/content/homeStartup.js";
+import { homeStartupMarkup, notFoundStartupMarkup } from "../src/content/homeStartup.js";
 import { crawlableHtml } from "../src/content/crawlable.js";
 
 const index = await readFile("dist/llms.txt", "utf8");
@@ -75,6 +75,12 @@ for (const route of routes) {
 
 const missing = await readFile("dist/404.html", "utf8");
 assert.ok(!missing.includes('id="home-startup"') && !missing.includes("data-home-prerender"), "404 keeps its ordinary static rendering");
+const missingStartup = notFoundStartupMarkup(crawlableHtml("/404"));
+assert.ok(missing.includes(`<div id="root">${missingStartup.content}</div>`), "404 retains its complete fallback gallery");
+assert.ok(missing.includes(missingStartup.head), "404 startup protection precedes its first paint");
+assert.ok(missing.indexOf('id="not-found-startup"') < missing.indexOf('type="module" crossorigin src='));
+assert.match(missing, /<body class="paper-route not-found-route">/, "404 starts with the gallery palette");
+assert.ok(!missing.includes('<html lang="en" data-not-found-startup'), "404 remains visible without JavaScript");
 assert.ok(missing.includes('name="robots" content="noindex"'));
 assert.ok(!missing.includes('rel="canonical"'));
 assert.ok(!missing.includes('"@type":"WebPage"'), "No indexable page metadata on the 404");
@@ -95,5 +101,6 @@ const builtFiles = await readdir("dist");
 assert.ok(!builtFiles.includes("motion-study.html"), "Keep the live motion study on the local development server");
 const builtAssets = await readdir("dist/assets");
 assert.ok(!builtAssets.some(file => /(?:motionStudy|engraved(?:Engine|Scenes|Motion\.worker|Geometry\.worker))/.test(file)), "Production animation uses prepared media without live renderer bundles");
+assert.ok(!builtAssets.some(file => /^NotFoundPage-.*\.js$/.test(file)), "404 renders with the app instead of a lazy loading-page intermediate state");
 console.log(`Verified ${routes.length} public routes: semantic HTML, agent index, canonical URLs, sitemap, article metadata, image loading, and 404 handling.`);
 console.log(`Initial bytes: ${JSON.stringify(totals)}`);

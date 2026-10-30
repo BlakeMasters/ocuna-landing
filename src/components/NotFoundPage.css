@@ -32,7 +32,7 @@ body:has(.not-found-page) {
 }
 
 body:has(.not-found-page)::before { display: none; }
-html body:has(.not-found-page) #root > .site-header.shell {
+html body:has(.not-found-page) :is(#root > .site-header.shell, .not-found-static-header) {
   width: min(1120px, calc(100% - 96px));
   border-bottom: 4px double var(--archive-rule);
 }
@@ -179,7 +179,7 @@ body:has(.not-found-page) .skip-link:focus { outline-color: var(--archive-accent
 
 @media (hover: none) { .not-found-art__enlarge { opacity: 1; } }
 @media (max-width: 1000px) {
-  html body:has(.not-found-page) #root > .site-header.shell,
+  html body:has(.not-found-page) :is(#root > .site-header.shell, .not-found-static-header),
   body:has(.not-found-page) .footer-layout,
   .not-found-shell { width: calc(100% - 64px); }
   .not-found-page .not-found-hero { gap: 2.5rem; }
@@ -194,7 +194,7 @@ body:has(.not-found-page) .skip-link:focus { outline-color: var(--archive-accent
   .not-found-art__image { height: 300px; }
 }
 @media (max-width: 700px) {
-  html body:has(.not-found-page) #root > .site-header.shell,
+  html body:has(.not-found-page) :is(#root > .site-header.shell, .not-found-static-header),
   body:has(.not-found-page) .footer-layout,
   .not-found-shell { width: calc(100% - 40px); }
   .not-found-page .not-found-hero { grid-template-columns: 1fr; gap: 2.5rem; padding-block: 2.25rem 2.5rem; }

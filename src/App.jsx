@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useRef, useState } from "react";
+import { lazy, Suspense, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { asset, pagePath, routeFromLocation } from "./assets.js";
 import "./components/CritterPage.css";
 import "./components/NotFoundPage.css";
@@ -12,6 +12,7 @@ import {
   SITE_ORIGIN,
 } from "./content.js";
 import ContactPage from "./components/ContactPage.jsx";
+import NotFoundPage from "./components/NotFoundPage.jsx";
 import { PageMotionProvider } from "./components/PageMotion.jsx";
 import BrandLogo from "./components/BrandLogo.jsx";
 import SystemHomePage from "./components/SystemHomePage.jsx";
@@ -24,7 +25,6 @@ const LANDING_KINDS = new Set(["home", "ocuna", "ocura"]);
 const PAPER_KINDS = new Set(["contact", "notfound"]);
 const RESEARCH_ROUTE_SET = new Set(RESEARCH_ROUTES);
 const CritterPage = lazy(() => import("./components/CritterPage.jsx"));
-const NotFoundPage = lazy(() => import("./components/NotFoundPage.jsx"));
 const ResearchPage = lazy(() => import("./components/ResearchPage.jsx"));
 const Four1Page = lazy(() => import("./components/Four1Page.jsx"));
 // Retain the OnVeil page for local work without including it in a release.
@@ -81,6 +81,7 @@ export default function App() {
   const isFour1Page = kind === "four1";
   const isCritterPage = kind === "critter";
   const isContactPage = kind === "contact";
+  const isNotFoundPage = kind === "notfound";
   const isResearchPage = kind === "research";
   const isPaperPage = PAPER_KINDS.has(kind);
   const docsTarget = documentationTarget(route);
@@ -147,12 +148,13 @@ export default function App() {
     script.textContent = JSON.stringify(jsonLdGraph(kind === "notfound" ? "/404" : route));
   }, [kind, route]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     document.body.classList.toggle("onveil-route", isOnVeilPage);
     document.body.classList.toggle("four1-route", isFour1Page);
     document.body.classList.toggle("critter-route", isCritterPage);
     document.body.classList.toggle("contact-route", isContactPage);
     document.body.classList.toggle("landing-route", isLandingPage);
+    document.body.classList.toggle("not-found-route", isNotFoundPage);
     document.body.classList.toggle("research-route", isResearchPage);
     document.body.classList.toggle("paper-route", isPaperPage);
     return () => {
@@ -161,10 +163,11 @@ export default function App() {
       document.body.classList.remove("critter-route");
       document.body.classList.remove("contact-route");
       document.body.classList.remove("landing-route");
+      document.body.classList.remove("not-found-route");
       document.body.classList.remove("research-route");
       document.body.classList.remove("paper-route");
     };
-  }, [isContactPage, isCritterPage, isFour1Page, isLandingPage, isOnVeilPage, isPaperPage, isResearchPage]);
+  }, [isContactPage, isCritterPage, isFour1Page, isLandingPage, isNotFoundPage, isOnVeilPage, isPaperPage, isResearchPage]);
 
   useEffect(() => {
     if (!moveFocusToMain.current) return;

@@ -6,7 +6,7 @@ import { SITE_ORIGIN, pageMeta } from "../src/content.js";
 import { DOC_REDIRECTS } from "../src/content/legacyDocs.js";
 import { OSS } from "../src/content/oss.js";
 import { RESEARCH_ROUTES } from "../src/content/research.js";
-import { homeStartupMarkup } from "../src/content/homeStartup.js";
+import { homeStartupMarkup, notFoundStartupMarkup } from "../src/content/homeStartup.js";
 
 const origin = SITE_ORIGIN;
 const routes = [
@@ -45,7 +45,7 @@ function applyDocument(html, route, isNotFound = false) {
   const rootHtml = crawlableHtml(
     isNotFound ? "/404" : route,
   );
-  const startup = homeStartupMarkup(key, rootHtml);
+  const startup = isNotFound ? notFoundStartupMarkup(rootHtml) : homeStartupMarkup(key, rootHtml);
   const jsonLd = escapeJsonLd(jsonLdGraph(key));
   let next = html;
   next = replaceFirst(next, /<title>[^<]*<\/title>/, `<title>${escapeTitle(meta.title)}</title>`);
