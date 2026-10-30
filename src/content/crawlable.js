@@ -99,11 +99,9 @@ function landingBody(extra = "") {
         <a href="/four1">Four1</a>
         <a href="/research">Field Notes</a>
       </nav>
-      <section id="work">
-        <h2>${escapeHtml(HOME.runtimeTitle)}</h2>
-        <p>${escapeHtml(HOME.runtimeIntroduction)}</p>
+      <section id="work" aria-label="Training, inference, and run records">
         <div id="market">
-          ${HOME.capabilities.map((capability) => `<article><h3>${escapeHtml(capability.title)}</h3><h4>${escapeHtml(capability.heading)}</h4><p>${escapeHtml(capability.description)}</p><a href="${capability.href}">${escapeHtml(capability.action)}</a></article>`).join("\n")}
+          ${HOME.capabilities.map((capability) => `<article><h2>${escapeHtml(capability.title)}</h2><h3>${escapeHtml(capability.heading)}</h3><p>${escapeHtml(capability.description)}</p></article>`).join("\n")}
         </div>
       </section>
       ${executionGraphHtml()}

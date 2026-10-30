@@ -43,20 +43,15 @@ function CapabilityArt({ kind }) {
 
 function RuntimePanels() {
   return (
-    <section className="system-runtime-section" id="work" aria-labelledby="system-runtime-title">
+    <section className="system-runtime-section" id="work" aria-label="Training, inference, and run records">
       <div className="shell">
-        <header className="system-section-heading">
-          <h2 id="system-runtime-title">{HOME.runtimeTitle}</h2>
-          <p>{HOME.runtimeIntroduction}</p>
-        </header>
         <div className="system-capabilities" id="market">
           {HOME.capabilities.map((capability) => (
             <article className="system-capability" key={capability.id}>
-              <div className="system-capability-visual"><h3>{capability.title}</h3><CapabilityArt kind={capability.id} /></div>
+              <div className="system-capability-visual"><h2>{capability.title}</h2><CapabilityArt kind={capability.id} /></div>
               <div className="system-capability-copy">
-                <h4>{capability.heading}</h4>
+                <h3>{capability.heading}</h3>
                 <p>{capability.description}</p>
-                <a className="system-text-link" href={capability.href.startsWith("#") ? capability.href : pagePath(capability.href)}>{capability.action} <ArrowIcon /></a>
               </div>
             </article>
           ))}

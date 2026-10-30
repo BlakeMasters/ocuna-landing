@@ -1,5 +1,3 @@
-import { OSS } from "./oss.js";
-
 export const HOME = {
   headline: "Accelerating Uncertain computation",
   headlineLead: "Accelerating",
@@ -9,9 +7,6 @@ export const HOME = {
   partners: [
     { name: "Antler", id: "antler", href: "https://www.antler.co/", logo: "partners/antler.svg", width: 117, height: 28 },
   ],
-  runtimeTitle: "Compute follows the work.",
-  runtimeIntroduction:
-    "Ocura directs compute across an execution frontier. The scheduler places work, holds budgets, and reuses results across training and inference branches. You build the pipeline; the runtime governs what runs, what waits, and what continues.",
   capabilities: [
     {
       id: "training",
@@ -19,8 +14,6 @@ export const HOME = {
       heading: "Explore more than one path.",
       description:
         "Coordinate checkpoint, data, and parameter branches. Keep each run tied to its budget and the evidence behind its continuation.",
-      href: "#ocura",
-      action: "Explore the execution graph",
     },
     {
       id: "inference",
@@ -28,8 +21,6 @@ export const HOME = {
       heading: "Direct a changing frontier.",
       description:
         "Coordinate serving pools, agent endpoints, and tools under explicit policy. Keep escalation, preemption, and continuation traceable.",
-      href: "#ocura",
-      action: "Explore the execution graph",
     },
     {
       id: "records",
@@ -37,8 +28,6 @@ export const HOME = {
       heading: "Keep the decisions with the result.",
       description:
         "Ocura OSS, hosted at Protention, records local command runs and their lineage. Branch from a baseline, compare outcomes, and inspect the record behind a result.",
-      href: OSS.state,
-      action: "Read about run records",
     },
   ],
 };
