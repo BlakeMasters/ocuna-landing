@@ -6,7 +6,7 @@ import { DURATION } from "../src/lib/engravedTimeline.js";
 const assets = { loopEntry: 3.4, variants: Object.fromEntries(["desktop", "mobile"].map(name => [name, { poster: `${name}.png`, intro: { src: `${name}-opening.mp4` }, loop: { src: `${name}-loop.mp4` } }])) };
 class Media extends EventTarget {
   style = {}; paused = true; readyState = 0; currentTime = 0; seeking = false; plays = 0; loads = 0;
-  play() { this.paused = false; this.plays++; this.dispatchEvent(new Event("playing")); return Promise.resolve(); }
+  play() { this.plays++; if (this.playError) return Promise.reject(this.playError); this.paused = false; this.dispatchEvent(new Event("playing")); return Promise.resolve(); }
   pause() { const changed = !this.paused; this.paused = true; if (changed) this.dispatchEvent(new Event("pause")); }
   load() { this.loads++; this.readyState = 0; this.currentTime = 0; }
   removeAttribute(name) { delete this[name]; }
@@ -46,27 +46,63 @@ test("a paused or reduced-motion start shows a still without fetching video", ()
   assert.equal(opening.paused, false); assert.equal(loop.paused, true);
 }));
 
-test("loading media keeps the poster visible until a decoded frame is ready", () => fixture(({ mount, host, opening, loop, poster, query }) => {
+test("loading autoplay never flashes a completed scene before the opening decodes", () => fixture(({ mount, host, opening, loop, poster, query }) => {
   mount(true);
   assert.equal(host.dataset.mode, "opening");
-  assert.equal(poster.style.visibility, "visible");
+  assert.equal(poster.style.visibility, "hidden");
   assert.equal(opening.style.visibility, "hidden");
   opening.metadata();
-  assert.equal(poster.style.visibility, "visible", "metadata alone cannot replace the still");
+  assert.equal(poster.style.visibility, "hidden", "metadata must not expose the completed Moon");
   opening.ready();
   assert.equal(poster.style.visibility, "hidden");
   assert.equal(opening.style.visibility, "visible");
   loop.metadata(); loop.ready(); opening.dispatchEvent(new Event("ended"));
   loop.advance(42.875);
   query.matches = true; query.dispatchEvent(new Event("change"));
-  assert.equal(poster.style.visibility, "visible", "responsive replacement has a loading fallback");
+  assert.equal(poster.style.visibility, "hidden", "responsive loading must not jump back to the Moon");
   assert.equal(host.dataset.time, "42.875", "loading does not reset the scene clock");
   loop.metadata();
-  assert.equal(poster.style.visibility, "visible");
+  assert.equal(poster.style.visibility, "hidden");
   loop.ready();
   assert.equal(poster.style.visibility, "hidden");
   assert.equal(loop.style.visibility, "visible");
   assert.equal(loop.currentTime, 42.875);
+}));
+
+test("an offscreen autoplay mount does not expose the completed still before starting", () => fixture(({ mount, poster, intersect, opening }) => {
+  mount(true, false);
+  assert.equal(poster.style.visibility, "hidden");
+  intersect(true);
+  assert.equal(poster.style.visibility, "hidden");
+  opening.metadata(); opening.ready();
+  assert.equal(poster.style.visibility, "hidden");
+  assert.equal(opening.style.visibility, "visible");
+}));
+
+test("pausing a pending opening shows the still and resuming restores the formation", () => fixture(({ mount, poster, opening }) => {
+  const player = mount(true);
+  player.setPlaying(false);
+  assert.equal(poster.style.visibility, "visible");
+  player.setPlaying(true);
+  assert.equal(poster.style.visibility, "hidden");
+  opening.metadata(); opening.ready(); opening.advance(.75);
+  player.setPlaying(false);
+  assert.equal(poster.style.visibility, "hidden", "a decoded paused frame stays in place");
+  assert.equal(opening.style.visibility, "visible");
+  assert.equal(opening.currentTime, .75);
+}));
+
+test("blocked autoplay falls back to the still and a successful retry starts cleanly", () => fixture(async ({ mount, poster, opening, host }) => {
+  opening.playError = Object.assign(new Error("Autoplay blocked"), { name: "NotAllowedError" });
+  const player = mount(true);
+  await Promise.resolve(); await Promise.resolve();
+  assert.equal(host.dataset.mode, "poster");
+  assert.equal(poster.style.visibility, "visible");
+  delete opening.playError;
+  player.setPlaying(false); player.setPlaying(true);
+  await Promise.resolve();
+  assert.equal(poster.style.visibility, "hidden");
+  assert.equal(host.dataset.mode, "opening");
 }));
 
 test("the opening hands off to the loop at its matching formed-moon frame", () => fixture(({ mount, host, opening, loop }) => {

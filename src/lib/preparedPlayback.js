@@ -22,7 +22,11 @@ export function mountPreparedPlayback({ host, opening, loop, poster, assets, sou
     const time = still ? 0 : position();
     const frame = filmFrame(time);
     Object.assign(host.dataset, { renderer: "prepared-video", mode: still ? "poster" : phase, variant, scene: CHAPTERS[frame.scene].name, time: time.toFixed(3), cycle: String(cycle), playing: String(!still && canPlay() && !active().paused), simulatedStrokes: "0" });
-    poster.style.visibility = still || active().readyState < 2 ? "visible" : "hidden";
+    // The poster is the completed Moon, while the opening starts as scattered
+    // ink. Showing it during a normal load makes the scene visibly rewind.
+    // Reserve that still for intentional static viewing and playback failures.
+    const showPoster = failed || blocked || (!playing && (!started || active().readyState < 2));
+    poster.style.visibility = showPoster ? "visible" : "hidden";
     opening.style.visibility = !still && phase !== "loop" && opening.readyState >= 2 ? "visible" : "hidden";
     loop.style.visibility = !still && phase === "loop" && loop.readyState >= 2 ? "visible" : "hidden";
     const quality = active().getVideoPlaybackQuality?.();

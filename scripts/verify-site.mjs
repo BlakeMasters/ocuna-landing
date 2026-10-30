@@ -6,6 +6,8 @@ import { isDocRoute } from "../src/content/docPages.js";
 import { getResearchPost, RESEARCH_POSTS } from "../src/content/research.js";
 import { renderInline } from "../src/lib/markdown.js";
 import { PREPARED_FILM } from "../src/content/preparedFilm.js";
+import { homeStartupMarkup } from "../src/content/homeStartup.js";
+import { crawlableHtml } from "../src/content/crawlable.js";
 
 const index = await readFile("dist/llms.txt", "utf8");
 const robots = await readFile("dist/robots.txt", "utf8");
@@ -55,6 +57,14 @@ for (const route of routes) {
     const heading = html.indexOf('<h1'), raccoon = html.indexOf('aria-label="Ocuna raccoon"'), engraving = html.indexOf('id="home-engraving"'), following = html.indexOf('aria-labelledby="system-partners-title"');
     assert.ok(engraving >= 0 && engraving < heading && heading < raccoon && raccoon < following, `${route}: engraving leads the lettering, raccoon and following content`);
     assert.ok(html.includes(`src="/${PREPARED_FILM.variants.desktop.poster}"`) && html.includes(`srcset="/${PREPARED_FILM.variants.mobile.poster}"`), `${route}: responsive scenic still without JavaScript`);
+    const startup = homeStartupMarkup(route, crawlableHtml(route));
+    assert.ok(html.includes(`<div id="root">${startup.content}</div>`), `${route}: complete static content remains available without JavaScript`);
+    assert.ok(html.includes(startup.head), `${route}: fail-open startup guard is included unchanged`);
+    assert.ok(html.indexOf('id="home-startup"') < html.indexOf('type="module" crossorigin src='), `${route}: startup guard precedes the application module`);
+    assert.match(html, /<body class="landing-route">/, `${route}: homepage palette is selected before React mounts`);
+    assert.ok(!html.includes('<html lang="en" data-home-startup'), `${route}: a browser without JavaScript never hides the static page`);
+  } else {
+    assert.ok(!html.includes('id="home-startup"') && !html.includes("data-home-prerender"), `${route}: homepage startup guard does not affect other routes`);
   }
   if (route === "/research") {
     assert.deepEqual(page.mainEntity.itemListElement.map((item) => item.name), RESEARCH_POSTS.map((item) => item.title));
@@ -65,6 +75,7 @@ for (const route of routes) {
 }
 
 const missing = await readFile("dist/404.html", "utf8");
+assert.ok(!missing.includes('id="home-startup"') && !missing.includes("data-home-prerender"), "404 keeps its ordinary static rendering");
 assert.ok(missing.includes('name="robots" content="noindex"'));
 assert.ok(!missing.includes('rel="canonical"'));
 assert.ok(!missing.includes('"@type":"WebPage"'), "No indexable page metadata on the 404");

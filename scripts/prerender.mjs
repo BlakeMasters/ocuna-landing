@@ -5,6 +5,7 @@ import { crawlableHtml } from "../src/content/crawlable.js";
 import { SITE_ORIGIN, OCURA_OSS_REPO, OCURA_OSS_SOURCE_REF, OCURA_OSS_VERSION, pageMeta } from "../src/content.js";
 import { DOC_PAGES, DOCS_ORIGIN } from "../src/content/docPages.js";
 import { RESEARCH_ROUTES } from "../src/content/research.js";
+import { homeStartupMarkup } from "../src/content/homeStartup.js";
 
 const origin = SITE_ORIGIN;
 const routes = [
@@ -54,6 +55,7 @@ function applyDocument(html, route, isNotFound = false) {
     isNotFound ? "/404" : route,
     documentation.get(route) ?? "",
   );
+  const startup = homeStartupMarkup(key, rootHtml);
   const jsonLd = escapeJsonLd(jsonLdGraph(key));
   let next = html;
   next = replaceFirst(next, /<title>[^<]*<\/title>/, `<title>${escapeTitle(meta.title)}</title>`);
@@ -77,7 +79,11 @@ function applyDocument(html, route, isNotFound = false) {
     /<script id="ocuna-jsonld" type="application\/ld\+json"><\/script>/,
     `<script id="ocuna-jsonld" type="application/ld+json">${jsonLd}</script>`,
   );
-  next = replaceFirst(next, /<div id="root"><\/div>/, `<div id="root">${rootHtml}</div>`);
+  next = replaceFirst(next, /<div id="root"><\/div>/, `<div id="root">${startup.content}</div>`);
+  if (startup.head) {
+    next = next.replace('<meta charset="UTF-8" />', `<meta charset="UTF-8" />\n${startup.head}`);
+    next = next.replace("<body>", `<body class="${startup.bodyClass}">`);
+  }
   next = replaceFirst(next, /<meta property="og:type" content="[^"]*" \/>/, `<meta property="og:type" content="${meta.type ?? "website"}" />`);
   next = replaceFirst(next, /<meta property="og:image" content="[^"]*" \/>/, `<meta property="og:image" content="${origin}${meta.image ?? "/images/ocuna_logo.png"}" />`);
   if (docPage && !isNotFound) {
