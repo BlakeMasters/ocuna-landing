@@ -1,9 +1,10 @@
-import { copyFile, mkdir, readFile, writeFile } from "node:fs/promises";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { jsonLdGraph } from "../src/content/jsonld.js";
 import { crawlableHtml } from "../src/content/crawlable.js";
-import { SITE_ORIGIN, OCURA_OSS_REPO, OCURA_OSS_SOURCE_REF, OCURA_OSS_VERSION, pageMeta } from "../src/content.js";
-import { DOC_PAGES, DOCS_ORIGIN } from "../src/content/docPages.js";
+import { SITE_ORIGIN, pageMeta } from "../src/content.js";
+import { DOC_REDIRECTS } from "../src/content/legacyDocs.js";
+import { OSS } from "../src/content/oss.js";
 import { RESEARCH_ROUTES } from "../src/content/research.js";
 import { homeStartupMarkup } from "../src/content/homeStartup.js";
 
@@ -14,19 +15,10 @@ const routes = [
   "/ocura",
   "/four1",
   "/critter-acknowledgement",
-  ...DOC_PAGES.map((page) => page.route),
   ...RESEARCH_ROUTES,
   "/contact",
 ];
 
-const documentationSources = new Map(
-  DOC_PAGES.map((page) => [page.route, `src/content/docs/${page.file}`]),
-);
-const documentation = new Map(
-  await Promise.all(
-    [...documentationSources].map(async ([route, source]) => [route, await readFile(source, "utf8")]),
-  ),
-);
 const built = await readFile("dist/index.html", "utf8");
 
 function replaceFirst(html, pattern, replacement) {
@@ -48,12 +40,10 @@ function escapeJsonLd(value) {
 function applyDocument(html, route, isNotFound = false) {
   const key = isNotFound ? "/404" : route;
   const meta = pageMeta[key];
-  const docPage = !isNotFound && DOC_PAGES.find((page) => page.route === route);
   const canonicalPath = route === "/ocuna" ? "/" : route;
-  const canonical = docPage ? docPage.destination : `${origin}${canonicalPath === "/" ? "/" : canonicalPath}`;
+  const canonical = `${origin}${canonicalPath === "/" ? "/" : canonicalPath}`;
   const rootHtml = crawlableHtml(
     isNotFound ? "/404" : route,
-    documentation.get(route) ?? "",
   );
   const startup = homeStartupMarkup(key, rootHtml);
   const jsonLd = escapeJsonLd(jsonLdGraph(key));
@@ -86,12 +76,6 @@ function applyDocument(html, route, isNotFound = false) {
   }
   next = replaceFirst(next, /<meta property="og:type" content="[^"]*" \/>/, `<meta property="og:type" content="${meta.type ?? "website"}" />`);
   next = replaceFirst(next, /<meta property="og:image" content="[^"]*" \/>/, `<meta property="og:image" content="${origin}${meta.image ?? "/images/ocuna_logo.png"}" />`);
-  if (docPage && !isNotFound) {
-    const redirect = `window.location.replace(${JSON.stringify(docPage.destination)} + window.location.search + window.location.hash);`;
-    next = next.replace("<head>", `<head>\n<script id="docs-redirect">${redirect}</script>`);
-    next = next.replace("<body>", '<body class="docs-route">');
-    next = next.replace("</head>", `<link rel="alternate" type="text/markdown" href="${DOCS_ORIGIN}/docs/${docPage.file}" title="Markdown" />\n</head>`);
-  }
 
   if (isNotFound) {
     next = replaceFirst(next, /<meta property="og:url" content="[^"]*" \/>/, "");
@@ -134,11 +118,12 @@ for (const route of routes.slice(1)) {
 
 await writeFile("dist/404.html", applyDocument(built, "/", true));
 
-await mkdir("dist/docs", { recursive: true });
-await Promise.all(
-  [...documentationSources.values()].map((source) =>
-    copyFile(source, path.join("dist/docs", path.basename(source))),
-  ),
-);
+// Legacy URLs retain only a redirect; no documentation content is hosted here.
+for (const page of DOC_REDIRECTS) {
+  const target = escapeAttr(page.target);
+  const html = `<!doctype html><html lang="en"><head><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><title>Ocura OSS | Protention</title><link rel="canonical" href="${target}" /><meta http-equiv="refresh" content="0; url=${target}" /><script>location.replace(${JSON.stringify(page.target)} + location.search + location.hash);</script></head><body><main><p><a href="${target}">Continue to Ocura OSS at Protention</a></p></main></body></html>`;
+  await writeRoute(page.route, html);
+  await writeFile(`dist/docs/${page.file}`, `Documentation is hosted at [Protention](https://protention.dev/docs/${page.file}).\n`);
+}
 
-await writeFile("dist/llms.txt", `# Ocuna\n\nOcuna builds infrastructure for uncertain computation. This index links to public pages and documentation.\n\n## Site\n\n${["/", "/ocura", "/four1", "/research", "/critter-acknowledgement", "/contact"].map((route) => `- [${pageMeta[route].title}](${origin}${route}): ${pageMeta[route].description}`).join("\n")}\n\n## Field Notes\n\n${RESEARCH_ROUTES.filter((route) => route !== "/research").map((route) => `- [${pageMeta[route].title}](${origin}${route}): ${pageMeta[route].description}`).join("\n")}\n\n## Reading and navigation\n\nPublic pages include their content in the initial HTML without JavaScript. The main landmark contains the page content; headings and contents links identify sections. Diagrams have text descriptions, and decorative artwork is hidden from assistive technology.\n\n## Ocura OSS ${OCURA_OSS_VERSION}\n\nA local execution ledger for recording, branching, and comparing command runs. Use the JSON CLI or typed Python API from a terminal, script, or AI agent. Documentation has moved to ${DOCS_ORIGIN}/; legacy /docs routes redirect there.\n\n${DOC_PAGES.map((page) => `- [${page.label}](${page.destination})\n- [${page.label} Markdown](${DOCS_ORIGIN}/docs/${page.file})`).join("\n")}\n\n## Source\n\n- [Version ${OCURA_OSS_VERSION}](${OCURA_OSS_REPO}/tree/${OCURA_OSS_SOURCE_REF})\n- [Repository training example](${OCURA_OSS_REPO}/tree/${OCURA_OSS_SOURCE_REF}/examples/autoregressive)\n\nExamples are repository-only. The core package has no runtime dependencies. Commands inherit their execution environment's permissions; checksums verify local consistency.\n`);
+await writeFile("dist/llms.txt", `# Ocuna\n\nOcuna builds infrastructure for uncertain computation. This index links to public company and research pages.\n\n## Site\n\n${["/", "/ocura", "/four1", "/research", "/critter-acknowledgement", "/contact"].map((route) => `- [${pageMeta[route].title}](${origin}${route}): ${pageMeta[route].description}`).join("\n")}\n\n## Field Notes\n\n${RESEARCH_ROUTES.filter((route) => route !== "/research").map((route) => `- [${pageMeta[route].title}](${origin}${route}): ${pageMeta[route].description}`).join("\n")}\n\n## Reading and navigation\n\nPublic pages include their content in the initial HTML without JavaScript. The main landmark contains the page content; headings and contents links identify sections. Diagrams have text descriptions, and decorative artwork is hidden from assistive technology.\n\n## Open source\n\n- [Ocura OSS at Protention](${OSS.home}): Local command-run records, branching, and comparison. Documentation and releases are hosted at Protention.\n- [Python API](${OSS.api})\n`);

@@ -27,16 +27,16 @@ npm run preview
 ```
 
 The build writes static files to `dist/`. `postbuild` runs `scripts/prerender.mjs`,
-which prerenders the main routes (home, Ocura, docs, contact, and others),
-writes `dist/404.html`, and copies OSS markdown into `dist/docs/`.
-The documentation route list lives in `src/content/docPages.js`; it drives the React
-navigation, prerendered navigation, raw Markdown exports, and `llms.txt` index.
-Each documentation page links to its Markdown file and versioned GitHub reference.
-Run `npm run verify:docs` after building to check route coverage, static content,
-Markdown parity, metadata, navigation, source links, and discovery files. The Pages
-workflow runs this check before deployment.
+which prerenders the company and research routes and writes `dist/404.html`.
+Ocura OSS documentation, API reference, examples, and releases live at
+[Protention](https://protention.dev/). This site contains no documentation renderer
+or copied documentation. `src/content/oss.js` holds the external destinations;
+`src/content/legacyDocs.js` preserves old `/docs` links as redirect stubs, including
+`.html` aliases. Old Markdown URLs contain a short pointer to their new location.
+Run `npm run verify:docs` after building to verify the migration, company metadata,
+external links, and prerendered content. The Pages workflow runs this check.
 
-Published routes include `/`, `/ocura`, `/docs`, `/contact`, `/four1`, and
+Public routes include `/`, `/ocura`, `/contact`, `/four1`, and
 `/critter-acknowledgement`. `/ocuna` aliases the home page; canonical URLs use `/`.
 
 `site-public/` also ships `robots.txt` and `sitemap.xml` for GitHub Pages.
@@ -82,11 +82,11 @@ from the Actions tab.
 src/
   App.jsx
   content.js
-  content/docs/          # Ocura OSS markdown (source for /docs)
+  content/oss.js         # External OSS destinations at Protention
+  content/legacyDocs.js  # Compatibility redirects only
   content/research.js    # Articles and research route metadata
   components/
     LandingPage.jsx
-    DocsPage.jsx
     ContactPage.jsx
     CritterPage.jsx
     ResearchPage.jsx

@@ -1,4 +1,4 @@
-import { isDocRoute } from "./content/docPages.js";
+import { documentationTarget } from "./content/legacyDocs.js";
 import { RESEARCH_ROUTES } from "./content/research.js";
 
 const base = import.meta.env.BASE_URL || "/";
@@ -9,6 +9,7 @@ export function asset(path) {
 }
 
 export function pagePath(path = "") {
+  if (/^https?:\/\//.test(path)) return path;
   const cleanPath = path.replace(/^\/+/, "");
   return `${base}${cleanPath}`;
 }
@@ -43,7 +44,7 @@ export function routeFromLocation(location = window.location) {
     return "/ocura";
   }
 
-  if (path.endsWith(".html") && (isDocRoute(path.slice(0, -5)) || researchRoutes.has(path.slice(0, -5)))) {
+  if (path.endsWith(".html") && (documentationTarget(path.slice(0, -5)) || researchRoutes.has(path.slice(0, -5)))) {
     return path.slice(0, -5);
   }
 

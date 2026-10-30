@@ -134,51 +134,6 @@ body.landing-route .site-footer a:hover {
   color: #fff;
 }
 
-body.docs-route {
-  color: #d6d9e0;
-  background: #1c1e21;
-}
-
-body.docs-route::before {
-  display: none;
-}
-
-body.docs-route .site-header {
-  color: rgba(248, 246, 243, 0.92);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-body.docs-route .brand img {
-  filter: invert(1) grayscale(1) brightness(1.8);
-}
-
-body.docs-route .nav {
-  color: rgba(248, 246, 243, 0.64);
-}
-
-body.docs-route .nav a:hover,
-body.docs-route .nav button:hover {
-  color: #fff;
-}
-
-body.docs-route .site-footer {
-  color: rgba(244, 241, 238, 0.56);
-  background: #15171a;
-}
-
-body.docs-route .footer-logo-link {
-  border-color: rgba(255, 255, 255, 0.14);
-  background: rgba(255, 255, 255, 0.04);
-}
-
-body.docs-route .footer-logo-link img {
-  filter: invert(1) grayscale(1);
-}
-
-body.docs-route .site-footer a:hover {
-  color: #fff;
-}
-
 a {
   color: inherit;
   text-decoration: none;

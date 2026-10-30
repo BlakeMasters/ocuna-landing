@@ -38,7 +38,7 @@ jobs:
       - name: Verify animation and playback
         run: node --test tests/*.test.mjs
 
-      - name: Verify documentation routes and exports
+      - name: Verify documentation redirects and site ownership
         run: npm run verify:docs
 
       - name: Verify crawler content and initial bundle budgets

@@ -1,6 +1,6 @@
 import { usePageMotion } from "./PageMotion.jsx";
 import { asset, pagePath } from "../assets.js";
-import { OCURA_OSS_PYPI, OCURA_OSS_REPO, OCURA_OSS_VERSION } from "../content.js";
+import { OSS } from "../content/oss.js";
 import { HOME } from "../content/home.js";
 import { FOUR1 } from "../content/four1.js";
 import { RESEARCH_ART, RESEARCH_POSTS } from "../content/research.js";
@@ -10,7 +10,7 @@ import "./SystemHomePage.css";
 
 const products = [
   { name: "Ocura", description: "Branch-aware AI runtime", href: "#work" },
-  { name: "Ocura OSS", description: "Local execution ledger", href: "#ocura-oss" },
+  { name: "Ocura OSS", description: "Open source at Protention", href: OSS.home },
   { name: "Four1", description: "Distributed agentic research", href: "/four1" },
 ];
 
@@ -96,16 +96,15 @@ function OssPanel() {
       <div className="shell system-oss-panel">
         <div className="system-oss-copy">
           <h2 id="system-oss-title">Record, branch,<br />and compare.</h2>
-          <p>Ocura OSS {OCURA_OSS_VERSION} is the part you can run on your own machine today. Keep a baseline, branch from it with a reason, and connect each result to the original run through the JSON CLI, the Python API, or an AI agent.</p>
-          <a className="system-text-link" href={pagePath("docs/examples")}>Try the training example <ArrowIcon /></a>
+          <p>Ocura OSS is an open-source execution ledger hosted at Protention. Record local command runs and their lineage, branch from a completed run, and compare the evidence.</p>
+          <a className="system-text-link" href={OSS.home}>Visit protention.dev <ArrowIcon /></a>
         </div>
         <div className="system-install-panel">
-          <h3>Start with Ocura OSS</h3>
+          <h3>Ocura OSS at Protention</h3>
           <pre><code>python -m pip install ocura-oss</code></pre>
           <nav className="system-install-links" aria-label="Ocura OSS resources">
-            <a href={pagePath("docs")}>Documentation <ArrowIcon /></a>
-            <a href={OCURA_OSS_PYPI}>PyPI <ArrowIcon /></a>
-            <a href={OCURA_OSS_REPO}>GitHub <ArrowIcon /></a>
+            <a href={OSS.api}>Python API <ArrowIcon /></a>
+            <a href={OSS.examples}>Training example <ArrowIcon /></a>
           </nav>
         </div>
       </div>
@@ -144,7 +143,7 @@ export default function SystemHomePage() {
     <main className="system-home" data-motion={motionEnabled ? "playing" : "paused"} id="top" tabIndex={-1}>
       <SystemHero motionEnabled={motionEnabled} onToggleMotion={toggleMotion} />
       <PartnerAcknowledgement />
-      <nav className="shell system-product-strip" aria-label="Ocuna systems">
+      <nav className="shell system-product-strip" aria-label="Explore Ocuna and open source">
         {products.map((product) => <a href={product.href.startsWith("#") ? product.href : pagePath(product.href)} key={product.name}><div><strong>{product.name}</strong><span>{product.description}</span></div><ArrowIcon /></a>)}
       </nav>
       <RuntimePanels />

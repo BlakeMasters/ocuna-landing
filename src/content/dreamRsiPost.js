@@ -1,11 +1,11 @@
-const EXAMPLE_SOURCE = "https://github.com/BlakeMasters/ocura-oss/blob/fe8f336b4be97c4ffb0ea818756d13da8189b72b/examples/dream_rsi";
+const EXAMPLE_SOURCE = "https://github.com/Protention/ocura-oss/blob/fe8f336b4be97c4ffb0ea818756d13da8189b72b/examples/dream_rsi";
 
 export const DREAM_RSI_POST = {
   slug: "dream-rsi-with-ocura-oss",
   title: "A Dream-RSI workflow with Ocura OSS",
   category: "Engineering",
   description:
-    "How Ocura's execution, lineage, and verified-log APIs supported a local workflow for agent-written training schedules, policy replay, and fresh deployment.",
+    "How Ocura OSS execution records, lineage, and verified logs supported a local workflow for agent-written training schedules, policy replay, and fresh deployment.",
   date: "2026-09-22",
   dateLabel: "September 22, 2026",
   readTime: "5 min read",
@@ -15,7 +15,7 @@ export const DREAM_RSI_POST = {
       id: "from-paper-to-workflow",
       title: "The experiment",
       paragraphs: [
-        "This study focuses on implementation support: how Ocura OSS helps developers build and inspect a Dream-RSI workflow. We use a small, bounded training experiment to exercise the integration, rather than to establish improvements in training performance.",
+        "This study focuses on implementation support: how [Ocura OSS](https://protention.dev/) helps developers build and inspect a Dream-RSI workflow. We use a small, bounded training experiment to exercise the integration, rather than to establish improvements in training performance.",
         "We adapted Dream-RSI to a local training workflow with Ocura OSS. One agent writes learning-rate schedules, another revises the policy that chooses which training attempt to pursue, and replay tests those policies against recorded results. The training workload ran locally on CPU, with agent access provided through Codex.",
         "Ocura records agent calls and training jobs through the same interface. Each attempt retains its command, output, and relationship to earlier work, giving the controller a consistent way to inspect results and decide what to run next.",
       ],
@@ -55,7 +55,7 @@ def record_attempt(root, command, parent):
     stdout = store.read_verified_log(execution.atom.id)
     stderr = store.read_verified_log(execution.atom.id, stream="stderr")
     return execution, stdout, stderr`,
-      links: [{ label: "Ocura OSS Python API", href: "/docs/api" }],
+      links: [{ label: "Ocura OSS Python API", href: "https://protention.dev/api/" }],
     },
     {
       id: "restoring-training",
@@ -82,7 +82,7 @@ logs = {
     atom.id: store.read_verified_log(atom.id)
     for atom in store.list_atoms()
 }`,
-      links: [{ label: "State and verification", href: "/docs/state" }],
+      links: [{ label: "State and verification", href: "https://protention.dev/state/" }],
     },
     {
       id: "completed-run",
@@ -104,7 +104,7 @@ logs = {
         "That let us revise prompts and policy code while keeping a consistent record of every attempt. The same records supported debugging during development and reconstruction after the run. For a workflow that evolves with each experiment, being able to return to the commands and results makes the next change easier to investigate.",
       ],
       links: [
-        { label: "Ocura OSS documentation", href: "/docs" },
+        { label: "Ocura OSS documentation", href: "https://protention.dev/" },
         {
           label: "Example and reproduction guide",
           href: `${EXAMPLE_SOURCE}/README.md`,

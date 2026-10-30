@@ -1,3 +1,4 @@
+import { OSS } from "../content/oss.js";
 import { asset } from "../assets.js";
 import { TENANTS_PLATE, TENANTS_PLATE_STYLE } from "../content/illustrations.js";
 import PaperShell from "./PaperShell.jsx";
@@ -33,7 +34,7 @@ export default function ContactPage() {
     <PaperShell
       className="paper-page--contact"
       titleLines={["Write", "to Ocuna"]}
-      lede="There is no signup form on this site. Use email for product, research, partnership, or documentation questions."
+      lede="There is no signup form on this site. Use email for product, research, or partnership questions."
       extra={<ContactArt />}
     >
       <div className="paper-prose">
@@ -42,12 +43,8 @@ export default function ContactPage() {
           <a href="mailto:business@ocuna-ai.com">business@ocuna-ai.com</a>
         </p>
         <p>
-          For Ocura OSS security issues, use GitHub private vulnerability reporting
-          on the{" "}
-          <a href="https://github.com/BlakeMasters/ocura-oss/security/advisories/new">
-            ocura-oss repository
-          </a>
-          . Do not include exploitable details in a public issue.
+          For Ocura OSS documentation and support, visit{" "}
+          <a href={OSS.home}>Protention</a>.
         </p>
       </div>
       <div className="paper-page__actions">

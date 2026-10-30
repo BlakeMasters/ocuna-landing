@@ -2,7 +2,6 @@ import assert from "node:assert/strict";
 import { readFile, readdir } from "node:fs/promises";
 import { gzipSync } from "node:zlib";
 import { knownRoutes, pageMeta, SITE_ORIGIN } from "../src/content.js";
-import { isDocRoute } from "../src/content/docPages.js";
 import { getResearchPost, RESEARCH_POSTS } from "../src/content/research.js";
 import { renderInline } from "../src/lib/markdown.js";
 import { PREPARED_FILM } from "../src/content/preparedFilm.js";
@@ -16,7 +15,7 @@ assert.match(robots, /User-agent: \*\s+Allow: \//);
 assert.ok(robots.includes(`${SITE_ORIGIN}/sitemap.xml`));
 assert.match(index, /^# Ocuna\n/);
 
-const routes = [...knownRoutes].filter((route) => !isDocRoute(route));
+const routes = [...knownRoutes];
 for (const route of routes) {
   const html = await readFile(route === "/" ? "dist/index.html" : `dist${route}/index.html`, "utf8");
   const canonical = `${SITE_ORIGIN}${route === "/ocuna" ? "/" : route}`;

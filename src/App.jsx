@@ -1,7 +1,6 @@
 import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { asset, pagePath, routeFromLocation } from "./assets.js";
 import "./components/CritterPage.css";
-import "./components/DocsPage.css";
 import "./components/NotFoundPage.css";
 import "./components/PaperPage.css";
 import {
@@ -17,7 +16,7 @@ import { PageMotionProvider } from "./components/PageMotion.jsx";
 import BrandLogo from "./components/BrandLogo.jsx";
 import SystemHomePage from "./components/SystemHomePage.jsx";
 import { jsonLdGraph } from "./content/jsonld.js";
-import { DOC_PAGES, isDocRoute } from "./content/docPages.js";
+import { documentationTarget } from "./content/legacyDocs.js";
 import { RESEARCH_ROUTES } from "./content/research.js";
 import "./components/ProductMenu.css";
 
@@ -25,7 +24,6 @@ const LANDING_KINDS = new Set(["home", "ocuna", "ocura"]);
 const PAPER_KINDS = new Set(["contact", "notfound"]);
 const RESEARCH_ROUTE_SET = new Set(RESEARCH_ROUTES);
 const CritterPage = lazy(() => import("./components/CritterPage.jsx"));
-const DocsPage = lazy(() => import("./components/DocsPage.jsx"));
 const NotFoundPage = lazy(() => import("./components/NotFoundPage.jsx"));
 const ResearchPage = lazy(() => import("./components/ResearchPage.jsx"));
 const Four1Page = lazy(() => import("./components/Four1Page.jsx"));
@@ -55,14 +53,14 @@ function pageKind(route) {
   if (import.meta.env.DEV && route === "/onveil") return "onveil";
   if (route === "/four1") return "four1";
   if (route === "/critter-acknowledgement") return "critter";
-  if (isDocRoute(route)) return "docs";
+  if (documentationTarget(route)) return "redirect";
   if (RESEARCH_ROUTE_SET.has(route)) return "research";
   if (route === "/contact") return "contact";
   return "notfound";
 }
 
 function canonicalUrl(route) {
-  return DOC_PAGES.find((page) => page.route === route)?.destination
+  return documentationTarget(route)
     ?? `${SITE_ORIGIN}${route === "/ocuna" ? "/" : route}`;
 }
 
@@ -83,11 +81,15 @@ export default function App() {
   const isFour1Page = kind === "four1";
   const isCritterPage = kind === "critter";
   const isContactPage = kind === "contact";
-  const isDocsPage = kind === "docs";
   const isResearchPage = kind === "research";
   const isPaperPage = PAPER_KINDS.has(kind);
-  const meta = isOnVeilPage ? localOnVeilMeta : pageMeta[kind === "notfound" ? "/404" : route] ?? pageMeta["/404"];
+  const docsTarget = documentationTarget(route);
+  const meta = docsTarget ? { title: "Ocura OSS | Protention", description: "Ocura OSS documentation is hosted at Protention." } : isOnVeilPage ? localOnVeilMeta : pageMeta[kind === "notfound" ? "/404" : route] ?? pageMeta["/404"];
   const moveFocusToMain = useRef(false);
+
+  useEffect(() => {
+    if (docsTarget) window.location.replace(`${docsTarget}${window.location.search}${window.location.hash}`);
+  }, [docsTarget]);
 
   useEffect(() => {
     document.title = meta.title;
@@ -151,7 +153,6 @@ export default function App() {
     document.body.classList.toggle("critter-route", isCritterPage);
     document.body.classList.toggle("contact-route", isContactPage);
     document.body.classList.toggle("landing-route", isLandingPage);
-    document.body.classList.toggle("docs-route", isDocsPage);
     document.body.classList.toggle("research-route", isResearchPage);
     document.body.classList.toggle("paper-route", isPaperPage);
     return () => {
@@ -160,11 +161,10 @@ export default function App() {
       document.body.classList.remove("critter-route");
       document.body.classList.remove("contact-route");
       document.body.classList.remove("landing-route");
-      document.body.classList.remove("docs-route");
       document.body.classList.remove("research-route");
       document.body.classList.remove("paper-route");
     };
-  }, [isContactPage, isCritterPage, isDocsPage, isFour1Page, isLandingPage, isOnVeilPage, isPaperPage, isResearchPage]);
+  }, [isContactPage, isCritterPage, isFour1Page, isLandingPage, isOnVeilPage, isPaperPage, isResearchPage]);
 
   useEffect(() => {
     if (!moveFocusToMain.current) return;
@@ -218,7 +218,7 @@ export default function App() {
     if (
       event.defaultPrevented || event.button !== 0 || event.metaKey ||
       event.ctrlKey || event.shiftKey || event.altKey ||
-      event.currentTarget.target === "_blank"
+      event.currentTarget.target === "_blank" || /^https?:\/\//.test(href)
     ) return;
 
     if (href.startsWith("#")) {
@@ -247,7 +247,6 @@ export default function App() {
 
   let page = <NotFoundPage />;
   if (isLandingPage) page = <SystemHomePage />;
-  if (kind === "docs") page = <DocsPage route={route} />;
   if (kind === "contact") page = <ContactPage />;
   if (kind === "critter") page = <CritterPage />;
   if (import.meta.env.DEV && isOnVeilPage) {
@@ -263,6 +262,8 @@ export default function App() {
       </Suspense>
     );
   }
+
+  if (docsTarget) return <main id="top"><p><a href={docsTarget}>Continue to Ocura OSS at Protention</a></p></main>;
 
   const shell = (
     <>

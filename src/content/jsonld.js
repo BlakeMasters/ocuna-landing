@@ -1,13 +1,8 @@
 import {
   CONTACT_EMAIL,
-  OCURA_OSS_DOCS,
-  OCURA_OSS_PYPI,
-  OCURA_OSS_REPO,
-  OCURA_OSS_VERSION,
   pageMeta,
   SITE_ORIGIN,
 } from "../content.js";
-import { isDocRoute } from "./docPages.js";
 import { FOUR1 } from "./four1.js";
 import { getResearchPost, RESEARCH_ART, RESEARCH_POSTS } from "./research.js";
 
@@ -43,7 +38,7 @@ export function jsonLdGraph(route = "/") {
         name: "Ocura",
         url: `${SITE_ORIGIN}/ocura`,
         description:
-          "Ocura is Ocuna’s branch-aware scheduler and evidence engine. Ocura OSS is the public research package for recorded local command runs.",
+          "Ocura is Ocuna’s branch-aware scheduler and evidence engine.",
         applicationCategory: "DeveloperApplication",
         publisher: { "@id": `${SITE_ORIGIN}/#organization` },
         brand: { "@id": `${SITE_ORIGIN}/#organization` },
@@ -59,26 +54,12 @@ export function jsonLdGraph(route = "/") {
         publisher: { "@id": `${SITE_ORIGIN}/#organization` },
         brand: { "@id": `${SITE_ORIGIN}/#organization` },
       },
-      {
-        "@type": "SoftwareSourceCode",
-        "@id": `${SITE_ORIGIN}/docs#ocura-oss`,
-        name: "Ocura OSS",
-        url: OCURA_OSS_DOCS,
-        codeRepository: OCURA_OSS_REPO,
-        license: "https://www.mozilla.org/MPL/2.0/",
-        programmingLanguage: "Python",
-        installUrl: OCURA_OSS_PYPI,
-        softwareVersion: OCURA_OSS_VERSION,
-        description:
-          "A local execution ledger for recording, branching, and comparing command runs. Use the JSON CLI or typed Python API from terminals, scripts, and AI agents. Repository examples support PyTorch, JAX, and a local Ray task.",
-        publisher: { "@id": `${SITE_ORIGIN}/#organization` },
-      },
     ],
   };
 
   // Redirect destinations describe their own pages; the 404 is not indexable.
   const meta = pageMeta[route];
-  if (!meta || route === "/404" || isDocRoute(route)) return graph;
+  if (!meta || route === "/404") return graph;
 
   const url = `${SITE_ORIGIN}${route === "/ocuna" ? "/" : route}`;
   const post = getResearchPost(route);

@@ -1,18 +1,13 @@
-import { DOC_PAGES, DOCS_ORIGIN } from "./content/docPages.js";
 import { RESEARCH_META, RESEARCH_ROUTES } from "./content/research.js";
 import { FOUR1 } from "./content/four1.js";
 import { CRITTER } from "./content/critter.js";
 
+import { OSS } from "./content/oss.js";
+
+export const OCURA_OSS_DOCS = OSS.home;
 export const SITE_ORIGIN = "https://ocuna-ai.com";
 export const CONTACT_EMAIL = "business@ocuna-ai.com";
-export const OCURA_OSS_REPO = "https://github.com/Protention/ocura-oss";
-export const OCURA_OSS_DOCS = `${DOCS_ORIGIN}/`;
-export const OCURA_OSS_PYPI = "https://pypi.org/project/ocura-oss/";
-export const OCURA_OSS_VERSION = "0.5.0";
-export const OCURA_OSS_SOURCE_REF = "9b1e07276e83868ffb2dce4570e0dce0e84be8c5";
-
 export const companyNavItems = [
-  { label: "Docs", href: "/docs" },
   { label: "Research", href: "/research" },
   { label: "Contact", href: "/contact" },
 ];
@@ -31,7 +26,6 @@ export const productItems = [
 ];
 
 export const footerNavItems = [
-  { label: "Docs", href: "/docs" },
   { label: "Research", href: "/research" },
   { label: "Contact", href: "/contact" },
 ];
@@ -42,7 +36,7 @@ export const acknowledgementCopy =
 const homeMeta = {
   title: "Ocuna | Accelerating Uncertain computation",
   description:
-    "Ocuna builds the execution layer for AI workloads that branch as they run. Ocura is its runtime. Ocura OSS is a local execution ledger for recording, branching, and comparing command runs.",
+    "Ocuna builds the execution layer for AI workloads that branch as they run. Ocura is its runtime.",
 };
 
 export const pageMeta = {
@@ -64,33 +58,6 @@ export const pageMeta = {
     description: "Ocuna’s acknowledgement of the raccoon, with a drawing from The Cambridge Natural History (1902) and quotations from Tenants of the Trees (1907).",
     image: `/${CRITTER.illustration.file}`,
   },
-  "/docs": {
-    title: "Ocura OSS | Documentation",
-    description:
-      `Ocura OSS ${OCURA_OSS_VERSION}: a local execution ledger for recording, branching, and comparing command runs. Use the JSON CLI or typed Python API from terminals, scripts, and AI agents.`,
-  },
-  "/docs/cli": {
-    title: "CLI reference | Ocura OSS",
-    description:
-      "Complete command-line reference for Ocura OSS, including commands, options, output, state behavior, and exit status.",
-  },
-  "/docs/api": {
-    title: "Python API reference | Ocura OSS",
-    description:
-      "Complete Python API reference for Ocura OSS workflows, verified log reading, Store access, data models, enums, exceptions, and typing.",
-  },
-  "/docs/automation": {
-    title: "Scripts and AI agents | Ocura OSS",
-    description: "Drive the Ocura OSS record, branch, rerun, and compare workflow with JSON commands or the Python API inside your existing execution environment.",
-  },
-  "/docs/examples": {
-    title: "PyTorch, JAX, and Ray example | Ocura OSS",
-    description: "Run a small autoregressive training experiment with PyTorch or JAX, optionally using a local Ray task, and reconstruct its comparison from saved evidence.",
-  },
-  "/docs/state": {
-    title: "State and verification | Ocura OSS",
-    description: "Understand Ocura OSS records, lineage, logs, checksums, and the local execution model.",
-  },
   "/contact": {
     title: "Contact Ocuna",
     description: "Reach Ocuna at business@ocuna-ai.com for product, research, and partnership questions.",
@@ -107,7 +74,6 @@ export const knownRoutes = new Set([
   "/ocura",
   "/four1",
   "/critter-acknowledgement",
-  ...DOC_PAGES.map((page) => page.route),
   ...RESEARCH_ROUTES,
   "/contact",
 ]);

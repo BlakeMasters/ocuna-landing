@@ -2,7 +2,7 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import { copyFile, mkdir, readFile } from "node:fs/promises";
 import path from "node:path";
-import { DOC_PAGES } from "./src/content/docPages.js";
+import { documentationTarget } from "./src/content/legacyDocs.js";
 
 const productionImages = [
   "ocuna_background1c.webp",
@@ -15,31 +15,22 @@ const productionImages = [
 function imagesDirectory() {
   let imagesDir;
   let distImagesDir;
-  let rootDir;
 
   return {
     name: "ocuna-images-directory",
     configResolved(config) {
-      rootDir = config.root;
       imagesDir = path.resolve(config.root, "images");
       distImagesDir = path.resolve(config.root, config.build.outDir, "images");
     },
     configureServer(server) {
       server.middlewares.use(async (req, res, next) => {
         const pathname = req.url ? new URL(req.url, "http://localhost").pathname : "";
-        const documentationSources = new Map(
-          DOC_PAGES.map((page) => [`/docs/${page.file}`, `src/content/docs/${page.file}`]),
-        );
-        const documentationSource = documentationSources.get(pathname);
-        if (documentationSource) {
-          try {
-            res.setHeader("Content-Type", "text/markdown; charset=utf-8");
-            res.end(await readFile(path.resolve(rootDir, documentationSource)));
-            return;
-          } catch {
-            next();
-            return;
-          }
+        const destination = documentationTarget(pathname);
+        if (destination) {
+          res.statusCode = 302;
+          res.setHeader("Location", `${destination}${new URL(req.url, "http://localhost").search}`);
+          res.end();
+          return;
         }
 
         if (!req.url?.startsWith("/images/")) {

@@ -28,7 +28,7 @@ export const RESEARCH_POSTS = [
         title: "The record",
         paragraphs: [
           "A training script reports a lower validation loss. To decide whether to keep the change, a collaborator needs the command that produced it, the configuration it used, and the output from the earlier run. A score copied into a notebook captures only part of that comparison.",
-          "Ocura OSS records local command attempts, their outcomes, and their stdout and stderr. Each attempt has a persistent identifier and a place in the experiment history. A reader can return to the saved output after the terminal closes, inspect an error, or trace a later variation back to its source.",
+          "[Ocura OSS](https://protention.dev/) records local command attempts, their outcomes, and their stdout and stderr. Each attempt has a persistent identifier and a place in the experiment history. A reader can return to the saved output after the terminal closes, inspect an error, or trace a later variation back to its source.",
           "Failed attempts belong in that history too. An invalid configuration or a process that could not start explains why a promising idea was abandoned. Retaining the outcome and available diagnostics gives the next person something more useful than an unexplained gap between successful runs."
         ]
       },
@@ -56,7 +56,7 @@ export const RESEARCH_POSTS = [
           },
           {
             label: "Ocura OSS documentation",
-            href: "/docs"
+            href: "https://protention.dev/"
           }
         ]
       }

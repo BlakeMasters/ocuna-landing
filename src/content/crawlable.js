@@ -1,14 +1,10 @@
 import {
   CONTACT_EMAIL,
-  OCURA_OSS_PYPI,
-  OCURA_OSS_REPO,
-  OCURA_OSS_SOURCE_REF,
-  OCURA_OSS_VERSION,
   pageMeta,
 } from "../content.js";
-import { DOC_PAGES, isDocRoute } from "./docPages.js";
+import { OSS } from "./oss.js";
 import { getResearchPost, RESEARCH_ART, RESEARCH_POSTS } from "./research.js";
-import { extractHeadings, escapeHtml, renderInline, renderMarkdown } from "../lib/markdown.js";
+import { escapeHtml, renderInline } from "../lib/markdown.js";
 import { FOUR1 } from "./four1.js";
 import { researchStageSvg } from "../components/four1/researchStageArt.js";
 import { CRITTER } from "./critter.js";
@@ -26,7 +22,6 @@ function navHtml(styled = false, headerClass = "not-found-static-header") {
     <a href="/">Home</a>
     <a href="/#work">Ocura</a>
     <a href="/four1">Four1</a>
-    <a href="/docs">Docs</a>
     <a href="/research">Research</a>
     <a href="/contact">Contact</a>
   </nav>
@@ -37,7 +32,6 @@ function footerHtml(styled = false) {
   return `
 <footer${styled ? ' class="site-footer"' : ""}>
   ${styled ? '<div class="shell footer-layout"><a class="footer-logo-link" href="#top" aria-label="Back to top"><img src="/images/ocuna_logo.webp" alt="" /></a><nav class="footer-contact" aria-label="Footer">' : ""}
-  <a href="/docs">Docs</a>
   <a href="/research">Research</a>
   <a href="/contact">Contact</a>
   <a href="mailto:${CONTACT_EMAIL}">${CONTACT_EMAIL}</a>
@@ -83,8 +77,8 @@ function landingBody(extra = "") {
         <a href="/#work">Scheduler</a>
         <a href="/#market">Training and inference</a>
         <a href="/#ocura">Execution graph</a>
-        <a href="/docs">Ocura OSS docs</a>
-        <a href="/docs/examples">PyTorch, JAX, and Ray example</a>
+        <a href="${OSS.home}">Ocura OSS at Protention</a>
+        <a href="${OSS.examples}">PyTorch, JAX, and Ray example</a>
         <a href="/four1">Four1</a>
         <a href="/research">Field Notes</a>
       </nav>
@@ -96,7 +90,7 @@ function landingBody(extra = "") {
         </div>
       </section>
       <section id="ocura" aria-labelledby="execution-display-title"><h2 id="execution-display-title">Execution graph</h2><p>The normal path writes <code>hello_world</code>. The review branch writes <code>review branch</code>, with both paths connected to the same chokepoint.</p></section>
-      <section id="ocura-oss"><h2>Record, branch, and compare.</h2><p>Ocura OSS ${OCURA_OSS_VERSION} is the part you can run on your own machine today. Keep a baseline, branch from it with a reason, and connect each result to the original run through the JSON CLI, the Python API, or an AI agent.</p><pre><code>python -m pip install ocura-oss</code></pre><a href="/docs">Documentation</a><a href="/docs/examples">Try the training example</a></section>
+      <section id="ocura-oss"><h2>Record, branch, and compare.</h2><p>Ocura OSS is an open-source execution ledger hosted at Protention. Record local command runs and their lineage, branch from a completed run, and compare the evidence.</p><pre><code>python -m pip install ocura-oss</code></pre><a href="${OSS.home}">Visit protention.dev</a><a href="${OSS.api}">Python API</a><a href="${OSS.examples}">Training example</a></section>
       <section><h2>More from Ocuna.</h2><h3><a href="/four1">Four1</a></h3><p>${escapeHtml(FOUR1.definition)}</p><h3><a href="/research/${escapeHtml(RESEARCH_POSTS[0].slug)}">${escapeHtml(RESEARCH_POSTS[0].title)}</a></h3><p>${escapeHtml(RESEARCH_POSTS[0].category)} · ${escapeHtml(RESEARCH_POSTS[0].dateLabel)}</p></section>
       <p id="critter"><a href="/critter-acknowledgement">Critter acknowledgement</a></p>
       ${extra}`;
@@ -114,7 +108,7 @@ function researchMediaHtml(media, priority = false) {
   return `<figure class="field-media field-media-${escapeHtml(media.layout)}${media.theme ? ` field-media-${escapeHtml(media.theme)}` : ""}">${visual}<figcaption>${escapeHtml(media.caption)}${media.credit ? ` <a href="${escapeHtml(media.credit.href)}">${escapeHtml(media.credit.label)}</a>.` : ""}</figcaption></figure>`;
 }
 
-export function crawlableHtml(route, markdown = "") {
+export function crawlableHtml(route) {
   if (route === "/research") {
     return wrap(
       "Field Notes",
@@ -167,56 +161,13 @@ ${footerHtml()}`;
     );
   }
 
-  if (isDocRoute(route)) {
-    const page = DOC_PAGES.find((item) => item.route === route);
-    const toc = extractHeadings(markdown)
-      .map((heading) => `<a${heading.level > 2 ? ' class="is-sub"' : ""} href="#${escapeHtml(heading.id)}">${escapeHtml(heading.text)}</a>`)
-      .join("\n");
-    const body = renderMarkdown(markdown);
-    return `${navHtml(true, "")}
-<main class="docs-page" id="top" tabindex="-1">
-  <div class="shell docs-layout">
-    <aside class="docs-sidebar" id="docs-sidebar" aria-label="Documentation navigation">
-      <div class="docs-sidebar-header"><p>Ocura OSS <span>v${OCURA_OSS_VERSION}</span></p></div>
-      <div class="docs-sidebar-body">
-        <div class="docs-sidebar-group">
-          <nav aria-label="Documentation sections">
-            ${DOC_PAGES.map((item) => `<a${item.route === route ? ' class="is-current" aria-current="page"' : ""} href="${item.route}">${item.label}</a>`).join("\n")}
-          </nav>
-        </div>
-        <div class="docs-sidebar-group"><p>On this page</p><nav aria-label="On this page">${toc}</nav></div>
-        <div class="docs-sidebar-group">
-          <p>Project</p>
-          <nav aria-label="Project links">
-            <a href="${OCURA_OSS_PYPI}">PyPI</a>
-            <a href="${OCURA_OSS_REPO}/tree/${OCURA_OSS_SOURCE_REF}">Source code</a>
-            <a href="${OCURA_OSS_REPO}/blob/${OCURA_OSS_SOURCE_REF}/CHANGELOG.md">Changelog</a>
-            <a href="${OCURA_OSS_REPO}/blob/${OCURA_OSS_SOURCE_REF}/CONTRIBUTING.md">Contributing</a>
-          </nav>
-        </div>
-      </div>
-      <div class="docs-sidebar-footer"><a href="#top">Back to top</a></div>
-    </aside>
-    <article class="docs-main">
-      <p>Documentation has moved to <a href="${page.destination}">protention.dev</a>.</p>
-      <nav class="docs-source-links" aria-label="Alternative documentation formats">
-        <a href="/docs/${page.file}">Read Markdown</a>
-        <a href="${OCURA_OSS_REPO}/blob/${OCURA_OSS_SOURCE_REF}/${page.repositoryPath}">Read on GitHub</a>
-      </nav>
-      <div class="docs-prose">${body}</div>
-    </article>
-  </div>
-</main>
-${footerHtml(true)}`;
-  }
-
   if (route === "/contact") {
     return wrap(
       "Write to Ocuna",
       `
       <p>${pageMeta["/contact"].description}</p>
       <p>Email <a href="mailto:${CONTACT_EMAIL}">${CONTACT_EMAIL}</a>. There is no signup form on this site.</p>
-      <p>Security reports for Ocura OSS should use <a href="${OCURA_OSS_REPO}/security/advisories/new">GitHub private vulnerability reporting</a>.</p>
+      <p>For Ocura OSS documentation and support, visit <a href="${OSS.home}">Protention</a>.</p>
       <figure style="max-width:25rem;margin:2rem auto;${Object.entries(TENANTS_PLATE_STYLE).map(([key, value]) => `${key}:${value}`).join(";")}">
         <div style="padding:1.1rem;background:#e9dfbc">
           <div style="position:relative;overflow:hidden;aspect-ratio:var(--plate-aspect)">

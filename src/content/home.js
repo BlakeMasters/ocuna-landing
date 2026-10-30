@@ -1,3 +1,5 @@
+import { OSS } from "./oss.js";
+
 export const HOME = {
   headline: "Accelerating Uncertain computation",
   headlineLead: "Accelerating",
@@ -34,8 +36,8 @@ export const HOME = {
       title: "Run records",
       heading: "Keep the decisions with the result.",
       description:
-        "Ocura OSS records local command runs and their lineage. Branch from a baseline, compare outcomes, and inspect the record behind a result.",
-      href: "/docs/state",
+        "Ocura OSS, hosted at Protention, records local command runs and their lineage. Branch from a baseline, compare outcomes, and inspect the record behind a result.",
+      href: OSS.state,
       action: "Read about run records",
     },
   ],

@@ -1,10 +1,6 @@
 import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { asset, pagePath } from "../assets.js";
-import {
-  OCURA_OSS_PYPI,
-  OCURA_OSS_REPO,
-  OCURA_OSS_VERSION,
-} from "../content.js";
+import { OSS } from "../content/oss.js";
 import { universeSections } from "../content/nounShapes.js";
 import { RESEARCH_ART, RESEARCH_POSTS } from "../content/research.js";
 import { FOUR1 } from "../content/four1.js";
@@ -295,10 +291,8 @@ function OssBand() {
         <div className="home-oss-copy">
           <h2 id="ocura-oss-title">Record, branch, and compare your command runs.</h2>
           <p>
-            Ocura OSS {OCURA_OSS_VERSION} is the part you can run on your own machine today. Keep
-            a baseline, branch from it with a reason, and connect each result to the original run
-            from the JSON CLI, the Python API, or an AI agent. The repository example covers
-            PyTorch, JAX, and a local Ray task.
+            Ocura OSS is an open-source execution ledger hosted at Protention.
+            Record local command runs, branch from a completed run, and compare the evidence.
           </p>
         </div>
         <div className="home-oss-try">
@@ -306,10 +300,8 @@ function OssBand() {
             <code>python -m pip install ocura-oss</code>
           </pre>
           <div className="home-oss-actions">
-            <a href={pagePath("docs")}>Docs</a>
-            <a href={pagePath("docs/examples")}>Training example</a>
-            <a href={OCURA_OSS_PYPI}>PyPI</a>
-            <a href={OCURA_OSS_REPO}>GitHub</a>
+            <a href={OSS.home}>Visit protention.dev</a>
+            <a href={OSS.examples}>Training example</a>
           </div>
         </div>
       </div>
