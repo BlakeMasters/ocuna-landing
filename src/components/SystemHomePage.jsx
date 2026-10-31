@@ -5,6 +5,7 @@ import { HOME } from "../content/home.js";
 import { FOUR1 } from "../content/four1.js";
 import { RESEARCH_ART, RESEARCH_POSTS } from "../content/research.js";
 import ExecutionGraphDisplay from "./ExecutionGraphDisplay.jsx";
+import ThinkingOrb from "./ThinkingOrb.jsx";
 import SystemHero, { ArrowIcon } from "./SystemHero.jsx";
 import "./SystemHomePage.css";
 
@@ -85,6 +86,19 @@ function PartnerAcknowledgement() {
   );
 }
 
+function BuildingStyles({ animate }) {
+  return (
+    <section className="shell system-builders" aria-labelledby="system-builders-title">
+      <h2 id="system-builders-title">{HOME.buildersTitle}</h2>
+      <div className="system-thinking-spheres" aria-hidden="true">
+        {["breathing", "globe", "orbits"].map((state) => (
+          <ThinkingOrb key={state} state={state} size={192} dark={false} paused={!animate} />
+        ))}
+      </div>
+    </section>
+  );
+}
+
 function OssPanel() {
   return (
     <section className="system-oss-section" id="ocura-oss" aria-labelledby="system-oss-title">
@@ -142,6 +156,7 @@ export default function SystemHomePage() {
         {products.map((product) => <a href={product.href.startsWith("#") ? product.href : pagePath(product.href)} key={product.name}><div><strong>{product.name}</strong><span>{product.description}</span></div><ArrowIcon /></a>)}
       </nav>
       <RuntimePanels />
+      <BuildingStyles animate={motionEnabled} />
       <ExecutionGraphDisplay animate={motionEnabled} />
       <OssPanel />
       <ResearchPanels />

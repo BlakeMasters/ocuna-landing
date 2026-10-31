@@ -104,6 +104,7 @@ function landingBody(extra = "") {
           ${HOME.capabilities.map((capability) => `<article><h2>${escapeHtml(capability.title)}</h2><h3>${escapeHtml(capability.heading)}</h3><p>${escapeHtml(capability.description)}</p></article>`).join("\n")}
         </div>
       </section>
+      <section aria-labelledby="system-builders-title"><h2 id="system-builders-title">${escapeHtml(HOME.buildersTitle)}</h2></section>
       ${executionGraphHtml()}
       <section id="ocura-oss"><h2>Record, branch, and compare.</h2><p>Ocura OSS is an open-source execution ledger hosted at Protention. Record local command runs and their lineage, branch from a completed run, and compare the evidence.</p><pre><code>python -m pip install ocura-oss</code></pre><a href="${OSS.home}">Visit protention.dev</a><a href="${OSS.api}">Python API</a><a href="${OSS.examples}">Training example</a></section>
       <section><h2>More from Ocuna.</h2><h3><a href="/four1">Four1</a></h3><p>${escapeHtml(FOUR1.definition)}</p><h3><a href="/research/${escapeHtml(RESEARCH_POSTS[0].slug)}">${escapeHtml(RESEARCH_POSTS[0].title)}</a></h3><p>${escapeHtml(RESEARCH_POSTS[0].category)} · ${escapeHtml(RESEARCH_POSTS[0].dateLabel)}</p></section>

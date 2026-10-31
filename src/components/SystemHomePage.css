@@ -383,6 +383,37 @@ body.landing-route:has(.system-home) .footer-logo-link img { filter: none; }
 .system-capability-copy h3 { margin: 0; font-size: 1.34rem; line-height: 1.25; letter-spacing: -0.035em; }
 .system-capability-copy > p { margin: 18px 0 0; color: var(--system-muted); font-size: 0.9rem; line-height: 1.65; }
 
+.system-builders {
+  padding: clamp(64px, 8vw, 112px) 0 0;
+  text-align: center;
+}
+
+.system-home .system-builders h2 {
+  max-width: none;
+  margin: 0;
+  font-size: clamp(2rem, 3.55vw, 3.1rem);
+  line-height: 1.1;
+  text-wrap: balance;
+}
+
+.system-thinking-spheres {
+  display: flex;
+  justify-content: center;
+  gap: clamp(12px, 4vw, 64px);
+  margin-top: 24px;
+}
+
+.system-thinking-spheres .thinking-orb {
+  display: block;
+  width: clamp(76px, 16vw, 192px) !important;
+  height: auto !important;
+  aspect-ratio: 1;
+}
+
+.system-home .system-builders + .system-execution-section {
+  padding-top: clamp(24px, 3vw, 40px);
+}
+
 .system-home .ocura-sim {
   --sim-border: #d2d7db;
   --sim-ink: var(--system-ink);

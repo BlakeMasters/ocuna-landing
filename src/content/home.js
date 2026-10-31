@@ -4,6 +4,7 @@ export const HOME = {
   introduction:
     "Ocuna builds the execution layer for AI workloads that branch as they run. From model training to agent research, we’re building systems that coordinate work and keep their decisions on the record.",
   partnersTitle: "Supported By",
+  buildersTitle: "Everyone builds differently",
   partners: [
     { name: "Antler", id: "antler", href: "https://www.antler.co/", logo: "partners/antler.svg", width: 117, height: 28 },
   ],
