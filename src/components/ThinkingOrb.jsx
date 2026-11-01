@@ -344,6 +344,7 @@ export default function ThinkingOrb({
   size = 120,
   dark = true,
   paused = false,
+  phase = 0,
   className = "",
   "aria-label": ariaLabel,
 }) {
@@ -352,7 +353,7 @@ export default function ThinkingOrb({
   const mode = MODES[state] ?? MODES.globe;
 
   useEffect(() => {
-    const controller = createThinkingOrbRenderer(canvasRef.current, window, MODES, { state, size, dark, paused });
+    const controller = createThinkingOrbRenderer(canvasRef.current, window, MODES, { state, size, dark, paused, phase });
     renderer.current = controller;
     return () => {
       controller.dispose();
@@ -360,7 +361,7 @@ export default function ThinkingOrb({
     };
   }, []);
 
-  useEffect(() => { renderer.current?.update({ state, size, dark, paused }); }, [state, size, dark, paused]);
+  useEffect(() => { renderer.current?.update({ state, size, dark, paused, phase }); }, [state, size, dark, paused, phase]);
 
   return (
     <canvas
