@@ -1,12 +1,11 @@
 import { useEffect, useRef } from "react";
 import { createThinkingOrbRenderer } from "../lib/thinkingOrb.js";
 
-/*
- * Dotted thought-orb, adapted for Ocura from thinking-orbs by Jakub Antalik
- * (MIT). Ported to plain 2D canvas + JS with two draw modes we care about:
- *   - "globe"  : a dotted sphere with a sweeping scan meridian (coherent path)
- *   - "orbits" : particles running tilted orbits (divergent / branching paths)
- * New shapes are added by writing another draw(ctx, size, t, dark, opts).
+/*!
+ * Dotted thought-orbs adapted from thinking-orbs by Jakub Antalik (MIT).
+ * Copyright (c) 2026 Jakub Antalik.
+ * Source: https://github.com/Jakubantalik/thinking-orbs
+ * Full license: /licenses/thinking-orbs.txt
  */
 
 const TAU = Math.PI * 2;
@@ -332,9 +331,44 @@ function drawThinking(ctx, size, t, dark) {
   paint(ctx, dots, dark, 0.3);
 }
 
+// Three particle strands weave over and under one another around the sphere.
+// Adapted from src/engine/braid.ts with the upstream large-preset density.
+function drawWeaving(ctx, size, t, dark) {
+  const R = (size / 2) * 0.76;
+  const pt = makeProj(t * 0.4, 0.3, size / 2, size / 2, 1);
+  const rs = radiusScale(size, 0.6);
+  const dots = [];
+  const ghostN = 75;
+  for (let i = 0; i < ghostN; i++) {
+    const d = fibDir(i, ghostN);
+    const [x, y, z] = pt(d[0] * R, d[1] * R, d[2] * R);
+    const depth = (z / R + 1) / 2;
+    dots.push({ x, y, z, r: 0.8 * rs, white: 0.78, a: 0.1 + 0.22 * depth });
+  }
+
+  const strandN = 26;
+  const turns = 3;
+  for (let strand = 0; strand < 3; strand++) {
+    const phase = (strand / 3) * TAU;
+    for (let i = 0; i < strandN; i++) {
+      const u = (frac(i / strandN + t * 0.045) * 2 - 1) * 0.96;
+      const surface = Math.sqrt(Math.max(0, 1 - u * u));
+      const endFade = Math.min(1, (1 - Math.abs(u)) / 0.1);
+      const angle = u * Math.PI * turns + phase;
+      const weave = 1 + 0.075 * Math.sin(u * Math.PI * turns * 2 + phase * 2 + t * 0.8);
+      const radius = surface * R * weave;
+      const [x, y, z] = pt(Math.cos(angle) * radius, u * R * weave, Math.sin(angle) * radius);
+      const depth = (z / R + 1) / 2;
+      dots.push({ x, y, z, r: (1.2 + 1.8 * depth) * rs, white: 0.55 - 0.45 * depth, a: endFade * (0.45 + 0.55 * depth) });
+    }
+  }
+  paint(ctx, dots, dark, 0.3);
+}
+
 const MODES = {
   breathing: { draw: drawThinking, speed: 2.0, label: "Thinking" },
   connecting: { draw: drawWeb, speed: 3.315, label: "Connecting" },
+  weaving: { draw: drawWeaving, speed: 1.625, label: "Weaving" },
   globe: { draw: drawGlobe, speed: 2.015, label: "Searching" },
   orbits: { draw: drawOrbits, speed: 1.885, label: "Working" },
 };
@@ -344,7 +378,6 @@ export default function ThinkingOrb({
   size = 120,
   dark = true,
   paused = false,
-  phase = 0,
   className = "",
   "aria-label": ariaLabel,
 }) {
@@ -353,7 +386,7 @@ export default function ThinkingOrb({
   const mode = MODES[state] ?? MODES.globe;
 
   useEffect(() => {
-    const controller = createThinkingOrbRenderer(canvasRef.current, window, MODES, { state, size, dark, paused, phase });
+    const controller = createThinkingOrbRenderer(canvasRef.current, window, MODES, { state, size, dark, paused });
     renderer.current = controller;
     return () => {
       controller.dispose();
@@ -361,7 +394,7 @@ export default function ThinkingOrb({
     };
   }, []);
 
-  useEffect(() => { renderer.current?.update({ state, size, dark, paused, phase }); }, [state, size, dark, paused, phase]);
+  useEffect(() => { renderer.current?.update({ state, size, dark, paused }); }, [state, size, dark, paused]);
 
   return (
     <canvas

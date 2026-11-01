@@ -91,8 +91,8 @@ function BuildingStyles({ animate }) {
     <section className="shell system-builders" aria-labelledby="system-builders-title">
       <h2 id="system-builders-title">{HOME.buildersTitle}</h2>
       <div className="system-thinking-spheres" aria-hidden="true">
-        {[1.7, 3.4, 0].map((phase) => (
-          <ThinkingOrb key={phase} state="orbits" phase={phase} size={192} dark={false} paused={!animate} />
+        {["connecting", "weaving", "orbits"].map((state) => (
+          <ThinkingOrb key={state} state={state} size={192} dark={false} paused={!animate} />
         ))}
       </div>
     </section>

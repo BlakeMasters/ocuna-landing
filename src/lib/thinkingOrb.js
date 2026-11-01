@@ -34,7 +34,7 @@ export function createThinkingOrbRenderer(canvas, win, modes, initial) {
       if (!opacity) return;
       context.save();
       context.globalAlpha = opacity;
-      shape.draw(context, size, (elapsed / 1000 + (options.phase ?? 0)) * shape.speed, dark);
+      shape.draw(context, size, (elapsed / 1000) * shape.speed, dark);
       context.restore();
     }
 
