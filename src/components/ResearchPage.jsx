@@ -87,7 +87,7 @@ function ResearchArticle({ post, onNavigate }) {
   return <main className="field-page field-article-page" id="top" tabIndex={-1}>
     <div className="field-shell">
       <a className="field-back" href={pagePath("/research")} onClick={(event) => onNavigate(event, "/research")}><span aria-hidden="true">←</span> All field notes</a>
-      <header className="field-article-heading"><p className="field-category">{post.category}</p><h1>{post.title}</h1><div className="field-article-byline"><span>Ocuna Research<span className="field-article-date"><time dateTime={post.date}>{post.dateLabel}</time> · {post.readTime}</span></span></div></header>
+      <header className="field-article-heading"><p className="field-category">{post.category}</p><h1>{post.title}</h1><div className="field-article-byline"><span>Ocuna Research<span className="field-article-date"><time dateTime={post.date}>{post.dateLabel}</time> · {post.readTime}{post.updated && <> · Updated <time dateTime={post.updated}>{post.updatedLabel}</time></>}</span></span></div></header>
       <div className={`field-article-cover${post.cover ? " field-article-cover-media" : ""}`}>
         {post.cover ? <ResearchMedia media={post.cover} priority /> : <NoteArt kind={post.art} />}
       </div>

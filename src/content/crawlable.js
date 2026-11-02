@@ -148,7 +148,7 @@ export function crawlableHtml(route) {
     <p>${escapeHtml(researchPost.category)}</p>
     <h1>${escapeHtml(researchPost.title)}</h1>
     <p>Ocuna Research</p>
-    <p><time datetime="${escapeHtml(researchPost.date)}">${escapeHtml(researchPost.dateLabel)}</time> · ${escapeHtml(researchPost.readTime)}</p>
+    <p><time datetime="${escapeHtml(researchPost.date)}">${escapeHtml(researchPost.dateLabel)}</time> · ${escapeHtml(researchPost.readTime)}${researchPost.updated ? ` · Updated <time datetime="${escapeHtml(researchPost.updated)}">${escapeHtml(researchPost.updatedLabel)}</time>` : ""}</p>
     ${researchPost.cover ? researchMediaHtml(researchPost.cover, true) : `<figure><img src="/research/${escapeHtml(illustration.file)}" width="${illustration.width ?? 1536}" height="${illustration.height ?? 1024}" style="max-width:100%;height:auto" alt="${escapeHtml(illustration.alt)}" /></figure>`}
     <nav aria-label="On this page">${researchPost.sections.map((section) => `<a href="#${escapeHtml(section.id)}">${escapeHtml(section.title)}</a>`).join(" ")}</nav>
     ${researchPost.sections.map((section) => `<section aria-labelledby="${escapeHtml(section.id)}">

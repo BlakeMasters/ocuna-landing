@@ -96,6 +96,7 @@ export function jsonLdGraph(route = "/") {
       description: post.description,
       articleSection: post.category,
       datePublished: post.date,
+      ...(post.updated ? { dateModified: post.updated } : {}),
       image: `${SITE_ORIGIN}/research/${RESEARCH_ART[post.art].file}`,
       mainEntityOfPage: { "@id": page["@id"] },
       author: { "@type": "Organization", name: "Ocuna Research", url: `${SITE_ORIGIN}/research` },
