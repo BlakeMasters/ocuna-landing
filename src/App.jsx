@@ -439,7 +439,7 @@ function SiteFooter({ isOnVeilPage, onNavigate }) {
     <footer className={`site-footer${isOnVeilPage ? " site-footer--onveil" : ""}`}>
       <div className="shell footer-layout">
         <a className="footer-logo-link" href="#top" aria-label="Back to top">
-          <img src={asset("images/ocuna_logo.webp")} alt="" />
+          <img src={asset("favicons/ocuna-head-512.png")} alt="" />
         </a>
         <nav className="footer-contact" aria-label="Footer">
           {footerNavItems.map((item) => (

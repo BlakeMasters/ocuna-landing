@@ -33,7 +33,7 @@ function navHtml(styled = false, headerClass = "not-found-static-header") {
 function footerHtml(styled = false) {
   return `
 <footer${styled ? ' class="site-footer"' : ""}>
-  ${styled ? '<div class="shell footer-layout"><a class="footer-logo-link" href="#top" aria-label="Back to top"><img src="/images/ocuna_logo.webp" alt="" /></a><nav class="footer-contact" aria-label="Footer">' : ""}
+  ${styled ? '<div class="shell footer-layout"><a class="footer-logo-link" href="#top" aria-label="Back to top"><img src="/favicons/ocuna-head-512.png" alt="" /></a><nav class="footer-contact" aria-label="Footer">' : ""}
   <a href="/research">Research</a>
   <a href="/contact">Contact</a>
   <a href="mailto:${CONTACT_EMAIL}">${CONTACT_EMAIL}</a>
